@@ -1,5 +1,5 @@
 import XCTest
-@testable import SwiftStripeAPI
+@testable import StripeAPI
 
 final class SwiftStripeAPITests: XCTestCase {
     func testExample() {

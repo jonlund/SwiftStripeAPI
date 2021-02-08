@@ -3,3 +3,5 @@
 /Packages
 /*.xcodeproj
 xcuserdata/
+Sources/spec3_formatted.json
+*.swp

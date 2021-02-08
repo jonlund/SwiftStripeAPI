@@ -8,7 +8,10 @@ public enum HTTPMethod: String {
 }
 #endif
 
-adasfa
+public typealias Timestamp = Int
+public struct Empty: Codable {}
+public struct MESSED_UP: Codable {}			// parsing didn't work out right
+
 public struct StringNumber: Codable {
 	public var rawValue: String
 	
@@ -43,6 +46,48 @@ public struct StringNumber: Codable {
 	}
 }
 
+extension Bool {
+	var urlEncoded: String {
+		return self ? "true" : "false"
+	}
+}
+
+extension String {
+	var urlEncoded: String {
+		return self					// FUTURE: Actually URL encode this
+	}
+}
+
+extension Int {
+	var urlEncoded: String {
+		return "\(self)"
+	}
+}
+
+extension Array where Element == String {
+	var urlEncoded: String {
+		return self.map({$0.urlEncoded}).joined(separator: ",")
+	}
+}
+
+//func urlencode(_ bool: Bool) -> String {
+//	return bool ? "true" : "false"
+//}
+//
+//func urlencode(_ str: String) -> String {
+//	return str
+//}
+//
+//func urlencode(_ strings: [String]) -> String {
+//	return urlencode(strings.joined(separator: ","))
+//}
+//
+//class asdfasfasf {
+//	init() {
+//		let a = PostAccountsAccount()
+//	}
+//}
+//
 
 /// protocol for Square Endpoint definitions
 public protocol StripeAPIEndpoint {

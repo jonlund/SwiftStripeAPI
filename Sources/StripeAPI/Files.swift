@@ -1,0 +1,113 @@
+
+/// Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
+public struct GetFiles: StripeAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = Output
+	public typealias paramType = Params
+	public struct Params {
+		let limit: Int
+		let purpose: String
+		let starting_after: String
+		let ending_before: String
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/files?purpose=\(inputs.purpose.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+	}
+	public static var method: HTTPMethod { return .GET }
+
+	public class Output: Codable {
+		public var data: [File]
+		/// True if this list has another page of items after this one that can be fetched.
+		public var has_more: Bool
+		/// String representing the object's type. Objects of the same type share the same value. Always has the value `list`.
+		public var object: ObjectValues
+		/// The URL where this list can be accessed.
+		public var url: String
+
+		public init(data: [File], has_more: Bool, object: ObjectValues, url: String) {
+			self.data = data
+			self.has_more = has_more
+			self.object = object
+			self.url = url
+		}
+
+		public enum ObjectValues: String, Codable {
+			case list = "list"
+		}
+	}
+
+}
+
+/// To upload a file to Stripe, you’ll need to send a request of type <code>multipart/form-data</code>. The request should contain the file you would like to upload, as well as the parameters for creating a file.  All of Stripe’s officially supported Client libraries should have support for sending <code>multipart/form-data</code>.
+public struct PostFiles: StripeAPIEndpoint {
+	public typealias inputType = DataInput
+	public typealias outputType = File
+	public typealias paramType = Empty
+	public static func endpoint(for inputs: Empty) throws -> String {
+		return "/v1/files"
+	}
+
+	public class DataInput: Codable {
+		/// Specifies which fields in the response should be expanded.
+		public var expand: [String]?
+		/// A file to upload. The file should follow the specifications of RFC 2388 (which defines file transfers for the `multipart/form-data` protocol).
+		public var file: String
+		/// Optional parameters to automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
+		public var file_link_data: FileLinkCreationParams?
+		/// The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
+		public var purpose: PurposeValues
+
+		public init(file: String, purpose: PurposeValues, expand: [String]? = nil, file_link_data: FileLinkCreationParams? = nil) {
+			self.file = file
+			self.purpose = purpose
+			self.expand = expand
+			self.file_link_data = file_link_data
+		}
+
+
+		/// Optional parameters to automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
+		public class FileLinkCreationParams: Codable {
+			public var create: Bool
+			public var expires_at: Timestamp?
+			public var metadata: MESSED_UP?
+
+			/// Optional parameters to automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
+			/// - Parameters:
+			///   - create: 
+			public init(create: Bool, expires_at: Timestamp? = nil, metadata: MESSED_UP? = nil) {
+				self.create = create
+				self.expires_at = expires_at
+				self.metadata = metadata
+			}
+		}
+
+
+		public enum PurposeValues: String, Codable {
+			case accountRequirement = "account_requirement"
+			case additionalVerification = "additional_verification"
+			case businessIcon = "business_icon"
+			case businessLogo = "business_logo"
+			case customerSignature = "customer_signature"
+			case disputeEvidence = "dispute_evidence"
+			case identityDocument = "identity_document"
+			case pciDocument = "pci_document"
+			case taxDocumentUserUpload = "tax_document_user_upload"
+		}
+	}
+
+}
+
+/// Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object. To access file contents, see the <a href="/docs/file-upload#download-file-contents">File Upload Guide</a>.
+public struct GetFilesFile: StripeAPIEndpoint {
+	public typealias inputType = Empty
+	public typealias outputType = File
+	public typealias paramType = Params
+	public struct Params {
+		let file: String
+	}
+	public static func endpoint(for inputs: Params) throws -> String {
+		return "/v1/files/\(inputs.file)"
+	}
+	public static var method: HTTPMethod { return .GET }
+
+}
