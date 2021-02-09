@@ -206,11 +206,11 @@ public struct PostRadarValueLists: StripeAPIEndpoint {
 		/// Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`. Use `string` if the item type is unknown or mixed.
 		public var item_type: ItemTypeValues?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The human-readable name of the value list.
 		public var name: String
 
-		public init(alias: String, name: String, expand: [String]? = nil, item_type: ItemTypeValues? = nil, metadata: String? = nil) {
+		public init(alias: String, name: String, expand: [String]? = nil, item_type: ItemTypeValues? = nil, metadata: Empty? = nil) {
 			self.alias = alias
 			self.name = name
 			self.expand = expand
@@ -264,11 +264,11 @@ public struct PostRadarValueListsValueList: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The human-readable name of the value list.
 		public var name: String?
 
-		public init(alias: String? = nil, expand: [String]? = nil, metadata: String? = nil, name: String? = nil) {
+		public init(alias: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, name: String? = nil) {
 			self.alias = alias
 			self.expand = expand
 			self.metadata = metadata

@@ -1380,9 +1380,9 @@ public struct PostAccountsAccountBankAccounts: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var external_account: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 
-		public init(bank_account: MESSED_UP? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: String? = nil) {
+		public init(bank_account: MESSED_UP? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand
@@ -1634,9 +1634,9 @@ public struct PostAccountsAccountExternalAccounts: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var external_account: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 
-		public init(bank_account: MESSED_UP? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: String? = nil) {
+		public init(bank_account: MESSED_UP? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand

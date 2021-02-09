@@ -199,7 +199,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 		/// Additional information about an `individual` cardholder.
 		public var individual: IndividualParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The cardholder's name. This will be printed on cards issued to them.
 		public var name: String
 		/// The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already.
@@ -211,7 +211,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 		/// One of `individual` or `company`.
 		public var type: TypeValues
 
-		public init(billing: BillingSpecs, name: String, type: TypeValues, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: String? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
+		public init(billing: BillingSpecs, name: String, type: TypeValues, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: Empty? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
 			self.billing = billing
 			self.name = name
 			self.type = type
@@ -400,7 +400,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		/// Additional information about an `individual` cardholder.
 		public var individual: IndividualParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The cardholder's phone number.
 		public var phone_number: String?
 		/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
@@ -408,7 +408,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		/// Specifies whether to permit authorizations on this cardholder's cards.
 		public var status: StatusValues?
 
-		public init(billing: BillingSpecs? = nil, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: String? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
+		public init(billing: BillingSpecs? = nil, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: Empty? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
 			self.billing = billing
 			self.company = company
 			self.email = email
@@ -612,7 +612,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The card this is meant to be a replacement for (if any).
 		public var replacement_for: String?
 		/// If `replacement_for` is specified, this should indicate why that card is being replaced.
@@ -626,7 +626,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 		/// The type of card to issue. Possible values are `physical` or `virtual`.
 		public var type: TypeValues
 
-		public init(currency: String, type: TypeValues, cardholder: String? = nil, expand: [String]? = nil, metadata: String? = nil, replacement_for: String? = nil, replacement_reason: ReplacementReasonValues? = nil, shipping: ShippingSpecs? = nil, spending_controls: AuthorizationControlsParam? = nil, status: StatusValues? = nil) {
+		public init(currency: String, type: TypeValues, cardholder: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, replacement_for: String? = nil, replacement_reason: ReplacementReasonValues? = nil, shipping: ShippingSpecs? = nil, spending_controls: AuthorizationControlsParam? = nil, status: StatusValues? = nil) {
 			self.currency = currency
 			self.type = type
 			self.cardholder = cardholder
@@ -861,11 +861,11 @@ public struct PostIssuingDisputes: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The ID of the issuing transaction to create a dispute for.
 		public var transaction: String
 
-		public init(transaction: String, evidence: EvidenceParam? = nil, expand: [String]? = nil, metadata: String? = nil) {
+		public init(transaction: String, evidence: EvidenceParam? = nil, expand: [String]? = nil, metadata: Empty? = nil) {
 			self.transaction = transaction
 			self.evidence = evidence
 			self.expand = expand
@@ -1088,9 +1088,9 @@ public struct PostIssuingSettlementsSettlement: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 
-		public init(expand: [String]? = nil, metadata: String? = nil) {
+		public init(expand: [String]? = nil, metadata: Empty? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}

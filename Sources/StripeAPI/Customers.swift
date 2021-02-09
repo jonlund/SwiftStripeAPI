@@ -458,11 +458,11 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: String? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -706,11 +706,11 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: String? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -958,11 +958,11 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: String? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card

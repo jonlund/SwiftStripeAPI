@@ -21,7 +21,7 @@ public struct PostSources: StripeAPIEndpoint {
 		public var flow: FlowValues?
 		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
 		public var mandate: MandateParams?
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The source to share.
 		public var original_source: String?
 		/// Information about the owner of the payment instrument that may be used or required by particular source types.
@@ -40,7 +40,7 @@ public struct PostSources: StripeAPIEndpoint {
 		public var type: String?
 		public var usage: UsageValues?
 
-		public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, flow: FlowValues? = nil, mandate: MandateParams? = nil, metadata: String? = nil, original_source: String? = nil, owner: Owner? = nil, receiver: ReceiverParams? = nil, redirect: RedirectParams? = nil, source_order: ShallowOrderSpecs? = nil, statement_descriptor: String? = nil, token: String? = nil, type: String? = nil, usage: UsageValues? = nil) {
+		public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, flow: FlowValues? = nil, mandate: MandateParams? = nil, metadata: Empty? = nil, original_source: String? = nil, owner: Owner? = nil, receiver: ReceiverParams? = nil, redirect: RedirectParams? = nil, source_order: ShallowOrderSpecs? = nil, statement_descriptor: String? = nil, token: String? = nil, type: String? = nil, usage: UsageValues? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.customer = customer

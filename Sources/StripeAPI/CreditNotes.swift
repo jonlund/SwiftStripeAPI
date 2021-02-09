@@ -62,7 +62,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 		/// The credit note's memo appears on the credit note PDF.
 		public var memo: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The integer amount in %s representing the amount that is credited outside of Stripe.
 		public var out_of_band_amount: Int?
 		/// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
@@ -72,7 +72,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 		/// The integer amount in %s representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
 		public var refund_amount: Int?
 
-		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, expand: [String]? = nil, lines: MESSED_UP? = nil, memo: String? = nil, metadata: String? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, refund_amount: Int? = nil) {
+		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, expand: [String]? = nil, lines: MESSED_UP? = nil, memo: String? = nil, metadata: Empty? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, refund_amount: Int? = nil) {
 			self.invoice = invoice
 			self.amount = amount
 			self.credit_amount = credit_amount
@@ -238,9 +238,9 @@ public struct PostCreditNotesId: StripeAPIEndpoint {
 		/// Credit note memo.
 		public var memo: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 
-		public init(expand: [String]? = nil, memo: String? = nil, metadata: String? = nil) {
+		public init(expand: [String]? = nil, memo: String? = nil, metadata: Empty? = nil) {
 			self.expand = expand
 			self.memo = memo
 			self.metadata = metadata

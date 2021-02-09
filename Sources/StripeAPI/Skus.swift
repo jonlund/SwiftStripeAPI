@@ -53,7 +53,7 @@ public struct PostSkus: StripeAPIEndpoint {
 		/// Whether the SKU is available for purchase. Default to `true`.
 		public var active: Bool?
 		/// A dictionary of attributes and values for the attributes defined by the product. If, for example, a product's attributes are `["size", "gender"]`, a valid SKU has the following dictionary of attributes: `{"size": "Medium", "gender": "Unisex"}`.
-		public var attributes: String?
+		public var attributes: Empty?
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 		public var currency: String
 		/// Specifies which fields in the response should be expanded.
@@ -65,7 +65,7 @@ public struct PostSkus: StripeAPIEndpoint {
 		/// Description of the SKU's inventory.
 		public var inventory: InventoryCreateSpecs
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The dimensions of this SKU for shipping purposes.
 		public var package_dimensions: PackageDimensionsSpecs?
 		/// The cost of the item as a nonnegative integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
@@ -73,7 +73,7 @@ public struct PostSkus: StripeAPIEndpoint {
 		/// The ID of the product this SKU is associated with. Must be a product with type `good`.
 		public var product: String
 
-		public init(currency: String, inventory: InventoryCreateSpecs, price: Int, product: String, active: Bool? = nil, attributes: String? = nil, expand: [String]? = nil, id: String? = nil, image: String? = nil, metadata: String? = nil, package_dimensions: PackageDimensionsSpecs? = nil) {
+		public init(currency: String, inventory: InventoryCreateSpecs, price: Int, product: String, active: Bool? = nil, attributes: Empty? = nil, expand: [String]? = nil, id: String? = nil, image: String? = nil, metadata: Empty? = nil, package_dimensions: PackageDimensionsSpecs? = nil) {
 			self.currency = currency
 			self.inventory = inventory
 			self.price = price
@@ -174,7 +174,7 @@ public struct PostSkusId: StripeAPIEndpoint {
 		/// Whether this SKU is available for purchase.
 		public var active: Bool?
 		/// A dictionary of attributes and values for the attributes defined by the product. When specified, `attributes` will partially update the existing attributes dictionary on the product, with the postcondition that a value must be present for each attribute key on the product.
-		public var attributes: String?
+		public var attributes: Empty?
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 		public var currency: String?
 		/// Specifies which fields in the response should be expanded.
@@ -192,7 +192,7 @@ public struct PostSkusId: StripeAPIEndpoint {
 		/// The ID of the product that this SKU should belong to. The product must exist, have the same set of attribute names as the SKU's current product, and be of type `good`.
 		public var product: String?
 
-		public init(active: Bool? = nil, attributes: String? = nil, currency: String? = nil, expand: [String]? = nil, image: String? = nil, inventory: InventoryUpdateSpecs? = nil, metadata: MESSED_UP? = nil, package_dimensions: MESSED_UP? = nil, price: Int? = nil, product: String? = nil) {
+		public init(active: Bool? = nil, attributes: Empty? = nil, currency: String? = nil, expand: [String]? = nil, image: String? = nil, inventory: InventoryUpdateSpecs? = nil, metadata: MESSED_UP? = nil, package_dimensions: MESSED_UP? = nil, price: Int? = nil, product: String? = nil) {
 			self.active = active
 			self.attributes = attributes
 			self.currency = currency

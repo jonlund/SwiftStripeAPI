@@ -72,7 +72,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 		/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
 		public var mandate_data: SecretKeyParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
 		public var off_session: Bool?
 		/// The Stripe account ID for which these funds are intended. For details, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
@@ -104,7 +104,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 		/// Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
 		public var use_stripe_sdk: Bool?
 
-		public init(amount: Int, currency: String, application_fee_amount: Int? = nil, capture_method: CaptureMethodValues? = nil, confirm: Bool? = nil, confirmation_method: ConfirmationMethodValues? = nil, customer: String? = nil, description: String? = nil, error_on_requires_action: Bool? = nil, expand: [String]? = nil, mandate: String? = nil, mandate_data: SecretKeyParam? = nil, metadata: String? = nil, off_session: Bool? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_data: PaymentMethodDataParams? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil, receipt_email: String? = nil, return_url: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: Shipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataCreationParams? = nil, transfer_group: String? = nil, use_stripe_sdk: Bool? = nil) {
+		public init(amount: Int, currency: String, application_fee_amount: Int? = nil, capture_method: CaptureMethodValues? = nil, confirm: Bool? = nil, confirmation_method: ConfirmationMethodValues? = nil, customer: String? = nil, description: String? = nil, error_on_requires_action: Bool? = nil, expand: [String]? = nil, mandate: String? = nil, mandate_data: SecretKeyParam? = nil, metadata: Empty? = nil, off_session: Bool? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_data: PaymentMethodDataParams? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil, receipt_email: String? = nil, return_url: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: Shipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataCreationParams? = nil, transfer_group: String? = nil, use_stripe_sdk: Bool? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.application_fee_amount = application_fee_amount
@@ -149,7 +149,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			public var grabpay: Param?
 			public var ideal: Param?
 			public var interac_present: Param?
-			public var metadata: String?
+			public var metadata: Empty?
 			public var oxxo: Param?
 			public var p24: Param?
 			public var sepa_debit: Param?
@@ -159,7 +159,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 			/// - Parameters:
 			///   - type: 
-			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: String? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
+			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: Empty? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
 				self.type = type
 				self.alipay = alipay
 				self.au_becs_debit = au_becs_debit
@@ -490,7 +490,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 			public var grabpay: Param?
 			public var ideal: Param?
 			public var interac_present: Param?
-			public var metadata: String?
+			public var metadata: Empty?
 			public var oxxo: Param?
 			public var p24: Param?
 			public var sepa_debit: Param?
@@ -500,7 +500,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 			/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 			/// - Parameters:
 			///   - type: 
-			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: String? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
+			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: Empty? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
 				self.type = type
 				self.alipay = alipay
 				self.au_becs_debit = au_becs_debit
@@ -779,7 +779,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 			public var grabpay: Param?
 			public var ideal: Param?
 			public var interac_present: Param?
-			public var metadata: String?
+			public var metadata: Empty?
 			public var oxxo: Param?
 			public var p24: Param?
 			public var sepa_debit: Param?
@@ -789,7 +789,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 			/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 			/// - Parameters:
 			///   - type: 
-			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: String? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
+			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: Empty? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
 				self.type = type
 				self.alipay = alipay
 				self.au_becs_debit = au_becs_debit

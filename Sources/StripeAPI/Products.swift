@@ -67,7 +67,7 @@ public struct PostProducts: StripeAPIEndpoint {
 		/// A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
 		public var images: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
 		public var name: String
 		/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
@@ -81,7 +81,7 @@ public struct PostProducts: StripeAPIEndpoint {
 		/// A URL of a publicly-accessible webpage for this product. May only be set if type=`good`.
 		public var url: String?
 
-		public init(name: String, active: Bool? = nil, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, metadata: String? = nil, package_dimensions: PackageDimensionsSpecs? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
+		public init(name: String, active: Bool? = nil, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, metadata: Empty? = nil, package_dimensions: PackageDimensionsSpecs? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
 			self.name = name
 			self.active = active
 			self.attributes = attributes

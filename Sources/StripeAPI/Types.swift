@@ -32,7 +32,7 @@ public final class Account: Codable {
 	public var id: String
 	public var individual: Person?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Whether Stripe can send payouts to this account.
@@ -61,7 +61,7 @@ public final class Account: Codable {
 	///   - payouts_enabled: Whether Stripe can send payouts to this account.
 	///   - settings: Options for customizing how the account functions within Stripe.
 	///   - type: The Stripe account type. Can be `standard`, `express`, or `custom`.
-	public init(id: String, object: ObjectValues, business_profile: AccountBusinessProfile? = nil, business_type: BusinessTypeValues? = nil, capabilities: AccountCapabilities? = nil, charges_enabled: Bool? = nil, company: LegalEntityCompany? = nil, country: String? = nil, created: Timestamp? = nil, default_currency: String? = nil, details_submitted: Bool? = nil, email: String? = nil, external_accounts: ExternalAccountList? = nil, individual: Person? = nil, metadata: String? = nil, payouts_enabled: Bool? = nil, requirements: AccountRequirements? = nil, settings: AccountSettings? = nil, tos_acceptance: AccountTosAcceptance? = nil, type: TypeValues? = nil) {
+	public init(id: String, object: ObjectValues, business_profile: AccountBusinessProfile? = nil, business_type: BusinessTypeValues? = nil, capabilities: AccountCapabilities? = nil, charges_enabled: Bool? = nil, company: LegalEntityCompany? = nil, country: String? = nil, created: Timestamp? = nil, default_currency: String? = nil, details_submitted: Bool? = nil, email: String? = nil, external_accounts: ExternalAccountList? = nil, individual: Person? = nil, metadata: Empty? = nil, payouts_enabled: Bool? = nil, requirements: AccountRequirements? = nil, settings: AccountSettings? = nil, tos_acceptance: AccountTosAcceptance? = nil, type: TypeValues? = nil) {
 		self.id = id
 		self.object = object
 		self.business_profile = business_profile
@@ -666,7 +666,7 @@ public final class AlipayAccount: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// If the Alipay account object is not reusable, the exact amount that you can create a charge for.
@@ -680,7 +680,7 @@ public final class AlipayAccount: Codable {
 	/// The username for the Alipay account.
 	public var username: String
 
-	public init(created: Timestamp, fingerprint: String, id: String, livemode: Bool, object: ObjectValues, reusable: Bool, used: Bool, username: String, customer: String? = nil, metadata: String? = nil, payment_amount: Int? = nil, payment_currency: String? = nil) {
+	public init(created: Timestamp, fingerprint: String, id: String, livemode: Bool, object: ObjectValues, reusable: Bool, used: Bool, username: String, customer: String? = nil, metadata: Empty? = nil, payment_amount: Int? = nil, payment_currency: String? = nil) {
 		self.created = created
 		self.fingerprint = fingerprint
 		self.id = id
@@ -1087,7 +1087,7 @@ public final class BankAccount: Codable {
 	/// The last four digits of the bank account number.
 	public var last4: String
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The routing transit number for the bank account.
@@ -1113,7 +1113,7 @@ public final class BankAccount: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - routing_number: The routing transit number for the bank account.
 	///   - status: For bank accounts, possible values are `new`, `validated`, `verified`, `verification_failed`, or `errored`. A bank account that hasn't had any activity or validation performed is `new`. If Stripe can determine that the bank account exists, its status will be `validated`. Note that there often isn’t enough information to know (e.g., for smaller credit unions), and the validation is not always run. If customer bank account verification has succeeded, the bank account status will be `verified`. If the verification failed for any reason, such as microdeposit failure, the status will be `verification_failed`. If a transfer sent to this bank account fails, we'll set the status to `errored` and will not continue to send transfers until the bank details are updated.  For external accounts, possible values are `new` and `errored`. Validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply. If a transfer fails, the status is set to `errored` and transfers are stopped until account details are updated.
-	public init(country: String, currency: String, id: String, last4: String, object: ObjectValues, status: String, account: String? = nil, account_holder_name: String? = nil, account_holder_type: String? = nil, available_payout_methods: [String]? = nil, bank_name: String? = nil, customer: String? = nil, default_for_currency: Bool? = nil, fingerprint: String? = nil, metadata: String? = nil, routing_number: String? = nil) {
+	public init(country: String, currency: String, id: String, last4: String, object: ObjectValues, status: String, account: String? = nil, account_holder_name: String? = nil, account_holder_type: String? = nil, available_payout_methods: [String]? = nil, bank_name: String? = nil, customer: String? = nil, default_for_currency: Bool? = nil, fingerprint: String? = nil, metadata: Empty? = nil, routing_number: String? = nil) {
 		self.country = country
 		self.currency = currency
 		self.id = id
@@ -1228,7 +1228,7 @@ public final class BitcoinReceiver: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The ID of the payment created from the receiver, if any. Hidden when viewing the receiver with a publishable key.
@@ -1242,7 +1242,7 @@ public final class BitcoinReceiver: Codable {
 	/// Indicate if this source is used for payment.
 	public var used_for_payment: Bool?
 
-	public init(active: Bool, amount: Int, amount_received: Int, bitcoin_amount: Int, bitcoin_amount_received: Int, bitcoin_uri: String, created: Timestamp, currency: String, filled: Bool, id: String, inbound_address: String, livemode: Bool, object: ObjectValues, uncaptured_funds: Bool, customer: String? = nil, description: String? = nil, email: String? = nil, metadata: String? = nil, payment: String? = nil, refund_address: String? = nil, transactions: BitcoinTransactionList? = nil, used_for_payment: Bool? = nil) {
+	public init(active: Bool, amount: Int, amount_received: Int, bitcoin_amount: Int, bitcoin_amount_received: Int, bitcoin_uri: String, created: Timestamp, currency: String, filled: Bool, id: String, inbound_address: String, livemode: Bool, object: ObjectValues, uncaptured_funds: Bool, customer: String? = nil, description: String? = nil, email: String? = nil, metadata: Empty? = nil, payment: String? = nil, refund_address: String? = nil, transactions: BitcoinTransactionList? = nil, used_for_payment: Bool? = nil) {
 		self.active = active
 		self.amount = amount
 		self.amount_received = amount_received
@@ -1430,7 +1430,7 @@ public final class Card: Codable {
 	/// The last four digits of the card.
 	public var last4: String
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// Cardholder name.
 	public var name: String?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -1470,7 +1470,7 @@ public final class Card: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - recipient: The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
 	///   - tokenization_method: If the card number is tokenized, this is the method that was used. Can be `android_pay` (includes Google Pay), `apple_pay`, `masterpass`, `visa_checkout`, or null.
-	public init(brand: String, exp_month: Int, exp_year: Int, funding: String, id: String, last4: String, object: ObjectValues, account: String? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line1_check: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, address_zip_check: String? = nil, available_payout_methods: [String]? = nil, country: String? = nil, currency: String? = nil, customer: String? = nil, cvc_check: String? = nil, default_for_currency: Bool? = nil, dynamic_last4: String? = nil, fingerprint: String? = nil, metadata: String? = nil, name: String? = nil, recipient: String? = nil, tokenization_method: String? = nil) {
+	public init(brand: String, exp_month: Int, exp_year: Int, funding: String, id: String, last4: String, object: ObjectValues, account: String? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line1_check: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, address_zip_check: String? = nil, available_payout_methods: [String]? = nil, country: String? = nil, currency: String? = nil, customer: String? = nil, cvc_check: String? = nil, default_for_currency: Bool? = nil, dynamic_last4: String? = nil, fingerprint: String? = nil, metadata: Empty? = nil, name: String? = nil, recipient: String? = nil, tokenization_method: String? = nil) {
 		self.brand = brand
 		self.exp_month = exp_month
 		self.exp_year = exp_year
@@ -1567,7 +1567,7 @@ public final class Charge: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
@@ -1659,7 +1659,7 @@ public final class Charge: Codable {
 	///   - transfer: ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
 	///   - transfer_data: An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
 	///   - transfer_group: A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
-	public init(amount: Int, amount_captured: Int, amount_refunded: Int, billing_details: BillingDetails, captured: Bool, created: Timestamp, currency: String, disputed: Bool, id: String, livemode: Bool, metadata: String, object: ObjectValues, paid: Bool, refunded: Bool, refunds: RefundList, status: String, application: String? = nil, application_fee: String? = nil, application_fee_amount: Int? = nil, balance_transaction: String? = nil, calculated_statement_descriptor: String? = nil, customer: String? = nil, description: String? = nil, failure_code: String? = nil, failure_message: String? = nil, fraud_details: ChargeFraudDetails? = nil, invoice: String? = nil, on_behalf_of: String? = nil, order: String? = nil, outcome: ChargeOutcome? = nil, payment_intent: String? = nil, payment_method: String? = nil, payment_method_details: PaymentMethodDetails? = nil, receipt_email: String? = nil, receipt_number: String? = nil, receipt_url: String? = nil, review: String? = nil, shipping: Shipping? = nil, source_transfer: String? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer: String? = nil, transfer_data: ChargeTransferData? = nil, transfer_group: String? = nil) {
+	public init(amount: Int, amount_captured: Int, amount_refunded: Int, billing_details: BillingDetails, captured: Bool, created: Timestamp, currency: String, disputed: Bool, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, paid: Bool, refunded: Bool, refunds: RefundList, status: String, application: String? = nil, application_fee: String? = nil, application_fee_amount: Int? = nil, balance_transaction: String? = nil, calculated_statement_descriptor: String? = nil, customer: String? = nil, description: String? = nil, failure_code: String? = nil, failure_message: String? = nil, fraud_details: ChargeFraudDetails? = nil, invoice: String? = nil, on_behalf_of: String? = nil, order: String? = nil, outcome: ChargeOutcome? = nil, payment_intent: String? = nil, payment_method: String? = nil, payment_method_details: PaymentMethodDetails? = nil, receipt_email: String? = nil, receipt_number: String? = nil, receipt_url: String? = nil, review: String? = nil, shipping: Shipping? = nil, source_transfer: String? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer: String? = nil, transfer_data: ChargeTransferData? = nil, transfer_group: String? = nil) {
 		self.amount = amount
 		self.amount_captured = amount_captured
 		self.amount_refunded = amount_refunded
@@ -1824,7 +1824,7 @@ public final class CheckoutSession: Codable {
 	/// The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
 	public var locale: LocaleValues?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// The mode of the Checkout Session.
 	public var mode: ModeValues
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -1879,7 +1879,7 @@ public final class CheckoutSession: Codable {
 	///   - subscription: The ID of the subscription for Checkout Sessions in `subscription` mode.
 	///   - success_url: The URL the customer will be directed to after the payment or subscription creation is successful.
 	///   - total_details: Tax and discount details for the computed total amount.
-	public init(cancel_url: String, id: String, livemode: Bool, mode: ModeValues, object: ObjectValues, payment_method_types: [String], payment_status: PaymentStatusValues, success_url: String, allow_promotion_codes: Bool? = nil, amount_subtotal: Int? = nil, amount_total: Int? = nil, billing_address_collection: BillingAddressCollectionValues? = nil, client_reference_id: String? = nil, currency: String? = nil, customer: String? = nil, customer_details: PaymentPagesCheckoutSessionCustomerDetails? = nil, customer_email: String? = nil, line_items: PaymentPagesCheckoutSessionListLineItems? = nil, locale: LocaleValues? = nil, metadata: String? = nil, payment_intent: String? = nil, setup_intent: String? = nil, shipping: Shipping? = nil, shipping_address_collection: PaymentPagesPaymentPageResourcesShippingAddressCollection? = nil, submit_type: SubmitTypeValues? = nil, subscription: String? = nil, total_details: PaymentPagesCheckoutSessionTotalDetails? = nil) {
+	public init(cancel_url: String, id: String, livemode: Bool, mode: ModeValues, object: ObjectValues, payment_method_types: [String], payment_status: PaymentStatusValues, success_url: String, allow_promotion_codes: Bool? = nil, amount_subtotal: Int? = nil, amount_total: Int? = nil, billing_address_collection: BillingAddressCollectionValues? = nil, client_reference_id: String? = nil, currency: String? = nil, customer: String? = nil, customer_details: PaymentPagesCheckoutSessionCustomerDetails? = nil, customer_email: String? = nil, line_items: PaymentPagesCheckoutSessionListLineItems? = nil, locale: LocaleValues? = nil, metadata: Empty? = nil, payment_intent: String? = nil, setup_intent: String? = nil, shipping: Shipping? = nil, shipping_address_collection: PaymentPagesPaymentPageResourcesShippingAddressCollection? = nil, submit_type: SubmitTypeValues? = nil, subscription: String? = nil, total_details: PaymentPagesCheckoutSessionTotalDetails? = nil) {
 		self.cancel_url = cancel_url
 		self.id = id
 		self.livemode = livemode
@@ -2045,7 +2045,7 @@ public final class CountrySpec: Codable {
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Currencies that can be accepted in the specific country (for transfers).
-	public var supported_bank_account_currencies: String
+	public var supported_bank_account_currencies: Empty
 	/// Currencies that can be accepted in the specified country (for payments).
 	public var supported_payment_currencies: [String]
 	/// Payment methods available in the specified country. You may need to enable some payment methods (e.g., [ACH](https://stripe.com/docs/ach)) on your account before they appear in this list. The `stripe` payment method refers to [charging through your platform](https://stripe.com/docs/connect/destination-charges).
@@ -2064,7 +2064,7 @@ public final class CountrySpec: Codable {
 	///   - supported_payment_methods: Payment methods available in the specified country. You may need to enable some payment methods (e.g., [ACH](https://stripe.com/docs/ach)) on your account before they appear in this list. The `stripe` payment method refers to [charging through your platform](https://stripe.com/docs/connect/destination-charges).
 	///   - supported_transfer_countries: Countries that can accept transfers from the specified country.
 	///   - verification_fields: 
-	public init(default_currency: String, id: String, object: ObjectValues, supported_bank_account_currencies: String, supported_payment_currencies: [String], supported_payment_methods: [String], supported_transfer_countries: [String], verification_fields: CountrySpecVerificationFields) {
+	public init(default_currency: String, id: String, object: ObjectValues, supported_bank_account_currencies: Empty, supported_payment_currencies: [String], supported_payment_methods: [String], supported_transfer_countries: [String], verification_fields: CountrySpecVerificationFields) {
 		self.default_currency = default_currency
 		self.id = id
 		self.object = object
@@ -2122,7 +2122,7 @@ public final class Coupon: Codable {
 	/// Maximum number of times this coupon can be redeemed, in total, across all customers, before it is no longer valid.
 	public var max_redemptions: Int?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// Name of the coupon displayed to customers on for instance invoices or receipts.
 	public var name: String?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -2153,7 +2153,7 @@ public final class Coupon: Codable {
 	///   - redeem_by: Date after which the coupon can no longer be redeemed.
 	///   - times_redeemed: Number of times this coupon has been applied to a customer.
 	///   - valid: Taking account of the above properties, whether this coupon can still be applied to a customer.
-	public init(created: Timestamp, duration: DurationValues, id: String, livemode: Bool, object: ObjectValues, times_redeemed: Int, valid: Bool, amount_off: Int? = nil, applies_to: CouponAppliesTo? = nil, currency: String? = nil, duration_in_months: Int? = nil, max_redemptions: Int? = nil, metadata: String? = nil, name: String? = nil, percent_off: StringNumber? = nil, redeem_by: Timestamp? = nil) {
+	public init(created: Timestamp, duration: DurationValues, id: String, livemode: Bool, object: ObjectValues, times_redeemed: Int, valid: Bool, amount_off: Int? = nil, applies_to: CouponAppliesTo? = nil, currency: String? = nil, duration_in_months: Int? = nil, max_redemptions: Int? = nil, metadata: Empty? = nil, name: String? = nil, percent_off: StringNumber? = nil, redeem_by: Timestamp? = nil) {
 		self.created = created
 		self.duration = duration
 		self.id = id
@@ -2219,7 +2219,7 @@ public final class CreditNote: Codable {
 	/// Customer-facing text that appears on the credit note PDF.
 	public var memo: String?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// A unique number that identifies this particular credit note and appears on the PDF of the credit note and its associated invoice.
 	public var number: String
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -2272,7 +2272,7 @@ public final class CreditNote: Codable {
 	///   - total: The integer amount in %s representing the total amount of the credit note, including tax and all discount.
 	///   - type: Type of this credit note, one of `pre_payment` or `post_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
 	///   - voided_at: The time that the credit note was voided.
-	public init(amount: Int, created: Timestamp, currency: String, customer: String, discount_amount: Int, discount_amounts: [DiscountsResourceDiscountAmount], id: String, invoice: String, lines: CreditNoteLinesList, livemode: Bool, number: String, object: ObjectValues, pdf: String, status: StatusValues, subtotal: Int, tax_amounts: [CreditNoteTaxAmount], total: Int, type: TypeValues, customer_balance_transaction: String? = nil, memo: String? = nil, metadata: String? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, voided_at: Timestamp? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, customer: String, discount_amount: Int, discount_amounts: [DiscountsResourceDiscountAmount], id: String, invoice: String, lines: CreditNoteLinesList, livemode: Bool, number: String, object: ObjectValues, pdf: String, status: StatusValues, subtotal: Int, tax_amounts: [CreditNoteTaxAmount], total: Int, type: TypeValues, customer_balance_transaction: String? = nil, memo: String? = nil, metadata: Empty? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, voided_at: Timestamp? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -2453,7 +2453,7 @@ public final class Customer: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// The customer's full name or business name.
 	public var name: String?
 	/// The suffix of the customer's next invoice number, e.g., 0001.
@@ -2500,7 +2500,7 @@ public final class Customer: Codable {
 	///   - subscriptions: The customer's current subscriptions, if any.
 	///   - tax_exempt: Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
 	///   - tax_ids: The customer's tax IDs.
-	public init(created: Timestamp, id: String, livemode: Bool, object: ObjectValues, address: Address? = nil, balance: Int? = nil, currency: String? = nil, default_source: String? = nil, delinquent: Bool? = nil, description: String? = nil, discount: Discount? = nil, email: String? = nil, invoice_prefix: String? = nil, invoice_settings: InvoiceSettingCustomerSetting? = nil, metadata: String? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]? = nil, shipping: Shipping? = nil, sources: ApmsSourcesSourceList? = nil, subscriptions: SubscriptionList? = nil, tax_exempt: TaxExemptValues? = nil, tax_ids: TaxIDsList? = nil) {
+	public init(created: Timestamp, id: String, livemode: Bool, object: ObjectValues, address: Address? = nil, balance: Int? = nil, currency: String? = nil, default_source: String? = nil, delinquent: Bool? = nil, description: String? = nil, discount: Discount? = nil, email: String? = nil, invoice_prefix: String? = nil, invoice_settings: InvoiceSettingCustomerSetting? = nil, metadata: Empty? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]? = nil, shipping: Shipping? = nil, sources: ApmsSourcesSourceList? = nil, subscriptions: SubscriptionList? = nil, tax_exempt: TaxExemptValues? = nil, tax_ids: TaxIDsList? = nil) {
 		self.created = created
 		self.id = id
 		self.livemode = livemode
@@ -2675,7 +2675,7 @@ public final class CustomerBalanceTransaction: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unspent_receiver_credit`, or `unapplied_from_invoice`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
@@ -2696,7 +2696,7 @@ public final class CustomerBalanceTransaction: Codable {
 	///   - metadata: Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - type: Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unspent_receiver_credit`, or `unapplied_from_invoice`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
-	public init(amount: Int, created: Timestamp, currency: String, customer: String, ending_balance: Int, id: String, livemode: Bool, object: ObjectValues, type: TypeValues, credit_note: String? = nil, description: String? = nil, invoice: String? = nil, metadata: String? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, customer: String, ending_balance: Int, id: String, livemode: Bool, object: ObjectValues, type: TypeValues, credit_note: String? = nil, description: String? = nil, invoice: String? = nil, metadata: Empty? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -3327,7 +3327,7 @@ public final class Dispute: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// ID of the PaymentIntent that was disputed.
@@ -3354,7 +3354,7 @@ public final class Dispute: Codable {
 	///   - payment_intent: ID of the PaymentIntent that was disputed.
 	///   - reason: Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
 	///   - status: Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
-	public init(amount: Int, balance_transactions: [BalanceTransaction], charge: String, created: Timestamp, currency: String, evidence: DisputeEvidence, evidence_details: DisputeEvidenceDetails, id: String, is_charge_refundable: Bool, livemode: Bool, metadata: String, object: ObjectValues, reason: String, status: StatusValues, payment_intent: String? = nil) {
+	public init(amount: Int, balance_transactions: [BalanceTransaction], charge: String, created: Timestamp, currency: String, evidence: DisputeEvidence, evidence_details: DisputeEvidenceDetails, id: String, is_charge_refundable: Bool, livemode: Bool, metadata: Empty, object: ObjectValues, reason: String, status: StatusValues, payment_intent: String? = nil) {
 		self.amount = amount
 		self.balance_transactions = balance_transactions
 		self.charge = charge
@@ -3592,14 +3592,14 @@ public final class ExchangeRate: Codable {
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Hash where the keys are supported currencies and the values are the exchange rate at which the base id currency converts to the key currency.
-	public var rates: String
+	public var rates: Empty
 
 	/// `Exchange Rate` objects allow you to determine the rates that Stripe is currently using to convert from one currency to another. Since this number is variable throughout the day, there are various reasons why you might want to know the current rate (for example, to dynamically price an item for a user with a default payment in a foreign currency).  If you want a guarantee that the charge is made with a certain exchange rate you expect is current, you can pass in `exchange_rate` to charges endpoints. If the value is no longer up to date, the charge won't go through. Please refer to our [Exchange Rates API](https://stripe.com/docs/exchange-rates) guide for more details.
 	/// - Parameters:
 	///   - id: Unique identifier for the object. Represented as the three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) in lowercase.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - rates: Hash where the keys are supported currencies and the values are the exchange rate at which the base id currency converts to the key currency.
-	public init(id: String, object: ObjectValues, rates: String) {
+	public init(id: String, object: ObjectValues, rates: Empty) {
 		self.id = id
 		self.object = object
 		self.rates = rates
@@ -3649,7 +3649,7 @@ public final class FeeRefund: Codable {
 	/// Unique identifier for the object.
 	public var id: String
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 
@@ -3663,7 +3663,7 @@ public final class FeeRefund: Codable {
 	///   - id: Unique identifier for the object.
 	///   - metadata: Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
-	public init(amount: Int, created: Timestamp, currency: String, fee: String, id: String, object: ObjectValues, balance_transaction: String? = nil, metadata: String? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, fee: String, id: String, object: ObjectValues, balance_transaction: String? = nil, metadata: Empty? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -3794,7 +3794,7 @@ public final class FileLink: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The publicly accessible URL to download the file.
@@ -3811,7 +3811,7 @@ public final class FileLink: Codable {
 	///   - metadata: Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - url: The publicly accessible URL to download the file.
-	public init(created: Timestamp, expired: Bool, file: String, id: String, livemode: Bool, metadata: String, object: ObjectValues, expires_at: Timestamp? = nil, url: String? = nil) {
+	public init(created: Timestamp, expired: Bool, file: String, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, expires_at: Timestamp? = nil, url: String? = nil) {
 		self.created = created
 		self.expired = expired
 		self.file = file
@@ -3954,7 +3954,7 @@ public final class Invoice: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// The time at which payment will next be attempted. This value will be `null` for invoices where `collection_method=send_invoice`.
 	public var next_payment_attempt: Timestamp?
 	/// A unique, identifying string that appears on emails sent to the customer for this invoice. This starts with the customer's unique invoice_prefix if it is specified.
@@ -4067,7 +4067,7 @@ public final class Invoice: Codable {
 	///   - total_tax_amounts: The aggregate amounts calculated per tax rate for all line items.
 	///   - transfer_data: The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
 	///   - webhooks_delivered_at: Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
-	public init(amount_due: Int, amount_paid: Int, amount_remaining: Int, attempt_count: Int, attempted: Bool, created: Timestamp, currency: String, customer: String, default_tax_rates: [TaxRate], lines: InvoiceLinesList, livemode: Bool, object: ObjectValues, paid: Bool, period_end: Timestamp, period_start: Timestamp, post_payment_credit_notes_amount: Int, pre_payment_credit_notes_amount: Int, starting_balance: Int, status_transitions: InvoicesStatusTransitions, subtotal: Int, total: Int, total_tax_amounts: [InvoiceTaxAmount], account_country: String? = nil, account_name: String? = nil, account_tax_ids: [String]? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, billing_reason: BillingReasonValues? = nil, charge: String? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: [InvoiceSettingCustomField]? = nil, customer_address: Address? = nil, customer_email: String? = nil, customer_name: String? = nil, customer_phone: String? = nil, customer_shipping: Shipping? = nil, customer_tax_exempt: CustomerTaxExemptValues? = nil, customer_tax_ids: [InvoicesResourceInvoiceTaxId]? = nil, default_payment_method: String? = nil, default_source: String? = nil, description: String? = nil, discount: Discount? = nil, discounts: [String]? = nil, due_date: Timestamp? = nil, ending_balance: Int? = nil, footer: String? = nil, hosted_invoice_url: String? = nil, id: String? = nil, invoice_pdf: String? = nil, last_finalization_error: ApiErrors? = nil, metadata: String? = nil, next_payment_attempt: Timestamp? = nil, number: String? = nil, payment_intent: String? = nil, receipt_number: String? = nil, statement_descriptor: String? = nil, status: StatusValues? = nil, subscription: String? = nil, subscription_proration_date: Int? = nil, tax: Int? = nil, threshold_reason: InvoiceThresholdReason? = nil, total_discount_amounts: [DiscountsResourceDiscountAmount]? = nil, transfer_data: InvoiceTransferData? = nil, webhooks_delivered_at: Timestamp? = nil) {
+	public init(amount_due: Int, amount_paid: Int, amount_remaining: Int, attempt_count: Int, attempted: Bool, created: Timestamp, currency: String, customer: String, default_tax_rates: [TaxRate], lines: InvoiceLinesList, livemode: Bool, object: ObjectValues, paid: Bool, period_end: Timestamp, period_start: Timestamp, post_payment_credit_notes_amount: Int, pre_payment_credit_notes_amount: Int, starting_balance: Int, status_transitions: InvoicesStatusTransitions, subtotal: Int, total: Int, total_tax_amounts: [InvoiceTaxAmount], account_country: String? = nil, account_name: String? = nil, account_tax_ids: [String]? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, billing_reason: BillingReasonValues? = nil, charge: String? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: [InvoiceSettingCustomField]? = nil, customer_address: Address? = nil, customer_email: String? = nil, customer_name: String? = nil, customer_phone: String? = nil, customer_shipping: Shipping? = nil, customer_tax_exempt: CustomerTaxExemptValues? = nil, customer_tax_ids: [InvoicesResourceInvoiceTaxId]? = nil, default_payment_method: String? = nil, default_source: String? = nil, description: String? = nil, discount: Discount? = nil, discounts: [String]? = nil, due_date: Timestamp? = nil, ending_balance: Int? = nil, footer: String? = nil, hosted_invoice_url: String? = nil, id: String? = nil, invoice_pdf: String? = nil, last_finalization_error: ApiErrors? = nil, metadata: Empty? = nil, next_payment_attempt: Timestamp? = nil, number: String? = nil, payment_intent: String? = nil, receipt_number: String? = nil, statement_descriptor: String? = nil, status: StatusValues? = nil, subscription: String? = nil, subscription_proration_date: Int? = nil, tax: Int? = nil, threshold_reason: InvoiceThresholdReason? = nil, total_discount_amounts: [DiscountsResourceDiscountAmount]? = nil, transfer_data: InvoiceTransferData? = nil, webhooks_delivered_at: Timestamp? = nil) {
 		self.amount_due = amount_due
 		self.amount_paid = amount_paid
 		self.amount_remaining = amount_remaining
@@ -4323,7 +4323,7 @@ public final class Invoiceitem: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	public var period: InvoiceLineItemPeriod
@@ -4367,7 +4367,7 @@ public final class Invoiceitem: Codable {
 	///   - tax_rates: The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
 	///   - unit_amount: Unit amount (in the `currency` specified) of the invoice item.
 	///   - unit_amount_decimal: Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
-	public init(amount: Int, currency: String, customer: String, date: Timestamp, discountable: Bool, id: String, livemode: Bool, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, quantity: Int, description: String? = nil, discounts: [String]? = nil, invoice: String? = nil, metadata: String? = nil, price: Price? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_rates: [TaxRate]? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+	public init(amount: Int, currency: String, customer: String, date: Timestamp, discountable: Bool, id: String, livemode: Bool, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, quantity: Int, description: String? = nil, discounts: [String]? = nil, invoice: String? = nil, metadata: Empty? = nil, price: Price? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_rates: [TaxRate]? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 		self.amount = amount
 		self.currency = currency
 		self.customer = customer
@@ -4540,7 +4540,7 @@ public final class IssuingAuthorization: Codable {
 	public var merchant_currency: String
 	public var merchant_data: IssuingAuthorizationMerchantData
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The pending authorization request. This field will only be non-null during an `issuing_authorization.request` webhook.
@@ -4579,7 +4579,7 @@ public final class IssuingAuthorization: Codable {
 	///   - transactions: List of [transactions](https://stripe.com/docs/api/issuing/transactions) associated with this authorization.
 	///   - verification_data: 
 	///   - wallet: What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
-	public init(amount: Int, approved: Bool, authorization_method: AuthorizationMethodValues, balance_transactions: [BalanceTransaction], card: IssuingCard, created: Timestamp, currency: String, id: String, livemode: Bool, merchant_amount: Int, merchant_currency: String, merchant_data: IssuingAuthorizationMerchantData, metadata: String, object: ObjectValues, request_history: [IssuingAuthorizationRequest], status: StatusValues, transactions: [IssuingTransaction], verification_data: IssuingAuthorizationVerificationData, amount_details: IssuingAuthorizationAmountDetails? = nil, cardholder: String? = nil, pending_request: IssuingAuthorizationPendingRequest? = nil, wallet: String? = nil) {
+	public init(amount: Int, approved: Bool, authorization_method: AuthorizationMethodValues, balance_transactions: [BalanceTransaction], card: IssuingCard, created: Timestamp, currency: String, id: String, livemode: Bool, merchant_amount: Int, merchant_currency: String, merchant_data: IssuingAuthorizationMerchantData, metadata: Empty, object: ObjectValues, request_history: [IssuingAuthorizationRequest], status: StatusValues, transactions: [IssuingTransaction], verification_data: IssuingAuthorizationVerificationData, amount_details: IssuingAuthorizationAmountDetails? = nil, cardholder: String? = nil, pending_request: IssuingAuthorizationPendingRequest? = nil, wallet: String? = nil) {
 		self.amount = amount
 		self.approved = approved
 		self.authorization_method = authorization_method
@@ -4647,7 +4647,7 @@ public final class IssuingCard: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
 	public var number: String?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -4689,7 +4689,7 @@ public final class IssuingCard: Codable {
 	///   - spending_controls: 
 	///   - status: Whether authorizations can be approved on this card.
 	///   - type: The type of the card.
-	public init(brand: String, cardholder: IssuingCardholder, created: Timestamp, currency: String, exp_month: Int, exp_year: Int, id: String, last4: String, livemode: Bool, metadata: String, object: ObjectValues, spending_controls: IssuingCardAuthorizationControls, status: StatusValues, type: TypeValues, cancellation_reason: CancellationReasonValues? = nil, cvc: String? = nil, number: String? = nil, replaced_by: String? = nil, replacement_for: String? = nil, replacement_reason: ReplacementReasonValues? = nil, shipping: IssuingCardShipping? = nil) {
+	public init(brand: String, cardholder: IssuingCardholder, created: Timestamp, currency: String, exp_month: Int, exp_year: Int, id: String, last4: String, livemode: Bool, metadata: Empty, object: ObjectValues, spending_controls: IssuingCardAuthorizationControls, status: StatusValues, type: TypeValues, cancellation_reason: CancellationReasonValues? = nil, cvc: String? = nil, number: String? = nil, replaced_by: String? = nil, replacement_for: String? = nil, replacement_reason: ReplacementReasonValues? = nil, shipping: IssuingCardShipping? = nil) {
 		self.brand = brand
 		self.cardholder = cardholder
 		self.created = created
@@ -4757,7 +4757,7 @@ public final class IssuingCardholder: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// The cardholder's name. This will be printed on cards issued to them.
 	public var name: String
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -4789,7 +4789,7 @@ public final class IssuingCardholder: Codable {
 	///   - spending_controls: Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 	///   - status: Specifies whether to permit authorizations on this cardholder's cards.
 	///   - type: One of `individual` or `company`.
-	public init(billing: IssuingCardholderAddress, created: Timestamp, id: String, livemode: Bool, metadata: String, name: String, object: ObjectValues, requirements: IssuingCardholderRequirements, status: StatusValues, type: TypeValues, company: IssuingCardholderCompany? = nil, email: String? = nil, individual: IssuingCardholderIndividual? = nil, phone_number: String? = nil, spending_controls: IssuingCardholderAuthorizationControls? = nil) {
+	public init(billing: IssuingCardholderAddress, created: Timestamp, id: String, livemode: Bool, metadata: Empty, name: String, object: ObjectValues, requirements: IssuingCardholderRequirements, status: StatusValues, type: TypeValues, company: IssuingCardholderCompany? = nil, email: String? = nil, individual: IssuingCardholderIndividual? = nil, phone_number: String? = nil, spending_controls: IssuingCardholderAuthorizationControls? = nil) {
 		self.billing = billing
 		self.created = created
 		self.id = id
@@ -4839,7 +4839,7 @@ public final class IssuingDispute: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Current status of the dispute.
@@ -4860,7 +4860,7 @@ public final class IssuingDispute: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - status: Current status of the dispute.
 	///   - transaction: The transaction being disputed.
-	public init(amount: Int, created: Timestamp, currency: String, evidence: IssuingDisputeEvidence, id: String, livemode: Bool, metadata: String, object: ObjectValues, status: StatusValues, transaction: String, balance_transactions: [BalanceTransaction]? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, evidence: IssuingDisputeEvidence, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, status: StatusValues, transaction: String, balance_transactions: [BalanceTransaction]? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -4904,7 +4904,7 @@ public final class IssuingSettlement: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// The total net amount required to settle with the network.
 	public var net_total: Int
 	/// The card network for this settlement report. One of ["visa"]
@@ -4940,7 +4940,7 @@ public final class IssuingSettlement: Codable {
 	///   - settlement_service: One of `international` or `uk_national_net`.
 	///   - transaction_count: The total number of transactions reflected in this settlement.
 	///   - transaction_volume: The total transaction amount reflected in this settlement.
-	public init(bin: String, clearing_date: Int, created: Timestamp, currency: String, id: String, interchange_fees: Int, livemode: Bool, metadata: String, net_total: Int, network: NetworkValues, network_fees: Int, network_settlement_identifier: String, object: ObjectValues, settlement_service: String, transaction_count: Int, transaction_volume: Int) {
+	public init(bin: String, clearing_date: Int, created: Timestamp, currency: String, id: String, interchange_fees: Int, livemode: Bool, metadata: Empty, net_total: Int, network: NetworkValues, network_fees: Int, network_settlement_identifier: String, object: ObjectValues, settlement_service: String, transaction_count: Int, transaction_volume: Int) {
 		self.bin = bin
 		self.clearing_date = clearing_date
 		self.created = created
@@ -4998,7 +4998,7 @@ public final class IssuingTransaction: Codable {
 	public var merchant_currency: String
 	public var merchant_data: IssuingAuthorizationMerchantData
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Additional purchase information that is optionally provided by the merchant.
@@ -5026,7 +5026,7 @@ public final class IssuingTransaction: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - purchase_details: Additional purchase information that is optionally provided by the merchant.
 	///   - type: The nature of the transaction.
-	public init(amount: Int, card: String, created: Timestamp, currency: String, id: String, livemode: Bool, merchant_amount: Int, merchant_currency: String, merchant_data: IssuingAuthorizationMerchantData, metadata: String, object: ObjectValues, type: TypeValues, amount_details: IssuingTransactionAmountDetails? = nil, authorization: String? = nil, balance_transaction: String? = nil, cardholder: String? = nil, dispute: String? = nil, purchase_details: IssuingTransactionPurchaseDetails? = nil) {
+	public init(amount: Int, card: String, created: Timestamp, currency: String, id: String, livemode: Bool, merchant_amount: Int, merchant_currency: String, merchant_data: IssuingAuthorizationMerchantData, metadata: Empty, object: ObjectValues, type: TypeValues, amount_details: IssuingTransactionAmountDetails? = nil, authorization: String? = nil, balance_transaction: String? = nil, cardholder: String? = nil, dispute: String? = nil, purchase_details: IssuingTransactionPurchaseDetails? = nil) {
 		self.amount = amount
 		self.card = card
 		self.created = created
@@ -6025,7 +6025,7 @@ public final class LineItem: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	public var period: InvoiceLineItemPeriod
@@ -6046,7 +6046,7 @@ public final class LineItem: Codable {
 	/// A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
 	public var type: TypeValues
 
-	public init(amount: Int, currency: String, discountable: Bool, id: String, livemode: Bool, metadata: String, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, type: TypeValues, description: String? = nil, discount_amounts: [DiscountsResourceDiscountAmount]? = nil, discounts: [String]? = nil, invoice_item: String? = nil, price: Price? = nil, quantity: Int? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_amounts: [InvoiceTaxAmount]? = nil, tax_rates: [TaxRate]? = nil) {
+	public init(amount: Int, currency: String, discountable: Bool, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, type: TypeValues, description: String? = nil, discount_amounts: [DiscountsResourceDiscountAmount]? = nil, discounts: [String]? = nil, invoice_item: String? = nil, price: Price? = nil, quantity: Int? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_amounts: [InvoiceTaxAmount]? = nil, tax_rates: [TaxRate]? = nil) {
 		self.amount = amount
 		self.currency = currency
 		self.discountable = discountable
@@ -6270,11 +6270,11 @@ public final class Networks: Codable {
 
 public final class NotificationEventData: Codable {
 	/// Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](https://stripe.com/docs/api#invoice_object) as the value of the object key.
-	public var object: String
+	public var object: Empty
 	/// Object containing the names of the attributes that have changed, and their previous values (sent along only with *.updated events).
-	public var previous_attributes: String?
+	public var previous_attributes: Empty?
 
-	public init(object: String, previous_attributes: String? = nil) {
+	public init(object: Empty, previous_attributes: Empty? = nil) {
 		self.object = object
 		self.previous_attributes = previous_attributes
 	}
@@ -6339,7 +6339,7 @@ public final class Order: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// A list of returns that have taken place for this order.
@@ -6384,7 +6384,7 @@ public final class Order: Codable {
 	///   - status_transitions: The timestamps at which the order status was updated.
 	///   - updated: Time at which the object was last updated. Measured in seconds since the Unix epoch.
 	///   - upstream_id: The user's order ID if it is different from the Stripe order ID.
-	public init(amount: Int, created: Timestamp, currency: String, id: String, items: [OrderItem], livemode: Bool, object: ObjectValues, status: String, amount_returned: Int? = nil, application: String? = nil, application_fee: Int? = nil, charge: String? = nil, customer: String? = nil, email: String? = nil, external_coupon_code: String? = nil, metadata: String? = nil, returns: OrdersResourceOrderReturnList? = nil, selected_shipping_method: String? = nil, shipping: Shipping? = nil, shipping_methods: [ShippingMethod]? = nil, status_transitions: StatusTransitions? = nil, updated: Timestamp? = nil, upstream_id: String? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, id: String, items: [OrderItem], livemode: Bool, object: ObjectValues, status: String, amount_returned: Int? = nil, application: String? = nil, application_fee: Int? = nil, charge: String? = nil, customer: String? = nil, email: String? = nil, external_coupon_code: String? = nil, metadata: Empty? = nil, returns: OrdersResourceOrderReturnList? = nil, selected_shipping_method: String? = nil, shipping: Shipping? = nil, shipping_methods: [ShippingMethod]? = nil, status_transitions: StatusTransitions? = nil, updated: Timestamp? = nil, upstream_id: String? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -6612,7 +6612,7 @@ public final class PaymentIntent: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
-	public var metadata: String?
+	public var metadata: Empty?
 	/// If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
 	public var next_action: PaymentIntentNextAction?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -6681,7 +6681,7 @@ public final class PaymentIntent: Codable {
 	///   - status: Status of this PaymentIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `requires_capture`, `canceled`, or `succeeded`. Read more about each PaymentIntent [status](https://stripe.com/docs/payments/intents#intent-statuses).
 	///   - transfer_data: The data with which to automatically create a Transfer when the payment is finalized. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
 	///   - transfer_group: A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
-	public init(amount: Int, capture_method: CaptureMethodValues, confirmation_method: ConfirmationMethodValues, created: Timestamp, currency: String, id: String, livemode: Bool, object: ObjectValues, payment_method_types: [String], status: StatusValues, amount_capturable: Int? = nil, amount_received: Int? = nil, application: String? = nil, application_fee_amount: Int? = nil, canceled_at: Timestamp? = nil, cancellation_reason: CancellationReasonValues? = nil, charges: PaymentFlowsPaymentIntentResourceChargeList? = nil, client_secret: String? = nil, customer: String? = nil, description: String? = nil, invoice: String? = nil, last_payment_error: ApiErrors? = nil, metadata: String? = nil, next_action: PaymentIntentNextAction? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_options: PaymentIntentPaymentMethodOptions? = nil, receipt_email: String? = nil, review: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: Shipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferData? = nil, transfer_group: String? = nil) {
+	public init(amount: Int, capture_method: CaptureMethodValues, confirmation_method: ConfirmationMethodValues, created: Timestamp, currency: String, id: String, livemode: Bool, object: ObjectValues, payment_method_types: [String], status: StatusValues, amount_capturable: Int? = nil, amount_received: Int? = nil, application: String? = nil, application_fee_amount: Int? = nil, canceled_at: Timestamp? = nil, cancellation_reason: CancellationReasonValues? = nil, charges: PaymentFlowsPaymentIntentResourceChargeList? = nil, client_secret: String? = nil, customer: String? = nil, description: String? = nil, invoice: String? = nil, last_payment_error: ApiErrors? = nil, metadata: Empty? = nil, next_action: PaymentIntentNextAction? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_options: PaymentIntentPaymentMethodOptions? = nil, receipt_email: String? = nil, review: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: Shipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferData? = nil, transfer_group: String? = nil) {
 		self.amount = amount
 		self.capture_method = capture_method
 		self.confirmation_method = confirmation_method
@@ -6797,9 +6797,9 @@ public final class PaymentIntentNextAction: Codable {
 	/// Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`.
 	public var type: String
 	/// When confirming a PaymentIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
-	public var use_stripe_sdk: String?
+	public var use_stripe_sdk: Empty?
 
-	public init(type: String, alipay_handle_redirect: PaymentIntentNextActionAlipayHandleRedirect? = nil, oxxo_display_details: PaymentIntentNextActionDisplayOxxoDetails? = nil, redirect_to_url: PaymentIntentNextActionRedirectToUrl? = nil, use_stripe_sdk: String? = nil) {
+	public init(type: String, alipay_handle_redirect: PaymentIntentNextActionAlipayHandleRedirect? = nil, oxxo_display_details: PaymentIntentNextActionDisplayOxxoDetails? = nil, redirect_to_url: PaymentIntentNextActionRedirectToUrl? = nil, use_stripe_sdk: Empty? = nil) {
 		self.type = type
 		self.alipay_handle_redirect = alipay_handle_redirect
 		self.oxxo_display_details = oxxo_display_details
@@ -6945,7 +6945,7 @@ public final class PaymentMethod: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	public var oxxo: PaymentMethodOxxo?
@@ -6965,7 +6965,7 @@ public final class PaymentMethod: Codable {
 	///   - metadata: Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - type: The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
-	public init(billing_details: BillingDetails, created: Timestamp, id: String, livemode: Bool, object: ObjectValues, type: TypeValues, alipay: PaymentFlowsPrivatePaymentMethodsAlipay? = nil, au_becs_debit: PaymentMethodAuBecsDebit? = nil, bacs_debit: PaymentMethodBacsDebit? = nil, bancontact: PaymentMethodBancontact? = nil, card: PaymentMethodCard? = nil, card_present: PaymentMethodCardPresent? = nil, customer: String? = nil, eps: PaymentMethodEps? = nil, fpx: PaymentMethodFpx? = nil, giropay: PaymentMethodGiropay? = nil, grabpay: PaymentMethodGrabpay? = nil, ideal: PaymentMethodIdeal? = nil, interac_present: PaymentMethodInteracPresent? = nil, metadata: String? = nil, oxxo: PaymentMethodOxxo? = nil, p24: PaymentMethodP24? = nil, sepa_debit: PaymentMethodSepaDebit? = nil, sofort: PaymentMethodSofort? = nil) {
+	public init(billing_details: BillingDetails, created: Timestamp, id: String, livemode: Bool, object: ObjectValues, type: TypeValues, alipay: PaymentFlowsPrivatePaymentMethodsAlipay? = nil, au_becs_debit: PaymentMethodAuBecsDebit? = nil, bacs_debit: PaymentMethodBacsDebit? = nil, bancontact: PaymentMethodBancontact? = nil, card: PaymentMethodCard? = nil, card_present: PaymentMethodCardPresent? = nil, customer: String? = nil, eps: PaymentMethodEps? = nil, fpx: PaymentMethodFpx? = nil, giropay: PaymentMethodGiropay? = nil, grabpay: PaymentMethodGrabpay? = nil, ideal: PaymentMethodIdeal? = nil, interac_present: PaymentMethodInteracPresent? = nil, metadata: Empty? = nil, oxxo: PaymentMethodOxxo? = nil, p24: PaymentMethodP24? = nil, sepa_debit: PaymentMethodSepaDebit? = nil, sofort: PaymentMethodSofort? = nil) {
 		self.billing_details = billing_details
 		self.created = created
 		self.id = id
@@ -8487,7 +8487,7 @@ public final class Payout: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces](https://stripe.com/blog/instant-payouts-for-marketplaces) for more information.)
 	public var method: String
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -8529,7 +8529,7 @@ public final class Payout: Codable {
 	///   - statement_descriptor: Extra information about a payout to be displayed on the user's bank statement.
 	///   - status: Current status of the payout: `paid`, `pending`, `in_transit`, `canceled` or `failed`. A payout is `pending` until it is submitted to the bank, when it becomes `in_transit`. The status then changes to `paid` if the transaction goes through, or to `failed` or `canceled` (within 5 business days). Some failed payouts may initially show as `paid` but then change to `failed`.
 	///   - type: Can be `bank_account` or `card`.
-	public init(amount: Int, arrival_date: Timestamp, automatic: Bool, created: Timestamp, currency: String, id: String, livemode: Bool, method: String, object: ObjectValues, source_type: String, status: String, type: TypeValues, balance_transaction: String? = nil, description: String? = nil, destination: String? = nil, failure_balance_transaction: String? = nil, failure_code: String? = nil, failure_message: String? = nil, metadata: String? = nil, original_payout: String? = nil, reversed_by: String? = nil, statement_descriptor: String? = nil) {
+	public init(amount: Int, arrival_date: Timestamp, automatic: Bool, created: Timestamp, currency: String, id: String, livemode: Bool, method: String, object: ObjectValues, source_type: String, status: String, type: TypeValues, balance_transaction: String? = nil, description: String? = nil, destination: String? = nil, failure_balance_transaction: String? = nil, failure_code: String? = nil, failure_message: String? = nil, metadata: Empty? = nil, original_payout: String? = nil, reversed_by: String? = nil, statement_descriptor: String? = nil) {
 		self.amount = amount
 		self.arrival_date = arrival_date
 		self.automatic = automatic
@@ -8609,7 +8609,7 @@ public final class Person: Codable {
 	/// The person's maiden name.
 	public var maiden_name: String?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The person's phone number.
@@ -8642,7 +8642,7 @@ public final class Person: Codable {
 	///   - phone: The person's phone number.
 	///   - political_exposure: Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
 	///   - ssn_last_4_provided: Whether the last four digits of the person's Social Security number have been provided (U.S. only).
-	public init(account: String, created: Timestamp, id: String, object: ObjectValues, address: Address? = nil, address_kana: LegalEntityJapanAddress? = nil, address_kanji: LegalEntityJapanAddress? = nil, dob: LegalEntityDob? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number_provided: Bool? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: String? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, relationship: PersonRelationship? = nil, requirements: PersonRequirements? = nil, ssn_last_4_provided: Bool? = nil, verification: LegalEntityPersonVerification? = nil) {
+	public init(account: String, created: Timestamp, id: String, object: ObjectValues, address: Address? = nil, address_kana: LegalEntityJapanAddress? = nil, address_kanji: LegalEntityJapanAddress? = nil, dob: LegalEntityDob? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number_provided: Bool? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: Empty? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, relationship: PersonRelationship? = nil, requirements: PersonRequirements? = nil, ssn_last_4_provided: Bool? = nil, verification: LegalEntityPersonVerification? = nil) {
 		self.account = account
 		self.created = created
 		self.id = id
@@ -8750,7 +8750,7 @@ public final class Plan: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// A brief description of the plan, hidden from customers.
 	public var nickname: String?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -8790,7 +8790,7 @@ public final class Plan: Codable {
 	///   - transform_usage: Apply a transformation to the reported usage or set quantity before computing the amount billed. Cannot be combined with `tiers`.
 	///   - trial_period_days: Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
 	///   - usage_type: Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
-	public init(active: Bool, billing_scheme: BillingSchemeValues, created: Timestamp, currency: String, id: String, interval: IntervalValues, interval_count: Int, livemode: Bool, object: ObjectValues, usage_type: UsageTypeValues, aggregate_usage: AggregateUsageValues? = nil, amount: Int? = nil, amount_decimal: StringNumber? = nil, metadata: String? = nil, nickname: String? = nil, product: String? = nil, tiers: [PlanTier]? = nil, tiers_mode: TiersModeValues? = nil, transform_usage: TransformUsage? = nil, trial_period_days: Int? = nil) {
+	public init(active: Bool, billing_scheme: BillingSchemeValues, created: Timestamp, currency: String, id: String, interval: IntervalValues, interval_count: Int, livemode: Bool, object: ObjectValues, usage_type: UsageTypeValues, aggregate_usage: AggregateUsageValues? = nil, amount: Int? = nil, amount_decimal: StringNumber? = nil, metadata: Empty? = nil, nickname: String? = nil, product: String? = nil, tiers: [PlanTier]? = nil, tiers_mode: TiersModeValues? = nil, transform_usage: TransformUsage? = nil, trial_period_days: Int? = nil) {
 		self.active = active
 		self.billing_scheme = billing_scheme
 		self.created = created
@@ -8910,7 +8910,7 @@ public final class Price: Codable {
 	/// A lookup key used to retrieve prices dynamically from a static string.
 	public var lookup_key: String?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// A brief description of the plan, hidden from customers.
 	public var nickname: String?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -8952,7 +8952,7 @@ public final class Price: Codable {
 	///   - type: One of `one_time` or `recurring` depending on whether the price is for a one-time purchase or a recurring (subscription) purchase.
 	///   - unit_amount: The unit amount in %s to be charged, represented as a whole integer if possible.
 	///   - unit_amount_decimal: The unit amount in %s to be charged, represented as a decimal string with at most 12 decimal places.
-	public init(active: Bool, billing_scheme: BillingSchemeValues, created: Timestamp, currency: String, id: String, livemode: Bool, metadata: String, object: ObjectValues, product: String, type: TypeValues, lookup_key: String? = nil, nickname: String? = nil, recurring: Recurring? = nil, tiers: [PriceTier]? = nil, tiers_mode: TiersModeValues? = nil, transform_quantity: TransformQuantity? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+	public init(active: Bool, billing_scheme: BillingSchemeValues, created: Timestamp, currency: String, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, product: String, type: TypeValues, lookup_key: String? = nil, nickname: String? = nil, recurring: Recurring? = nil, tiers: [PriceTier]? = nil, tiers_mode: TiersModeValues? = nil, transform_quantity: TransformQuantity? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 		self.active = active
 		self.billing_scheme = billing_scheme
 		self.created = created
@@ -9035,7 +9035,7 @@ public final class Product: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
 	public var name: String
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -9073,7 +9073,7 @@ public final class Product: Codable {
 	///   - unit_label: A label that represents units of this product in Stripe and on customers’ receipts and invoices. When set, this will be included in associated invoice line item descriptions.
 	///   - updated: Time at which the object was last updated. Measured in seconds since the Unix epoch.
 	///   - url: A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
-	public init(active: Bool, created: Timestamp, id: String, images: [String], livemode: Bool, metadata: String, name: String, object: ObjectValues, updated: Timestamp, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, package_dimensions: PackageDimensions? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
+	public init(active: Bool, created: Timestamp, id: String, images: [String], livemode: Bool, metadata: Empty, name: String, object: ObjectValues, updated: Timestamp, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, package_dimensions: PackageDimensions? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
 		self.active = active
 		self.created = created
 		self.id = id
@@ -9119,7 +9119,7 @@ public final class PromotionCode: Codable {
 	/// Maximum number of times this promotion code can be redeemed.
 	public var max_redemptions: Int?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	public var restrictions: PromotionCodesResourceRestrictions
@@ -9141,7 +9141,7 @@ public final class PromotionCode: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - restrictions: 
 	///   - times_redeemed: Number of times this promotion code has been used.
-	public init(active: Bool, code: String, coupon: Coupon, created: Timestamp, id: String, livemode: Bool, object: ObjectValues, restrictions: PromotionCodesResourceRestrictions, times_redeemed: Int, customer: String? = nil, expires_at: Timestamp? = nil, max_redemptions: Int? = nil, metadata: String? = nil) {
+	public init(active: Bool, code: String, coupon: Coupon, created: Timestamp, id: String, livemode: Bool, object: ObjectValues, restrictions: PromotionCodesResourceRestrictions, times_redeemed: Int, customer: String? = nil, expires_at: Timestamp? = nil, max_redemptions: Int? = nil, metadata: Empty? = nil) {
 		self.active = active
 		self.code = code
 		self.coupon = coupon
@@ -9235,7 +9235,7 @@ public final class RadarValueList: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// The name of the value list.
 	public var name: String
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -9253,7 +9253,7 @@ public final class RadarValueList: Codable {
 	///   - metadata: Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	///   - name: The name of the value list.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
-	public init(alias: String, created: Timestamp, created_by: String, id: String, item_type: ItemTypeValues, list_items: RadarListListItemList, livemode: Bool, metadata: String, name: String, object: ObjectValues) {
+	public init(alias: String, created: Timestamp, created_by: String, id: String, item_type: ItemTypeValues, list_items: RadarListListItemList, livemode: Bool, metadata: Empty, name: String, object: ObjectValues) {
 		self.alias = alias
 		self.created = created
 		self.created_by = created_by
@@ -9409,7 +9409,7 @@ public final class Recipient: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// The ID of the [Custom account](https://stripe.com/docs/connect/custom-accounts) this recipient was migrated to. If set, the recipient can no longer be updated, nor can transfers be made to it: use the Custom account instead.
 	public var migrated_to: String?
 	/// Full, legal name of the recipient.
@@ -9433,7 +9433,7 @@ public final class Recipient: Codable {
 	///   - name: Full, legal name of the recipient.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - type: Type of the recipient, one of `individual` or `corporation`.
-	public init(created: Timestamp, id: String, livemode: Bool, metadata: String, object: ObjectValues, type: String, active_account: BankAccount? = nil, cards: CardList? = nil, default_card: String? = nil, description: String? = nil, email: String? = nil, migrated_to: String? = nil, name: String? = nil, rolled_back_from: String? = nil) {
+	public init(created: Timestamp, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, type: String, active_account: BankAccount? = nil, cards: CardList? = nil, default_card: String? = nil, description: String? = nil, email: String? = nil, migrated_to: String? = nil, name: String? = nil, rolled_back_from: String? = nil) {
 		self.created = created
 		self.id = id
 		self.livemode = livemode
@@ -9536,7 +9536,7 @@ public final class Refund: Codable {
 	/// Unique identifier for the object.
 	public var id: String
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// ID of the PaymentIntent that was refunded.
@@ -9571,7 +9571,7 @@ public final class Refund: Codable {
 	///   - source_transfer_reversal: The transfer reversal that is associated with the refund. Only present if the charge came from another Stripe account. See the Connect documentation for details.
 	///   - status: Status of the refund. For credit card refunds, this can be `pending`, `succeeded`, or `failed`. For other types of refunds, it can be `pending`, `succeeded`, `failed`, or `canceled`. Refer to our [refunds](https://stripe.com/docs/refunds#failed-refunds) documentation for more details.
 	///   - transfer_reversal: If the accompanying transfer was reversed, the transfer reversal object. Only applicable if the charge was created using the destination parameter.
-	public init(amount: Int, created: Timestamp, currency: String, id: String, object: ObjectValues, balance_transaction: String? = nil, charge: String? = nil, description: String? = nil, failure_balance_transaction: String? = nil, failure_reason: String? = nil, metadata: String? = nil, payment_intent: String? = nil, reason: String? = nil, receipt_number: String? = nil, source_transfer_reversal: String? = nil, status: String? = nil, transfer_reversal: String? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, id: String, object: ObjectValues, balance_transaction: String? = nil, charge: String? = nil, description: String? = nil, failure_balance_transaction: String? = nil, failure_reason: String? = nil, metadata: Empty? = nil, payment_intent: String? = nil, reason: String? = nil, receipt_number: String? = nil, source_transfer_reversal: String? = nil, status: String? = nil, transfer_reversal: String? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -10134,7 +10134,7 @@ public final class SetupIntent: Codable {
 	/// ID of the multi use Mandate generated by the SetupIntent.
 	public var mandate: String?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// If present, this property tells you what actions you need to take in order for your customer to continue payment setup.
 	public var next_action: SetupIntentNextAction?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -10177,7 +10177,7 @@ public final class SetupIntent: Codable {
 	///   - single_use_mandate: ID of the single_use Mandate generated by the SetupIntent.
 	///   - status: [Status](https://stripe.com/docs/payments/intents#intent-statuses) of this SetupIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or `succeeded`.
 	///   - usage: Indicates how the payment method is intended to be used in the future.  Use `on_session` if you intend to only reuse the payment method when the customer is in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. If not provided, this value defaults to `off_session`.
-	public init(created: Timestamp, id: String, livemode: Bool, object: ObjectValues, payment_method_types: [String], status: StatusValues, usage: String, application: String? = nil, cancellation_reason: CancellationReasonValues? = nil, client_secret: String? = nil, customer: String? = nil, description: String? = nil, last_setup_error: ApiErrors? = nil, latest_attempt: String? = nil, mandate: String? = nil, metadata: String? = nil, next_action: SetupIntentNextAction? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_options: SetupIntentPaymentMethodOptions? = nil, single_use_mandate: String? = nil) {
+	public init(created: Timestamp, id: String, livemode: Bool, object: ObjectValues, payment_method_types: [String], status: StatusValues, usage: String, application: String? = nil, cancellation_reason: CancellationReasonValues? = nil, client_secret: String? = nil, customer: String? = nil, description: String? = nil, last_setup_error: ApiErrors? = nil, latest_attempt: String? = nil, mandate: String? = nil, metadata: Empty? = nil, next_action: SetupIntentNextAction? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_options: SetupIntentPaymentMethodOptions? = nil, single_use_mandate: String? = nil) {
 		self.created = created
 		self.id = id
 		self.livemode = livemode
@@ -10226,9 +10226,9 @@ public final class SetupIntentNextAction: Codable {
 	/// Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`.
 	public var type: String
 	/// When confirming a SetupIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
-	public var use_stripe_sdk: String?
+	public var use_stripe_sdk: Empty?
 
-	public init(type: String, redirect_to_url: SetupIntentNextActionRedirectToUrl? = nil, use_stripe_sdk: String? = nil) {
+	public init(type: String, redirect_to_url: SetupIntentNextActionRedirectToUrl? = nil, use_stripe_sdk: Empty? = nil) {
 		self.type = type
 		self.redirect_to_url = redirect_to_url
 		self.use_stripe_sdk = use_stripe_sdk
@@ -10341,7 +10341,7 @@ public final class Sku: Codable {
 	/// Whether the SKU is available for purchase.
 	public var active: Bool
 	/// A dictionary of attributes and values for the attributes defined by the product. If, for example, a product's attributes are `["size", "gender"]`, a valid SKU has the following dictionary of attributes: `{"size": "Medium", "gender": "Unisex"}`.
-	public var attributes: String
+	public var attributes: Empty
 	/// Time at which the object was created. Measured in seconds since the Unix epoch.
 	public var created: Timestamp
 	/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -10354,7 +10354,7 @@ public final class Sku: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The dimensions of this SKU for shipping purposes.
@@ -10382,7 +10382,7 @@ public final class Sku: Codable {
 	///   - price: The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
 	///   - product: The ID of the product this SKU is associated with. The product must be currently active.
 	///   - updated: Time at which the object was last updated. Measured in seconds since the Unix epoch.
-	public init(active: Bool, attributes: String, created: Timestamp, currency: String, id: String, inventory: Inventory, livemode: Bool, metadata: String, object: ObjectValues, price: Int, product: String, updated: Timestamp, image: String? = nil, package_dimensions: PackageDimensions? = nil) {
+	public init(active: Bool, attributes: Empty, created: Timestamp, currency: String, id: String, inventory: Inventory, livemode: Bool, metadata: Empty, object: ObjectValues, price: Int, product: String, updated: Timestamp, image: String? = nil, package_dimensions: PackageDimensions? = nil) {
 		self.active = active
 		self.attributes = attributes
 		self.created = created
@@ -10435,7 +10435,7 @@ public final class Source: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	public var multibanco: SourceTypeMultibanco?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
@@ -10475,7 +10475,7 @@ public final class Source: Codable {
 	///   - status: The status of the source, one of `canceled`, `chargeable`, `consumed`, `failed`, or `pending`. Only `chargeable` sources can be used to create a charge.
 	///   - type: The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://stripe.com/docs/sources) used.
 	///   - usage: Either `reusable` or `single_use`. Whether this source should be reusable or not. Some source types may or may not be reusable by construction, while others may leave the option at creation. If an incompatible value is passed, an error will be returned.
-	public init(client_secret: String, created: Timestamp, flow: String, id: String, livemode: Bool, object: ObjectValues, status: String, type: TypeValues, ach_credit_transfer: SourceTypeAchCreditTransfer? = nil, ach_debit: SourceTypeAchDebit? = nil, alipay: SourceTypeAlipay? = nil, amount: Int? = nil, au_becs_debit: SourceTypeAuBecsDebit? = nil, bancontact: SourceTypeBancontact? = nil, card: SourceTypeCard? = nil, card_present: SourceTypeCardPresent? = nil, code_verification: SourceCodeVerificationFlow? = nil, currency: String? = nil, customer: String? = nil, eps: SourceTypeEps? = nil, giropay: SourceTypeGiropay? = nil, ideal: SourceTypeIdeal? = nil, klarna: SourceTypeKlarna? = nil, metadata: String? = nil, multibanco: SourceTypeMultibanco? = nil, owner: SourceOwner? = nil, p24: SourceTypeP24? = nil, receiver: SourceReceiverFlow? = nil, redirect: SourceRedirectFlow? = nil, sepa_debit: SourceTypeSepaDebit? = nil, sofort: SourceTypeSofort? = nil, source_order: SourceOrder? = nil, statement_descriptor: String? = nil, three_d_secure: SourceTypeThreeDSecure? = nil, usage: String? = nil, wechat: SourceTypeWechat? = nil) {
+	public init(client_secret: String, created: Timestamp, flow: String, id: String, livemode: Bool, object: ObjectValues, status: String, type: TypeValues, ach_credit_transfer: SourceTypeAchCreditTransfer? = nil, ach_debit: SourceTypeAchDebit? = nil, alipay: SourceTypeAlipay? = nil, amount: Int? = nil, au_becs_debit: SourceTypeAuBecsDebit? = nil, bancontact: SourceTypeBancontact? = nil, card: SourceTypeCard? = nil, card_present: SourceTypeCardPresent? = nil, code_verification: SourceCodeVerificationFlow? = nil, currency: String? = nil, customer: String? = nil, eps: SourceTypeEps? = nil, giropay: SourceTypeGiropay? = nil, ideal: SourceTypeIdeal? = nil, klarna: SourceTypeKlarna? = nil, metadata: Empty? = nil, multibanco: SourceTypeMultibanco? = nil, owner: SourceOwner? = nil, p24: SourceTypeP24? = nil, receiver: SourceReceiverFlow? = nil, redirect: SourceRedirectFlow? = nil, sepa_debit: SourceTypeSepaDebit? = nil, sofort: SourceTypeSofort? = nil, source_order: SourceOrder? = nil, statement_descriptor: String? = nil, three_d_secure: SourceTypeThreeDSecure? = nil, usage: String? = nil, wechat: SourceTypeWechat? = nil) {
 		self.client_secret = client_secret
 		self.created = created
 		self.flow = flow
@@ -11378,7 +11378,7 @@ public final class Subscription: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at `pending_invoice_item_interval`.
 	public var next_pending_invoice_item_invoice: Timestamp?
 	/// String representing the object's type. Objects of the same type share the same value.
@@ -11440,7 +11440,7 @@ public final class Subscription: Codable {
 	///   - transfer_data: The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
 	///   - trial_end: If the subscription has a trial, the end of that trial.
 	///   - trial_start: If the subscription has a trial, the beginning of that trial.
-	public init(billing_cycle_anchor: Timestamp, cancel_at_period_end: Bool, created: Timestamp, current_period_end: Timestamp, current_period_start: Timestamp, customer: String, id: String, items: SubscriptionItemList, livemode: Bool, metadata: String, object: ObjectValues, start_date: Timestamp, status: StatusValues, application_fee_percent: StringNumber? = nil, billing_thresholds: SubscriptionBillingThresholds? = nil, cancel_at: Timestamp? = nil, canceled_at: Timestamp? = nil, collection_method: CollectionMethodValues? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [TaxRate]? = nil, discount: Discount? = nil, ended_at: Timestamp? = nil, latest_invoice: String? = nil, next_pending_invoice_item_invoice: Timestamp? = nil, pause_collection: SubscriptionsResourcePauseCollection? = nil, pending_invoice_item_interval: SubscriptionPendingInvoiceItemInterval? = nil, pending_setup_intent: String? = nil, pending_update: SubscriptionsResourcePendingUpdate? = nil, schedule: String? = nil, transfer_data: SubscriptionTransferData? = nil, trial_end: Timestamp? = nil, trial_start: Timestamp? = nil) {
+	public init(billing_cycle_anchor: Timestamp, cancel_at_period_end: Bool, created: Timestamp, current_period_end: Timestamp, current_period_start: Timestamp, customer: String, id: String, items: SubscriptionItemList, livemode: Bool, metadata: Empty, object: ObjectValues, start_date: Timestamp, status: StatusValues, application_fee_percent: StringNumber? = nil, billing_thresholds: SubscriptionBillingThresholds? = nil, cancel_at: Timestamp? = nil, canceled_at: Timestamp? = nil, collection_method: CollectionMethodValues? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [TaxRate]? = nil, discount: Discount? = nil, ended_at: Timestamp? = nil, latest_invoice: String? = nil, next_pending_invoice_item_invoice: Timestamp? = nil, pause_collection: SubscriptionsResourcePauseCollection? = nil, pending_invoice_item_interval: SubscriptionPendingInvoiceItemInterval? = nil, pending_setup_intent: String? = nil, pending_update: SubscriptionsResourcePendingUpdate? = nil, schedule: String? = nil, transfer_data: SubscriptionTransferData? = nil, trial_end: Timestamp? = nil, trial_start: Timestamp? = nil) {
 		self.billing_cycle_anchor = billing_cycle_anchor
 		self.cancel_at_period_end = cancel_at_period_end
 		self.created = created
@@ -11549,7 +11549,7 @@ public final class SubscriptionItem: Codable {
 	/// Unique identifier for the object.
 	public var id: String
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	public var price: Price
@@ -11571,7 +11571,7 @@ public final class SubscriptionItem: Codable {
 	///   - quantity: The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.
 	///   - subscription: The `subscription` this `subscription_item` belongs to.
 	///   - tax_rates: The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
-	public init(created: Int, id: String, metadata: String, object: ObjectValues, price: Price, subscription: String, billing_thresholds: SubscriptionItemBillingThresholds? = nil, quantity: Int? = nil, tax_rates: [TaxRate]? = nil) {
+	public init(created: Int, id: String, metadata: Empty, object: ObjectValues, price: Price, subscription: String, billing_thresholds: SubscriptionItemBillingThresholds? = nil, quantity: Int? = nil, tax_rates: [TaxRate]? = nil) {
 		self.created = created
 		self.id = id
 		self.metadata = metadata
@@ -11636,7 +11636,7 @@ public final class SubscriptionSchedule: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Configuration for the subscription schedule's phases.
@@ -11668,7 +11668,7 @@ public final class SubscriptionSchedule: Codable {
 	///   - released_subscription: ID of the subscription once managed by the subscription schedule (if it is released).
 	///   - status: The present status of the subscription schedule. Possible values are `not_started`, `active`, `completed`, `released`, and `canceled`. You can read more about the different states in our [behavior guide](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
 	///   - subscription: ID of the subscription managed by the subscription schedule.
-	public init(created: Timestamp, customer: String, default_settings: SubscriptionSchedulesResourceDefaultSettings, end_behavior: EndBehaviorValues, id: String, livemode: Bool, object: ObjectValues, phases: [SubscriptionSchedulePhaseConfiguration], status: StatusValues, canceled_at: Timestamp? = nil, completed_at: Timestamp? = nil, current_phase: SubscriptionScheduleCurrentPhase? = nil, metadata: String? = nil, released_at: Timestamp? = nil, released_subscription: String? = nil, subscription: String? = nil) {
+	public init(created: Timestamp, customer: String, default_settings: SubscriptionSchedulesResourceDefaultSettings, end_behavior: EndBehaviorValues, id: String, livemode: Bool, object: ObjectValues, phases: [SubscriptionSchedulePhaseConfiguration], status: StatusValues, canceled_at: Timestamp? = nil, completed_at: Timestamp? = nil, current_phase: SubscriptionScheduleCurrentPhase? = nil, metadata: Empty? = nil, released_at: Timestamp? = nil, released_subscription: String? = nil, subscription: String? = nil) {
 		self.created = created
 		self.customer = customer
 		self.default_settings = default_settings
@@ -12104,7 +12104,7 @@ public final class TaxRate: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// This represents the tax rate percent out of 100.
@@ -12127,7 +12127,7 @@ public final class TaxRate: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - percentage: This represents the tax rate percent out of 100.
 	///   - state: [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
-	public init(active: Bool, created: Timestamp, display_name: String, id: String, inclusive: Bool, livemode: Bool, object: ObjectValues, percentage: StringNumber, country: String? = nil, description: String? = nil, jurisdiction: String? = nil, metadata: String? = nil, state: String? = nil) {
+	public init(active: Bool, created: Timestamp, display_name: String, id: String, inclusive: Bool, livemode: Bool, object: ObjectValues, percentage: StringNumber, country: String? = nil, description: String? = nil, jurisdiction: String? = nil, metadata: Empty? = nil, state: String? = nil) {
 		self.active = active
 		self.created = created
 		self.display_name = display_name
@@ -12183,7 +12183,7 @@ public final class TerminalLocation: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 
@@ -12195,7 +12195,7 @@ public final class TerminalLocation: Codable {
 	///   - livemode: Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	///   - metadata: Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	///   - object: String representing the object's type. Objects of the same type share the same value.
-	public init(address: Address, display_name: String, id: String, livemode: Bool, metadata: String, object: ObjectValues) {
+	public init(address: Address, display_name: String, id: String, livemode: Bool, metadata: Empty, object: ObjectValues) {
 		self.address = address
 		self.display_name = display_name
 		self.id = id
@@ -12226,7 +12226,7 @@ public final class TerminalReader: Codable {
 	/// The location identifier of the reader.
 	public var location: String?
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// Serial number of the reader.
@@ -12247,7 +12247,7 @@ public final class TerminalReader: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - serial_number: Serial number of the reader.
 	///   - status: The networking status of the reader.
-	public init(device_type: DeviceTypeValues, id: String, label: String, livemode: Bool, metadata: String, object: ObjectValues, serial_number: String, device_sw_version: String? = nil, ip_address: String? = nil, location: String? = nil, status: String? = nil) {
+	public init(device_type: DeviceTypeValues, id: String, label: String, livemode: Bool, metadata: Empty, object: ObjectValues, serial_number: String, device_sw_version: String? = nil, ip_address: String? = nil, location: String? = nil, status: String? = nil) {
 		self.device_type = device_type
 		self.id = id
 		self.label = label
@@ -12447,7 +12447,7 @@ public final class Topup: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	public var source: Source
@@ -12476,7 +12476,7 @@ public final class Topup: Codable {
 	///   - statement_descriptor: Extra information about a top-up. This will appear on your source's bank statement. It must contain at least one letter.
 	///   - status: The status of the top-up is either `canceled`, `failed`, `pending`, `reversed`, or `succeeded`.
 	///   - transfer_group: A string that identifies this top-up as part of a group.
-	public init(amount: Int, created: Timestamp, currency: String, id: String, livemode: Bool, metadata: String, object: ObjectValues, source: Source, status: StatusValues, balance_transaction: String? = nil, description: String? = nil, expected_availability_date: Int? = nil, failure_code: String? = nil, failure_message: String? = nil, statement_descriptor: String? = nil, transfer_group: String? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, source: Source, status: StatusValues, balance_transaction: String? = nil, description: String? = nil, expected_availability_date: Int? = nil, failure_code: String? = nil, failure_message: String? = nil, statement_descriptor: String? = nil, transfer_group: String? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -12531,7 +12531,7 @@ public final class Transfer: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// A list of reversals that have been applied to the transfer.
@@ -12564,7 +12564,7 @@ public final class Transfer: Codable {
 	///   - source_transaction: ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.
 	///   - source_type: The source balance this transfer came from. One of `card`, `fpx`, or `bank_account`.
 	///   - transfer_group: A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
-	public init(amount: Int, amount_reversed: Int, created: Timestamp, currency: String, id: String, livemode: Bool, metadata: String, object: ObjectValues, reversals: TransferReversalList, reversed: Bool, balance_transaction: String? = nil, description: String? = nil, destination: String? = nil, destination_payment: String? = nil, source_transaction: String? = nil, source_type: String? = nil, transfer_group: String? = nil) {
+	public init(amount: Int, amount_reversed: Int, created: Timestamp, currency: String, id: String, livemode: Bool, metadata: Empty, object: ObjectValues, reversals: TransferReversalList, reversed: Bool, balance_transaction: String? = nil, description: String? = nil, destination: String? = nil, destination_payment: String? = nil, source_transaction: String? = nil, source_type: String? = nil, transfer_group: String? = nil) {
 		self.amount = amount
 		self.amount_reversed = amount_reversed
 		self.created = created
@@ -12647,7 +12647,7 @@ public final class TransferReversal: Codable {
 	/// Unique identifier for the object.
 	public var id: String
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String?
+	public var metadata: Empty?
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// ID of the refund responsible for the transfer reversal.
@@ -12667,7 +12667,7 @@ public final class TransferReversal: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - source_refund: ID of the refund responsible for the transfer reversal.
 	///   - transfer: ID of the transfer that was reversed.
-	public init(amount: Int, created: Timestamp, currency: String, id: String, object: ObjectValues, transfer: String, balance_transaction: String? = nil, destination_payment_refund: String? = nil, metadata: String? = nil, source_refund: String? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, id: String, object: ObjectValues, transfer: String, balance_transaction: String? = nil, destination_payment_refund: String? = nil, metadata: Empty? = nil, source_refund: String? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -12821,7 +12821,7 @@ public final class WebhookEndpoint: Codable {
 	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	public var livemode: Bool
 	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-	public var metadata: String
+	public var metadata: Empty
 	/// String representing the object's type. Objects of the same type share the same value.
 	public var object: ObjectValues
 	/// The endpoint's secret, used to generate [webhook signatures](https://stripe.com/docs/webhooks/signatures). Only returned at creation.
@@ -12845,7 +12845,7 @@ public final class WebhookEndpoint: Codable {
 	///   - secret: The endpoint's secret, used to generate [webhook signatures](https://stripe.com/docs/webhooks/signatures). Only returned at creation.
 	///   - status: The status of the webhook. It can be `enabled` or `disabled`.
 	///   - url: The URL of the webhook endpoint.
-	public init(created: Timestamp, enabled_events: [String], id: String, livemode: Bool, metadata: String, object: ObjectValues, status: String, url: String, api_version: String? = nil, application: String? = nil, description: String? = nil, secret: String? = nil) {
+	public init(created: Timestamp, enabled_events: [String], id: String, livemode: Bool, metadata: Empty, object: ObjectValues, status: String, url: String, api_version: String? = nil, application: String? = nil, description: String? = nil, secret: String? = nil) {
 		self.created = created
 		self.enabled_events = enabled_events
 		self.id = id

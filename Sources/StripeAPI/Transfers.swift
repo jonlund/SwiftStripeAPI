@@ -61,7 +61,7 @@ public struct PostTransfers: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// You can use this parameter to transfer funds from a charge before they are added to your available balance. A pending balance will transfer immediately but the funds will not become available until the original charge becomes available. [See the Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-availability) for details.
 		public var source_transaction: String?
 		/// The source balance to use for this transfer. One of `bank_account`, `card`, or `fpx`. For most users, this will default to `card`.
@@ -69,7 +69,7 @@ public struct PostTransfers: StripeAPIEndpoint {
 		/// A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
 		public var transfer_group: String?
 
-		public init(currency: String, destination: String, amount: Int? = nil, description: String? = nil, expand: [String]? = nil, metadata: String? = nil, source_transaction: String? = nil, source_type: SourceTypeValues? = nil, transfer_group: String? = nil) {
+		public init(currency: String, destination: String, amount: Int? = nil, description: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, source_transaction: String? = nil, source_type: SourceTypeValues? = nil, transfer_group: String? = nil) {
 			self.currency = currency
 			self.destination = destination
 			self.amount = amount

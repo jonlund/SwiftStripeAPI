@@ -64,13 +64,13 @@ public struct PostTaxRates: StripeAPIEndpoint {
 		/// The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer’s invoice.
 		public var jurisdiction: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// This represents the tax rate percent out of 100.
 		public var percentage: StringNumber
 		/// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
 		public var state: String?
 
-		public init(display_name: String, inclusive: Bool, percentage: StringNumber, active: Bool? = nil, country: String? = nil, description: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: String? = nil, state: String? = nil) {
+		public init(display_name: String, inclusive: Bool, percentage: StringNumber, active: Bool? = nil, country: String? = nil, description: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: Empty? = nil, state: String? = nil) {
 			self.display_name = display_name
 			self.inclusive = inclusive
 			self.percentage = percentage

@@ -60,7 +60,7 @@ public struct PostPayouts: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 		/// The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces for more information](https://stripe.com/blog/instant-payouts-for-marketplaces).)
 		public var method: MethodValues?
 		/// The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account`, `card`, or `fpx`.
@@ -68,7 +68,7 @@ public struct PostPayouts: StripeAPIEndpoint {
 		/// A string to be displayed on the recipient's bank or card statement. This may be at most 22 characters. Attempting to use a `statement_descriptor` longer than 22 characters will return an error. Note: Most banks will truncate this information and/or display it inconsistently. Some may not display it at all.
 		public var statement_descriptor: String?
 
-		public init(amount: Int, currency: String, description: String? = nil, destination: String? = nil, expand: [String]? = nil, metadata: String? = nil, method: MethodValues? = nil, source_type: SourceTypeValues? = nil, statement_descriptor: String? = nil) {
+		public init(amount: Int, currency: String, description: String? = nil, destination: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, method: MethodValues? = nil, source_type: SourceTypeValues? = nil, statement_descriptor: String? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.description = description
@@ -174,9 +174,9 @@ public struct PostPayoutsPayoutReverse: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: String?
+		public var metadata: Empty?
 
-		public init(expand: [String]? = nil, metadata: String? = nil) {
+		public init(expand: [String]? = nil, metadata: Empty? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}
