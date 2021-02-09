@@ -60,6 +60,99 @@ public struct PostSources: StripeAPIEndpoint {
 		}
 
 
+		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
+		public class MandateParams: Codable {
+			public var acceptance: MandateAcceptanceParams?
+			public var amount: Int?
+			public var currency: String?
+			public var interval: IntervalValues?
+			public var notification_method: NotificationMethodValues?
+
+			/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
+			/// - Parameters:
+			public init(acceptance: MandateAcceptanceParams? = nil, amount: Int? = nil, currency: String? = nil, interval: IntervalValues? = nil, notification_method: NotificationMethodValues? = nil) {
+				self.acceptance = acceptance
+				self.amount = amount
+				self.currency = currency
+				self.interval = interval
+				self.notification_method = notification_method
+			}
+
+
+			public class MandateAcceptanceParams: Codable {
+				public var date: Timestamp?
+				public var ip: String?
+				public var offline: MandateOfflineAcceptanceParams?
+				public var online: MandateOnlineAcceptanceParams?
+				public var status: StatusValues
+				public var type: TypeValues?
+				public var user_agent: String?
+
+				public init(status: StatusValues, date: Timestamp? = nil, ip: String? = nil, offline: MandateOfflineAcceptanceParams? = nil, online: MandateOnlineAcceptanceParams? = nil, type: TypeValues? = nil, user_agent: String? = nil) {
+					self.status = status
+					self.date = date
+					self.ip = ip
+					self.offline = offline
+					self.online = online
+					self.type = type
+					self.user_agent = user_agent
+				}
+
+
+				public class MandateOfflineAcceptanceParams: Codable {
+					public var contact_email: String
+
+					public init(contact_email: String) {
+						self.contact_email = contact_email
+					}
+				}
+
+
+
+				public class MandateOnlineAcceptanceParams: Codable {
+					public var date: Timestamp?
+					public var ip: String?
+					public var user_agent: String?
+
+					public init(date: Timestamp? = nil, ip: String? = nil, user_agent: String? = nil) {
+						self.date = date
+						self.ip = ip
+						self.user_agent = user_agent
+					}
+				}
+
+
+				public enum StatusValues: String, Codable {
+					case accepted = "accepted"
+					case pending = "pending"
+					case refused = "refused"
+					case revoked = "revoked"
+				}
+
+				public enum TypeValues: String, Codable {
+					case offline = "offline"
+					case online = "online"
+				}
+			}
+
+
+			public enum IntervalValues: String, Codable {
+				case oneTime = "one_time"
+				case scheduled = "scheduled"
+				case variable = "variable"
+			}
+
+			public enum NotificationMethodValues: String, Codable {
+				case deprecatedNone = "deprecated_none"
+				case email = "email"
+				case manual = "manual"
+				case none = "none"
+				case stripeEmail = "stripe_email"
+			}
+		}
+
+
+
 		/// Information about the owner of the payment instrument that may be used or required by particular source types.
 		public class Owner: Codable {
 			public var address: SourceAddress?
@@ -95,6 +188,39 @@ public struct PostSources: StripeAPIEndpoint {
 				}
 			}
 
+		}
+
+
+
+		/// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
+		public class ReceiverParams: Codable {
+			public var refund_attributes_method: RefundAttributesMethodValues?
+
+			/// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
+			/// - Parameters:
+			public init(refund_attributes_method: RefundAttributesMethodValues? = nil) {
+				self.refund_attributes_method = refund_attributes_method
+			}
+
+			public enum RefundAttributesMethodValues: String, Codable {
+				case email = "email"
+				case manual = "manual"
+				case none = "none"
+			}
+		}
+
+
+
+		/// Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
+		public class RedirectParams: Codable {
+			public var return_url: String
+
+			/// Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
+			/// - Parameters:
+			///   - return_url: 
+			public init(return_url: String) {
+				self.return_url = return_url
+			}
 		}
 
 
@@ -148,132 +274,6 @@ public struct PostSources: StripeAPIEndpoint {
 
 			}
 
-		}
-
-
-
-		/// Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
-		public class RedirectParams: Codable {
-			public var return_url: String
-
-			/// Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
-			/// - Parameters:
-			///   - return_url: 
-			public init(return_url: String) {
-				self.return_url = return_url
-			}
-		}
-
-
-
-		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
-		public class MandateParams: Codable {
-			public var acceptance: MandateAcceptanceParams?
-			public var amount: Int?
-			public var currency: String?
-			public var interval: IntervalValues?
-			public var notification_method: NotificationMethodValues?
-
-			/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
-			/// - Parameters:
-			public init(acceptance: MandateAcceptanceParams? = nil, amount: Int? = nil, currency: String? = nil, interval: IntervalValues? = nil, notification_method: NotificationMethodValues? = nil) {
-				self.acceptance = acceptance
-				self.amount = amount
-				self.currency = currency
-				self.interval = interval
-				self.notification_method = notification_method
-			}
-
-
-			public class MandateAcceptanceParams: Codable {
-				public var date: Timestamp?
-				public var ip: String?
-				public var offline: MandateOfflineAcceptanceParams?
-				public var online: MandateOnlineAcceptanceParams?
-				public var status: StatusValues
-				public var type: TypeValues?
-				public var user_agent: String?
-
-				public init(status: StatusValues, date: Timestamp? = nil, ip: String? = nil, offline: MandateOfflineAcceptanceParams? = nil, online: MandateOnlineAcceptanceParams? = nil, type: TypeValues? = nil, user_agent: String? = nil) {
-					self.status = status
-					self.date = date
-					self.ip = ip
-					self.offline = offline
-					self.online = online
-					self.type = type
-					self.user_agent = user_agent
-				}
-
-
-				public class MandateOnlineAcceptanceParams: Codable {
-					public var date: Timestamp?
-					public var ip: String?
-					public var user_agent: String?
-
-					public init(date: Timestamp? = nil, ip: String? = nil, user_agent: String? = nil) {
-						self.date = date
-						self.ip = ip
-						self.user_agent = user_agent
-					}
-				}
-
-
-
-				public class MandateOfflineAcceptanceParams: Codable {
-					public var contact_email: String
-
-					public init(contact_email: String) {
-						self.contact_email = contact_email
-					}
-				}
-
-
-				public enum StatusValues: String, Codable {
-					case accepted = "accepted"
-					case pending = "pending"
-					case refused = "refused"
-					case revoked = "revoked"
-				}
-
-				public enum TypeValues: String, Codable {
-					case offline = "offline"
-					case online = "online"
-				}
-			}
-
-
-			public enum IntervalValues: String, Codable {
-				case oneTime = "one_time"
-				case scheduled = "scheduled"
-				case variable = "variable"
-			}
-
-			public enum NotificationMethodValues: String, Codable {
-				case deprecatedNone = "deprecated_none"
-				case email = "email"
-				case manual = "manual"
-				case none = "none"
-				case stripeEmail = "stripe_email"
-			}
-		}
-
-
-
-		/// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
-		public class ReceiverParams: Codable {
-			public var refund_attributes_method: RefundAttributesMethodValues?
-
-			/// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
-			/// - Parameters:
-			public init(refund_attributes_method: RefundAttributesMethodValues? = nil) {
-				self.refund_attributes_method = refund_attributes_method
-			}
-
-			public enum RefundAttributesMethodValues: String, Codable {
-				case email = "email"
-				case manual = "manual"
-				case none = "none"
-			}
 		}
 
 
@@ -344,41 +344,95 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 		}
 
 
-		/// Information about the owner of the payment instrument that may be used or required by particular source types.
-		public class Owner: Codable {
-			public var address: SourceAddress?
-			public var email: String?
-			public var name: String?
-			public var phone: String?
+		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
+		public class MandateParams: Codable {
+			public var acceptance: MandateAcceptanceParams?
+			public var amount: Int?
+			public var currency: String?
+			public var interval: IntervalValues?
+			public var notification_method: NotificationMethodValues?
 
-			/// Information about the owner of the payment instrument that may be used or required by particular source types.
+			/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
 			/// - Parameters:
-			public init(address: SourceAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
-				self.address = address
-				self.email = email
-				self.name = name
-				self.phone = phone
+			public init(acceptance: MandateAcceptanceParams? = nil, amount: Int? = nil, currency: String? = nil, interval: IntervalValues? = nil, notification_method: NotificationMethodValues? = nil) {
+				self.acceptance = acceptance
+				self.amount = amount
+				self.currency = currency
+				self.interval = interval
+				self.notification_method = notification_method
 			}
 
 
-			public class SourceAddress: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String?
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
+			public class MandateAcceptanceParams: Codable {
+				public var date: Timestamp?
+				public var ip: String?
+				public var offline: MandateOfflineAcceptanceParams?
+				public var online: MandateOnlineAcceptanceParams?
+				public var status: StatusValues
+				public var type: TypeValues?
+				public var user_agent: String?
 
-				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
+				public init(status: StatusValues, date: Timestamp? = nil, ip: String? = nil, offline: MandateOfflineAcceptanceParams? = nil, online: MandateOnlineAcceptanceParams? = nil, type: TypeValues? = nil, user_agent: String? = nil) {
+					self.status = status
+					self.date = date
+					self.ip = ip
+					self.offline = offline
+					self.online = online
+					self.type = type
+					self.user_agent = user_agent
+				}
+
+
+				public class MandateOfflineAcceptanceParams: Codable {
+					public var contact_email: String
+
+					public init(contact_email: String) {
+						self.contact_email = contact_email
+					}
+				}
+
+
+
+				public class MandateOnlineAcceptanceParams: Codable {
+					public var date: Timestamp?
+					public var ip: String?
+					public var user_agent: String?
+
+					public init(date: Timestamp? = nil, ip: String? = nil, user_agent: String? = nil) {
+						self.date = date
+						self.ip = ip
+						self.user_agent = user_agent
+					}
+				}
+
+
+				public enum StatusValues: String, Codable {
+					case accepted = "accepted"
+					case pending = "pending"
+					case refused = "refused"
+					case revoked = "revoked"
+				}
+
+				public enum TypeValues: String, Codable {
+					case offline = "offline"
+					case online = "online"
 				}
 			}
 
+
+			public enum IntervalValues: String, Codable {
+				case oneTime = "one_time"
+				case scheduled = "scheduled"
+				case variable = "variable"
+			}
+
+			public enum NotificationMethodValues: String, Codable {
+				case deprecatedNone = "deprecated_none"
+				case email = "email"
+				case manual = "manual"
+				case none = "none"
+				case stripeEmail = "stripe_email"
+			}
 		}
 
 
@@ -436,95 +490,41 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 
 
 
-		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
-		public class MandateParams: Codable {
-			public var acceptance: MandateAcceptanceParams?
-			public var amount: Int?
-			public var currency: String?
-			public var interval: IntervalValues?
-			public var notification_method: NotificationMethodValues?
+		/// Information about the owner of the payment instrument that may be used or required by particular source types.
+		public class Owner: Codable {
+			public var address: SourceAddress?
+			public var email: String?
+			public var name: String?
+			public var phone: String?
 
-			/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
+			/// Information about the owner of the payment instrument that may be used or required by particular source types.
 			/// - Parameters:
-			public init(acceptance: MandateAcceptanceParams? = nil, amount: Int? = nil, currency: String? = nil, interval: IntervalValues? = nil, notification_method: NotificationMethodValues? = nil) {
-				self.acceptance = acceptance
-				self.amount = amount
-				self.currency = currency
-				self.interval = interval
-				self.notification_method = notification_method
+			public init(address: SourceAddress? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+				self.address = address
+				self.email = email
+				self.name = name
+				self.phone = phone
 			}
 
 
-			public class MandateAcceptanceParams: Codable {
-				public var date: Timestamp?
-				public var ip: String?
-				public var offline: MandateOfflineAcceptanceParams?
-				public var online: MandateOnlineAcceptanceParams?
-				public var status: StatusValues
-				public var type: TypeValues?
-				public var user_agent: String?
+			public class SourceAddress: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
 
-				public init(status: StatusValues, date: Timestamp? = nil, ip: String? = nil, offline: MandateOfflineAcceptanceParams? = nil, online: MandateOnlineAcceptanceParams? = nil, type: TypeValues? = nil, user_agent: String? = nil) {
-					self.status = status
-					self.date = date
-					self.ip = ip
-					self.offline = offline
-					self.online = online
-					self.type = type
-					self.user_agent = user_agent
-				}
-
-
-				public class MandateOnlineAcceptanceParams: Codable {
-					public var date: Timestamp?
-					public var ip: String?
-					public var user_agent: String?
-
-					public init(date: Timestamp? = nil, ip: String? = nil, user_agent: String? = nil) {
-						self.date = date
-						self.ip = ip
-						self.user_agent = user_agent
-					}
-				}
-
-
-
-				public class MandateOfflineAcceptanceParams: Codable {
-					public var contact_email: String
-
-					public init(contact_email: String) {
-						self.contact_email = contact_email
-					}
-				}
-
-
-				public enum StatusValues: String, Codable {
-					case accepted = "accepted"
-					case pending = "pending"
-					case refused = "refused"
-					case revoked = "revoked"
-				}
-
-				public enum TypeValues: String, Codable {
-					case offline = "offline"
-					case online = "online"
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
 				}
 			}
 
-
-			public enum IntervalValues: String, Codable {
-				case oneTime = "one_time"
-				case scheduled = "scheduled"
-				case variable = "variable"
-			}
-
-			public enum NotificationMethodValues: String, Codable {
-				case deprecatedNone = "deprecated_none"
-				case email = "email"
-				case manual = "manual"
-				case none = "none"
-				case stripeEmail = "stripe_email"
-			}
 		}
 
 	}
@@ -554,12 +554,12 @@ public struct GetSourcesSourceSourceTransactions: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let ending_before: String
-		let source: String
 		let limit: Int
+		let source: String
 		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/sources/\(inputs.source)/source_transactions?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/sources/\(inputs.source)/source_transactions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

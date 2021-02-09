@@ -6,13 +6,13 @@ public struct GetTransfers: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let destination: String
-		let transfer_group: String
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+		let transfer_group: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/transfers?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&destination=\(inputs.destination.urlEncoded))&transfer_group=\(inputs.transfer_group.urlEncoded))"
+		return "/v1/transfers?destination=\(inputs.destination.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&transfer_group=\(inputs.transfer_group.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -215,8 +215,8 @@ public struct GetTransfersTransferReversalsId: StripeAPIEndpoint {
 	public typealias outputType = TransferReversal
 	public typealias paramType = Params
 	public struct Params {
-		let transfer: String
 		let id: String
+		let transfer: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers/\(inputs.transfer)/reversals/\(inputs.id)"

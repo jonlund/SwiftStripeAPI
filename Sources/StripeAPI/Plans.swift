@@ -5,14 +5,14 @@ public struct GetPlans: StripeAPIEndpoint {
 	public typealias outputType = PlanList
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let product: String
 		let active: Bool
-		let limit: Int
 		let ending_before: String
+		let limit: Int
+		let product: String
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/plans?product=\(inputs.product.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&active=\(inputs.active.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/plans?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&product=\(inputs.product.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -129,6 +129,13 @@ public struct PostPlans: StripeAPIEndpoint {
 		}
 
 
+		public enum AggregateUsageValues: String, Codable {
+			case lastDuringPeriod = "last_during_period"
+			case lastEver = "last_ever"
+			case max = "max"
+			case sum = "sum"
+		}
+
 		public enum BillingSchemeValues: String, Codable {
 			case perUnit = "per_unit"
 			case tiered = "tiered"
@@ -139,13 +146,6 @@ public struct PostPlans: StripeAPIEndpoint {
 			case month = "month"
 			case week = "week"
 			case year = "year"
-		}
-
-		public enum AggregateUsageValues: String, Codable {
-			case lastDuringPeriod = "last_during_period"
-			case lastEver = "last_ever"
-			case max = "max"
-			case sum = "sum"
 		}
 
 		public enum TiersModeValues: String, Codable {

@@ -5,14 +5,14 @@ public struct GetTaxRates: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let limit: Int
 		let active: Bool
-		let starting_after: String
 		let ending_before: String
 		let inclusive: Bool
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/tax_rates?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&inclusive=\(inputs.inclusive.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&active=\(inputs.active.urlEncoded))"
+		return "/v1/tax_rates?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&inclusive=\(inputs.inclusive.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

@@ -33,7 +33,7 @@ public struct GetTerminalLocations: StripeAPIEndpoint {
 		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/terminal/locations?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/terminal/locations?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -205,15 +205,15 @@ public struct GetTerminalReaders: StripeAPIEndpoint {
 	public typealias outputType = TerminalReaderRetrieveReader
 	public typealias paramType = Params
 	public struct Params {
-		let status: String
-		let ending_before: String
 		let device_type: String
-		let location: String
+		let ending_before: String
 		let limit: Int
+		let location: String
 		let starting_after: String
+		let status: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/terminal/readers?status=\(inputs.status.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&device_type=\(inputs.device_type.urlEncoded))&location=\(inputs.location.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/terminal/readers?device_type=\(inputs.device_type.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&location=\(inputs.location.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

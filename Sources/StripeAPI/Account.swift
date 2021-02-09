@@ -71,32 +71,46 @@ public struct PostAccount: StripeAPIEndpoint {
 		}
 
 
-		/// Documents that may be submitted to satisfy various informational requests.
-		public class DocumentsSpecs: Codable {
-			public var bank_account_ownership_verification: DocumentsParam?
-			public var company_license: DocumentsParam?
-			public var company_memorandum_of_association: DocumentsParam?
-			public var company_ministerial_decree: DocumentsParam?
-			public var company_registration_verification: DocumentsParam?
-			public var company_tax_id_verification: DocumentsParam?
+		/// Business information about the account.
+		public class BusinessProfileSpecs: Codable {
+			public var mcc: String?
+			public var name: String?
+			public var product_description: String?
+			public var support_address: AddressSpecs?
+			public var support_email: String?
+			public var support_phone: String?
+			public var support_url: String?
+			public var url: String?
 
-			/// Documents that may be submitted to satisfy various informational requests.
+			/// Business information about the account.
 			/// - Parameters:
-			public init(bank_account_ownership_verification: DocumentsParam? = nil, company_license: DocumentsParam? = nil, company_memorandum_of_association: DocumentsParam? = nil, company_ministerial_decree: DocumentsParam? = nil, company_registration_verification: DocumentsParam? = nil, company_tax_id_verification: DocumentsParam? = nil) {
-				self.bank_account_ownership_verification = bank_account_ownership_verification
-				self.company_license = company_license
-				self.company_memorandum_of_association = company_memorandum_of_association
-				self.company_ministerial_decree = company_ministerial_decree
-				self.company_registration_verification = company_registration_verification
-				self.company_tax_id_verification = company_tax_id_verification
+			public init(mcc: String? = nil, name: String? = nil, product_description: String? = nil, support_address: AddressSpecs? = nil, support_email: String? = nil, support_phone: String? = nil, support_url: String? = nil, url: String? = nil) {
+				self.mcc = mcc
+				self.name = name
+				self.product_description = product_description
+				self.support_address = support_address
+				self.support_email = support_email
+				self.support_phone = support_phone
+				self.support_url = support_url
+				self.url = url
 			}
 
 
-			public class DocumentsParam: Codable {
-				public var files: [String]?
+			public class AddressSpecs: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
 
-				public init(files: [String]? = nil) {
-					self.files = files
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
 				}
 			}
 
@@ -165,6 +179,186 @@ public struct PostAccount: StripeAPIEndpoint {
 
 
 
+		/// Information about the company or business. This field is available for any `business_type`.
+		public class CompanySpecs: Codable {
+			public var address: AddressSpecs?
+			public var address_kana: JapanAddressKanaSpecs?
+			public var address_kanji: JapanAddressKanjiSpecs?
+			public var directors_provided: Bool?
+			public var executives_provided: Bool?
+			public var name: String?
+			public var name_kana: String?
+			public var name_kanji: String?
+			public var owners_provided: Bool?
+			public var phone: String?
+			public var registration_number: String?
+			public var structure: StructureValues?
+			public var tax_id: String?
+			public var tax_id_registrar: String?
+			public var vat_id: String?
+			public var verification: VerificationSpecs?
+
+			/// Information about the company or business. This field is available for any `business_type`.
+			/// - Parameters:
+			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, directors_provided: Bool? = nil, executives_provided: Bool? = nil, name: String? = nil, name_kana: String? = nil, name_kanji: String? = nil, owners_provided: Bool? = nil, phone: String? = nil, registration_number: String? = nil, structure: StructureValues? = nil, tax_id: String? = nil, tax_id_registrar: String? = nil, vat_id: String? = nil, verification: VerificationSpecs? = nil) {
+				self.address = address
+				self.address_kana = address_kana
+				self.address_kanji = address_kanji
+				self.directors_provided = directors_provided
+				self.executives_provided = executives_provided
+				self.name = name
+				self.name_kana = name_kana
+				self.name_kanji = name_kanji
+				self.owners_provided = owners_provided
+				self.phone = phone
+				self.registration_number = registration_number
+				self.structure = structure
+				self.tax_id = tax_id
+				self.tax_id_registrar = tax_id_registrar
+				self.vat_id = vat_id
+				self.verification = verification
+			}
+
+
+			public class AddressSpecs: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
+
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
+				}
+			}
+
+
+
+			public class JapanAddressKanaSpecs: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
+				public var town: String?
+
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
+					self.town = town
+				}
+			}
+
+
+
+			public class JapanAddressKanjiSpecs: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
+				public var town: String?
+
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
+					self.town = town
+				}
+			}
+
+
+
+			public class VerificationSpecs: Codable {
+				public var document: VerificationDocumentSpecs?
+
+				public init(document: VerificationDocumentSpecs? = nil) {
+					self.document = document
+				}
+
+
+				public class VerificationDocumentSpecs: Codable {
+					public var back: String?
+					public var front: String?
+
+					public init(back: String? = nil, front: String? = nil) {
+						self.back = back
+						self.front = front
+					}
+				}
+
+			}
+
+
+			public enum StructureValues: String, Codable {
+				case governmentInstrumentality = "government_instrumentality"
+				case governmentalUnit = "governmental_unit"
+				case incorporatedNonProfit = "incorporated_non_profit"
+				case limitedLiabilityPartnership = "limited_liability_partnership"
+				case multiMemberLlc = "multi_member_llc"
+				case privateCompany = "private_company"
+				case privateCorporation = "private_corporation"
+				case privatePartnership = "private_partnership"
+				case publicCompany = "public_company"
+				case publicCorporation = "public_corporation"
+				case publicPartnership = "public_partnership"
+				case soleProprietorship = "sole_proprietorship"
+				case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
+				case unincorporatedAssociation = "unincorporated_association"
+				case unincorporatedNonProfit = "unincorporated_non_profit"
+			}
+		}
+
+
+
+		/// Documents that may be submitted to satisfy various informational requests.
+		public class DocumentsSpecs: Codable {
+			public var bank_account_ownership_verification: DocumentsParam?
+			public var company_license: DocumentsParam?
+			public var company_memorandum_of_association: DocumentsParam?
+			public var company_ministerial_decree: DocumentsParam?
+			public var company_registration_verification: DocumentsParam?
+			public var company_tax_id_verification: DocumentsParam?
+
+			/// Documents that may be submitted to satisfy various informational requests.
+			/// - Parameters:
+			public init(bank_account_ownership_verification: DocumentsParam? = nil, company_license: DocumentsParam? = nil, company_memorandum_of_association: DocumentsParam? = nil, company_ministerial_decree: DocumentsParam? = nil, company_registration_verification: DocumentsParam? = nil, company_tax_id_verification: DocumentsParam? = nil) {
+				self.bank_account_ownership_verification = bank_account_ownership_verification
+				self.company_license = company_license
+				self.company_memorandum_of_association = company_memorandum_of_association
+				self.company_ministerial_decree = company_ministerial_decree
+				self.company_registration_verification = company_registration_verification
+				self.company_tax_id_verification = company_tax_id_verification
+			}
+
+
+			public class DocumentsParam: Codable {
+				public var files: [String]?
+
+				public init(files: [String]? = nil) {
+					self.files = files
+				}
+			}
+
+		}
+
+
+
 		/// Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
 		public class IndividualSpecs: Codable {
 			public var address: AddressSpecs?
@@ -212,6 +406,26 @@ public struct PostAccount: StripeAPIEndpoint {
 			}
 
 
+			public class AddressSpecs: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
+
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
+				}
+			}
+
+
+
 			public class JapanAddressKanaSpecs: Codable {
 				public var city: String?
 				public var country: String?
@@ -256,26 +470,6 @@ public struct PostAccount: StripeAPIEndpoint {
 
 
 
-			public class AddressSpecs: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String?
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
-
-				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
-				}
-			}
-
-
-
 			public class PersonVerificationSpecs: Codable {
 				public var additional_document: PersonVerificationDocumentSpecs?
 				public var document: PersonVerificationDocumentSpecs?
@@ -307,72 +501,6 @@ public struct PostAccount: StripeAPIEndpoint {
 
 
 
-		/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
-		public class TosAcceptanceSpecs: Codable {
-			public var date: Timestamp?
-			public var ip: String?
-			public var service_agreement: String?
-			public var user_agent: String?
-
-			/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
-			/// - Parameters:
-			public init(date: Timestamp? = nil, ip: String? = nil, service_agreement: String? = nil, user_agent: String? = nil) {
-				self.date = date
-				self.ip = ip
-				self.service_agreement = service_agreement
-				self.user_agent = user_agent
-			}
-		}
-
-
-
-		/// Business information about the account.
-		public class BusinessProfileSpecs: Codable {
-			public var mcc: String?
-			public var name: String?
-			public var product_description: String?
-			public var support_address: AddressSpecs?
-			public var support_email: String?
-			public var support_phone: String?
-			public var support_url: String?
-			public var url: String?
-
-			/// Business information about the account.
-			/// - Parameters:
-			public init(mcc: String? = nil, name: String? = nil, product_description: String? = nil, support_address: AddressSpecs? = nil, support_email: String? = nil, support_phone: String? = nil, support_url: String? = nil, url: String? = nil) {
-				self.mcc = mcc
-				self.name = name
-				self.product_description = product_description
-				self.support_address = support_address
-				self.support_email = support_email
-				self.support_phone = support_phone
-				self.support_url = support_url
-				self.url = url
-			}
-
-
-			public class AddressSpecs: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String?
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
-
-				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
-				}
-			}
-
-		}
-
-
-
 		/// Options for customizing how the account functions within Stripe.
 		public class SettingsSpecs: Codable {
 			public var branding: BrandingSettingsSpecs?
@@ -388,20 +516,6 @@ public struct PostAccount: StripeAPIEndpoint {
 				self.payments = payments
 				self.payouts = payouts
 			}
-
-
-			public class PaymentsSettingsSpecs: Codable {
-				public var statement_descriptor: String?
-				public var statement_descriptor_kana: String?
-				public var statement_descriptor_kanji: String?
-
-				public init(statement_descriptor: String? = nil, statement_descriptor_kana: String? = nil, statement_descriptor_kanji: String? = nil) {
-					self.statement_descriptor = statement_descriptor
-					self.statement_descriptor_kana = statement_descriptor_kana
-					self.statement_descriptor_kanji = statement_descriptor_kanji
-				}
-			}
-
 
 
 			public class BrandingSettingsSpecs: Codable {
@@ -440,6 +554,20 @@ public struct PostAccount: StripeAPIEndpoint {
 					}
 				}
 
+			}
+
+
+
+			public class PaymentsSettingsSpecs: Codable {
+				public var statement_descriptor: String?
+				public var statement_descriptor_kana: String?
+				public var statement_descriptor_kanji: String?
+
+				public init(statement_descriptor: String? = nil, statement_descriptor_kana: String? = nil, statement_descriptor_kanji: String? = nil) {
+					self.statement_descriptor = statement_descriptor
+					self.statement_descriptor_kana = statement_descriptor_kana
+					self.statement_descriptor_kanji = statement_descriptor_kanji
+				}
 			}
 
 
@@ -493,148 +621,20 @@ public struct PostAccount: StripeAPIEndpoint {
 
 
 
-		/// Information about the company or business. This field is available for any `business_type`.
-		public class CompanySpecs: Codable {
-			public var address: AddressSpecs?
-			public var address_kana: JapanAddressKanaSpecs?
-			public var address_kanji: JapanAddressKanjiSpecs?
-			public var directors_provided: Bool?
-			public var executives_provided: Bool?
-			public var name: String?
-			public var name_kana: String?
-			public var name_kanji: String?
-			public var owners_provided: Bool?
-			public var phone: String?
-			public var registration_number: String?
-			public var structure: StructureValues?
-			public var tax_id: String?
-			public var tax_id_registrar: String?
-			public var vat_id: String?
-			public var verification: VerificationSpecs?
+		/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
+		public class TosAcceptanceSpecs: Codable {
+			public var date: Timestamp?
+			public var ip: String?
+			public var service_agreement: String?
+			public var user_agent: String?
 
-			/// Information about the company or business. This field is available for any `business_type`.
+			/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
 			/// - Parameters:
-			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, directors_provided: Bool? = nil, executives_provided: Bool? = nil, name: String? = nil, name_kana: String? = nil, name_kanji: String? = nil, owners_provided: Bool? = nil, phone: String? = nil, registration_number: String? = nil, structure: StructureValues? = nil, tax_id: String? = nil, tax_id_registrar: String? = nil, vat_id: String? = nil, verification: VerificationSpecs? = nil) {
-				self.address = address
-				self.address_kana = address_kana
-				self.address_kanji = address_kanji
-				self.directors_provided = directors_provided
-				self.executives_provided = executives_provided
-				self.name = name
-				self.name_kana = name_kana
-				self.name_kanji = name_kanji
-				self.owners_provided = owners_provided
-				self.phone = phone
-				self.registration_number = registration_number
-				self.structure = structure
-				self.tax_id = tax_id
-				self.tax_id_registrar = tax_id_registrar
-				self.vat_id = vat_id
-				self.verification = verification
-			}
-
-
-			public class JapanAddressKanaSpecs: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String?
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
-				public var town: String?
-
-				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
-					self.town = town
-				}
-			}
-
-
-
-			public class VerificationSpecs: Codable {
-				public var document: VerificationDocumentSpecs?
-
-				public init(document: VerificationDocumentSpecs? = nil) {
-					self.document = document
-				}
-
-
-				public class VerificationDocumentSpecs: Codable {
-					public var back: String?
-					public var front: String?
-
-					public init(back: String? = nil, front: String? = nil) {
-						self.back = back
-						self.front = front
-					}
-				}
-
-			}
-
-
-
-			public class JapanAddressKanjiSpecs: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String?
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
-				public var town: String?
-
-				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
-					self.town = town
-				}
-			}
-
-
-
-			public class AddressSpecs: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String?
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
-
-				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
-				}
-			}
-
-
-			public enum StructureValues: String, Codable {
-				case governmentInstrumentality = "government_instrumentality"
-				case governmentalUnit = "governmental_unit"
-				case incorporatedNonProfit = "incorporated_non_profit"
-				case limitedLiabilityPartnership = "limited_liability_partnership"
-				case multiMemberLlc = "multi_member_llc"
-				case privateCompany = "private_company"
-				case privateCorporation = "private_corporation"
-				case privatePartnership = "private_partnership"
-				case publicCompany = "public_company"
-				case publicCorporation = "public_corporation"
-				case publicPartnership = "public_partnership"
-				case soleProprietorship = "sole_proprietorship"
-				case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
-				case unincorporatedAssociation = "unincorporated_association"
-				case unincorporatedNonProfit = "unincorporated_non_profit"
+			public init(date: Timestamp? = nil, ip: String? = nil, service_agreement: String? = nil, user_agent: String? = nil) {
+				self.date = date
+				self.ip = ip
+				self.service_agreement = service_agreement
+				self.user_agent = user_agent
 			}
 		}
 
@@ -878,12 +878,12 @@ public struct GetAccountExternalAccounts: StripeAPIEndpoint {
 	public typealias outputType = ExternalAccountList
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
 		let ending_before: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/account/external_accounts?starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/account/external_accounts?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1094,12 +1094,12 @@ public struct GetAccountPeople: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
 		let ending_before: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/account/people?limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/account/people?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1209,6 +1209,29 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		}
 
 
+		/// The person's address.
+		public class AddressSpecs: Codable {
+			public var city: String?
+			public var country: String?
+			public var line1: String?
+			public var line2: String?
+			public var postal_code: String?
+			public var state: String?
+
+			/// The person's address.
+			/// - Parameters:
+			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+				self.city = city
+				self.country = country
+				self.line1 = line1
+				self.line2 = line2
+				self.postal_code = postal_code
+				self.state = state
+			}
+		}
+
+
+
 		/// The Kana variation of the person's address (Japan only).
 		public class JapanAddressKanaSpecs: Codable {
 			public var city: String?
@@ -1259,52 +1282,6 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 
 
 
-		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
-			public var director: Bool?
-			public var executive: Bool?
-			public var owner: Bool?
-			public var percent_ownership: StringNumber?
-			public var representative: Bool?
-			public var title: String?
-
-			/// The relationship that this person has with the account's legal entity.
-			/// - Parameters:
-			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
-				self.director = director
-				self.executive = executive
-				self.owner = owner
-				self.percent_ownership = percent_ownership
-				self.representative = representative
-				self.title = title
-			}
-		}
-
-
-
-		/// The person's address.
-		public class AddressSpecs: Codable {
-			public var city: String?
-			public var country: String?
-			public var line1: String?
-			public var line2: String?
-			public var postal_code: String?
-			public var state: String?
-
-			/// The person's address.
-			/// - Parameters:
-			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-				self.city = city
-				self.country = country
-				self.line1 = line1
-				self.line2 = line2
-				self.postal_code = postal_code
-				self.state = state
-			}
-		}
-
-
-
 		/// The person's verification status.
 		public class PersonVerificationSpecs: Codable {
 			public var additional_document: PersonVerificationDocumentSpecs?
@@ -1328,6 +1305,29 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 				}
 			}
 
+		}
+
+
+
+		/// The relationship that this person has with the account's legal entity.
+		public class RelationshipSpecs: Codable {
+			public var director: Bool?
+			public var executive: Bool?
+			public var owner: Bool?
+			public var percent_ownership: StringNumber?
+			public var representative: Bool?
+			public var title: String?
+
+			/// The relationship that this person has with the account's legal entity.
+			/// - Parameters:
+			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
+				self.director = director
+				self.executive = executive
+				self.owner = owner
+				self.percent_ownership = percent_ownership
+				self.representative = representative
+				self.title = title
+			}
 		}
 
 	}
@@ -1435,26 +1435,24 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		}
 
 
-		/// The Kanji variation of the person's address (Japan only).
-		public class JapanAddressKanjiSpecs: Codable {
+		/// The person's address.
+		public class AddressSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
 			public var line2: String?
 			public var postal_code: String?
 			public var state: String?
-			public var town: String?
 
-			/// The Kanji variation of the person's address (Japan only).
+			/// The person's address.
 			/// - Parameters:
-			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
+			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
 				self.city = city
 				self.country = country
 				self.line1 = line1
 				self.line2 = line2
 				self.postal_code = postal_code
 				self.state = state
-				self.town = town
 			}
 		}
 
@@ -1485,47 +1483,26 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 
 
 
-		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
-			public var director: Bool?
-			public var executive: Bool?
-			public var owner: Bool?
-			public var percent_ownership: StringNumber?
-			public var representative: Bool?
-			public var title: String?
-
-			/// The relationship that this person has with the account's legal entity.
-			/// - Parameters:
-			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
-				self.director = director
-				self.executive = executive
-				self.owner = owner
-				self.percent_ownership = percent_ownership
-				self.representative = representative
-				self.title = title
-			}
-		}
-
-
-
-		/// The person's address.
-		public class AddressSpecs: Codable {
+		/// The Kanji variation of the person's address (Japan only).
+		public class JapanAddressKanjiSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
 			public var line2: String?
 			public var postal_code: String?
 			public var state: String?
+			public var town: String?
 
-			/// The person's address.
+			/// The Kanji variation of the person's address (Japan only).
 			/// - Parameters:
-			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
 				self.city = city
 				self.country = country
 				self.line1 = line1
 				self.line2 = line2
 				self.postal_code = postal_code
 				self.state = state
+				self.town = town
 			}
 		}
 
@@ -1556,6 +1533,29 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 
 		}
 
+
+
+		/// The relationship that this person has with the account's legal entity.
+		public class RelationshipSpecs: Codable {
+			public var director: Bool?
+			public var executive: Bool?
+			public var owner: Bool?
+			public var percent_ownership: StringNumber?
+			public var representative: Bool?
+			public var title: String?
+
+			/// The relationship that this person has with the account's legal entity.
+			/// - Parameters:
+			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
+				self.director = director
+				self.executive = executive
+				self.owner = owner
+				self.percent_ownership = percent_ownership
+				self.representative = representative
+				self.title = title
+			}
+		}
+
 	}
 
 }
@@ -1581,12 +1581,12 @@ public struct GetAccountPersons: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
+		let ending_before: String
 		let limit: Int
 		let starting_after: String
-		let ending_before: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/account/persons?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/account/persons?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1696,81 +1696,6 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		}
 
 
-		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
-			public var director: Bool?
-			public var executive: Bool?
-			public var owner: Bool?
-			public var percent_ownership: StringNumber?
-			public var representative: Bool?
-			public var title: String?
-
-			/// The relationship that this person has with the account's legal entity.
-			/// - Parameters:
-			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
-				self.director = director
-				self.executive = executive
-				self.owner = owner
-				self.percent_ownership = percent_ownership
-				self.representative = representative
-				self.title = title
-			}
-		}
-
-
-
-		/// The person's verification status.
-		public class PersonVerificationSpecs: Codable {
-			public var additional_document: PersonVerificationDocumentSpecs?
-			public var document: PersonVerificationDocumentSpecs?
-
-			/// The person's verification status.
-			/// - Parameters:
-			public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
-				self.additional_document = additional_document
-				self.document = document
-			}
-
-
-			public class PersonVerificationDocumentSpecs: Codable {
-				public var back: String?
-				public var front: String?
-
-				public init(back: String? = nil, front: String? = nil) {
-					self.back = back
-					self.front = front
-				}
-			}
-
-		}
-
-
-
-		/// The Kanji variation of the person's address (Japan only).
-		public class JapanAddressKanjiSpecs: Codable {
-			public var city: String?
-			public var country: String?
-			public var line1: String?
-			public var line2: String?
-			public var postal_code: String?
-			public var state: String?
-			public var town: String?
-
-			/// The Kanji variation of the person's address (Japan only).
-			/// - Parameters:
-			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
-				self.city = city
-				self.country = country
-				self.line1 = line1
-				self.line2 = line2
-				self.postal_code = postal_code
-				self.state = state
-				self.town = town
-			}
-		}
-
-
-
 		/// The person's address.
 		public class AddressSpecs: Codable {
 			public var city: String?
@@ -1814,6 +1739,81 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 				self.postal_code = postal_code
 				self.state = state
 				self.town = town
+			}
+		}
+
+
+
+		/// The Kanji variation of the person's address (Japan only).
+		public class JapanAddressKanjiSpecs: Codable {
+			public var city: String?
+			public var country: String?
+			public var line1: String?
+			public var line2: String?
+			public var postal_code: String?
+			public var state: String?
+			public var town: String?
+
+			/// The Kanji variation of the person's address (Japan only).
+			/// - Parameters:
+			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
+				self.city = city
+				self.country = country
+				self.line1 = line1
+				self.line2 = line2
+				self.postal_code = postal_code
+				self.state = state
+				self.town = town
+			}
+		}
+
+
+
+		/// The person's verification status.
+		public class PersonVerificationSpecs: Codable {
+			public var additional_document: PersonVerificationDocumentSpecs?
+			public var document: PersonVerificationDocumentSpecs?
+
+			/// The person's verification status.
+			/// - Parameters:
+			public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
+				self.additional_document = additional_document
+				self.document = document
+			}
+
+
+			public class PersonVerificationDocumentSpecs: Codable {
+				public var back: String?
+				public var front: String?
+
+				public init(back: String? = nil, front: String? = nil) {
+					self.back = back
+					self.front = front
+				}
+			}
+
+		}
+
+
+
+		/// The relationship that this person has with the account's legal entity.
+		public class RelationshipSpecs: Codable {
+			public var director: Bool?
+			public var executive: Bool?
+			public var owner: Bool?
+			public var percent_ownership: StringNumber?
+			public var representative: Bool?
+			public var title: String?
+
+			/// The relationship that this person has with the account's legal entity.
+			/// - Parameters:
+			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
+				self.director = director
+				self.executive = executive
+				self.owner = owner
+				self.percent_ownership = percent_ownership
+				self.representative = representative
+				self.title = title
 			}
 		}
 
@@ -1922,81 +1922,6 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		}
 
 
-		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
-			public var director: Bool?
-			public var executive: Bool?
-			public var owner: Bool?
-			public var percent_ownership: StringNumber?
-			public var representative: Bool?
-			public var title: String?
-
-			/// The relationship that this person has with the account's legal entity.
-			/// - Parameters:
-			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
-				self.director = director
-				self.executive = executive
-				self.owner = owner
-				self.percent_ownership = percent_ownership
-				self.representative = representative
-				self.title = title
-			}
-		}
-
-
-
-		/// The person's verification status.
-		public class PersonVerificationSpecs: Codable {
-			public var additional_document: PersonVerificationDocumentSpecs?
-			public var document: PersonVerificationDocumentSpecs?
-
-			/// The person's verification status.
-			/// - Parameters:
-			public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
-				self.additional_document = additional_document
-				self.document = document
-			}
-
-
-			public class PersonVerificationDocumentSpecs: Codable {
-				public var back: String?
-				public var front: String?
-
-				public init(back: String? = nil, front: String? = nil) {
-					self.back = back
-					self.front = front
-				}
-			}
-
-		}
-
-
-
-		/// The Kanji variation of the person's address (Japan only).
-		public class JapanAddressKanjiSpecs: Codable {
-			public var city: String?
-			public var country: String?
-			public var line1: String?
-			public var line2: String?
-			public var postal_code: String?
-			public var state: String?
-			public var town: String?
-
-			/// The Kanji variation of the person's address (Japan only).
-			/// - Parameters:
-			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
-				self.city = city
-				self.country = country
-				self.line1 = line1
-				self.line2 = line2
-				self.postal_code = postal_code
-				self.state = state
-				self.town = town
-			}
-		}
-
-
-
 		/// The person's address.
 		public class AddressSpecs: Codable {
 			public var city: String?
@@ -2040,6 +1965,81 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 				self.postal_code = postal_code
 				self.state = state
 				self.town = town
+			}
+		}
+
+
+
+		/// The Kanji variation of the person's address (Japan only).
+		public class JapanAddressKanjiSpecs: Codable {
+			public var city: String?
+			public var country: String?
+			public var line1: String?
+			public var line2: String?
+			public var postal_code: String?
+			public var state: String?
+			public var town: String?
+
+			/// The Kanji variation of the person's address (Japan only).
+			/// - Parameters:
+			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
+				self.city = city
+				self.country = country
+				self.line1 = line1
+				self.line2 = line2
+				self.postal_code = postal_code
+				self.state = state
+				self.town = town
+			}
+		}
+
+
+
+		/// The person's verification status.
+		public class PersonVerificationSpecs: Codable {
+			public var additional_document: PersonVerificationDocumentSpecs?
+			public var document: PersonVerificationDocumentSpecs?
+
+			/// The person's verification status.
+			/// - Parameters:
+			public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
+				self.additional_document = additional_document
+				self.document = document
+			}
+
+
+			public class PersonVerificationDocumentSpecs: Codable {
+				public var back: String?
+				public var front: String?
+
+				public init(back: String? = nil, front: String? = nil) {
+					self.back = back
+					self.front = front
+				}
+			}
+
+		}
+
+
+
+		/// The relationship that this person has with the account's legal entity.
+		public class RelationshipSpecs: Codable {
+			public var director: Bool?
+			public var executive: Bool?
+			public var owner: Bool?
+			public var percent_ownership: StringNumber?
+			public var representative: Bool?
+			public var title: String?
+
+			/// The relationship that this person has with the account's legal entity.
+			/// - Parameters:
+			public init(director: Bool? = nil, executive: Bool? = nil, owner: Bool? = nil, percent_ownership: StringNumber? = nil, representative: Bool? = nil, title: String? = nil) {
+				self.director = director
+				self.executive = executive
+				self.owner = owner
+				self.percent_ownership = percent_ownership
+				self.representative = representative
+				self.title = title
 			}
 		}
 

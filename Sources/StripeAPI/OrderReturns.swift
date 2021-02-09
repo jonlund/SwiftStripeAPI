@@ -6,12 +6,12 @@ public struct GetOrderReturns: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let ending_before: String
-		let starting_after: String
 		let limit: Int
 		let order: String
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/order_returns?ending_before=\(inputs.ending_before.urlEncoded))&order=\(inputs.order.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/order_returns?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&order=\(inputs.order.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

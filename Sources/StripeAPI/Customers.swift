@@ -5,13 +5,13 @@ public struct GetCustomers: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let limit: Int
 		let email: String
 		let ending_before: String
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers?email=\(inputs.email.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/customers?email=\(inputs.email.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -282,12 +282,12 @@ public struct GetCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer: String
-		let starting_after: String
-		let limit: Int
 		let ending_before: String
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/balance_transactions?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/customers/\(inputs.customer)/balance_transactions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -403,12 +403,12 @@ public struct GetCustomersCustomerBankAccounts: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer: String
-		let starting_after: String
-		let limit: Int
 		let ending_before: String
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/bank_accounts?starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/customers/\(inputs.customer)/bank_accounts?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -496,8 +496,8 @@ public struct PostCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 	public typealias outputType = Card
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/bank_accounts/\(inputs.id)"
@@ -599,8 +599,8 @@ public struct DeleteCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/bank_accounts/\(inputs.id)"
@@ -624,8 +624,8 @@ public struct PostCustomersCustomerBankAccountsIdVerify: StripeAPIEndpoint {
 	public typealias outputType = BankAccount
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/bank_accounts/\(inputs.id)/verify"
@@ -651,13 +651,13 @@ public struct GetCustomersCustomerCards: StripeAPIEndpoint {
 	public typealias outputType = CardList
 	public typealias paramType = Params
 	public struct Params {
+		let customer: String
 		let ending_before: String
 		let limit: Int
-		let customer: String
 		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/cards?limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/customers/\(inputs.customer)/cards?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -728,8 +728,8 @@ public struct GetCustomersCustomerCardsId: StripeAPIEndpoint {
 	public typealias outputType = Card
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/cards/\(inputs.id)"
@@ -744,8 +744,8 @@ public struct PostCustomersCustomerCardsId: StripeAPIEndpoint {
 	public typealias outputType = Card
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/cards/\(inputs.id)"
@@ -901,14 +901,14 @@ public struct GetCustomersCustomerSources: StripeAPIEndpoint {
 	public typealias outputType = ApmsSourcesSourceList
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let object: String
+		let customer: String
 		let ending_before: String
 		let limit: Int
-		let customer: String
+		let object: String
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/sources?limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&object=\(inputs.object.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/customers/\(inputs.customer)/sources?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&object=\(inputs.object.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -980,8 +980,8 @@ public struct GetCustomersCustomerSourcesId: StripeAPIEndpoint {
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/sources/\(inputs.id)"
@@ -996,8 +996,8 @@ public struct PostCustomersCustomerSourcesId: StripeAPIEndpoint {
 	public typealias outputType = Card
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/sources/\(inputs.id)"
@@ -1099,8 +1099,8 @@ public struct DeleteCustomersCustomerSourcesId: StripeAPIEndpoint {
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/sources/\(inputs.id)"
@@ -1124,8 +1124,8 @@ public struct PostCustomersCustomerSourcesIdVerify: StripeAPIEndpoint {
 	public typealias outputType = BankAccount
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let customer: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/sources/\(inputs.id)/verify"
@@ -1152,12 +1152,12 @@ public struct GetCustomersCustomerSubscriptions: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer: String
-		let starting_after: String
 		let ending_before: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/subscriptions?starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/customers/\(inputs.customer)/subscriptions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1293,10 +1293,9 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		}
 
 
-		public enum ProrationBehaviorValues: String, Codable {
-			case alwaysInvoice = "always_invoice"
-			case createProrations = "create_prorations"
-			case none = "none"
+		public enum CollectionMethodValues: String, Codable {
+			case chargeAutomatically = "charge_automatically"
+			case sendInvoice = "send_invoice"
 		}
 
 		public enum PaymentBehaviorValues: String, Codable {
@@ -1305,9 +1304,10 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 			case pendingIfIncomplete = "pending_if_incomplete"
 		}
 
-		public enum CollectionMethodValues: String, Codable {
-			case chargeAutomatically = "charge_automatically"
-			case sendInvoice = "send_invoice"
+		public enum ProrationBehaviorValues: String, Codable {
+			case alwaysInvoice = "always_invoice"
+			case createProrations = "create_prorations"
+			case none = "none"
 		}
 	}
 
@@ -1319,8 +1319,8 @@ public struct GetCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPIE
 	public typealias outputType = Subscription
 	public typealias paramType = Params
 	public struct Params {
-		let subscription_exposed_id: String
 		let customer: String
+		let subscription_exposed_id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/subscriptions/\(inputs.subscription_exposed_id)"
@@ -1335,8 +1335,8 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 	public typealias outputType = Subscription
 	public typealias paramType = Params
 	public struct Params {
-		let subscription_exposed_id: String
 		let customer: String
+		let subscription_exposed_id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/subscriptions/\(inputs.subscription_exposed_id)"
@@ -1427,6 +1427,11 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 			case unchanged = "unchanged"
 		}
 
+		public enum CollectionMethodValues: String, Codable {
+			case chargeAutomatically = "charge_automatically"
+			case sendInvoice = "send_invoice"
+		}
+
 		public enum PaymentBehaviorValues: String, Codable {
 			case allowIncomplete = "allow_incomplete"
 			case errorIfIncomplete = "error_if_incomplete"
@@ -1437,11 +1442,6 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 			case alwaysInvoice = "always_invoice"
 			case createProrations = "create_prorations"
 			case none = "none"
-		}
-
-		public enum CollectionMethodValues: String, Codable {
-			case chargeAutomatically = "charge_automatically"
-			case sendInvoice = "send_invoice"
 		}
 	}
 
@@ -1515,10 +1515,10 @@ public struct GetCustomersCustomerTaxIds: StripeAPIEndpoint {
 	public typealias outputType = TaxIDsList
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let ending_before: String
 		let customer: String
+		let ending_before: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/customers/\(inputs.customer)/tax_ids?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"

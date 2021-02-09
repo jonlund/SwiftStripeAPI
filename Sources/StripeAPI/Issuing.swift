@@ -5,15 +5,15 @@ public struct GetIssuingAuthorizations: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
+		let card: String
 		let cardholder: String
 		let ending_before: String
+		let limit: Int
 		let starting_after: String
 		let status: String
-		let limit: Int
-		let card: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/authorizations?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&limit=\(inputs.limit.urlEncoded))&cardholder=\(inputs.cardholder.urlEncoded))&card=\(inputs.card.urlEncoded))"
+		return "/v1/issuing/authorizations?card=\(inputs.card.urlEncoded))&cardholder=\(inputs.cardholder.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -142,16 +142,16 @@ public struct GetIssuingCardholders: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
 		let email: String
 		let ending_before: String
 		let limit: Int
-		let type: String
 		let phone_number: String
+		let starting_after: String
 		let status: String
+		let type: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/cardholders?phone_number=\(inputs.phone_number.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&type=\(inputs.type.urlEncoded))&status=\(inputs.status.urlEncoded))&email=\(inputs.email.urlEncoded))"
+		return "/v1/issuing/cardholders?email=\(inputs.email.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&phone_number=\(inputs.phone_number.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&type=\(inputs.type.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -245,6 +245,53 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 
 
 
+		/// The cardholder's billing address.
+		public class BillingSpecs: Codable {
+			public var address: RequiredAddress
+
+			/// The cardholder's billing address.
+			/// - Parameters:
+			///   - address: 
+			public init(address: RequiredAddress) {
+				self.address = address
+			}
+
+
+			public class RequiredAddress: Codable {
+				public var city: String
+				public var country: String
+				public var line1: String
+				public var line2: String?
+				public var postal_code: String
+				public var state: String?
+
+				public init(city: String, country: String, line1: String, postal_code: String, line2: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.postal_code = postal_code
+					self.line2 = line2
+					self.state = state
+				}
+			}
+
+		}
+
+
+
+		/// Additional information about a `company` cardholder.
+		public class CompanyParam: Codable {
+			public var tax_id: String?
+
+			/// Additional information about a `company` cardholder.
+			/// - Parameters:
+			public init(tax_id: String? = nil) {
+				self.tax_id = tax_id
+			}
+		}
+
+
+
 		/// Additional information about an `individual` cardholder.
 		public class IndividualParam: Codable {
 			public var dob: DateOfBirthSpecs?
@@ -296,53 +343,6 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 					}
 				}
 
-			}
-
-		}
-
-
-
-		/// Additional information about a `company` cardholder.
-		public class CompanyParam: Codable {
-			public var tax_id: String?
-
-			/// Additional information about a `company` cardholder.
-			/// - Parameters:
-			public init(tax_id: String? = nil) {
-				self.tax_id = tax_id
-			}
-		}
-
-
-
-		/// The cardholder's billing address.
-		public class BillingSpecs: Codable {
-			public var address: RequiredAddress
-
-			/// The cardholder's billing address.
-			/// - Parameters:
-			///   - address: 
-			public init(address: RequiredAddress) {
-				self.address = address
-			}
-
-
-			public class RequiredAddress: Codable {
-				public var city: String
-				public var country: String
-				public var line1: String
-				public var line2: String?
-				public var postal_code: String
-				public var state: String?
-
-				public init(city: String, country: String, line1: String, postal_code: String, line2: String? = nil, state: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.postal_code = postal_code
-					self.line2 = line2
-					self.state = state
-				}
 			}
 
 		}
@@ -421,19 +421,6 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		}
 
 
-		/// Additional information about a `company` cardholder.
-		public class CompanyParam: Codable {
-			public var tax_id: String?
-
-			/// Additional information about a `company` cardholder.
-			/// - Parameters:
-			public init(tax_id: String? = nil) {
-				self.tax_id = tax_id
-			}
-		}
-
-
-
 		/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 		public class AuthorizationControlsParamV2: Codable {
 			public var allowed_categories: [String]?
@@ -448,6 +435,53 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 				self.blocked_categories = blocked_categories
 				self.spending_limits = spending_limits
 				self.spending_limits_currency = spending_limits_currency
+			}
+		}
+
+
+
+		/// The cardholder's billing address.
+		public class BillingSpecs: Codable {
+			public var address: RequiredAddress
+
+			/// The cardholder's billing address.
+			/// - Parameters:
+			///   - address: 
+			public init(address: RequiredAddress) {
+				self.address = address
+			}
+
+
+			public class RequiredAddress: Codable {
+				public var city: String
+				public var country: String
+				public var line1: String
+				public var line2: String?
+				public var postal_code: String
+				public var state: String?
+
+				public init(city: String, country: String, line1: String, postal_code: String, line2: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.postal_code = postal_code
+					self.line2 = line2
+					self.state = state
+				}
+			}
+
+		}
+
+
+
+		/// Additional information about a `company` cardholder.
+		public class CompanyParam: Codable {
+			public var tax_id: String?
+
+			/// Additional information about a `company` cardholder.
+			/// - Parameters:
+			public init(tax_id: String? = nil) {
+				self.tax_id = tax_id
 			}
 		}
 
@@ -509,40 +543,6 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		}
 
 
-
-		/// The cardholder's billing address.
-		public class BillingSpecs: Codable {
-			public var address: RequiredAddress
-
-			/// The cardholder's billing address.
-			/// - Parameters:
-			///   - address: 
-			public init(address: RequiredAddress) {
-				self.address = address
-			}
-
-
-			public class RequiredAddress: Codable {
-				public var city: String
-				public var country: String
-				public var line1: String
-				public var line2: String?
-				public var postal_code: String
-				public var state: String?
-
-				public init(city: String, country: String, line1: String, postal_code: String, line2: String? = nil, state: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.postal_code = postal_code
-					self.line2 = line2
-					self.state = state
-				}
-			}
-
-		}
-
-
 		public enum StatusValues: String, Codable {
 			case active = "active"
 			case inactive = "inactive"
@@ -557,18 +557,18 @@ public struct GetIssuingCards: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let type: String
-		let starting_after: String
 		let cardholder: String
-		let exp_year: Int
 		let ending_before: String
 		let exp_month: Int
-		let limit: Int
+		let exp_year: Int
 		let last4: String
+		let limit: Int
+		let starting_after: String
 		let status: String
+		let type: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/cards?starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&exp_year=\(inputs.exp_year.urlEncoded))&cardholder=\(inputs.cardholder.urlEncoded))&type=\(inputs.type.urlEncoded))&exp_month=\(inputs.exp_month.urlEncoded))&limit=\(inputs.limit.urlEncoded))&last4=\(inputs.last4.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/issuing/cards?cardholder=\(inputs.cardholder.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&exp_month=\(inputs.exp_month.urlEncoded))&exp_year=\(inputs.exp_year.urlEncoded))&last4=\(inputs.last4.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&type=\(inputs.type.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -640,6 +640,23 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 		}
 
 
+		/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
+		public class AuthorizationControlsParam: Codable {
+			public var allowed_categories: [String]?
+			public var blocked_categories: [String]?
+			public var spending_limits: MESSED_UP?
+
+			/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
+			/// - Parameters:
+			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: MESSED_UP? = nil) {
+				self.allowed_categories = allowed_categories
+				self.blocked_categories = blocked_categories
+				self.spending_limits = spending_limits
+			}
+		}
+
+
+
 		/// The address where the card will be shipped.
 		public class ShippingSpecs: Codable {
 			public var address: RequiredAddress
@@ -687,23 +704,6 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 			public enum TypeValues: String, Codable {
 				case bulk = "bulk"
 				case individual = "individual"
-			}
-		}
-
-
-
-		/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
-		public class AuthorizationControlsParam: Codable {
-			public var allowed_categories: [String]?
-			public var blocked_categories: [String]?
-			public var spending_limits: MESSED_UP?
-
-			/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
-			/// - Parameters:
-			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: MESSED_UP? = nil) {
-				self.allowed_categories = allowed_categories
-				self.blocked_categories = blocked_categories
-				self.spending_limits = spending_limits
 			}
 		}
 
@@ -792,15 +792,15 @@ public struct PostIssuingCardsCard: StripeAPIEndpoint {
 		}
 
 
+		public enum CancellationReasonValues: String, Codable {
+			case lost = "lost"
+			case stolen = "stolen"
+		}
+
 		public enum StatusValues: String, Codable {
 			case active = "active"
 			case canceled = "canceled"
 			case inactive = "inactive"
-		}
-
-		public enum CancellationReasonValues: String, Codable {
-			case lost = "lost"
-			case stolen = "stolen"
 		}
 	}
 
@@ -812,14 +812,14 @@ public struct GetIssuingDisputes: StripeAPIEndpoint {
 	public typealias outputType = IssuingDisputeList
 	public typealias paramType = Params
 	public struct Params {
-		let transaction: String
-		let status: String
+		let ending_before: String
 		let limit: Int
 		let starting_after: String
-		let ending_before: String
+		let status: String
+		let transaction: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/disputes?status=\(inputs.status.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&transaction=\(inputs.transaction.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/issuing/disputes?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&transaction=\(inputs.transaction.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1025,12 +1025,12 @@ public struct GetIssuingSettlements: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let limit: Int
 		let ending_before: String
+		let limit: Int
 		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/settlements?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/issuing/settlements?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1104,15 +1104,15 @@ public struct GetIssuingTransactions: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let ending_before: String
-		let starting_after: String
-		let limit: Int
-		let type: String
-		let cardholder: String
 		let card: String
+		let cardholder: String
+		let ending_before: String
+		let limit: Int
+		let starting_after: String
+		let type: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/transactions?ending_before=\(inputs.ending_before.urlEncoded))&cardholder=\(inputs.cardholder.urlEncoded))&card=\(inputs.card.urlEncoded))&type=\(inputs.type.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/issuing/transactions?card=\(inputs.card.urlEncoded))&cardholder=\(inputs.cardholder.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

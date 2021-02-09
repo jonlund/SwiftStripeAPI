@@ -5,15 +5,15 @@ public struct GetProducts: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let url: String
-		let shippable: Bool
-		let limit: Int
 		let active: Bool
 		let ending_before: String
+		let limit: Int
+		let shippable: Bool
+		let starting_after: String
+		let url: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/products?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&active=\(inputs.active.urlEncoded))&shippable=\(inputs.shippable.urlEncoded))&url=\(inputs.url.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/products?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&shippable=\(inputs.shippable.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&url=\(inputs.url.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

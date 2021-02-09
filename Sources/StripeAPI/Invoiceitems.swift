@@ -5,15 +5,15 @@ public struct GetInvoiceitems: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let limit: Int
-		let pending: Bool
-		let invoice: String
-		let starting_after: String
 		let customer: String
 		let ending_before: String
+		let invoice: String
+		let limit: Int
+		let pending: Bool
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoiceitems?pending=\(inputs.pending.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/invoiceitems?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&pending=\(inputs.pending.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -106,23 +106,6 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 		}
 
 
-		/// The period associated with this invoice item.
-		public class Period: Codable {
-			public var end: Timestamp
-			public var start: Timestamp
-
-			/// The period associated with this invoice item.
-			/// - Parameters:
-			///   - end: 
-			///   - start: 
-			public init(end: Timestamp, start: Timestamp) {
-				self.end = end
-				self.start = start
-			}
-		}
-
-
-
 		/// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
 		public class OneTimePriceData: Codable {
 			public var currency: String
@@ -139,6 +122,23 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 				self.product = product
 				self.unit_amount = unit_amount
 				self.unit_amount_decimal = unit_amount_decimal
+			}
+		}
+
+
+
+		/// The period associated with this invoice item.
+		public class Period: Codable {
+			public var end: Timestamp
+			public var start: Timestamp
+
+			/// The period associated with this invoice item.
+			/// - Parameters:
+			///   - end: 
+			///   - start: 
+			public init(end: Timestamp, start: Timestamp) {
+				self.end = end
+				self.start = start
 			}
 		}
 
@@ -218,23 +218,6 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 		}
 
 
-		/// The period associated with this invoice item.
-		public class Period: Codable {
-			public var end: Timestamp
-			public var start: Timestamp
-
-			/// The period associated with this invoice item.
-			/// - Parameters:
-			///   - end: 
-			///   - start: 
-			public init(end: Timestamp, start: Timestamp) {
-				self.end = end
-				self.start = start
-			}
-		}
-
-
-
 		/// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
 		public class OneTimePriceData: Codable {
 			public var currency: String
@@ -251,6 +234,23 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 				self.product = product
 				self.unit_amount = unit_amount
 				self.unit_amount_decimal = unit_amount_decimal
+			}
+		}
+
+
+
+		/// The period associated with this invoice item.
+		public class Period: Codable {
+			public var end: Timestamp
+			public var start: Timestamp
+
+			/// The period associated with this invoice item.
+			/// - Parameters:
+			///   - end: 
+			///   - start: 
+			public init(end: Timestamp, start: Timestamp) {
+				self.end = end
+				self.start = start
 			}
 		}
 

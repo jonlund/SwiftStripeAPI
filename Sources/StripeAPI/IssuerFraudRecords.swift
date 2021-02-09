@@ -5,13 +5,13 @@ public struct GetIssuerFraudRecords: StripeAPIEndpoint {
 	public typealias outputType = RadarIssuerFraudRecordList
 	public typealias paramType = Params
 	public struct Params {
-		let ending_before: String
-		let starting_after: String
-		let limit: Int
 		let charge: String
+		let ending_before: String
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuer_fraud_records?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))&charge=\(inputs.charge.urlEncoded))"
+		return "/v1/issuer_fraud_records?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

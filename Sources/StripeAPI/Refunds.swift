@@ -7,12 +7,12 @@ public struct GetRefunds: StripeAPIEndpoint {
 	public struct Params {
 		let charge: String
 		let ending_before: String
-		let payment_intent: String
 		let limit: Int
+		let payment_intent: String
 		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/refunds?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&charge=\(inputs.charge.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))"
+		return "/v1/refunds?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

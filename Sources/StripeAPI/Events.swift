@@ -5,14 +5,14 @@ public struct GetEvents: StripeAPIEndpoint {
 	public typealias outputType = NotificationEventList
 	public typealias paramType = Params
 	public struct Params {
-		let type: String
-		let limit: Int
-		let ending_before: String
 		let delivery_success: Bool
+		let ending_before: String
+		let limit: Int
 		let starting_after: String
+		let type: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/events?ending_before=\(inputs.ending_before.urlEncoded))&type=\(inputs.type.urlEncoded))&delivery_success=\(inputs.delivery_success.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/events?delivery_success=\(inputs.delivery_success.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

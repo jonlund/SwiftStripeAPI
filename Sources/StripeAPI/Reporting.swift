@@ -6,11 +6,11 @@ public struct GetReportingReportRuns: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let ending_before: String
-		let starting_after: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/reporting/report_runs?limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/reporting/report_runs?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -83,6 +83,43 @@ public struct PostReportingReportRuns: StripeAPIEndpoint {
 				self.payout = payout
 				self.reporting_category = reporting_category
 				self.timezone = timezone
+			}
+
+			public enum ReportingCategoryValues: String, Codable {
+				case advance = "advance"
+				case advanceFunding = "advance_funding"
+				case anticipationRepayment = "anticipation_repayment"
+				case charge = "charge"
+				case chargeFailure = "charge_failure"
+				case connectCollectionTransfer = "connect_collection_transfer"
+				case connectReservedFunds = "connect_reserved_funds"
+				case contribution = "contribution"
+				case dispute = "dispute"
+				case disputeReversal = "dispute_reversal"
+				case fee = "fee"
+				case financingPaydown = "financing_paydown"
+				case financingPaydownReversal = "financing_paydown_reversal"
+				case financingPayout = "financing_payout"
+				case financingPayoutReversal = "financing_payout_reversal"
+				case issuingAuthorizationHold = "issuing_authorization_hold"
+				case issuingAuthorizationRelease = "issuing_authorization_release"
+				case issuingDispute = "issuing_dispute"
+				case issuingTransaction = "issuing_transaction"
+				case networkCost = "network_cost"
+				case otherAdjustment = "other_adjustment"
+				case partialCaptureReversal = "partial_capture_reversal"
+				case payout = "payout"
+				case payoutReversal = "payout_reversal"
+				case platformEarning = "platform_earning"
+				case platformEarningRefund = "platform_earning_refund"
+				case refund = "refund"
+				case refundFailure = "refund_failure"
+				case riskReservedFunds = "risk_reserved_funds"
+				case tax = "tax"
+				case topup = "topup"
+				case topupReversal = "topup_reversal"
+				case transfer = "transfer"
+				case transferReversal = "transfer_reversal"
 			}
 
 			public enum TimezoneValues: String, Codable {
@@ -680,43 +717,6 @@ public struct PostReportingReportRuns: StripeAPIEndpoint {
 				case optionWMinusSu = "W-SU"
 				case optionWET = "WET"
 				case optionZulu = "Zulu"
-			}
-
-			public enum ReportingCategoryValues: String, Codable {
-				case advance = "advance"
-				case advanceFunding = "advance_funding"
-				case anticipationRepayment = "anticipation_repayment"
-				case charge = "charge"
-				case chargeFailure = "charge_failure"
-				case connectCollectionTransfer = "connect_collection_transfer"
-				case connectReservedFunds = "connect_reserved_funds"
-				case contribution = "contribution"
-				case dispute = "dispute"
-				case disputeReversal = "dispute_reversal"
-				case fee = "fee"
-				case financingPaydown = "financing_paydown"
-				case financingPaydownReversal = "financing_paydown_reversal"
-				case financingPayout = "financing_payout"
-				case financingPayoutReversal = "financing_payout_reversal"
-				case issuingAuthorizationHold = "issuing_authorization_hold"
-				case issuingAuthorizationRelease = "issuing_authorization_release"
-				case issuingDispute = "issuing_dispute"
-				case issuingTransaction = "issuing_transaction"
-				case networkCost = "network_cost"
-				case otherAdjustment = "other_adjustment"
-				case partialCaptureReversal = "partial_capture_reversal"
-				case payout = "payout"
-				case payoutReversal = "payout_reversal"
-				case platformEarning = "platform_earning"
-				case platformEarningRefund = "platform_earning_refund"
-				case refund = "refund"
-				case refundFailure = "refund_failure"
-				case riskReservedFunds = "risk_reserved_funds"
-				case tax = "tax"
-				case topup = "topup"
-				case topupReversal = "topup_reversal"
-				case transfer = "transfer"
-				case transferReversal = "transfer_reversal"
 			}
 		}
 

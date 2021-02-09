@@ -6,13 +6,13 @@ public struct GetCreditNotes: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer: String
+		let ending_before: String
 		let invoice: String
 		let limit: Int
 		let starting_after: String
-		let ending_before: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes?customer=\(inputs.customer.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/credit_notes?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -103,16 +103,16 @@ public struct GetCreditNotesPreview: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let amount: Int
+		let credit_amount: Int
+		let invoice: String
+		let memo: String
 		let out_of_band_amount: Int
 		let reason: String
-		let credit_amount: Int
-		let refund_amount: Int
-		let memo: String
-		let invoice: String
 		let refund: String
+		let refund_amount: Int
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes/preview?out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))&memo=\(inputs.memo.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&refund=\(inputs.refund.urlEncoded))&reason=\(inputs.reason.urlEncoded))&amount=\(inputs.amount.urlEncoded))"
+		return "/v1/credit_notes/preview?amount=\(inputs.amount.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&memo=\(inputs.memo.urlEncoded))&out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&reason=\(inputs.reason.urlEncoded))&refund=\(inputs.refund.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -125,19 +125,19 @@ public struct GetCreditNotesPreviewLines: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let amount: Int
-		let starting_after: String
+		let credit_amount: Int
+		let ending_before: String
+		let invoice: String
+		let limit: Int
+		let memo: String
 		let out_of_band_amount: Int
 		let reason: String
-		let limit: Int
-		let credit_amount: Int
-		let refund_amount: Int
-		let memo: String
-		let invoice: String
 		let refund: String
-		let ending_before: String
+		let refund_amount: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes/preview/lines?memo=\(inputs.memo.urlEncoded))&refund=\(inputs.refund.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))&limit=\(inputs.limit.urlEncoded))&out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&amount=\(inputs.amount.urlEncoded))&reason=\(inputs.reason.urlEncoded))"
+		return "/v1/credit_notes/preview/lines?amount=\(inputs.amount.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&memo=\(inputs.memo.urlEncoded))&out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&reason=\(inputs.reason.urlEncoded))&refund=\(inputs.refund.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -172,12 +172,12 @@ public struct GetCreditNotesCreditNoteLines: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let credit_note: String
-		let starting_after: String
-		let limit: Int
 		let ending_before: String
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes/\(inputs.credit_note)/lines?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/credit_notes/\(inputs.credit_note)/lines?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

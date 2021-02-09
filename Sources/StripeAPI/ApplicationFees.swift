@@ -5,13 +5,13 @@ public struct GetApplicationFees: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let ending_before: String
 		let charge: String
+		let ending_before: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/application_fees?starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))&charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/application_fees?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -44,8 +44,8 @@ public struct GetApplicationFeesFeeRefundsId: StripeAPIEndpoint {
 	public typealias outputType = FeeRefund
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
 		let fee: String
+		let id: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees/\(inputs.fee)/refunds/\(inputs.id)"
@@ -128,13 +128,13 @@ public struct GetApplicationFeesIdRefunds: StripeAPIEndpoint {
 	public typealias outputType = FeeRefundList
 	public typealias paramType = Params
 	public struct Params {
-		let id: String
-		let starting_after: String
 		let ending_before: String
+		let id: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/application_fees/\(inputs.id)/refunds?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/application_fees/\(inputs.id)/refunds?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

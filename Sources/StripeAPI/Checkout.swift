@@ -6,13 +6,13 @@ public struct GetCheckoutSessions: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let ending_before: String
-		let subscription: String
+		let limit: Int
 		let payment_intent: String
 		let starting_after: String
-		let limit: Int
+		let subscription: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/checkout/sessions?subscription=\(inputs.subscription.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))"
+		return "/v1/checkout/sessions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -111,23 +111,6 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		}
 
 
-		/// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
-		public class SetupIntentDataParam: Codable {
-			public var description: String?
-			public var metadata: String?
-			public var on_behalf_of: String?
-
-			/// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
-			/// - Parameters:
-			public init(description: String? = nil, metadata: String? = nil, on_behalf_of: String? = nil) {
-				self.description = description
-				self.metadata = metadata
-				self.on_behalf_of = on_behalf_of
-			}
-		}
-
-
-
 		/// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
 		public class PaymentIntentDataParams: Codable {
 			public var application_fee_amount: Int?
@@ -210,14 +193,45 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 			}
 
 
+			public enum CaptureMethodValues: String, Codable {
+				case automatic = "automatic"
+				case manual = "manual"
+			}
+
 			public enum SetupFutureUsageValues: String, Codable {
 				case offSession = "off_session"
 				case onSession = "on_session"
 			}
+		}
 
-			public enum CaptureMethodValues: String, Codable {
-				case automatic = "automatic"
-				case manual = "manual"
+
+
+		/// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
+		public class SetupIntentDataParam: Codable {
+			public var description: String?
+			public var metadata: String?
+			public var on_behalf_of: String?
+
+			/// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
+			/// - Parameters:
+			public init(description: String? = nil, metadata: String? = nil, on_behalf_of: String? = nil) {
+				self.description = description
+				self.metadata = metadata
+				self.on_behalf_of = on_behalf_of
+			}
+		}
+
+
+
+		/// When set, provides configuration for Checkout to collect a shipping address from a customer.
+		public class ShippingAddressCollectionParams: Codable {
+			public var allowed_countries: [String]
+
+			/// When set, provides configuration for Checkout to collect a shipping address from a customer.
+			/// - Parameters:
+			///   - allowed_countries: 
+			public init(allowed_countries: [String]) {
+				self.allowed_countries = allowed_countries
 			}
 		}
 
@@ -244,26 +258,6 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 			}
 		}
 
-
-
-		/// When set, provides configuration for Checkout to collect a shipping address from a customer.
-		public class ShippingAddressCollectionParams: Codable {
-			public var allowed_countries: [String]
-
-			/// When set, provides configuration for Checkout to collect a shipping address from a customer.
-			/// - Parameters:
-			///   - allowed_countries: 
-			public init(allowed_countries: [String]) {
-				self.allowed_countries = allowed_countries
-			}
-		}
-
-
-		public enum ModeValues: String, Codable {
-			case payment = "payment"
-			case setup = "setup"
-			case subscription = "subscription"
-		}
 
 		public enum BillingAddressCollectionValues: String, Codable {
 			case auto = "auto"
@@ -309,6 +303,12 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 			case zhMinusTw = "zh-TW"
 		}
 
+		public enum ModeValues: String, Codable {
+			case payment = "payment"
+			case setup = "setup"
+			case subscription = "subscription"
+		}
+
 		public enum SubmitTypeValues: String, Codable {
 			case auto = "auto"
 			case book = "book"
@@ -340,13 +340,13 @@ public struct GetCheckoutSessionsSessionLineItems: StripeAPIEndpoint {
 	public typealias outputType = PaymentPagesCheckoutSessionListLineItems
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
 		let ending_before: String
 		let limit: Int
 		let session: String
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/checkout/sessions/\(inputs.session)/line_items?starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/checkout/sessions/\(inputs.session)/line_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

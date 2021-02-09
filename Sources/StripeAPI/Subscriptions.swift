@@ -5,16 +5,16 @@ public struct GetSubscriptions: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let status: String
-		let limit: Int
-		let ending_before: String
-		let customer: String
-		let starting_after: String
 		let collection_method: String
+		let customer: String
+		let ending_before: String
+		let limit: Int
 		let price: String
+		let starting_after: String
+		let status: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/subscriptions?collection_method=\(inputs.collection_method.urlEncoded))&status=\(inputs.status.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&price=\(inputs.price.urlEncoded))&customer=\(inputs.customer.urlEncoded))"
+		return "/v1/subscriptions?collection_method=\(inputs.collection_method.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&price=\(inputs.price.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -149,15 +149,15 @@ public struct PostSubscriptions: StripeAPIEndpoint {
 		}
 
 
+		public enum CollectionMethodValues: String, Codable {
+			case chargeAutomatically = "charge_automatically"
+			case sendInvoice = "send_invoice"
+		}
+
 		public enum PaymentBehaviorValues: String, Codable {
 			case allowIncomplete = "allow_incomplete"
 			case errorIfIncomplete = "error_if_incomplete"
 			case pendingIfIncomplete = "pending_if_incomplete"
-		}
-
-		public enum CollectionMethodValues: String, Codable {
-			case chargeAutomatically = "charge_automatically"
-			case sendInvoice = "send_invoice"
 		}
 
 		public enum ProrationBehaviorValues: String, Codable {
@@ -276,26 +276,26 @@ public struct PostSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
 			self.trial_from_plan = trial_from_plan
 		}
 
+		public enum BillingCycleAnchorValues: String, Codable {
+			case now = "now"
+			case unchanged = "unchanged"
+		}
+
+		public enum CollectionMethodValues: String, Codable {
+			case chargeAutomatically = "charge_automatically"
+			case sendInvoice = "send_invoice"
+		}
+
 		public enum PaymentBehaviorValues: String, Codable {
 			case allowIncomplete = "allow_incomplete"
 			case errorIfIncomplete = "error_if_incomplete"
 			case pendingIfIncomplete = "pending_if_incomplete"
 		}
 
-		public enum BillingCycleAnchorValues: String, Codable {
-			case now = "now"
-			case unchanged = "unchanged"
-		}
-
 		public enum ProrationBehaviorValues: String, Codable {
 			case alwaysInvoice = "always_invoice"
 			case createProrations = "create_prorations"
 			case none = "none"
-		}
-
-		public enum CollectionMethodValues: String, Codable {
-			case chargeAutomatically = "charge_automatically"
-			case sendInvoice = "send_invoice"
 		}
 	}
 

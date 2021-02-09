@@ -5,14 +5,14 @@ public struct GetPaymentMethods: StripeAPIEndpoint {
 	public typealias outputType = PaymentFlowsPaymentMethodList
 	public typealias paramType = Params
 	public struct Params {
-		let ending_before: String
 		let customer: String
-		let type: String
+		let ending_before: String
 		let limit: Int
 		let starting_after: String
+		let type: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/payment_methods?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))&limit=\(inputs.limit.urlEncoded))&customer=\(inputs.customer.urlEncoded))"
+		return "/v1/payment_methods?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

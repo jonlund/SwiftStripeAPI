@@ -6,13 +6,13 @@ public struct GetRecipients: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let ending_before: String
-		let verified: Bool
-		let type: String
 		let limit: Int
 		let starting_after: String
+		let type: String
+		let verified: Bool
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/recipients?ending_before=\(inputs.ending_before.urlEncoded))&verified=\(inputs.verified.urlEncoded))&type=\(inputs.type.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/recipients?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))&verified=\(inputs.verified.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

@@ -5,14 +5,14 @@ public struct GetSetupIntents: StripeAPIEndpoint {
 	public typealias outputType = PaymentFlowsSetupIntentList
 	public typealias paramType = Params
 	public struct Params {
-		let limit: Int
-		let ending_before: String
 		let customer: String
+		let ending_before: String
+		let limit: Int
 		let payment_method: String
 		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/setup_intents?ending_before=\(inputs.ending_before.urlEncoded))&payment_method=\(inputs.payment_method.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&customer=\(inputs.customer.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/setup_intents?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_method=\(inputs.payment_method.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -93,78 +93,6 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 		}
 
 
-		/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
-		public class SecretKeyParam: Codable {
-			public var customer_acceptance: CustomerAcceptanceParam
-
-			/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
-			/// - Parameters:
-			///   - customer_acceptance: 
-			public init(customer_acceptance: CustomerAcceptanceParam) {
-				self.customer_acceptance = customer_acceptance
-			}
-
-
-			public class CustomerAcceptanceParam: Codable {
-				public var accepted_at: Timestamp?
-				public var offline: OfflineParam?
-				public var online: OnlineParam?
-				public var type: TypeValues
-
-				public init(type: TypeValues, accepted_at: Timestamp? = nil, offline: OfflineParam? = nil, online: OnlineParam? = nil) {
-					self.type = type
-					self.accepted_at = accepted_at
-					self.offline = offline
-					self.online = online
-				}
-
-
-				public class OnlineParam: Codable {
-					public var ip_address: String
-					public var user_agent: String
-
-					public init(ip_address: String, user_agent: String) {
-						self.ip_address = ip_address
-						self.user_agent = user_agent
-					}
-				}
-
-
-
-				public class OfflineParam: Codable {
-
-					public init() {
-					}
-				}
-
-
-				public enum TypeValues: String, Codable {
-					case offline = "offline"
-					case online = "online"
-				}
-			}
-
-		}
-
-
-
-		/// If this hash is populated, this SetupIntent will generate a single_use Mandate on success.
-		public class SetupIntentSingleUseParams: Codable {
-			public var amount: Int
-			public var currency: String
-
-			/// If this hash is populated, this SetupIntent will generate a single_use Mandate on success.
-			/// - Parameters:
-			///   - amount: 
-			///   - currency: 
-			public init(amount: Int, currency: String) {
-				self.amount = amount
-				self.currency = currency
-			}
-		}
-
-
-
 		/// Payment-method-specific configuration for this SetupIntent.
 		public class PaymentMethodOptionsParam: Codable {
 			public var card: SetupIntentParam?
@@ -212,6 +140,78 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 		}
 
 
+
+		/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+		public class SecretKeyParam: Codable {
+			public var customer_acceptance: CustomerAcceptanceParam
+
+			/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+			/// - Parameters:
+			///   - customer_acceptance: 
+			public init(customer_acceptance: CustomerAcceptanceParam) {
+				self.customer_acceptance = customer_acceptance
+			}
+
+
+			public class CustomerAcceptanceParam: Codable {
+				public var accepted_at: Timestamp?
+				public var offline: OfflineParam?
+				public var online: OnlineParam?
+				public var type: TypeValues
+
+				public init(type: TypeValues, accepted_at: Timestamp? = nil, offline: OfflineParam? = nil, online: OnlineParam? = nil) {
+					self.type = type
+					self.accepted_at = accepted_at
+					self.offline = offline
+					self.online = online
+				}
+
+
+				public class OfflineParam: Codable {
+
+					public init() {
+					}
+				}
+
+
+
+				public class OnlineParam: Codable {
+					public var ip_address: String
+					public var user_agent: String
+
+					public init(ip_address: String, user_agent: String) {
+						self.ip_address = ip_address
+						self.user_agent = user_agent
+					}
+				}
+
+
+				public enum TypeValues: String, Codable {
+					case offline = "offline"
+					case online = "online"
+				}
+			}
+
+		}
+
+
+
+		/// If this hash is populated, this SetupIntent will generate a single_use Mandate on success.
+		public class SetupIntentSingleUseParams: Codable {
+			public var amount: Int
+			public var currency: String
+
+			/// If this hash is populated, this SetupIntent will generate a single_use Mandate on success.
+			/// - Parameters:
+			///   - amount: 
+			///   - currency: 
+			public init(amount: Int, currency: String) {
+				self.amount = amount
+				self.currency = currency
+			}
+		}
+
+
 		public enum UsageValues: String, Codable {
 			case offSession = "off_session"
 			case onSession = "on_session"
@@ -226,8 +226,8 @@ public struct GetSetupIntentsIntent: StripeAPIEndpoint {
 	public typealias outputType = SetupIntent
 	public typealias paramType = Params
 	public struct Params {
-		let intent: String
 		let client_secret: String
+		let intent: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/setup_intents/\(inputs.intent)?client_secret=\(inputs.client_secret.urlEncoded))"
@@ -288,6 +288,21 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 			}
 
 
+			public class SetupIntentParam: Codable {
+				public var request_three_d_secure: RequestThreeDSecureValues?
+
+				public init(request_three_d_secure: RequestThreeDSecureValues? = nil) {
+					self.request_three_d_secure = request_three_d_secure
+				}
+
+				public enum RequestThreeDSecureValues: String, Codable {
+					case any = "any"
+					case automatic = "automatic"
+				}
+			}
+
+
+
 			public class SetupIntentPaymentMethodOptionsParam: Codable {
 				public var mandate_options: PaymentMethodOptionsMandateOptionsParam?
 
@@ -302,21 +317,6 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 					}
 				}
 
-			}
-
-
-
-			public class SetupIntentParam: Codable {
-				public var request_three_d_secure: RequestThreeDSecureValues?
-
-				public init(request_three_d_secure: RequestThreeDSecureValues? = nil) {
-					self.request_three_d_secure = request_three_d_secure
-				}
-
-				public enum RequestThreeDSecureValues: String, Codable {
-					case any = "any"
-					case automatic = "automatic"
-				}
 			}
 
 		}

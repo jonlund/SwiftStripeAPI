@@ -5,16 +5,16 @@ public struct GetPromotionCodes: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let limit: Int
+		let active: Bool
 		let code: String
 		let coupon: String
 		let customer: String
-		let active: Bool
 		let ending_before: String
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/promotion_codes?limit=\(inputs.limit.urlEncoded))&coupon=\(inputs.coupon.urlEncoded))&active=\(inputs.active.urlEncoded))&code=\(inputs.code.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&customer=\(inputs.customer.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/promotion_codes?active=\(inputs.active.urlEncoded))&code=\(inputs.code.urlEncoded))&coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

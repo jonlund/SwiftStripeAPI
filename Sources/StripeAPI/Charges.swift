@@ -6,14 +6,14 @@ public struct GetCharges: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer: String
-		let starting_after: String
-		let payment_intent: String
-		let limit: Int
-		let transfer_group: String
 		let ending_before: String
+		let limit: Int
+		let payment_intent: String
+		let starting_after: String
+		let transfer_group: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/charges?ending_before=\(inputs.ending_before.urlEncoded))&transfer_group=\(inputs.transfer_group.urlEncoded))&customer=\(inputs.customer.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/charges?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&transfer_group=\(inputs.transfer_group.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -110,22 +110,6 @@ public struct PostCharges: StripeAPIEndpoint {
 		}
 
 
-		/// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
-		public class TransferDataSpecs: Codable {
-			public var amount: Int?
-			public var destination: String
-
-			/// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
-			/// - Parameters:
-			///   - destination: 
-			public init(destination: String, amount: Int? = nil) {
-				self.destination = destination
-				self.amount = amount
-			}
-		}
-
-
-
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
 		public class Shipping: Codable {
 			public var address: Address
@@ -165,6 +149,22 @@ public struct PostCharges: StripeAPIEndpoint {
 				}
 			}
 
+		}
+
+
+
+		/// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
+		public class TransferDataSpecs: Codable {
+			public var amount: Int?
+			public var destination: String
+
+			/// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
+			/// - Parameters:
+			///   - destination: 
+			public init(destination: String, amount: Int? = nil) {
+				self.destination = destination
+				self.amount = amount
+			}
 		}
 
 	}
@@ -533,10 +533,10 @@ public struct GetChargesChargeRefunds: StripeAPIEndpoint {
 	public typealias outputType = RefundList
 	public typealias paramType = Params
 	public struct Params {
-		let ending_before: String
 		let charge: String
-		let starting_after: String
+		let ending_before: String
 		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/charges/\(inputs.charge)/refunds?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"

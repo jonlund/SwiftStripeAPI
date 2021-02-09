@@ -5,14 +5,14 @@ public struct GetSubscriptionSchedules: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let scheduled: Bool
-		let ending_before: String
 		let customer: String
+		let ending_before: String
 		let limit: Int
+		let scheduled: Bool
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/subscription_schedules?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&customer=\(inputs.customer.urlEncoded))&limit=\(inputs.limit.urlEncoded))&scheduled=\(inputs.scheduled.urlEncoded))"
+		return "/v1/subscription_schedules?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&scheduled=\(inputs.scheduled.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -110,14 +110,14 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 			}
 
 
-			public enum CollectionMethodValues: String, Codable {
-				case chargeAutomatically = "charge_automatically"
-				case sendInvoice = "send_invoice"
-			}
-
 			public enum BillingCycleAnchorValues: String, Codable {
 				case automatic = "automatic"
 				case phaseStart = "phase_start"
+			}
+
+			public enum CollectionMethodValues: String, Codable {
+				case chargeAutomatically = "charge_automatically"
+				case sendInvoice = "send_invoice"
 			}
 		}
 
@@ -215,29 +215,29 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 			}
 
 
-			public enum CollectionMethodValues: String, Codable {
-				case chargeAutomatically = "charge_automatically"
-				case sendInvoice = "send_invoice"
-			}
-
 			public enum BillingCycleAnchorValues: String, Codable {
 				case automatic = "automatic"
 				case phaseStart = "phase_start"
 			}
+
+			public enum CollectionMethodValues: String, Codable {
+				case chargeAutomatically = "charge_automatically"
+				case sendInvoice = "send_invoice"
+			}
 		}
 
-
-		public enum ProrationBehaviorValues: String, Codable {
-			case alwaysInvoice = "always_invoice"
-			case createProrations = "create_prorations"
-			case none = "none"
-		}
 
 		public enum EndBehaviorValues: String, Codable {
 			case cancel = "cancel"
 			case none = "none"
 			case release = "release"
 			case renew = "renew"
+		}
+
+		public enum ProrationBehaviorValues: String, Codable {
+			case alwaysInvoice = "always_invoice"
+			case createProrations = "create_prorations"
+			case none = "none"
 		}
 	}
 

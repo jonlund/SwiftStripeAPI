@@ -5,16 +5,16 @@ public struct GetInvoices: StripeAPIEndpoint {
 	public typealias outputType = InvoicesList
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
+		let collection_method: String
 		let customer: String
 		let ending_before: String
-		let status: String
 		let limit: Int
-		let collection_method: String
+		let starting_after: String
+		let status: String
 		let subscription: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices?starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&customer=\(inputs.customer.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&collection_method=\(inputs.collection_method.urlEncoded))"
+		return "/v1/invoices?collection_method=\(inputs.collection_method.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -142,19 +142,19 @@ public struct GetInvoicesUpcoming: StripeAPIEndpoint {
 	public typealias outputType = Invoice
 	public typealias paramType = Params
 	public struct Params {
-		let subscription_proration_date: Timestamp
-		let subscription_start_date: Timestamp
-		let subscription_cancel_at_period_end: Bool
-		let subscription_cancel_now: Bool
-		let subscription_proration_behavior: String
-		let subscription_trial_from_plan: Bool
 		let coupon: String
 		let customer: String
 		let schedule: String
 		let subscription: String
+		let subscription_cancel_at_period_end: Bool
+		let subscription_cancel_now: Bool
+		let subscription_proration_behavior: String
+		let subscription_proration_date: Timestamp
+		let subscription_start_date: Timestamp
+		let subscription_trial_from_plan: Bool
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices/upcoming?subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&customer=\(inputs.customer.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&coupon=\(inputs.coupon.urlEncoded))"
+		return "/v1/invoices/upcoming?coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -166,22 +166,22 @@ public struct GetInvoicesUpcomingLines: StripeAPIEndpoint {
 	public typealias outputType = InvoiceLinesList
 	public typealias paramType = Params
 	public struct Params {
-		let subscription_start_date: Timestamp
-		let subscription_cancel_now: Bool
-		let subscription_cancel_at_period_end: Bool
-		let subscription_proration_behavior: String
 		let coupon: String
 		let customer: String
 		let ending_before: String
-		let schedule: String
-		let subscription_trial_from_plan: Bool
-		let starting_after: String
 		let limit: Int
+		let schedule: String
+		let starting_after: String
 		let subscription: String
+		let subscription_cancel_at_period_end: Bool
+		let subscription_cancel_now: Bool
+		let subscription_proration_behavior: String
 		let subscription_proration_date: Timestamp
+		let subscription_start_date: Timestamp
+		let subscription_trial_from_plan: Bool
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices/upcoming/lines?customer=\(inputs.customer.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&coupon=\(inputs.coupon.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&limit=\(inputs.limit.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/invoices/upcoming/lines?coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -353,7 +353,7 @@ public struct GetInvoicesInvoiceLines: StripeAPIEndpoint {
 		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices/\(inputs.invoice)/lines?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))"
+		return "/v1/invoices/\(inputs.invoice)/lines?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

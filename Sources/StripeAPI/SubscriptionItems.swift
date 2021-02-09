@@ -6,12 +6,12 @@ public struct GetSubscriptionItems: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let ending_before: String
+		let limit: Int
 		let starting_after: String
 		let subscription: String
-		let limit: Int
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/subscription_items?starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/subscription_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -308,13 +308,13 @@ public struct GetSubscriptionItemsSubscriptionItemUsageRecordSummaries: StripeAP
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
-		let limit: Int
-		let subscription_item: String
 		let ending_before: String
+		let limit: Int
+		let starting_after: String
+		let subscription_item: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/subscription_items/\(inputs.subscription_item)/usage_record_summaries?limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/subscription_items/\(inputs.subscription_item)/usage_record_summaries?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

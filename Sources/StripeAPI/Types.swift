@@ -2,8 +2,8 @@
 
 /// Information about this version of this API
 public struct StripeAPIInfo: Codable {
-	static let version: String = "2020-08-27"
-	static let server: String = "https://api.stripe.com/"
+	public static let version: String = "2020-08-27"
+	public static let server: String = "https://api.stripe.com/"
 }
 
 /// This is an object representing a Stripe account. You can retrieve it to see properties on the account like its current e-mail address or if the account is enabled yet to make live charges.  Some properties, marked below, are available only to platforms that want to [create and manage Express or Custom accounts](https://stripe.com/docs/connect/accounts).
@@ -115,12 +115,6 @@ public class Account: Codable {
 	}
 
 
-	public enum TypeValues: String, Codable {
-		case custom = "custom"
-		case express = "express"
-		case standard = "standard"
-	}
-
 	public enum BusinessTypeValues: String, Codable {
 		case company = "company"
 		case governmentEntity = "government_entity"
@@ -130,6 +124,12 @@ public class Account: Codable {
 
 	public enum ObjectValues: String, Codable {
 		case account = "account"
+	}
+
+	public enum TypeValues: String, Codable {
+		case custom = "custom"
+		case express = "express"
+		case standard = "standard"
 	}
 }
 
@@ -255,13 +255,61 @@ public class AccountCapabilities: Codable {
 		self.transfers = transfers
 	}
 
+	public enum AuBecsDebitPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum BacsDebitPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum BancontactPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum CardIssuingValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum CardPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
 	public enum CartesBancairesPaymentsValues: String, Codable {
 		case active = "active"
 		case inactive = "inactive"
 		case pending = "pending"
 	}
 
-	public enum JcbPaymentsValues: String, Codable {
+	public enum EpsPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum FpxPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum GiropayPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum GrabpayPaymentsValues: String, Codable {
 		case active = "active"
 		case inactive = "inactive"
 		case pending = "pending"
@@ -273,7 +321,13 @@ public class AccountCapabilities: Codable {
 		case pending = "pending"
 	}
 
-	public enum GiropayPaymentsValues: String, Codable {
+	public enum JcbPaymentsValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum LegacyPaymentsValues: String, Codable {
 		case active = "active"
 		case inactive = "inactive"
 		case pending = "pending"
@@ -291,67 +345,7 @@ public class AccountCapabilities: Codable {
 		case pending = "pending"
 	}
 
-	public enum GrabpayPaymentsValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum FpxPaymentsValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum AuBecsDebitPaymentsValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum CardIssuingValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
 	public enum SepaDebitPaymentsValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum TaxReportingUs1099MiscValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum TaxReportingUs1099KValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum TransfersValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum BancontactPaymentsValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum EpsPaymentsValues: String, Codable {
-		case active = "active"
-		case inactive = "inactive"
-		case pending = "pending"
-	}
-
-	public enum LegacyPaymentsValues: String, Codable {
 		case active = "active"
 		case inactive = "inactive"
 		case pending = "pending"
@@ -363,13 +357,19 @@ public class AccountCapabilities: Codable {
 		case pending = "pending"
 	}
 
-	public enum BacsDebitPaymentsValues: String, Codable {
+	public enum TaxReportingUs1099KValues: String, Codable {
 		case active = "active"
 		case inactive = "inactive"
 		case pending = "pending"
 	}
 
-	public enum CardPaymentsValues: String, Codable {
+	public enum TaxReportingUs1099MiscValues: String, Codable {
+		case active = "active"
+		case inactive = "inactive"
+		case pending = "pending"
+	}
+
+	public enum TransfersValues: String, Codable {
 		case active = "active"
 		case inactive = "inactive"
 		case pending = "pending"
@@ -1020,6 +1020,10 @@ public class BalanceTransaction: Codable {
 		self.source = source
 	}
 
+	public enum ObjectValues: String, Codable {
+		case balanceTransaction = "balance_transaction"
+	}
+
 	public enum TypeValues: String, Codable {
 		case adjustment = "adjustment"
 		case advance = "advance"
@@ -1053,10 +1057,6 @@ public class BalanceTransaction: Codable {
 		case transferCancel = "transfer_cancel"
 		case transferFailure = "transfer_failure"
 		case transferRefund = "transfer_refund"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case balanceTransaction = "balance_transaction"
 	}
 }
 
@@ -1940,26 +1940,9 @@ public class CheckoutSession: Codable {
 	}
 
 
-	public enum SubmitTypeValues: String, Codable {
-		case auto = "auto"
-		case book = "book"
-		case donate = "donate"
-		case pay = "pay"
-	}
-
-	public enum ModeValues: String, Codable {
-		case payment = "payment"
-		case setup = "setup"
-		case subscription = "subscription"
-	}
-
 	public enum BillingAddressCollectionValues: String, Codable {
 		case auto = "auto"
 		case required = "required"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case checkoutSession = "checkout.session"
 	}
 
 	public enum LocaleValues: String, Codable {
@@ -2001,10 +1984,27 @@ public class CheckoutSession: Codable {
 		case zhMinusTw = "zh-TW"
 	}
 
+	public enum ModeValues: String, Codable {
+		case payment = "payment"
+		case setup = "setup"
+		case subscription = "subscription"
+	}
+
+	public enum ObjectValues: String, Codable {
+		case checkoutSession = "checkout.session"
+	}
+
 	public enum PaymentStatusValues: String, Codable {
 		case noPaymentRequired = "no_payment_required"
 		case paid = "paid"
 		case unpaid = "unpaid"
+	}
+
+	public enum SubmitTypeValues: String, Codable {
+		case auto = "auto"
+		case book = "book"
+		case donate = "donate"
+		case pay = "pay"
 	}
 }
 
@@ -2331,9 +2331,8 @@ public class CreditNote: Codable {
 	}
 
 
-	public enum StatusValues: String, Codable {
-		case issued = "issued"
-		case void = "void"
+	public enum ObjectValues: String, Codable {
+		case creditNote = "credit_note"
 	}
 
 	public enum ReasonValues: String, Codable {
@@ -2343,8 +2342,9 @@ public class CreditNote: Codable {
 		case productUnsatisfactory = "product_unsatisfactory"
 	}
 
-	public enum ObjectValues: String, Codable {
-		case creditNote = "credit_note"
+	public enum StatusValues: String, Codable {
+		case issued = "issued"
+		case void = "void"
 	}
 
 	public enum TypeValues: String, Codable {
@@ -2528,37 +2528,6 @@ public class Customer: Codable {
 	}
 
 
-	/// The customer's tax IDs.
-	public class TaxIDsList: Codable {
-		/// Details about each object.
-		public var data: [TaxId]
-		/// True if this list has another page of items after this one that can be fetched.
-		public var has_more: Bool
-		/// String representing the object's type. Objects of the same type share the same value. Always has the value `list`.
-		public var object: ObjectValues
-		/// The URL where this list can be accessed.
-		public var url: String
-
-		/// The customer's tax IDs.
-		/// - Parameters:
-		///   - data: Details about each object.
-		///   - has_more: True if this list has another page of items after this one that can be fetched.
-		///   - object: String representing the object's type. Objects of the same type share the same value. Always has the value `list`.
-		///   - url: The URL where this list can be accessed.
-		public init(data: [TaxId], has_more: Bool, object: ObjectValues, url: String) {
-			self.data = data
-			self.has_more = has_more
-			self.object = object
-			self.url = url
-		}
-
-		public enum ObjectValues: String, Codable {
-			case list = "list"
-		}
-	}
-
-
-
 	/// The customer's payment sources, if any.
 	public class ApmsSourcesSourceList: Codable {
 		/// Details about each object.
@@ -2608,6 +2577,37 @@ public class Customer: Codable {
 		///   - object: String representing the object's type. Objects of the same type share the same value. Always has the value `list`.
 		///   - url: The URL where this list can be accessed.
 		public init(data: [Subscription], has_more: Bool, object: ObjectValues, url: String) {
+			self.data = data
+			self.has_more = has_more
+			self.object = object
+			self.url = url
+		}
+
+		public enum ObjectValues: String, Codable {
+			case list = "list"
+		}
+	}
+
+
+
+	/// The customer's tax IDs.
+	public class TaxIDsList: Codable {
+		/// Details about each object.
+		public var data: [TaxId]
+		/// True if this list has another page of items after this one that can be fetched.
+		public var has_more: Bool
+		/// String representing the object's type. Objects of the same type share the same value. Always has the value `list`.
+		public var object: ObjectValues
+		/// The URL where this list can be accessed.
+		public var url: String
+
+		/// The customer's tax IDs.
+		/// - Parameters:
+		///   - data: Details about each object.
+		///   - has_more: True if this list has another page of items after this one that can be fetched.
+		///   - object: String representing the object's type. Objects of the same type share the same value. Always has the value `list`.
+		///   - url: The URL where this list can be accessed.
+		public init(data: [TaxId], has_more: Bool, object: ObjectValues, url: String) {
 			self.data = data
 			self.has_more = has_more
 			self.object = object
@@ -2712,6 +2712,10 @@ public class CustomerBalanceTransaction: Codable {
 		self.metadata = metadata
 	}
 
+	public enum ObjectValues: String, Codable {
+		case customerBalanceTransaction = "customer_balance_transaction"
+	}
+
 	public enum TypeValues: String, Codable {
 		case adjustment = "adjustment"
 		case appliedToInvoice = "applied_to_invoice"
@@ -2722,10 +2726,6 @@ public class CustomerBalanceTransaction: Codable {
 		case migration = "migration"
 		case unappliedFromInvoice = "unapplied_from_invoice"
 		case unspentReceiverCredit = "unspent_receiver_credit"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case customerBalanceTransaction = "customer_balance_transaction"
 	}
 }
 
@@ -3762,6 +3762,10 @@ public class File: Codable {
 	}
 
 
+	public enum ObjectValues: String, Codable {
+		case file = "file"
+	}
+
 	public enum PurposeValues: String, Codable {
 		case accountRequirement = "account_requirement"
 		case additionalVerification = "additional_verification"
@@ -3772,10 +3776,6 @@ public class File: Codable {
 		case identityDocument = "identity_document"
 		case pciDocument = "pci_document"
 		case taxDocumentUserUpload = "tax_document_user_upload"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case file = "file"
 	}
 }
 
@@ -4165,9 +4165,26 @@ public class Invoice: Codable {
 	}
 
 
+	public enum BillingReasonValues: String, Codable {
+		case automaticPendingInvoiceItemInvoice = "automatic_pending_invoice_item_invoice"
+		case manual = "manual"
+		case subscription = "subscription"
+		case subscriptionCreate = "subscription_create"
+		case subscriptionCycle = "subscription_cycle"
+		case subscriptionThreshold = "subscription_threshold"
+		case subscriptionUpdate = "subscription_update"
+		case upcoming = "upcoming"
+	}
+
 	public enum CollectionMethodValues: String, Codable {
 		case chargeAutomatically = "charge_automatically"
 		case sendInvoice = "send_invoice"
+	}
+
+	public enum CustomerTaxExemptValues: String, Codable {
+		case exempt = "exempt"
+		case none = "none"
+		case reverse = "reverse"
 	}
 
 	public enum ObjectValues: String, Codable {
@@ -4181,23 +4198,6 @@ public class Invoice: Codable {
 		case paid = "paid"
 		case uncollectible = "uncollectible"
 		case void = "void"
-	}
-
-	public enum BillingReasonValues: String, Codable {
-		case automaticPendingInvoiceItemInvoice = "automatic_pending_invoice_item_invoice"
-		case manual = "manual"
-		case subscription = "subscription"
-		case subscriptionCreate = "subscription_create"
-		case subscriptionCycle = "subscription_cycle"
-		case subscriptionThreshold = "subscription_threshold"
-		case subscriptionUpdate = "subscription_update"
-		case upcoming = "upcoming"
-	}
-
-	public enum CustomerTaxExemptValues: String, Codable {
-		case exempt = "exempt"
-		case none = "none"
-		case reverse = "reverse"
 	}
 }
 
@@ -4604,12 +4604,6 @@ public class IssuingAuthorization: Codable {
 		self.wallet = wallet
 	}
 
-	public enum StatusValues: String, Codable {
-		case closed = "closed"
-		case pending = "pending"
-		case reversed = "reversed"
-	}
-
 	public enum AuthorizationMethodValues: String, Codable {
 		case chip = "chip"
 		case contactless = "contactless"
@@ -4620,6 +4614,12 @@ public class IssuingAuthorization: Codable {
 
 	public enum ObjectValues: String, Codable {
 		case issuingAuthorization = "issuing.authorization"
+	}
+
+	public enum StatusValues: String, Codable {
+		case closed = "closed"
+		case pending = "pending"
+		case reversed = "reversed"
 	}
 }
 
@@ -4713,9 +4713,7 @@ public class IssuingCard: Codable {
 		self.shipping = shipping
 	}
 
-	public enum ReplacementReasonValues: String, Codable {
-		case damaged = "damaged"
-		case expired = "expired"
+	public enum CancellationReasonValues: String, Codable {
 		case lost = "lost"
 		case stolen = "stolen"
 	}
@@ -4724,7 +4722,9 @@ public class IssuingCard: Codable {
 		case issuingCard = "issuing.card"
 	}
 
-	public enum CancellationReasonValues: String, Codable {
+	public enum ReplacementReasonValues: String, Codable {
+		case damaged = "damaged"
+		case expired = "expired"
 		case lost = "lost"
 		case stolen = "stolen"
 	}
@@ -4807,6 +4807,10 @@ public class IssuingCardholder: Codable {
 		self.spending_controls = spending_controls
 	}
 
+	public enum ObjectValues: String, Codable {
+		case issuingCardholder = "issuing.cardholder"
+	}
+
 	public enum StatusValues: String, Codable {
 		case active = "active"
 		case blocked = "blocked"
@@ -4816,10 +4820,6 @@ public class IssuingCardholder: Codable {
 	public enum TypeValues: String, Codable {
 		case company = "company"
 		case individual = "individual"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case issuingCardholder = "issuing.cardholder"
 	}
 }
 
@@ -4874,16 +4874,16 @@ public class IssuingDispute: Codable {
 		self.balance_transactions = balance_transactions
 	}
 
+	public enum ObjectValues: String, Codable {
+		case issuingDispute = "issuing.dispute"
+	}
+
 	public enum StatusValues: String, Codable {
 		case expired = "expired"
 		case lost = "lost"
 		case submitted = "submitted"
 		case unsubmitted = "unsubmitted"
 		case won = "won"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case issuingDispute = "issuing.dispute"
 	}
 }
 
@@ -5186,12 +5186,6 @@ public class IssuingAuthorizationVerificationData: Codable {
 		case notProvided = "not_provided"
 	}
 
-	public enum ExpiryCheckValues: String, Codable {
-		case match = "match"
-		case mismatch = "mismatch"
-		case notProvided = "not_provided"
-	}
-
 	public enum AddressPostalCodeCheckValues: String, Codable {
 		case match = "match"
 		case mismatch = "mismatch"
@@ -5199,6 +5193,12 @@ public class IssuingAuthorizationVerificationData: Codable {
 	}
 
 	public enum CvcCheckValues: String, Codable {
+		case match = "match"
+		case mismatch = "mismatch"
+		case notProvided = "not_provided"
+	}
+
+	public enum ExpiryCheckValues: String, Codable {
 		case match = "match"
 		case mismatch = "mismatch"
 		case notProvided = "not_provided"
@@ -5254,14 +5254,15 @@ public class IssuingCardShipping: Codable {
 		self.tracking_url = tracking_url
 	}
 
-	public enum TypeValues: String, Codable {
-		case bulk = "bulk"
-		case individual = "individual"
-	}
-
 	public enum CarrierValues: String, Codable {
 		case fedex = "fedex"
 		case usps = "usps"
+	}
+
+	public enum ServiceValues: String, Codable {
+		case express = "express"
+		case priority = "priority"
+		case standard = "standard"
 	}
 
 	public enum StatusValues: String, Codable {
@@ -5273,10 +5274,9 @@ public class IssuingCardShipping: Codable {
 		case shipped = "shipped"
 	}
 
-	public enum ServiceValues: String, Codable {
-		case express = "express"
-		case priority = "priority"
-		case standard = "standard"
+	public enum TypeValues: String, Codable {
+		case bulk = "bulk"
+		case individual = "individual"
 	}
 }
 
@@ -6069,13 +6069,13 @@ public class LineItem: Codable {
 		self.tax_rates = tax_rates
 	}
 
+	public enum ObjectValues: String, Codable {
+		case lineItem = "line_item"
+	}
+
 	public enum TypeValues: String, Codable {
 		case invoiceitem = "invoiceitem"
 		case subscription = "subscription"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case lineItem = "line_item"
 	}
 }
 
@@ -6162,9 +6162,8 @@ public class Mandate: Codable {
 		self.single_use = single_use
 	}
 
-	public enum TypeValues: String, Codable {
-		case multiUse = "multi_use"
-		case singleUse = "single_use"
+	public enum ObjectValues: String, Codable {
+		case mandate = "mandate"
 	}
 
 	public enum StatusValues: String, Codable {
@@ -6173,8 +6172,9 @@ public class Mandate: Codable {
 		case pending = "pending"
 	}
 
-	public enum ObjectValues: String, Codable {
-		case mandate = "mandate"
+	public enum TypeValues: String, Codable {
+		case multiUse = "multi_use"
+		case singleUse = "single_use"
 	}
 }
 
@@ -6760,18 +6760,23 @@ public class PaymentIntent: Codable {
 		case voidInvoice = "void_invoice"
 	}
 
-	public enum ConfirmationMethodValues: String, Codable {
+	public enum CaptureMethodValues: String, Codable {
 		case automatic = "automatic"
 		case manual = "manual"
 	}
 
-	public enum CaptureMethodValues: String, Codable {
+	public enum ConfirmationMethodValues: String, Codable {
 		case automatic = "automatic"
 		case manual = "manual"
 	}
 
 	public enum ObjectValues: String, Codable {
 		case paymentIntent = "payment_intent"
+	}
+
+	public enum SetupFutureUsageValues: String, Codable {
+		case offSession = "off_session"
+		case onSession = "on_session"
 	}
 
 	public enum StatusValues: String, Codable {
@@ -6782,11 +6787,6 @@ public class PaymentIntent: Codable {
 		case requiresConfirmation = "requires_confirmation"
 		case requiresPaymentMethod = "requires_payment_method"
 		case succeeded = "succeeded"
-	}
-
-	public enum SetupFutureUsageValues: String, Codable {
-		case offSession = "off_session"
-		case onSession = "on_session"
 	}
 }
 
@@ -6887,12 +6887,6 @@ public class PaymentIntentPaymentMethodOptionsCard: Codable {
 		self.request_three_d_secure = request_three_d_secure
 	}
 
-	public enum RequestThreeDSecureValues: String, Codable {
-		case any = "any"
-		case automatic = "automatic"
-		case challengeOnly = "challenge_only"
-	}
-
 	public enum NetworkValues: String, Codable {
 		case amex = "amex"
 		case cartesBancaires = "cartes_bancaires"
@@ -6904,6 +6898,12 @@ public class PaymentIntentPaymentMethodOptionsCard: Codable {
 		case unionpay = "unionpay"
 		case unknown = "unknown"
 		case visa = "visa"
+	}
+
+	public enum RequestThreeDSecureValues: String, Codable {
+		case any = "any"
+		case automatic = "automatic"
+		case challengeOnly = "challenge_only"
 	}
 }
 
@@ -6992,6 +6992,10 @@ public class PaymentMethod: Codable {
 		self.sofort = sofort
 	}
 
+	public enum ObjectValues: String, Codable {
+		case paymentMethod = "payment_method"
+	}
+
 	public enum TypeValues: String, Codable {
 		case alipay = "alipay"
 		case auBecsDebit = "au_becs_debit"
@@ -7009,10 +7013,6 @@ public class PaymentMethod: Codable {
 		case p24 = "p24"
 		case sepaDebit = "sepa_debit"
 		case sofort = "sofort"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case paymentMethod = "payment_method"
 	}
 }
 
@@ -7798,21 +7798,6 @@ public class PaymentMethodDetailsIdeal: Codable {
 		self.verified_name = verified_name
 	}
 
-	public enum BicValues: String, Codable {
-		case optionABNANL2A = "ABNANL2A"
-		case optionASNBNL21 = "ASNBNL21"
-		case optionBUNQNL2A = "BUNQNL2A"
-		case optionFVLBNL22 = "FVLBNL22"
-		case optionHANDNL2A = "HANDNL2A"
-		case optionINGBNL2A = "INGBNL2A"
-		case optionKNABNL2H = "KNABNL2H"
-		case optionMOYONL21 = "MOYONL21"
-		case optionRABONL2U = "RABONL2U"
-		case optionRBRBNL21 = "RBRBNL21"
-		case optionSNSBNL2A = "SNSBNL2A"
-		case optionTRIONL2U = "TRIONL2U"
-	}
-
 	public enum BankValues: String, Codable {
 		case abnAmro = "abn_amro"
 		case asnBank = "asn_bank"
@@ -7826,6 +7811,21 @@ public class PaymentMethodDetailsIdeal: Codable {
 		case snsBank = "sns_bank"
 		case triodosBank = "triodos_bank"
 		case vanLanschot = "van_lanschot"
+	}
+
+	public enum BicValues: String, Codable {
+		case optionABNANL2A = "ABNANL2A"
+		case optionASNBNL21 = "ASNBNL21"
+		case optionBUNQNL2A = "BUNQNL2A"
+		case optionFVLBNL22 = "FVLBNL22"
+		case optionHANDNL2A = "HANDNL2A"
+		case optionINGBNL2A = "INGBNL2A"
+		case optionKNABNL2H = "KNABNL2H"
+		case optionMOYONL21 = "MOYONL21"
+		case optionRABONL2U = "RABONL2U"
+		case optionRBRBNL21 = "RBRBNL21"
+		case optionSNSBNL2A = "SNSBNL2A"
+		case optionTRIONL2U = "TRIONL2U"
 	}
 }
 
@@ -8554,13 +8554,13 @@ public class Payout: Codable {
 		self.statement_descriptor = statement_descriptor
 	}
 
+	public enum ObjectValues: String, Codable {
+		case payout = "payout"
+	}
+
 	public enum TypeValues: String, Codable {
 		case bankAccount = "bank_account"
 		case card = "card"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case payout = "payout"
 	}
 }
 
@@ -8813,27 +8813,6 @@ public class Plan: Codable {
 		self.trial_period_days = trial_period_days
 	}
 
-	public enum ObjectValues: String, Codable {
-		case plan = "plan"
-	}
-
-	public enum TiersModeValues: String, Codable {
-		case graduated = "graduated"
-		case volume = "volume"
-	}
-
-	public enum IntervalValues: String, Codable {
-		case day = "day"
-		case month = "month"
-		case week = "week"
-		case year = "year"
-	}
-
-	public enum UsageTypeValues: String, Codable {
-		case licensed = "licensed"
-		case metered = "metered"
-	}
-
 	public enum AggregateUsageValues: String, Codable {
 		case lastDuringPeriod = "last_during_period"
 		case lastEver = "last_ever"
@@ -8844,6 +8823,27 @@ public class Plan: Codable {
 	public enum BillingSchemeValues: String, Codable {
 		case perUnit = "per_unit"
 		case tiered = "tiered"
+	}
+
+	public enum IntervalValues: String, Codable {
+		case day = "day"
+		case month = "month"
+		case week = "week"
+		case year = "year"
+	}
+
+	public enum ObjectValues: String, Codable {
+		case plan = "plan"
+	}
+
+	public enum TiersModeValues: String, Codable {
+		case graduated = "graduated"
+		case volume = "volume"
+	}
+
+	public enum UsageTypeValues: String, Codable {
+		case licensed = "licensed"
+		case metered = "metered"
 	}
 }
 
@@ -8973,23 +8973,23 @@ public class Price: Codable {
 		self.unit_amount_decimal = unit_amount_decimal
 	}
 
-	public enum ObjectValues: String, Codable {
-		case price = "price"
-	}
-
-	public enum TypeValues: String, Codable {
-		case oneTime = "one_time"
-		case recurring = "recurring"
-	}
-
 	public enum BillingSchemeValues: String, Codable {
 		case perUnit = "per_unit"
 		case tiered = "tiered"
 	}
 
+	public enum ObjectValues: String, Codable {
+		case price = "price"
+	}
+
 	public enum TiersModeValues: String, Codable {
 		case graduated = "graduated"
 		case volume = "volume"
+	}
+
+	public enum TypeValues: String, Codable {
+		case oneTime = "one_time"
+		case recurring = "recurring"
 	}
 }
 
@@ -9495,6 +9495,13 @@ public class Recurring: Codable {
 		self.aggregate_usage = aggregate_usage
 	}
 
+	public enum AggregateUsageValues: String, Codable {
+		case lastDuringPeriod = "last_during_period"
+		case lastEver = "last_ever"
+		case max = "max"
+		case sum = "sum"
+	}
+
 	public enum IntervalValues: String, Codable {
 		case day = "day"
 		case month = "month"
@@ -9505,13 +9512,6 @@ public class Recurring: Codable {
 	public enum UsageTypeValues: String, Codable {
 		case licensed = "licensed"
 		case metered = "metered"
-	}
-
-	public enum AggregateUsageValues: String, Codable {
-		case lastDuringPeriod = "last_during_period"
-		case lastEver = "last_ever"
-		case max = "max"
-		case sum = "sum"
 	}
 }
 
@@ -9781,20 +9781,20 @@ public class Review: Codable {
 		self.session = session
 	}
 
-	public enum OpenedReasonValues: String, Codable {
-		case manual = "manual"
-		case rule = "rule"
+	public enum ClosedReasonValues: String, Codable {
+		case approved = "approved"
+		case disputed = "disputed"
+		case refunded = "refunded"
+		case refundedAsFraud = "refunded_as_fraud"
 	}
 
 	public enum ObjectValues: String, Codable {
 		case review = "review"
 	}
 
-	public enum ClosedReasonValues: String, Codable {
-		case approved = "approved"
-		case disputed = "disputed"
-		case refunded = "refunded"
-		case refundedAsFraud = "refunded_as_fraud"
+	public enum OpenedReasonValues: String, Codable {
+		case manual = "manual"
+		case rule = "rule"
 	}
 }
 
@@ -10207,6 +10207,10 @@ public class SetupIntent: Codable {
 		case requestedByCustomer = "requested_by_customer"
 	}
 
+	public enum ObjectValues: String, Codable {
+		case setupIntent = "setup_intent"
+	}
+
 	public enum StatusValues: String, Codable {
 		case canceled = "canceled"
 		case processing = "processing"
@@ -10214,10 +10218,6 @@ public class SetupIntent: Codable {
 		case requiresConfirmation = "requires_confirmation"
 		case requiresPaymentMethod = "requires_payment_method"
 		case succeeded = "succeeded"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case setupIntent = "setup_intent"
 	}
 }
 
@@ -11508,6 +11508,15 @@ public class Subscription: Codable {
 	}
 
 
+	public enum CollectionMethodValues: String, Codable {
+		case chargeAutomatically = "charge_automatically"
+		case sendInvoice = "send_invoice"
+	}
+
+	public enum ObjectValues: String, Codable {
+		case subscription = "subscription"
+	}
+
 	public enum StatusValues: String, Codable {
 		case active = "active"
 		case canceled = "canceled"
@@ -11516,15 +11525,6 @@ public class Subscription: Codable {
 		case pastDue = "past_due"
 		case trialing = "trialing"
 		case unpaid = "unpaid"
-	}
-
-	public enum CollectionMethodValues: String, Codable {
-		case chargeAutomatically = "charge_automatically"
-		case sendInvoice = "send_invoice"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case subscription = "subscription"
 	}
 }
 
@@ -11687,6 +11687,13 @@ public class SubscriptionSchedule: Codable {
 		self.subscription = subscription
 	}
 
+	public enum EndBehaviorValues: String, Codable {
+		case cancel = "cancel"
+		case none = "none"
+		case release = "release"
+		case renew = "renew"
+	}
+
 	public enum ObjectValues: String, Codable {
 		case subscriptionSchedule = "subscription_schedule"
 	}
@@ -11697,13 +11704,6 @@ public class SubscriptionSchedule: Codable {
 		case completed = "completed"
 		case notStarted = "not_started"
 		case released = "released"
-	}
-
-	public enum EndBehaviorValues: String, Codable {
-		case cancel = "cancel"
-		case none = "none"
-		case release = "release"
-		case renew = "renew"
 	}
 }
 
@@ -11833,12 +11833,6 @@ public class SubscriptionSchedulePhaseConfiguration: Codable {
 		self.trial_end = trial_end
 	}
 
-	public enum ProrationBehaviorValues: String, Codable {
-		case alwaysInvoice = "always_invoice"
-		case createProrations = "create_prorations"
-		case none = "none"
-	}
-
 	public enum BillingCycleAnchorValues: String, Codable {
 		case automatic = "automatic"
 		case phaseStart = "phase_start"
@@ -11847,6 +11841,12 @@ public class SubscriptionSchedulePhaseConfiguration: Codable {
 	public enum CollectionMethodValues: String, Codable {
 		case chargeAutomatically = "charge_automatically"
 		case sendInvoice = "send_invoice"
+	}
+
+	public enum ProrationBehaviorValues: String, Codable {
+		case alwaysInvoice = "always_invoice"
+		case createProrations = "create_prorations"
+		case none = "none"
 	}
 }
 
@@ -12261,13 +12261,13 @@ public class TerminalReader: Codable {
 		self.status = status
 	}
 
-	public enum ObjectValues: String, Codable {
-		case terminalReader = "terminal.reader"
-	}
-
 	public enum DeviceTypeValues: String, Codable {
 		case bbposChipper2X = "bbpos_chipper2x"
 		case verifoneP400 = "verifone_P400"
+	}
+
+	public enum ObjectValues: String, Codable {
+		case terminalReader = "terminal.reader"
 	}
 }
 
@@ -12345,6 +12345,16 @@ public class ThreeDSecureDetails: Codable {
 		case frictionless = "frictionless"
 	}
 
+	public enum ResultReasonValues: String, Codable {
+		case abandoned = "abandoned"
+		case bypassed = "bypassed"
+		case canceled = "canceled"
+		case cardNotEnrolled = "card_not_enrolled"
+		case networkNotSupported = "network_not_supported"
+		case protocolError = "protocol_error"
+		case rejected = "rejected"
+	}
+
 	public enum ResultValues: String, Codable {
 		case attemptAcknowledged = "attempt_acknowledged"
 		case authenticated = "authenticated"
@@ -12357,16 +12367,6 @@ public class ThreeDSecureDetails: Codable {
 		case option102 = "1.0.2"
 		case option210 = "2.1.0"
 		case option220 = "2.2.0"
-	}
-
-	public enum ResultReasonValues: String, Codable {
-		case abandoned = "abandoned"
-		case bypassed = "bypassed"
-		case canceled = "canceled"
-		case cardNotEnrolled = "card_not_enrolled"
-		case networkNotSupported = "network_not_supported"
-		case protocolError = "protocol_error"
-		case rejected = "rejected"
 	}
 }
 
@@ -12495,16 +12495,16 @@ public class Topup: Codable {
 		self.transfer_group = transfer_group
 	}
 
+	public enum ObjectValues: String, Codable {
+		case topup = "topup"
+	}
+
 	public enum StatusValues: String, Codable {
 		case canceled = "canceled"
 		case failed = "failed"
 		case pending = "pending"
 		case reversed = "reversed"
 		case succeeded = "succeeded"
-	}
-
-	public enum ObjectValues: String, Codable {
-		case topup = "topup"
 	}
 }
 

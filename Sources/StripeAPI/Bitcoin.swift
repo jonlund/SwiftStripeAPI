@@ -5,15 +5,15 @@ public struct GetBitcoinReceivers: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
-		let starting_after: String
 		let active: Bool
+		let ending_before: String
 		let filled: Bool
 		let limit: Int
-		let ending_before: String
+		let starting_after: String
 		let uncaptured_funds: Bool
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/bitcoin/receivers?active=\(inputs.active.urlEncoded))&filled=\(inputs.filled.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&uncaptured_funds=\(inputs.uncaptured_funds.urlEncoded))"
+		return "/v1/bitcoin/receivers?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&filled=\(inputs.filled.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&uncaptured_funds=\(inputs.uncaptured_funds.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -62,13 +62,13 @@ public struct GetBitcoinReceiversReceiverTransactions: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer: String
-		let starting_after: String
-		let receiver: String
-		let limit: Int
 		let ending_before: String
+		let limit: Int
+		let receiver: String
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/bitcoin/receivers/\(inputs.receiver)/transactions?customer=\(inputs.customer.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))"
+		return "/v1/bitcoin/receivers/\(inputs.receiver)/transactions?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -103,13 +103,13 @@ public struct GetBitcoinTransactions: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let customer: String
-		let starting_after: String
-		let receiver: String
-		let limit: Int
 		let ending_before: String
+		let limit: Int
+		let receiver: String
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/bitcoin/transactions?ending_before=\(inputs.ending_before.urlEncoded))&customer=\(inputs.customer.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&receiver=\(inputs.receiver.urlEncoded))"
+		return "/v1/bitcoin/transactions?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&receiver=\(inputs.receiver.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

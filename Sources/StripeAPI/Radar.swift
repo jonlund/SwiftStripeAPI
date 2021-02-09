@@ -5,13 +5,13 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 	public typealias outputType = RadarEarlyFraudWarningList
 	public typealias paramType = Params
 	public struct Params {
+		let charge: String
+		let ending_before: String
 		let limit: Int
 		let starting_after: String
-		let ending_before: String
-		let charge: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/radar/early_fraud_warnings?limit=\(inputs.limit.urlEncoded))&charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		return "/v1/radar/early_fraud_warnings?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -60,13 +60,13 @@ public struct GetRadarValueListItems: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let ending_before: String
-		let value_list: String
-		let value: String
-		let starting_after: String
 		let limit: Int
+		let starting_after: String
+		let value: String
+		let value_list: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/radar/value_list_items?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&value=\(inputs.value.urlEncoded))&limit=\(inputs.limit.urlEncoded))&value_list=\(inputs.value_list.urlEncoded))"
+		return "/v1/radar/value_list_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&value=\(inputs.value.urlEncoded))&value_list=\(inputs.value_list.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -155,14 +155,14 @@ public struct GetRadarValueLists: StripeAPIEndpoint {
 	public typealias outputType = Output
 	public typealias paramType = Params
 	public struct Params {
+		let alias: String
+		let contains: String
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
-		let contains: String
-		let alias: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/radar/value_lists?ending_before=\(inputs.ending_before.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&alias=\(inputs.alias.urlEncoded))&limit=\(inputs.limit.urlEncoded))&contains=\(inputs.contains.urlEncoded))"
+		return "/v1/radar/value_lists?alias=\(inputs.alias.urlEncoded))&contains=\(inputs.contains.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 

@@ -5,13 +5,13 @@ public struct GetPaymentIntents: StripeAPIEndpoint {
 	public typealias outputType = PaymentFlowsPaymentIntentList
 	public typealias paramType = Params
 	public struct Params {
-		let limit: Int
 		let customer: String
-		let starting_after: String
 		let ending_before: String
+		let limit: Int
+		let starting_after: String
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/payment_intents?starting_after=\(inputs.starting_after.urlEncoded))&limit=\(inputs.limit.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&customer=\(inputs.customer.urlEncoded))"
+		return "/v1/payment_intents?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -180,6 +180,22 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			}
 
 
+			public class BillingDetailsInnerParams: Codable {
+				public var address: MESSED_UP?
+				public var email: String?
+				public var name: String?
+				public var phone: String?
+
+				public init(address: MESSED_UP? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+					self.address = address
+					self.email = email
+					self.name = name
+					self.phone = phone
+				}
+			}
+
+
+
 			public class Param: Codable {
 				public var country: CountryValues
 
@@ -194,22 +210,6 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 					case optionES = "ES"
 					case optionIT = "IT"
 					case optionNL = "NL"
-				}
-			}
-
-
-
-			public class BillingDetailsInnerParams: Codable {
-				public var address: MESSED_UP?
-				public var email: String?
-				public var name: String?
-				public var phone: String?
-
-				public init(address: MESSED_UP? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
-					self.address = address
-					self.email = email
-					self.name = name
-					self.phone = phone
 				}
 			}
 
@@ -284,6 +284,14 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 				}
 
 
+				public class OfflineParam: Codable {
+
+					public init() {
+					}
+				}
+
+
+
 				public class OnlineParam: Codable {
 					public var ip_address: String
 					public var user_agent: String
@@ -291,14 +299,6 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 					public init(ip_address: String, user_agent: String) {
 						self.ip_address = ip_address
 						self.user_agent = user_agent
-					}
-				}
-
-
-
-				public class OfflineParam: Codable {
-
-					public init() {
 					}
 				}
 
@@ -376,14 +376,14 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			case manual = "manual"
 		}
 
-		public enum SetupFutureUsageValues: String, Codable {
-			case offSession = "off_session"
-			case onSession = "on_session"
-		}
-
 		public enum ConfirmationMethodValues: String, Codable {
 			case automatic = "automatic"
 			case manual = "manual"
+		}
+
+		public enum SetupFutureUsageValues: String, Codable {
+			case offSession = "off_session"
+			case onSession = "on_session"
 		}
 	}
 
@@ -475,19 +475,6 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 			self.transfer_data = transfer_data
 			self.transfer_group = transfer_group
 		}
-
-
-		/// The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-		public class TransferDataUpdateParams: Codable {
-			public var amount: Int?
-
-			/// The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-			/// - Parameters:
-			public init(amount: Int? = nil) {
-				self.amount = amount
-			}
-		}
-
 
 
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
@@ -607,6 +594,19 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 				self.p24 = p24
 				self.sepa_debit = sepa_debit
 				self.sofort = sofort
+			}
+		}
+
+
+
+		/// The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+		public class TransferDataUpdateParams: Codable {
+			public var amount: Int?
+
+			/// The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+			/// - Parameters:
+			public init(amount: Int? = nil) {
+				self.amount = amount
 			}
 		}
 
@@ -810,6 +810,22 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 			}
 
 
+			public class BillingDetailsInnerParams: Codable {
+				public var address: MESSED_UP?
+				public var email: String?
+				public var name: String?
+				public var phone: String?
+
+				public init(address: MESSED_UP? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+					self.address = address
+					self.email = email
+					self.name = name
+					self.phone = phone
+				}
+			}
+
+
+
 			public class Param: Codable {
 				public var country: CountryValues
 
@@ -824,22 +840,6 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 					case optionES = "ES"
 					case optionIT = "IT"
 					case optionNL = "NL"
-				}
-			}
-
-
-
-			public class BillingDetailsInnerParams: Codable {
-				public var address: MESSED_UP?
-				public var email: String?
-				public var name: String?
-				public var phone: String?
-
-				public init(address: MESSED_UP? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
-					self.address = address
-					self.email = email
-					self.name = name
-					self.phone = phone
 				}
 			}
 

@@ -112,28 +112,6 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class VerificationSpecs: Codable {
-					public var document: VerificationDocumentSpecs?
-
-					public init(document: VerificationDocumentSpecs? = nil) {
-						self.document = document
-					}
-
-
-					public class VerificationDocumentSpecs: Codable {
-						public var back: String?
-						public var front: String?
-
-						public init(back: String? = nil, front: String? = nil) {
-							self.back = back
-							self.front = front
-						}
-					}
-
-				}
-
-
-
 				public class JapanAddressKanaSpecs: Codable {
 					public var city: String?
 					public var country: String?
@@ -174,6 +152,28 @@ public struct PostTokens: StripeAPIEndpoint {
 						self.state = state
 						self.town = town
 					}
+				}
+
+
+
+				public class VerificationSpecs: Codable {
+					public var document: VerificationDocumentSpecs?
+
+					public init(document: VerificationDocumentSpecs? = nil) {
+						self.document = document
+					}
+
+
+					public class VerificationDocumentSpecs: Codable {
+						public var back: String?
+						public var front: String?
+
+						public init(back: String? = nil, front: String? = nil) {
+							self.back = back
+							self.front = front
+						}
+					}
+
 				}
 
 
@@ -242,47 +242,21 @@ public struct PostTokens: StripeAPIEndpoint {
 				}
 
 
-				public class PersonVerificationSpecs: Codable {
-					public var additional_document: PersonVerificationDocumentSpecs?
-					public var document: PersonVerificationDocumentSpecs?
-
-					public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
-						self.additional_document = additional_document
-						self.document = document
-					}
-
-
-					public class PersonVerificationDocumentSpecs: Codable {
-						public var back: String?
-						public var front: String?
-
-						public init(back: String? = nil, front: String? = nil) {
-							self.back = back
-							self.front = front
-						}
-					}
-
-				}
-
-
-
-				public class JapanAddressKanjiSpecs: Codable {
+				public class AddressSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
 					public var line2: String?
 					public var postal_code: String?
 					public var state: String?
-					public var town: String?
 
-					public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
+					public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
 						self.city = city
 						self.country = country
 						self.line1 = line1
 						self.line2 = line2
 						self.postal_code = postal_code
 						self.state = state
-						self.town = town
 					}
 				}
 
@@ -310,22 +284,48 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class AddressSpecs: Codable {
+				public class JapanAddressKanjiSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
 					public var line2: String?
 					public var postal_code: String?
 					public var state: String?
+					public var town: String?
 
-					public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+					public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil, town: String? = nil) {
 						self.city = city
 						self.country = country
 						self.line1 = line1
 						self.line2 = line2
 						self.postal_code = postal_code
 						self.state = state
+						self.town = town
 					}
+				}
+
+
+
+				public class PersonVerificationSpecs: Codable {
+					public var additional_document: PersonVerificationDocumentSpecs?
+					public var document: PersonVerificationDocumentSpecs?
+
+					public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
+						self.additional_document = additional_document
+						self.document = document
+					}
+
+
+					public class PersonVerificationDocumentSpecs: Codable {
+						public var back: String?
+						public var front: String?
+
+						public init(back: String? = nil, front: String? = nil) {
+							self.back = back
+							self.front = front
+						}
+					}
+
 				}
 
 
@@ -346,44 +346,15 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-		/// The bank account this token will represent.
-		public class TokenCreateBankAccount: Codable {
-			public var account_holder_name: String?
-			public var account_holder_type: AccountHolderTypeValues?
-			public var account_number: String
-			public var country: String
-			public var currency: String?
-			public var routing_number: String?
+		/// The updated CVC value this token will represent.
+		public class CvcParams: Codable {
+			public var cvc: String
 
-			/// The bank account this token will represent.
+			/// The updated CVC value this token will represent.
 			/// - Parameters:
-			///   - account_number: 
-			///   - country: 
-			public init(account_number: String, country: String, account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, currency: String? = nil, routing_number: String? = nil) {
-				self.account_number = account_number
-				self.country = country
-				self.account_holder_name = account_holder_name
-				self.account_holder_type = account_holder_type
-				self.currency = currency
-				self.routing_number = routing_number
-			}
-
-			public enum AccountHolderTypeValues: String, Codable {
-				case company = "company"
-				case individual = "individual"
-			}
-		}
-
-
-
-		/// The PII this token will represent.
-		public class PiiTokenSpecs: Codable {
-			public var id_number: String?
-
-			/// The PII this token will represent.
-			/// - Parameters:
-			public init(id_number: String? = nil) {
-				self.id_number = id_number
+			///   - cvc: 
+			public init(cvc: String) {
+				self.cvc = cvc
 			}
 		}
 
@@ -438,26 +409,22 @@ public struct PostTokens: StripeAPIEndpoint {
 			}
 
 
-			public class PersonVerificationSpecs: Codable {
-				public var additional_document: PersonVerificationDocumentSpecs?
-				public var document: PersonVerificationDocumentSpecs?
+			public class AddressSpecs: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
 
-				public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
-					self.additional_document = additional_document
-					self.document = document
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
 				}
-
-
-				public class PersonVerificationDocumentSpecs: Codable {
-					public var back: String?
-					public var front: String?
-
-					public init(back: String? = nil, front: String? = nil) {
-						self.back = back
-						self.front = front
-					}
-				}
-
 			}
 
 
@@ -506,22 +473,26 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-			public class AddressSpecs: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String?
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
+			public class PersonVerificationSpecs: Codable {
+				public var additional_document: PersonVerificationDocumentSpecs?
+				public var document: PersonVerificationDocumentSpecs?
 
-				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.city = city
-					self.country = country
-					self.line1 = line1
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
+				public init(additional_document: PersonVerificationDocumentSpecs? = nil, document: PersonVerificationDocumentSpecs? = nil) {
+					self.additional_document = additional_document
+					self.document = document
 				}
+
+
+				public class PersonVerificationDocumentSpecs: Codable {
+					public var back: String?
+					public var front: String?
+
+					public init(back: String? = nil, front: String? = nil) {
+						self.back = back
+						self.front = front
+					}
+				}
+
 			}
 
 
@@ -548,15 +519,44 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-		/// The updated CVC value this token will represent.
-		public class CvcParams: Codable {
-			public var cvc: String
+		/// The PII this token will represent.
+		public class PiiTokenSpecs: Codable {
+			public var id_number: String?
 
-			/// The updated CVC value this token will represent.
+			/// The PII this token will represent.
 			/// - Parameters:
-			///   - cvc: 
-			public init(cvc: String) {
-				self.cvc = cvc
+			public init(id_number: String? = nil) {
+				self.id_number = id_number
+			}
+		}
+
+
+
+		/// The bank account this token will represent.
+		public class TokenCreateBankAccount: Codable {
+			public var account_holder_name: String?
+			public var account_holder_type: AccountHolderTypeValues?
+			public var account_number: String
+			public var country: String
+			public var currency: String?
+			public var routing_number: String?
+
+			/// The bank account this token will represent.
+			/// - Parameters:
+			///   - account_number: 
+			///   - country: 
+			public init(account_number: String, country: String, account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, currency: String? = nil, routing_number: String? = nil) {
+				self.account_number = account_number
+				self.country = country
+				self.account_holder_name = account_holder_name
+				self.account_holder_type = account_holder_type
+				self.currency = currency
+				self.routing_number = routing_number
+			}
+
+			public enum AccountHolderTypeValues: String, Codable {
+				case company = "company"
+				case individual = "individual"
 			}
 		}
 
