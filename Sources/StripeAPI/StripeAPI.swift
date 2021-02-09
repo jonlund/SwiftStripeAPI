@@ -9,7 +9,9 @@ public enum HTTPMethod: String {
 #endif
 
 public typealias Timestamp = Int
-public struct Empty: Codable {}
+public struct Empty: Codable {
+	public init() {}
+}
 public struct MESSED_UP: Codable {}			// parsing didn't work out right
 
 public struct StringNumber: Codable {
