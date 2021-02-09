@@ -500,19 +500,19 @@ public final class AccountRequirements: Codable {
 	/// The date the fields in `currently_due` must be collected by to keep payouts enabled for the account. These fields might block payouts sooner if the next threshold is reached before these fields are collected.
 	public var current_deadline: Timestamp?
 	/// The fields that need to be collected to keep the account enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
-	public var currently_due: [String]??
+	public var currently_due: [String]?
 	/// If the account is disabled, this string describes why the account can’t create charges or receive payouts. Can be `requirements.past_due`, `requirements.pending_verification`, `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `listed`, `under_review`, or `other`.
 	public var disabled_reason: String?
 	/// The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
-	public var errors: [AccountRequirementsError]??
+	public var errors: [AccountRequirementsError]?
 	/// The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
-	public var eventually_due: [String]??
+	public var eventually_due: [String]?
 	/// The fields that weren't collected by the `current_deadline`. These fields need to be collected to re-enable the account.
-	public var past_due: [String]??
+	public var past_due: [String]?
 	/// Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
-	public var pending_verification: [String]??
+	public var pending_verification: [String]?
 
-	public init(current_deadline: Timestamp? = nil, currently_due: [String]?? = nil, disabled_reason: String? = nil, errors: [AccountRequirementsError]?? = nil, eventually_due: [String]?? = nil, past_due: [String]?? = nil, pending_verification: [String]?? = nil) {
+	public init(current_deadline: Timestamp? = nil, currently_due: [String]? = nil, disabled_reason: String? = nil, errors: [AccountRequirementsError]? = nil, eventually_due: [String]? = nil, past_due: [String]? = nil, pending_verification: [String]? = nil) {
 		self.current_deadline = current_deadline
 		self.currently_due = currently_due
 		self.disabled_reason = disabled_reason
@@ -1069,7 +1069,7 @@ public final class BankAccount: Codable {
 	/// The type of entity that holds the account. This can be either `individual` or `company`.
 	public var account_holder_type: String?
 	/// A set of available payout methods for this bank account. Only values from this set should be passed as the `method` when creating a payout.
-	public var available_payout_methods: [String]??
+	public var available_payout_methods: [String]?
 	/// Name of the bank associated with the routing number (e.g., `WELLS FARGO`).
 	public var bank_name: String?
 	/// Two-letter ISO code representing the country the bank account is located in.
@@ -1113,7 +1113,7 @@ public final class BankAccount: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - routing_number: The routing transit number for the bank account.
 	///   - status: For bank accounts, possible values are `new`, `validated`, `verified`, `verification_failed`, or `errored`. A bank account that hasn't had any activity or validation performed is `new`. If Stripe can determine that the bank account exists, its status will be `validated`. Note that there often isn’t enough information to know (e.g., for smaller credit unions), and the validation is not always run. If customer bank account verification has succeeded, the bank account status will be `verified`. If the verification failed for any reason, such as microdeposit failure, the status will be `verification_failed`. If a transfer sent to this bank account fails, we'll set the status to `errored` and will not continue to send transfers until the bank details are updated.  For external accounts, possible values are `new` and `errored`. Validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply. If a transfer fails, the status is set to `errored` and transfers are stopped until account details are updated.
-	public init(country: String, currency: String, id: String, last4: String, object: ObjectValues, status: String, account: String? = nil, account_holder_name: String? = nil, account_holder_type: String? = nil, available_payout_methods: [String]?? = nil, bank_name: String? = nil, customer: String? = nil, default_for_currency: Bool? = nil, fingerprint: String? = nil, metadata: String? = nil, routing_number: String? = nil) {
+	public init(country: String, currency: String, id: String, last4: String, object: ObjectValues, status: String, account: String? = nil, account_holder_name: String? = nil, account_holder_type: String? = nil, available_payout_methods: [String]? = nil, bank_name: String? = nil, customer: String? = nil, default_for_currency: Bool? = nil, fingerprint: String? = nil, metadata: String? = nil, routing_number: String? = nil) {
 		self.country = country
 		self.currency = currency
 		self.id = id
@@ -1402,7 +1402,7 @@ public final class Card: Codable {
 	/// If `address_zip` was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
 	public var address_zip_check: String?
 	/// A set of available payout methods for this card. Only values from this set should be passed as the `method` when creating a payout.
-	public var available_payout_methods: [String]??
+	public var available_payout_methods: [String]?
 	/// Card brand. Can be `American Express`, `Diners Club`, `Discover`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
 	public var brand: String
 	/// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
@@ -1470,7 +1470,7 @@ public final class Card: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - recipient: The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
 	///   - tokenization_method: If the card number is tokenized, this is the method that was used. Can be `android_pay` (includes Google Pay), `apple_pay`, `masterpass`, `visa_checkout`, or null.
-	public init(brand: String, exp_month: Int, exp_year: Int, funding: String, id: String, last4: String, object: ObjectValues, account: String? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line1_check: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, address_zip_check: String? = nil, available_payout_methods: [String]?? = nil, country: String? = nil, currency: String? = nil, customer: String? = nil, cvc_check: String? = nil, default_for_currency: Bool? = nil, dynamic_last4: String? = nil, fingerprint: String? = nil, metadata: String? = nil, name: String? = nil, recipient: String? = nil, tokenization_method: String? = nil) {
+	public init(brand: String, exp_month: Int, exp_year: Int, funding: String, id: String, last4: String, object: ObjectValues, account: String? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line1_check: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, address_zip_check: String? = nil, available_payout_methods: [String]? = nil, country: String? = nil, currency: String? = nil, customer: String? = nil, cvc_check: String? = nil, default_for_currency: Bool? = nil, dynamic_last4: String? = nil, fingerprint: String? = nil, metadata: String? = nil, name: String? = nil, recipient: String? = nil, tokenization_method: String? = nil) {
 		self.brand = brand
 		self.exp_month = exp_month
 		self.exp_year = exp_year
@@ -2463,7 +2463,7 @@ public final class Customer: Codable {
 	/// The customer's phone number.
 	public var phone: String?
 	/// The customer's preferred locales (languages), ordered by preference.
-	public var preferred_locales: [String]??
+	public var preferred_locales: [String]?
 	/// Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
 	public var shipping: Shipping?
 	/// The customer's payment sources, if any.
@@ -2500,7 +2500,7 @@ public final class Customer: Codable {
 	///   - subscriptions: The customer's current subscriptions, if any.
 	///   - tax_exempt: Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
 	///   - tax_ids: The customer's tax IDs.
-	public init(created: Timestamp, id: String, livemode: Bool, object: ObjectValues, address: Address? = nil, balance: Int? = nil, currency: String? = nil, default_source: String? = nil, delinquent: Bool? = nil, description: String? = nil, discount: Discount? = nil, email: String? = nil, invoice_prefix: String? = nil, invoice_settings: InvoiceSettingCustomerSetting? = nil, metadata: String? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]?? = nil, shipping: Shipping? = nil, sources: ApmsSourcesSourceList? = nil, subscriptions: SubscriptionList? = nil, tax_exempt: TaxExemptValues? = nil, tax_ids: TaxIDsList? = nil) {
+	public init(created: Timestamp, id: String, livemode: Bool, object: ObjectValues, address: Address? = nil, balance: Int? = nil, currency: String? = nil, default_source: String? = nil, delinquent: Bool? = nil, description: String? = nil, discount: Discount? = nil, email: String? = nil, invoice_prefix: String? = nil, invoice_settings: InvoiceSettingCustomerSetting? = nil, metadata: String? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]? = nil, shipping: Shipping? = nil, sources: ApmsSourcesSourceList? = nil, subscriptions: SubscriptionList? = nil, tax_exempt: TaxExemptValues? = nil, tax_ids: TaxIDsList? = nil) {
 		self.created = created
 		self.id = id
 		self.livemode = livemode
@@ -3880,7 +3880,7 @@ public final class Invoice: Codable {
 	/// The public name of the business associated with this invoice, most often the business creating the invoice.
 	public var account_name: String?
 	/// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
-	public var account_tax_ids: [String]??
+	public var account_tax_ids: [String]?
 	/// Final amount due at this time for this invoice. If the invoice's total is smaller than the minimum charge amount, for example, or if there is account credit that can be applied to the invoice, the `amount_due` may be 0. If there is a positive `starting_balance` for the invoice (the customer owes money), the `amount_due` will also take that into account. The charge that gets generated for the invoice will be for the amount specified in `amount_due`.
 	public var amount_due: Int
 	/// The amount, in %s, that was paid.
@@ -3906,7 +3906,7 @@ public final class Invoice: Codable {
 	/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 	public var currency: String
 	/// Custom fields displayed on the invoice.
-	public var custom_fields: [InvoiceSettingCustomField]??
+	public var custom_fields: [InvoiceSettingCustomField]?
 	/// The ID of the customer who will be billed.
 	public var customer: String
 	/// The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -3922,7 +3922,7 @@ public final class Invoice: Codable {
 	/// The customer's tax exempt status. Until the invoice is finalized, this field will equal `customer.tax_exempt`. Once the invoice is finalized, this field will no longer be updated.
 	public var customer_tax_exempt: CustomerTaxExemptValues?
 	/// The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
-	public var customer_tax_ids: [InvoicesResourceInvoiceTaxId]??
+	public var customer_tax_ids: [InvoicesResourceInvoiceTaxId]?
 	/// ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
 	public var default_payment_method: String?
 	/// ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
@@ -3934,7 +3934,7 @@ public final class Invoice: Codable {
 	/// Describes the current discount applied to this invoice, if there is one. Not populated if there are multiple discounts.
 	public var discount: Discount?
 	/// The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
-	public var discounts: [String]??
+	public var discounts: [String]?
 	/// The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
 	public var due_date: Timestamp?
 	/// Ending customer balance after the invoice is finalized. Invoices are finalized approximately an hour after successful webhook delivery or when payment collection is attempted for the invoice. If the invoice has not been finalized yet, this will be null.
@@ -3994,7 +3994,7 @@ public final class Invoice: Codable {
 	/// Total after discounts and taxes.
 	public var total: Int
 	/// The aggregate amounts calculated per discount across all line items.
-	public var total_discount_amounts: [DiscountsResourceDiscountAmount]??
+	public var total_discount_amounts: [DiscountsResourceDiscountAmount]?
 	/// The aggregate amounts calculated per tax rate for all line items.
 	public var total_tax_amounts: [InvoiceTaxAmount]
 	/// The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
@@ -4067,7 +4067,7 @@ public final class Invoice: Codable {
 	///   - total_tax_amounts: The aggregate amounts calculated per tax rate for all line items.
 	///   - transfer_data: The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
 	///   - webhooks_delivered_at: Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
-	public init(amount_due: Int, amount_paid: Int, amount_remaining: Int, attempt_count: Int, attempted: Bool, created: Timestamp, currency: String, customer: String, default_tax_rates: [TaxRate], lines: InvoiceLinesList, livemode: Bool, object: ObjectValues, paid: Bool, period_end: Timestamp, period_start: Timestamp, post_payment_credit_notes_amount: Int, pre_payment_credit_notes_amount: Int, starting_balance: Int, status_transitions: InvoicesStatusTransitions, subtotal: Int, total: Int, total_tax_amounts: [InvoiceTaxAmount], account_country: String? = nil, account_name: String? = nil, account_tax_ids: [String]?? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, billing_reason: BillingReasonValues? = nil, charge: String? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: [InvoiceSettingCustomField]?? = nil, customer_address: Address? = nil, customer_email: String? = nil, customer_name: String? = nil, customer_phone: String? = nil, customer_shipping: Shipping? = nil, customer_tax_exempt: CustomerTaxExemptValues? = nil, customer_tax_ids: [InvoicesResourceInvoiceTaxId]?? = nil, default_payment_method: String? = nil, default_source: String? = nil, description: String? = nil, discount: Discount? = nil, discounts: [String]?? = nil, due_date: Timestamp? = nil, ending_balance: Int? = nil, footer: String? = nil, hosted_invoice_url: String? = nil, id: String? = nil, invoice_pdf: String? = nil, last_finalization_error: ApiErrors? = nil, metadata: String? = nil, next_payment_attempt: Timestamp? = nil, number: String? = nil, payment_intent: String? = nil, receipt_number: String? = nil, statement_descriptor: String? = nil, status: StatusValues? = nil, subscription: String? = nil, subscription_proration_date: Int? = nil, tax: Int? = nil, threshold_reason: InvoiceThresholdReason? = nil, total_discount_amounts: [DiscountsResourceDiscountAmount]?? = nil, transfer_data: InvoiceTransferData? = nil, webhooks_delivered_at: Timestamp? = nil) {
+	public init(amount_due: Int, amount_paid: Int, amount_remaining: Int, attempt_count: Int, attempted: Bool, created: Timestamp, currency: String, customer: String, default_tax_rates: [TaxRate], lines: InvoiceLinesList, livemode: Bool, object: ObjectValues, paid: Bool, period_end: Timestamp, period_start: Timestamp, post_payment_credit_notes_amount: Int, pre_payment_credit_notes_amount: Int, starting_balance: Int, status_transitions: InvoicesStatusTransitions, subtotal: Int, total: Int, total_tax_amounts: [InvoiceTaxAmount], account_country: String? = nil, account_name: String? = nil, account_tax_ids: [String]? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, billing_reason: BillingReasonValues? = nil, charge: String? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: [InvoiceSettingCustomField]? = nil, customer_address: Address? = nil, customer_email: String? = nil, customer_name: String? = nil, customer_phone: String? = nil, customer_shipping: Shipping? = nil, customer_tax_exempt: CustomerTaxExemptValues? = nil, customer_tax_ids: [InvoicesResourceInvoiceTaxId]? = nil, default_payment_method: String? = nil, default_source: String? = nil, description: String? = nil, discount: Discount? = nil, discounts: [String]? = nil, due_date: Timestamp? = nil, ending_balance: Int? = nil, footer: String? = nil, hosted_invoice_url: String? = nil, id: String? = nil, invoice_pdf: String? = nil, last_finalization_error: ApiErrors? = nil, metadata: String? = nil, next_payment_attempt: Timestamp? = nil, number: String? = nil, payment_intent: String? = nil, receipt_number: String? = nil, statement_descriptor: String? = nil, status: StatusValues? = nil, subscription: String? = nil, subscription_proration_date: Int? = nil, tax: Int? = nil, threshold_reason: InvoiceThresholdReason? = nil, total_discount_amounts: [DiscountsResourceDiscountAmount]? = nil, transfer_data: InvoiceTransferData? = nil, webhooks_delivered_at: Timestamp? = nil) {
 		self.amount_due = amount_due
 		self.amount_paid = amount_paid
 		self.amount_remaining = amount_remaining
@@ -4239,13 +4239,13 @@ public final class InvoiceSettingCustomField: Codable {
 
 public final class InvoiceSettingCustomerSetting: Codable {
 	/// Default custom fields to be displayed on invoices for this customer.
-	public var custom_fields: [InvoiceSettingCustomField]??
+	public var custom_fields: [InvoiceSettingCustomField]?
 	/// ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
 	public var default_payment_method: String?
 	/// Default footer to be displayed on invoices for this customer.
 	public var footer: String?
 
-	public init(custom_fields: [InvoiceSettingCustomField]?? = nil, default_payment_method: String? = nil, footer: String? = nil) {
+	public init(custom_fields: [InvoiceSettingCustomField]? = nil, default_payment_method: String? = nil, footer: String? = nil) {
 		self.custom_fields = custom_fields
 		self.default_payment_method = default_payment_method
 		self.footer = footer
@@ -4315,7 +4315,7 @@ public final class Invoiceitem: Codable {
 	/// If true, discounts will apply to this invoice item. Always false for prorations.
 	public var discountable: Bool
 	/// The discounts which apply to the invoice item. Item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
-	public var discounts: [String]??
+	public var discounts: [String]?
 	/// Unique identifier for the object.
 	public var id: String
 	/// The ID of the invoice this invoice item belongs to.
@@ -4338,7 +4338,7 @@ public final class Invoiceitem: Codable {
 	/// The subscription item that this invoice item has been created for, if any.
 	public var subscription_item: String?
 	/// The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
-	public var tax_rates: [TaxRate]??
+	public var tax_rates: [TaxRate]?
 	/// Unit amount (in the `currency` specified) of the invoice item.
 	public var unit_amount: Int?
 	/// Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
@@ -4367,7 +4367,7 @@ public final class Invoiceitem: Codable {
 	///   - tax_rates: The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
 	///   - unit_amount: Unit amount (in the `currency` specified) of the invoice item.
 	///   - unit_amount_decimal: Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
-	public init(amount: Int, currency: String, customer: String, date: Timestamp, discountable: Bool, id: String, livemode: Bool, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, quantity: Int, description: String? = nil, discounts: [String]?? = nil, invoice: String? = nil, metadata: String? = nil, price: Price? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_rates: [TaxRate]?? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+	public init(amount: Int, currency: String, customer: String, date: Timestamp, discountable: Bool, id: String, livemode: Bool, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, quantity: Int, description: String? = nil, discounts: [String]? = nil, invoice: String? = nil, metadata: String? = nil, price: Price? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_rates: [TaxRate]? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 		self.amount = amount
 		self.currency = currency
 		self.customer = customer
@@ -4828,7 +4828,7 @@ public final class IssuingDispute: Codable {
 	/// Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation).
 	public var amount: Int
 	/// List of balance transactions associated with the dispute.
-	public var balance_transactions: [BalanceTransaction]??
+	public var balance_transactions: [BalanceTransaction]?
 	/// Time at which the object was created. Measured in seconds since the Unix epoch.
 	public var created: Timestamp
 	/// The currency the `disputed_transaction` was made in.
@@ -4860,7 +4860,7 @@ public final class IssuingDispute: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - status: Current status of the dispute.
 	///   - transaction: The transaction being disputed.
-	public init(amount: Int, created: Timestamp, currency: String, evidence: IssuingDisputeEvidence, id: String, livemode: Bool, metadata: String, object: ObjectValues, status: StatusValues, transaction: String, balance_transactions: [BalanceTransaction]?? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, evidence: IssuingDisputeEvidence, id: String, livemode: Bool, metadata: String, object: ObjectValues, status: StatusValues, transaction: String, balance_transactions: [BalanceTransaction]? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -5207,15 +5207,15 @@ public final class IssuingAuthorizationVerificationData: Codable {
 
 public final class IssuingCardAuthorizationControls: Codable {
 	/// Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
-	public var allowed_categories: [String]??
+	public var allowed_categories: [String]?
 	/// Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
-	public var blocked_categories: [String]??
+	public var blocked_categories: [String]?
 	/// Limit spending with amount-based rules that apply across any cards this card replaced (i.e., its `replacement_for` card and _that_ card's `replacement_for` card, up the chain).
-	public var spending_limits: [IssuingCardSpendingLimit]??
+	public var spending_limits: [IssuingCardSpendingLimit]?
 	/// Currency of the amounts within `spending_limits`. Always the same as the currency of the card.
 	public var spending_limits_currency: String?
 
-	public init(allowed_categories: [String]?? = nil, blocked_categories: [String]?? = nil, spending_limits: [IssuingCardSpendingLimit]?? = nil, spending_limits_currency: String? = nil) {
+	public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: [IssuingCardSpendingLimit]? = nil, spending_limits_currency: String? = nil) {
 		self.allowed_categories = allowed_categories
 		self.blocked_categories = blocked_categories
 		self.spending_limits = spending_limits
@@ -5284,11 +5284,11 @@ public final class IssuingCardSpendingLimit: Codable {
 	/// Maximum amount allowed to spend per interval.
 	public var amount: Int
 	/// Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
-	public var categories: [String]??
+	public var categories: [String]?
 	/// Interval (or event) to which the amount applies.
 	public var interval: IntervalValues
 
-	public init(amount: Int, interval: IntervalValues, categories: [String]?? = nil) {
+	public init(amount: Int, interval: IntervalValues, categories: [String]? = nil) {
 		self.amount = amount
 		self.interval = interval
 		self.categories = categories
@@ -5314,15 +5314,15 @@ public final class IssuingCardholderAddress: Codable {
 
 public final class IssuingCardholderAuthorizationControls: Codable {
 	/// Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
-	public var allowed_categories: [String]??
+	public var allowed_categories: [String]?
 	/// Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
-	public var blocked_categories: [String]??
+	public var blocked_categories: [String]?
 	/// Limit spending with amount-based rules that apply across this cardholder's cards.
-	public var spending_limits: [IssuingCardholderSpendingLimit]??
+	public var spending_limits: [IssuingCardholderSpendingLimit]?
 	/// Currency of the amounts within `spending_limits`.
 	public var spending_limits_currency: String?
 
-	public init(allowed_categories: [String]?? = nil, blocked_categories: [String]?? = nil, spending_limits: [IssuingCardholderSpendingLimit]?? = nil, spending_limits_currency: String? = nil) {
+	public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: [IssuingCardholderSpendingLimit]? = nil, spending_limits_currency: String? = nil) {
 		self.allowed_categories = allowed_categories
 		self.blocked_categories = blocked_categories
 		self.spending_limits = spending_limits
@@ -5388,9 +5388,9 @@ public final class IssuingCardholderRequirements: Codable {
 	/// If `disabled_reason` is present, all cards will decline authorizations with `cardholder_verification_required` reason.
 	public var disabled_reason: DisabledReasonValues?
 	/// Array of fields that need to be collected in order to verify and re-enable the cardholder.
-	public var past_due: [String]??
+	public var past_due: [String]?
 
-	public init(disabled_reason: DisabledReasonValues? = nil, past_due: [String]?? = nil) {
+	public init(disabled_reason: DisabledReasonValues? = nil, past_due: [String]? = nil) {
 		self.disabled_reason = disabled_reason
 		self.past_due = past_due
 	}
@@ -5406,11 +5406,11 @@ public final class IssuingCardholderSpendingLimit: Codable {
 	/// Maximum amount allowed to spend per interval.
 	public var amount: Int
 	/// Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
-	public var categories: [String]??
+	public var categories: [String]?
 	/// Interval (or event) to which the amount applies.
 	public var interval: IntervalValues
 
-	public init(amount: Int, interval: IntervalValues, categories: [String]?? = nil) {
+	public init(amount: Int, interval: IntervalValues, categories: [String]? = nil) {
 		self.amount = amount
 		self.interval = interval
 		self.categories = categories
@@ -5666,11 +5666,11 @@ public final class IssuingTransactionFlightData: Codable {
 	/// Whether the ticket is refundable.
 	public var refundable: Bool?
 	/// The legs of the trip.
-	public var segments: [IssuingTransactionFlightDataLeg]??
+	public var segments: [IssuingTransactionFlightDataLeg]?
 	/// The travel agency that issued the ticket.
 	public var travel_agency: String?
 
-	public init(departure_at: Int? = nil, passenger_name: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionFlightDataLeg]?? = nil, travel_agency: String? = nil) {
+	public init(departure_at: Int? = nil, passenger_name: String? = nil, refundable: Bool? = nil, segments: [IssuingTransactionFlightDataLeg]? = nil, travel_agency: String? = nil) {
 		self.departure_at = departure_at
 		self.passenger_name = passenger_name
 		self.refundable = refundable
@@ -5741,11 +5741,11 @@ public final class IssuingTransactionPurchaseDetails: Codable {
 	/// Information about lodging that was purchased with this transaction.
 	public var lodging: IssuingTransactionLodgingData?
 	/// The line items in the purchase.
-	public var receipt: [IssuingTransactionReceiptData]??
+	public var receipt: [IssuingTransactionReceiptData]?
 	/// A merchant-specific order number.
 	public var reference: String?
 
-	public init(flight: IssuingTransactionFlightData? = nil, fuel: IssuingTransactionFuelData? = nil, lodging: IssuingTransactionLodgingData? = nil, receipt: [IssuingTransactionReceiptData]?? = nil, reference: String? = nil) {
+	public init(flight: IssuingTransactionFlightData? = nil, fuel: IssuingTransactionFuelData? = nil, lodging: IssuingTransactionLodgingData? = nil, receipt: [IssuingTransactionReceiptData]? = nil, reference: String? = nil) {
 		self.flight = flight
 		self.fuel = fuel
 		self.lodging = lodging
@@ -6013,11 +6013,11 @@ public final class LineItem: Codable {
 	/// An arbitrary string attached to the object. Often useful for displaying to users.
 	public var description: String?
 	/// The amount of discount calculated per discount for this line item.
-	public var discount_amounts: [DiscountsResourceDiscountAmount]??
+	public var discount_amounts: [DiscountsResourceDiscountAmount]?
 	/// If true, discounts will apply to this line item. Always false for prorations.
 	public var discountable: Bool
 	/// The discounts applied to the invoice line item. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
-	public var discounts: [String]??
+	public var discounts: [String]?
 	/// Unique identifier for the object.
 	public var id: String
 	/// The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
@@ -6046,7 +6046,7 @@ public final class LineItem: Codable {
 	/// A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
 	public var type: TypeValues
 
-	public init(amount: Int, currency: String, discountable: Bool, id: String, livemode: Bool, metadata: String, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, type: TypeValues, description: String? = nil, discount_amounts: [DiscountsResourceDiscountAmount]?? = nil, discounts: [String]?? = nil, invoice_item: String? = nil, price: Price? = nil, quantity: Int? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_amounts: [InvoiceTaxAmount]? = nil, tax_rates: [TaxRate]? = nil) {
+	public init(amount: Int, currency: String, discountable: Bool, id: String, livemode: Bool, metadata: String, object: ObjectValues, period: InvoiceLineItemPeriod, proration: Bool, type: TypeValues, description: String? = nil, discount_amounts: [DiscountsResourceDiscountAmount]? = nil, discounts: [String]? = nil, invoice_item: String? = nil, price: Price? = nil, quantity: Int? = nil, subscription: String? = nil, subscription_item: String? = nil, tax_amounts: [InvoiceTaxAmount]? = nil, tax_rates: [TaxRate]? = nil) {
 		self.amount = amount
 		self.currency = currency
 		self.discountable = discountable
@@ -6349,7 +6349,7 @@ public final class Order: Codable {
 	/// The shipping address for the order. Present if the order is for goods to be shipped.
 	public var shipping: Shipping?
 	/// A list of supported shipping methods for this order. The desired shipping method can be specified either by updating the order, or when paying it.
-	public var shipping_methods: [ShippingMethod]??
+	public var shipping_methods: [ShippingMethod]?
 	/// Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More details in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
 	public var status: String
 	/// The timestamps at which the order status was updated.
@@ -6384,7 +6384,7 @@ public final class Order: Codable {
 	///   - status_transitions: The timestamps at which the order status was updated.
 	///   - updated: Time at which the object was last updated. Measured in seconds since the Unix epoch.
 	///   - upstream_id: The user's order ID if it is different from the Stripe order ID.
-	public init(amount: Int, created: Timestamp, currency: String, id: String, items: [OrderItem], livemode: Bool, object: ObjectValues, status: String, amount_returned: Int? = nil, application: String? = nil, application_fee: Int? = nil, charge: String? = nil, customer: String? = nil, email: String? = nil, external_coupon_code: String? = nil, metadata: String? = nil, returns: OrdersResourceOrderReturnList? = nil, selected_shipping_method: String? = nil, shipping: Shipping? = nil, shipping_methods: [ShippingMethod]?? = nil, status_transitions: StatusTransitions? = nil, updated: Timestamp? = nil, upstream_id: String? = nil) {
+	public init(amount: Int, created: Timestamp, currency: String, id: String, items: [OrderItem], livemode: Bool, object: ObjectValues, status: String, amount_returned: Int? = nil, application: String? = nil, application_fee: Int? = nil, charge: String? = nil, customer: String? = nil, email: String? = nil, external_coupon_code: String? = nil, metadata: String? = nil, returns: OrdersResourceOrderReturnList? = nil, selected_shipping_method: String? = nil, shipping: Shipping? = nil, shipping_methods: [ShippingMethod]? = nil, status_transitions: StatusTransitions? = nil, updated: Timestamp? = nil, upstream_id: String? = nil) {
 		self.amount = amount
 		self.created = created
 		self.currency = currency
@@ -7853,13 +7853,13 @@ public final class PaymentMethodDetailsInteracPresent: Codable {
 	/// Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
 	public var network: String?
 	/// EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
-	public var preferred_locales: [String]??
+	public var preferred_locales: [String]?
 	/// How card details were read in this transaction.
 	public var read_method: ReadMethodValues?
 	/// A collection of fields required to be displayed on receipts. Only required for EMV transactions.
 	public var receipt: PaymentMethodDetailsInteracPresentReceipt?
 
-	public init(exp_month: Int, exp_year: Int, brand: String? = nil, cardholder_name: String? = nil, country: String? = nil, emv_auth_data: String? = nil, fingerprint: String? = nil, funding: String? = nil, generated_card: String? = nil, last4: String? = nil, network: String? = nil, preferred_locales: [String]?? = nil, read_method: ReadMethodValues? = nil, receipt: PaymentMethodDetailsInteracPresentReceipt? = nil) {
+	public init(exp_month: Int, exp_year: Int, brand: String? = nil, cardholder_name: String? = nil, country: String? = nil, emv_auth_data: String? = nil, fingerprint: String? = nil, funding: String? = nil, generated_card: String? = nil, last4: String? = nil, network: String? = nil, preferred_locales: [String]? = nil, read_method: ReadMethodValues? = nil, receipt: PaymentMethodDetailsInteracPresentReceipt? = nil) {
 		self.exp_month = exp_month
 		self.exp_year = exp_year
 		self.brand = brand
@@ -8228,13 +8228,13 @@ public final class PaymentMethodOptionsBancontact: Codable {
 
 public final class PaymentMethodOptionsCardInstallments: Codable {
 	/// Installment plans that may be selected for this PaymentIntent.
-	public var available_plans: [PaymentMethodDetailsCardInstallmentsPlan]??
+	public var available_plans: [PaymentMethodDetailsCardInstallmentsPlan]?
 	/// Whether Installments are enabled for this PaymentIntent.
 	public var enabled: Bool
 	/// Installment plan selected for this PaymentIntent.
 	public var plan: PaymentMethodDetailsCardInstallmentsPlan?
 
-	public init(enabled: Bool, available_plans: [PaymentMethodDetailsCardInstallmentsPlan]?? = nil, plan: PaymentMethodDetailsCardInstallmentsPlan? = nil) {
+	public init(enabled: Bool, available_plans: [PaymentMethodDetailsCardInstallmentsPlan]? = nil, plan: PaymentMethodDetailsCardInstallmentsPlan? = nil) {
 		self.enabled = enabled
 		self.available_plans = available_plans
 		self.plan = plan
@@ -8357,9 +8357,9 @@ public final class PaymentPagesCheckoutSessionCustomerDetails: Codable {
 	/// The customer’s tax exempt status at time of checkout.
 	public var tax_exempt: TaxExemptValues?
 	/// The customer’s tax IDs at time of checkout.
-	public var tax_ids: [PaymentPagesCheckoutSessionTaxId]??
+	public var tax_ids: [PaymentPagesCheckoutSessionTaxId]?
 
-	public init(email: String? = nil, tax_exempt: TaxExemptValues? = nil, tax_ids: [PaymentPagesCheckoutSessionTaxId]?? = nil) {
+	public init(email: String? = nil, tax_exempt: TaxExemptValues? = nil, tax_ids: [PaymentPagesCheckoutSessionTaxId]? = nil) {
 		self.email = email
 		self.tax_exempt = tax_exempt
 		self.tax_ids = tax_ids
@@ -9019,7 +9019,7 @@ public final class Product: Codable {
 	/// Whether the product is currently available for purchase.
 	public var active: Bool
 	/// A list of up to 5 attributes that each SKU can provide values for (e.g., `["color", "size"]`).
-	public var attributes: [String]??
+	public var attributes: [String]?
 	/// A short one-line description of the product, meant to be displayable to the customer. Only applicable to products of `type=good`.
 	public var caption: String?
 	/// Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -9073,7 +9073,7 @@ public final class Product: Codable {
 	///   - unit_label: A label that represents units of this product in Stripe and on customers’ receipts and invoices. When set, this will be included in associated invoice line item descriptions.
 	///   - updated: Time at which the object was last updated. Measured in seconds since the Unix epoch.
 	///   - url: A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
-	public init(active: Bool, created: Timestamp, id: String, images: [String], livemode: Bool, metadata: String, name: String, object: ObjectValues, updated: Timestamp, attributes: [String]?? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, package_dimensions: PackageDimensions? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
+	public init(active: Bool, created: Timestamp, id: String, images: [String], livemode: Bool, metadata: String, name: String, object: ObjectValues, updated: Timestamp, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, package_dimensions: PackageDimensions? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
 		self.active = active
 		self.created = created
 		self.id = id
@@ -9655,7 +9655,7 @@ public final class ReportingReportType: Codable {
 	/// Earliest time for which this Report Type is available. Measured in seconds since the Unix epoch.
 	public var data_available_start: Timestamp
 	/// List of column names that are included by default when this Report Type gets run. (If the Report Type doesn't support the `columns` parameter, this will be null.)
-	public var default_columns: [String]??
+	public var default_columns: [String]?
 	/// The [ID of the Report Type](https://stripe.com/docs/reporting/statements/api#available-report-types), such as `balance.summary.1`.
 	public var id: String
 	/// Human-readable name of the Report Type
@@ -9677,7 +9677,7 @@ public final class ReportingReportType: Codable {
 	///   - object: String representing the object's type. Objects of the same type share the same value.
 	///   - updated: When this Report Type was latest updated. Measured in seconds since the Unix epoch.
 	///   - version: Version of the Report Type. Different versions report with the same ID will have the same purpose, but may take different run parameters or have different result schemas.
-	public init(data_available_end: Timestamp, data_available_start: Timestamp, id: String, name: String, object: ObjectValues, updated: Timestamp, version: Int, default_columns: [String]?? = nil) {
+	public init(data_available_end: Timestamp, data_available_start: Timestamp, id: String, name: String, object: ObjectValues, updated: Timestamp, version: Int, default_columns: [String]? = nil) {
 		self.data_available_end = data_available_end
 		self.data_available_start = data_available_start
 		self.id = id
@@ -10646,10 +10646,10 @@ public final class SourceOrder: Codable {
 	/// The email address of the customer placing the order.
 	public var email: String?
 	/// List of items constituting the order.
-	public var items: [SourceOrderItem]??
+	public var items: [SourceOrderItem]?
 	public var shipping: Shipping?
 
-	public init(amount: Int, currency: String, email: String? = nil, items: [SourceOrderItem]?? = nil, shipping: Shipping? = nil) {
+	public init(amount: Int, currency: String, email: String? = nil, items: [SourceOrderItem]? = nil, shipping: Shipping? = nil) {
 		self.amount = amount
 		self.currency = currency
 		self.email = email
@@ -11364,7 +11364,7 @@ public final class Subscription: Codable {
 	/// ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
 	public var default_source: String?
 	/// The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
-	public var default_tax_rates: [TaxRate]??
+	public var default_tax_rates: [TaxRate]?
 	/// Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis.
 	public var discount: Discount?
 	/// If the subscription has ended, the date the subscription ended.
@@ -11440,7 +11440,7 @@ public final class Subscription: Codable {
 	///   - transfer_data: The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
 	///   - trial_end: If the subscription has a trial, the end of that trial.
 	///   - trial_start: If the subscription has a trial, the beginning of that trial.
-	public init(billing_cycle_anchor: Timestamp, cancel_at_period_end: Bool, created: Timestamp, current_period_end: Timestamp, current_period_start: Timestamp, customer: String, id: String, items: SubscriptionItemList, livemode: Bool, metadata: String, object: ObjectValues, start_date: Timestamp, status: StatusValues, application_fee_percent: StringNumber? = nil, billing_thresholds: SubscriptionBillingThresholds? = nil, cancel_at: Timestamp? = nil, canceled_at: Timestamp? = nil, collection_method: CollectionMethodValues? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [TaxRate]?? = nil, discount: Discount? = nil, ended_at: Timestamp? = nil, latest_invoice: String? = nil, next_pending_invoice_item_invoice: Timestamp? = nil, pause_collection: SubscriptionsResourcePauseCollection? = nil, pending_invoice_item_interval: SubscriptionPendingInvoiceItemInterval? = nil, pending_setup_intent: String? = nil, pending_update: SubscriptionsResourcePendingUpdate? = nil, schedule: String? = nil, transfer_data: SubscriptionTransferData? = nil, trial_end: Timestamp? = nil, trial_start: Timestamp? = nil) {
+	public init(billing_cycle_anchor: Timestamp, cancel_at_period_end: Bool, created: Timestamp, current_period_end: Timestamp, current_period_start: Timestamp, customer: String, id: String, items: SubscriptionItemList, livemode: Bool, metadata: String, object: ObjectValues, start_date: Timestamp, status: StatusValues, application_fee_percent: StringNumber? = nil, billing_thresholds: SubscriptionBillingThresholds? = nil, cancel_at: Timestamp? = nil, canceled_at: Timestamp? = nil, collection_method: CollectionMethodValues? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [TaxRate]? = nil, discount: Discount? = nil, ended_at: Timestamp? = nil, latest_invoice: String? = nil, next_pending_invoice_item_invoice: Timestamp? = nil, pause_collection: SubscriptionsResourcePauseCollection? = nil, pending_invoice_item_interval: SubscriptionPendingInvoiceItemInterval? = nil, pending_setup_intent: String? = nil, pending_update: SubscriptionsResourcePendingUpdate? = nil, schedule: String? = nil, transfer_data: SubscriptionTransferData? = nil, trial_end: Timestamp? = nil, trial_start: Timestamp? = nil) {
 		self.billing_cycle_anchor = billing_cycle_anchor
 		self.cancel_at_period_end = cancel_at_period_end
 		self.created = created
@@ -11558,7 +11558,7 @@ public final class SubscriptionItem: Codable {
 	/// The `subscription` this `subscription_item` belongs to.
 	public var subscription: String
 	/// The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
-	public var tax_rates: [TaxRate]??
+	public var tax_rates: [TaxRate]?
 
 	/// Subscription items allow you to create customer subscriptions with more than one plan, making it easy to represent complex billing relationships.
 	/// - Parameters:
@@ -11571,7 +11571,7 @@ public final class SubscriptionItem: Codable {
 	///   - quantity: The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.
 	///   - subscription: The `subscription` this `subscription_item` belongs to.
 	///   - tax_rates: The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
-	public init(created: Int, id: String, metadata: String, object: ObjectValues, price: Price, subscription: String, billing_thresholds: SubscriptionItemBillingThresholds? = nil, quantity: Int? = nil, tax_rates: [TaxRate]?? = nil) {
+	public init(created: Int, id: String, metadata: String, object: ObjectValues, price: Price, subscription: String, billing_thresholds: SubscriptionItemBillingThresholds? = nil, quantity: Int? = nil, tax_rates: [TaxRate]? = nil) {
 		self.created = created
 		self.id = id
 		self.metadata = metadata
@@ -11714,14 +11714,14 @@ public final class SubscriptionScheduleAddInvoiceItem: Codable {
 	/// The quantity of the invoice item.
 	public var quantity: Int?
 	/// The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
-	public var tax_rates: [TaxRate]??
+	public var tax_rates: [TaxRate]?
 
 	/// An Add Invoice Item describes the prices and quantities that will be added as pending invoice items when entering a phase.
 	/// - Parameters:
 	///   - price: ID of the price used to generate the invoice item.
 	///   - quantity: The quantity of the invoice item.
 	///   - tax_rates: The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
-	public init(price: String, quantity: Int? = nil, tax_rates: [TaxRate]?? = nil) {
+	public init(price: String, quantity: Int? = nil, tax_rates: [TaxRate]? = nil) {
 		self.price = price
 		self.quantity = quantity
 		self.tax_rates = tax_rates
@@ -11737,7 +11737,7 @@ public final class SubscriptionScheduleConfigurationItem: Codable {
 	/// Quantity of the plan to which the customer should be subscribed.
 	public var quantity: Int?
 	/// The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
-	public var tax_rates: [TaxRate]??
+	public var tax_rates: [TaxRate]?
 
 	/// A phase item describes the price and quantity of a phase.
 	/// - Parameters:
@@ -11745,7 +11745,7 @@ public final class SubscriptionScheduleConfigurationItem: Codable {
 	///   - price: ID of the price to which the customer should be subscribed.
 	///   - quantity: Quantity of the plan to which the customer should be subscribed.
 	///   - tax_rates: The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
-	public init(price: String, billing_thresholds: SubscriptionItemBillingThresholds? = nil, quantity: Int? = nil, tax_rates: [TaxRate]?? = nil) {
+	public init(price: String, billing_thresholds: SubscriptionItemBillingThresholds? = nil, quantity: Int? = nil, tax_rates: [TaxRate]? = nil) {
 		self.price = price
 		self.billing_thresholds = billing_thresholds
 		self.quantity = quantity
@@ -11782,7 +11782,7 @@ public final class SubscriptionSchedulePhaseConfiguration: Codable {
 	/// ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
 	public var default_payment_method: String?
 	/// The default tax rates to apply to the subscription during this phase of the subscription schedule.
-	public var default_tax_rates: [TaxRate]??
+	public var default_tax_rates: [TaxRate]?
 	/// The end of this phase of the subscription schedule.
 	public var end_date: Timestamp
 	/// The invoice settings applicable during this phase.
@@ -11815,7 +11815,7 @@ public final class SubscriptionSchedulePhaseConfiguration: Codable {
 	///   - start_date: The start of this phase of the subscription schedule.
 	///   - transfer_data: The account (if any) the associated subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
 	///   - trial_end: When the trial ends within the phase.
-	public init(add_invoice_items: [SubscriptionScheduleAddInvoiceItem], end_date: Timestamp, items: [SubscriptionScheduleConfigurationItem], proration_behavior: ProrationBehaviorValues, start_date: Timestamp, application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: SubscriptionBillingThresholds? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, default_payment_method: String? = nil, default_tax_rates: [TaxRate]?? = nil, invoice_settings: InvoiceSettingSubscriptionScheduleSetting? = nil, transfer_data: SubscriptionTransferData? = nil, trial_end: Timestamp? = nil) {
+	public init(add_invoice_items: [SubscriptionScheduleAddInvoiceItem], end_date: Timestamp, items: [SubscriptionScheduleConfigurationItem], proration_behavior: ProrationBehaviorValues, start_date: Timestamp, application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: SubscriptionBillingThresholds? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, default_payment_method: String? = nil, default_tax_rates: [TaxRate]? = nil, invoice_settings: InvoiceSettingSubscriptionScheduleSetting? = nil, transfer_data: SubscriptionTransferData? = nil, trial_end: Timestamp? = nil) {
 		self.add_invoice_items = add_invoice_items
 		self.end_date = end_date
 		self.items = items
@@ -11929,7 +11929,7 @@ public final class SubscriptionsResourcePendingUpdate: Codable {
 	/// The point after which the changes reflected by this update will be discarded and no longer applied.
 	public var expires_at: Timestamp
 	/// List of subscription items, each with an attached plan, that will be set if the update is applied.
-	public var subscription_items: [SubscriptionItem]??
+	public var subscription_items: [SubscriptionItem]?
 	/// Unix timestamp representing the end of the trial period the customer will get before being charged for the first time, if the update is applied.
 	public var trial_end: Timestamp?
 	/// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
@@ -11942,7 +11942,7 @@ public final class SubscriptionsResourcePendingUpdate: Codable {
 	///   - subscription_items: List of subscription items, each with an attached plan, that will be set if the update is applied.
 	///   - trial_end: Unix timestamp representing the end of the trial period the customer will get before being charged for the first time, if the update is applied.
 	///   - trial_from_plan: Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
-	public init(expires_at: Timestamp, billing_cycle_anchor: Timestamp? = nil, subscription_items: [SubscriptionItem]?? = nil, trial_end: Timestamp? = nil, trial_from_plan: Bool? = nil) {
+	public init(expires_at: Timestamp, billing_cycle_anchor: Timestamp? = nil, subscription_items: [SubscriptionItem]? = nil, trial_end: Timestamp? = nil, trial_from_plan: Bool? = nil) {
 		self.expires_at = expires_at
 		self.billing_cycle_anchor = billing_cycle_anchor
 		self.subscription_items = subscription_items
