@@ -16,7 +16,7 @@ public struct GetRefunds: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Refund]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostRefunds: StripeAPIEndpoint {
 		return "/v1/refunds"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		public var amount: Int?
 		public var charge: String?
 		/// Specifies which fields in the response should be expanded.
@@ -107,7 +107,7 @@ public struct PostRefundsRefund: StripeAPIEndpoint {
 		return "/v1/refunds/\(inputs.refund)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

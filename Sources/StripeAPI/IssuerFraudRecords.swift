@@ -15,7 +15,7 @@ public struct GetIssuerFraudRecords: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class RadarIssuerFraudRecordList: Codable {
+	public final class RadarIssuerFraudRecordList: Codable {
 		public var data: [IssuerFraudRecord]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool

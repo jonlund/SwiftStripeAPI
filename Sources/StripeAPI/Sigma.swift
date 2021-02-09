@@ -14,7 +14,7 @@ public struct GetSigmaScheduledQueryRuns: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [ScheduledQueryRun]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool

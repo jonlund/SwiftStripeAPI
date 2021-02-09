@@ -16,7 +16,7 @@ public struct GetPaymentMethods: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PaymentFlowsPaymentMethodList: Codable {
+	public final class PaymentFlowsPaymentMethodList: Codable {
 		public var data: [PaymentMethod]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 		return "/v1/payment_methods"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
 		public var alipay: Param?
 		/// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -118,7 +118,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 
 
 		/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
-		public class BillingDetailsInnerParams: Codable {
+		public final class BillingDetailsInnerParams: Codable {
 			public var address: MESSED_UP?
 			public var email: String?
 			public var name: String?
@@ -137,7 +137,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 
 
 		/// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-		public class Param: Codable {
+		public final class Param: Codable {
 			public var country: CountryValues
 
 			/// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -205,7 +205,7 @@ public struct PostPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 		return "/v1/payment_methods/\(inputs.payment_method)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
 		public var billing_details: BillingDetailsInnerParams?
 		/// If this is a `card` PaymentMethod, this hash contains the user's card details.
@@ -224,7 +224,7 @@ public struct PostPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 
 
 		/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
-		public class BillingDetailsInnerParams: Codable {
+		public final class BillingDetailsInnerParams: Codable {
 			public var address: MESSED_UP?
 			public var email: String?
 			public var name: String?
@@ -243,7 +243,7 @@ public struct PostPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 
 
 		/// If this is a `card` PaymentMethod, this hash contains the user's card details.
-		public class UpdateApiParam: Codable {
+		public final class UpdateApiParam: Codable {
 			public var exp_month: Int?
 			public var exp_year: Int?
 
@@ -271,7 +271,7 @@ public struct PostPaymentMethodsPaymentMethodAttach: StripeAPIEndpoint {
 		return "/v1/payment_methods/\(inputs.payment_method)/attach"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The ID of the customer to which to attach the PaymentMethod.
 		public var customer: String
 		/// Specifies which fields in the response should be expanded.
@@ -297,7 +297,7 @@ public struct PostPaymentMethodsPaymentMethodDetach: StripeAPIEndpoint {
 		return "/v1/payment_methods/\(inputs.payment_method)/detach"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 

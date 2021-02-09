@@ -8,7 +8,7 @@ public struct PostEphemeralKeys: StripeAPIEndpoint {
 		return "/v1/ephemeral_keys"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The ID of the Customer you'd like to modify using the resulting ephemeral key.
 		public var customer: String?
 		/// Specifies which fields in the response should be expanded.
@@ -38,7 +38,7 @@ public struct DeleteEphemeralKeysKey: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .DELETE }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 

@@ -17,7 +17,7 @@ public struct GetCharges: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Charge]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -49,7 +49,7 @@ public struct PostCharges: StripeAPIEndpoint {
 		return "/v1/charges"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Amount intended to be collected by this payment. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
 		public var amount: Int?
 		public var application_fee: Int?
@@ -111,7 +111,7 @@ public struct PostCharges: StripeAPIEndpoint {
 
 
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-		public class Shipping: Codable {
+		public final class Shipping: Codable {
 			public var address: Address
 			public var carrier: String?
 			public var name: String
@@ -131,7 +131,7 @@ public struct PostCharges: StripeAPIEndpoint {
 			}
 
 
-			public class Address: Codable {
+			public final class Address: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String
@@ -154,7 +154,7 @@ public struct PostCharges: StripeAPIEndpoint {
 
 
 		/// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
-		public class TransferDataSpecs: Codable {
+		public final class TransferDataSpecs: Codable {
 			public var amount: Int?
 			public var destination: String
 
@@ -198,7 +198,7 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 		return "/v1/charges/\(inputs.charge)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The ID of an existing customer that will be associated with this request. This field may only be updated if there is no existing associated customer with this charge.
 		public var customer: String?
 		/// An arbitrary string which you can attach to a charge object. It is displayed when in the web interface alongside the charge. Note that if you use Stripe to send automatic email receipts to your customers, your receipt emails will include the `description` of the charge(s) that they are describing.
@@ -229,7 +229,7 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 
 
 		/// A set of key-value pairs you can attach to a charge giving information about its riskiness. If you believe a charge is fraudulent, include a `user_report` key with a value of `fraudulent`. If you believe a charge is safe, include a `user_report` key with a value of `safe`. Stripe will use the information you send to improve our fraud detection algorithms.
-		public class FraudDetails: Codable {
+		public final class FraudDetails: Codable {
 			public var user_report: UserReportValues
 
 			/// A set of key-value pairs you can attach to a charge giving information about its riskiness. If you believe a charge is fraudulent, include a `user_report` key with a value of `fraudulent`. If you believe a charge is safe, include a `user_report` key with a value of `safe`. Stripe will use the information you send to improve our fraud detection algorithms.
@@ -248,7 +248,7 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 
 
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-		public class Shipping: Codable {
+		public final class Shipping: Codable {
 			public var address: Address
 			public var carrier: String?
 			public var name: String
@@ -268,7 +268,7 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 			}
 
 
-			public class Address: Codable {
+			public final class Address: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String
@@ -304,7 +304,7 @@ public struct PostChargesChargeCapture: StripeAPIEndpoint {
 		return "/v1/charges/\(inputs.charge)/capture"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The amount to capture, which must be less than or equal to the original amount. Any additional amount will be automatically refunded.
 		public var amount: Int?
 		/// An application fee to add on to this charge.
@@ -338,7 +338,7 @@ public struct PostChargesChargeCapture: StripeAPIEndpoint {
 
 
 		/// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
-		public class TransferDataSpecs: Codable {
+		public final class TransferDataSpecs: Codable {
 			public var amount: Int?
 
 			/// An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
@@ -378,7 +378,7 @@ public struct PostChargesChargeDispute: StripeAPIEndpoint {
 		return "/v1/charges/\(inputs.charge)/dispute"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
 		public var evidence: DisputeEvidenceParams?
 		/// Specifies which fields in the response should be expanded.
@@ -397,7 +397,7 @@ public struct PostChargesChargeDispute: StripeAPIEndpoint {
 
 
 		/// Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
-		public class DisputeEvidenceParams: Codable {
+		public final class DisputeEvidenceParams: Codable {
 			public var access_activity_log: String?
 			public var billing_address: String?
 			public var cancellation_policy: String?
@@ -474,7 +474,7 @@ public struct PostChargesChargeDisputeClose: StripeAPIEndpoint {
 		return "/v1/charges/\(inputs.charge)/dispute/close"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 
@@ -497,7 +497,7 @@ public struct PostChargesChargeRefund: StripeAPIEndpoint {
 		return "/v1/charges/\(inputs.charge)/refund"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		public var amount: Int?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
@@ -543,7 +543,7 @@ public struct GetChargesChargeRefunds: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class RefundList: Codable {
+	public final class RefundList: Codable {
 		/// Details about each object.
 		public var data: [Refund]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -579,7 +579,7 @@ public struct PostChargesChargeRefunds: StripeAPIEndpoint {
 		return "/v1/charges/\(inputs.charge)/refunds"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		public var amount: Int?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
@@ -638,7 +638,7 @@ public struct PostChargesChargeRefundsRefund: StripeAPIEndpoint {
 		return "/v1/charges/\(inputs.charge)/refunds/\(inputs.refund)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		public var metadata: MESSED_UP?

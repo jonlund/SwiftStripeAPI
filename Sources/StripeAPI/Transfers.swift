@@ -16,7 +16,7 @@ public struct GetTransfers: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class TransferList: Codable {
+	public final class TransferList: Codable {
 		/// Details about each object.
 		public var data: [Transfer]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -49,7 +49,7 @@ public struct PostTransfers: StripeAPIEndpoint {
 		return "/v1/transfers"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A positive integer in %s representing how much to transfer.
 		public var amount: Int?
 		/// 3-letter [ISO code for currency](https://stripe.com/docs/payouts).
@@ -106,7 +106,7 @@ public struct GetTransfersIdReversals: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class TransferReversalList: Codable {
+	public final class TransferReversalList: Codable {
 		/// Details about each object.
 		public var data: [TransferReversal]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -142,7 +142,7 @@ public struct PostTransfersIdReversals: StripeAPIEndpoint {
 		return "/v1/transfers/\(inputs.id)/reversals"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A positive integer in %s representing how much of this transfer to reverse. Can only reverse up to the unreversed amount remaining of the transfer. Partial transfer reversals are only allowed for transfers to Stripe Accounts. Defaults to the entire transfer amount.
 		public var amount: Int?
 		/// An arbitrary string which you can attach to a reversal object. It is displayed alongside the reversal in the Dashboard. This will be unset if you POST an empty value.
@@ -192,7 +192,7 @@ public struct PostTransfersTransfer: StripeAPIEndpoint {
 		return "/v1/transfers/\(inputs.transfer)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// An arbitrary string attached to the object. Often useful for displaying to users.
 		public var description: String?
 		/// Specifies which fields in the response should be expanded.
@@ -238,7 +238,7 @@ public struct PostTransfersTransferReversalsId: StripeAPIEndpoint {
 		return "/v1/transfers/\(inputs.transfer)/reversals/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

@@ -15,7 +15,7 @@ public struct GetApplicationFees: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [ApplicationFee]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -67,7 +67,7 @@ public struct PostApplicationFeesFeeRefundsId: StripeAPIEndpoint {
 		return "/v1/application_fees/\(inputs.fee)/refunds/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -107,7 +107,7 @@ public struct PostApplicationFeesIdRefund: StripeAPIEndpoint {
 		return "/v1/application_fees/\(inputs.id)/refund"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		public var amount: Int?
 		public var directive: String?
 		/// Specifies which fields in the response should be expanded.
@@ -138,7 +138,7 @@ public struct GetApplicationFeesIdRefunds: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class FeeRefundList: Codable {
+	public final class FeeRefundList: Codable {
 		/// Details about each object.
 		public var data: [FeeRefund]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -174,7 +174,7 @@ public struct PostApplicationFeesIdRefunds: StripeAPIEndpoint {
 		return "/v1/application_fees/\(inputs.id)/refunds"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A positive integer, in _%s_, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
 		public var amount: Int?
 		/// Specifies which fields in the response should be expanded.

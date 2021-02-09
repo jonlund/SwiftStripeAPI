@@ -16,7 +16,7 @@ public struct GetSetupIntents: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PaymentFlowsSetupIntentList: Codable {
+	public final class PaymentFlowsSetupIntentList: Codable {
 		public var data: [SetupIntent]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 		return "/v1/setup_intents"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If the payment method attached is a card, a return_url may be provided in case additional authentication is required.
 		public var confirm: Bool?
 		/// ID of the Customer this SetupIntent belongs to, if one exists.  If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
@@ -94,7 +94,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 
 
 		/// Payment-method-specific configuration for this SetupIntent.
-		public class PaymentMethodOptionsParam: Codable {
+		public final class PaymentMethodOptionsParam: Codable {
 			public var card: SetupIntentParam?
 			public var sepa_debit: SetupIntentPaymentMethodOptionsParam?
 
@@ -106,7 +106,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 			}
 
 
-			public class SetupIntentParam: Codable {
+			public final class SetupIntentParam: Codable {
 				public var request_three_d_secure: RequestThreeDSecureValues?
 
 				public init(request_three_d_secure: RequestThreeDSecureValues? = nil) {
@@ -121,7 +121,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 
 
 
-			public class SetupIntentPaymentMethodOptionsParam: Codable {
+			public final class SetupIntentPaymentMethodOptionsParam: Codable {
 				public var mandate_options: PaymentMethodOptionsMandateOptionsParam?
 
 				public init(mandate_options: PaymentMethodOptionsMandateOptionsParam? = nil) {
@@ -129,7 +129,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 				}
 
 
-				public class PaymentMethodOptionsMandateOptionsParam: Codable {
+				public final class PaymentMethodOptionsMandateOptionsParam: Codable {
 
 					public init() {
 					}
@@ -142,7 +142,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 
 
 		/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
-		public class SecretKeyParam: Codable {
+		public final class SecretKeyParam: Codable {
 			public var customer_acceptance: CustomerAcceptanceParam
 
 			/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
@@ -153,7 +153,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 			}
 
 
-			public class CustomerAcceptanceParam: Codable {
+			public final class CustomerAcceptanceParam: Codable {
 				public var accepted_at: Timestamp?
 				public var offline: OfflineParam?
 				public var online: OnlineParam?
@@ -167,7 +167,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 				}
 
 
-				public class OfflineParam: Codable {
+				public final class OfflineParam: Codable {
 
 					public init() {
 					}
@@ -175,7 +175,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 
 
 
-				public class OnlineParam: Codable {
+				public final class OnlineParam: Codable {
 					public var ip_address: String
 					public var user_agent: String
 
@@ -197,7 +197,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 
 
 		/// If this hash is populated, this SetupIntent will generate a single_use Mandate on success.
-		public class SetupIntentSingleUseParams: Codable {
+		public final class SetupIntentSingleUseParams: Codable {
 			public var amount: Int
 			public var currency: String
 
@@ -248,7 +248,7 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 		return "/v1/setup_intents/\(inputs.intent)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// ID of the Customer this SetupIntent belongs to, if one exists.  If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
 		public var customer: String?
 		/// An arbitrary string attached to the object. Often useful for displaying to users.
@@ -276,7 +276,7 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 
 
 		/// Payment-method-specific configuration for this SetupIntent.
-		public class PaymentMethodOptionsParam: Codable {
+		public final class PaymentMethodOptionsParam: Codable {
 			public var card: SetupIntentParam?
 			public var sepa_debit: SetupIntentPaymentMethodOptionsParam?
 
@@ -288,7 +288,7 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 			}
 
 
-			public class SetupIntentParam: Codable {
+			public final class SetupIntentParam: Codable {
 				public var request_three_d_secure: RequestThreeDSecureValues?
 
 				public init(request_three_d_secure: RequestThreeDSecureValues? = nil) {
@@ -303,7 +303,7 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 
 
 
-			public class SetupIntentPaymentMethodOptionsParam: Codable {
+			public final class SetupIntentPaymentMethodOptionsParam: Codable {
 				public var mandate_options: PaymentMethodOptionsMandateOptionsParam?
 
 				public init(mandate_options: PaymentMethodOptionsMandateOptionsParam? = nil) {
@@ -311,7 +311,7 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 				}
 
 
-				public class PaymentMethodOptionsMandateOptionsParam: Codable {
+				public final class PaymentMethodOptionsMandateOptionsParam: Codable {
 
 					public init() {
 					}
@@ -337,7 +337,7 @@ public struct PostSetupIntentsIntentCancel: StripeAPIEndpoint {
 		return "/v1/setup_intents/\(inputs.intent)/cancel"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Reason for canceling this SetupIntent. Possible values are `abandoned`, `requested_by_customer`, or `duplicate`
 		public var cancellation_reason: CancellationReasonValues?
 		/// Specifies which fields in the response should be expanded.
@@ -369,7 +369,7 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 		return "/v1/setup_intents/\(inputs.intent)/confirm"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The client secret of the SetupIntent.
 		public var client_secret: String?
 		/// Specifies which fields in the response should be expanded.
@@ -394,7 +394,7 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 
 
 		/// Payment-method-specific configuration for this SetupIntent.
-		public class PaymentMethodOptionsParam: Codable {
+		public final class PaymentMethodOptionsParam: Codable {
 			public var card: SetupIntentParam?
 			public var sepa_debit: SetupIntentPaymentMethodOptionsParam?
 
@@ -406,7 +406,7 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 			}
 
 
-			public class SetupIntentParam: Codable {
+			public final class SetupIntentParam: Codable {
 				public var request_three_d_secure: RequestThreeDSecureValues?
 
 				public init(request_three_d_secure: RequestThreeDSecureValues? = nil) {
@@ -421,7 +421,7 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 
 
 
-			public class SetupIntentPaymentMethodOptionsParam: Codable {
+			public final class SetupIntentPaymentMethodOptionsParam: Codable {
 				public var mandate_options: PaymentMethodOptionsMandateOptionsParam?
 
 				public init(mandate_options: PaymentMethodOptionsMandateOptionsParam? = nil) {
@@ -429,7 +429,7 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 				}
 
 
-				public class PaymentMethodOptionsMandateOptionsParam: Codable {
+				public final class PaymentMethodOptionsMandateOptionsParam: Codable {
 
 					public init() {
 					}

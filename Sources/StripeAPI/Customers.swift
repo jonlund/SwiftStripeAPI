@@ -15,7 +15,7 @@ public struct GetCustomers: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Customer]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -47,7 +47,7 @@ public struct PostCustomers: StripeAPIEndpoint {
 		return "/v1/customers"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The customer's address.
 		public var address: MESSED_UP?
 		/// An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -108,7 +108,7 @@ public struct PostCustomers: StripeAPIEndpoint {
 
 
 		/// Default invoice settings for this customer.
-		public class CustomerParam: Codable {
+		public final class CustomerParam: Codable {
 			public var custom_fields: MESSED_UP?
 			public var default_payment_method: String?
 			public var footer: String?
@@ -159,7 +159,7 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The customer's address.
 		public var address: MESSED_UP?
 		/// An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -236,7 +236,7 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 
 
 		/// Default invoice settings for this customer.
-		public class CustomerParam: Codable {
+		public final class CustomerParam: Codable {
 			public var custom_fields: MESSED_UP?
 			public var default_payment_method: String?
 			public var footer: String?
@@ -291,7 +291,7 @@ public struct GetCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class CustomerBalanceTransactionList: Codable {
+	public final class CustomerBalanceTransactionList: Codable {
 		/// Details about each object.
 		public var data: [CustomerBalanceTransaction]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -327,7 +327,7 @@ public struct PostCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/balance_transactions"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The integer amount in **%s** to apply to the customer's credit balance.
 		public var amount: Int
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). If the customer's [`currency`](https://stripe.com/docs/api/customers/object#customer_object-currency) is set, this value must match it. If the customer's `currency` is not set, it will be updated to this value.
@@ -379,7 +379,7 @@ public struct PostCustomersCustomerBalanceTransactionsTransaction: StripeAPIEndp
 		return "/v1/customers/\(inputs.customer)/balance_transactions/\(inputs.transaction)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// An arbitrary string attached to the object. Often useful for displaying to users.
 		public var description: String?
 		/// Specifies which fields in the response should be expanded.
@@ -412,7 +412,7 @@ public struct GetCustomersCustomerBankAccounts: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class BankAccountList: Codable {
+	public final class BankAccountList: Codable {
 		/// Details about each object.
 		public var data: [BankAccount]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -448,7 +448,7 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/bank_accounts"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
 		public var alipay_account: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
@@ -503,7 +503,7 @@ public struct PostCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/bank_accounts/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The name of the person or business that owns the bank account.
 		public var account_holder_name: String?
 		/// The type of entity that holds the account. This can be either `individual` or `company`.
@@ -550,7 +550,7 @@ public struct PostCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 		}
 
 
-		public class Owner: Codable {
+		public final class Owner: Codable {
 			public var address: SourceAddress?
 			public var email: String?
 			public var name: String?
@@ -564,7 +564,7 @@ public struct PostCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 			}
 
 
-			public class SourceAddress: Codable {
+			public final class SourceAddress: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -607,7 +607,7 @@ public struct DeleteCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .DELETE }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 
@@ -631,7 +631,7 @@ public struct PostCustomersCustomerBankAccountsIdVerify: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/bank_accounts/\(inputs.id)/verify"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
 		public var amounts: [Int]?
 		/// Specifies which fields in the response should be expanded.
@@ -661,7 +661,7 @@ public struct GetCustomersCustomerCards: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class CardList: Codable {
+	public final class CardList: Codable {
 		public var data: [Card]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -696,7 +696,7 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/cards"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
 		public var alipay_account: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
@@ -751,7 +751,7 @@ public struct PostCustomersCustomerCardsId: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/cards/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The name of the person or business that owns the bank account.
 		public var account_holder_name: String?
 		/// The type of entity that holds the account. This can be either `individual` or `company`.
@@ -798,7 +798,7 @@ public struct PostCustomersCustomerCardsId: StripeAPIEndpoint {
 		}
 
 
-		public class Owner: Codable {
+		public final class Owner: Codable {
 			public var address: SourceAddress?
 			public var email: String?
 			public var name: String?
@@ -812,7 +812,7 @@ public struct PostCustomersCustomerCardsId: StripeAPIEndpoint {
 			}
 
 
-			public class SourceAddress: Codable {
+			public final class SourceAddress: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -855,7 +855,7 @@ public struct DeleteCustomersCustomerCardsId: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .DELETE }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 
@@ -912,7 +912,7 @@ public struct GetCustomersCustomerSources: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class ApmsSourcesSourceList: Codable {
+	public final class ApmsSourcesSourceList: Codable {
 		/// Details about each object.
 		public var data: [AlipayAccount]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -948,7 +948,7 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/sources"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
 		public var alipay_account: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
@@ -1003,7 +1003,7 @@ public struct PostCustomersCustomerSourcesId: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/sources/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The name of the person or business that owns the bank account.
 		public var account_holder_name: String?
 		/// The type of entity that holds the account. This can be either `individual` or `company`.
@@ -1050,7 +1050,7 @@ public struct PostCustomersCustomerSourcesId: StripeAPIEndpoint {
 		}
 
 
-		public class Owner: Codable {
+		public final class Owner: Codable {
 			public var address: SourceAddress?
 			public var email: String?
 			public var name: String?
@@ -1064,7 +1064,7 @@ public struct PostCustomersCustomerSourcesId: StripeAPIEndpoint {
 			}
 
 
-			public class SourceAddress: Codable {
+			public final class SourceAddress: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -1107,7 +1107,7 @@ public struct DeleteCustomersCustomerSourcesId: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .DELETE }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 
@@ -1131,7 +1131,7 @@ public struct PostCustomersCustomerSourcesIdVerify: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/sources/\(inputs.id)/verify"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
 		public var amounts: [Int]?
 		/// Specifies which fields in the response should be expanded.
@@ -1161,7 +1161,7 @@ public struct GetCustomersCustomerSubscriptions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class SubscriptionList: Codable {
+	public final class SubscriptionList: Codable {
 		/// Details about each object.
 		public var data: [Subscription]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -1197,7 +1197,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/subscriptions"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
 		public var add_invoice_items: MESSED_UP?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -1279,7 +1279,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 
 
 		/// If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
-		public class TransferDataSpecs: Codable {
+		public final class TransferDataSpecs: Codable {
 			public var amount_percent: StringNumber?
 			public var destination: String
 
@@ -1342,7 +1342,7 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 		return "/v1/customers/\(inputs.customer)/subscriptions/\(inputs.subscription_exposed_id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
 		public var add_invoice_items: MESSED_UP?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -1461,7 +1461,7 @@ public struct DeleteCustomersCustomerSubscriptionsSubscriptionExposedId: StripeA
 	}
 	public static var method: HTTPMethod { return .DELETE }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Can be set to `true` if `at_period_end` is not set to `true`. Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
@@ -1525,7 +1525,7 @@ public struct GetCustomersCustomerTaxIds: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class TaxIDsList: Codable {
+	public final class TaxIDsList: Codable {
 		/// Details about each object.
 		public var data: [TaxId]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -1561,7 +1561,7 @@ public struct PostCustomersCustomerTaxIds: StripeAPIEndpoint {
 		return "/v1/customers/\(inputs.customer)/tax_ids"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Type of the tax ID, one of `ae_trn`, `au_abn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `hk_br`, `id_npwp`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `us_ein`, or `za_vat`

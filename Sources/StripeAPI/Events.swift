@@ -16,7 +16,7 @@ public struct GetEvents: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class NotificationEventList: Codable {
+	public final class NotificationEventList: Codable {
 		public var data: [Event]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool

@@ -14,7 +14,7 @@ public struct GetExchangeRates: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [ExchangeRate]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool

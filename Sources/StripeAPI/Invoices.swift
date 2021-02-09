@@ -18,7 +18,7 @@ public struct GetInvoices: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class InvoicesList: Codable {
+	public final class InvoicesList: Codable {
 		public var data: [Invoice]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -50,7 +50,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 		return "/v1/invoices"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
 		public var account_tax_ids: MESSED_UP?
 		/// A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
@@ -114,7 +114,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 
 
 		/// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
-		public class TransferDataSpecs: Codable {
+		public final class TransferDataSpecs: Codable {
 			public var amount: Int?
 			public var destination: String
 
@@ -185,7 +185,7 @@ public struct GetInvoicesUpcomingLines: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class InvoiceLinesList: Codable {
+	public final class InvoiceLinesList: Codable {
 		/// Details about each object.
 		public var data: [LineItem]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -236,7 +236,7 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 		return "/v1/invoices/\(inputs.invoice)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
 		public var account_tax_ids: MESSED_UP?
 		/// A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
@@ -327,7 +327,7 @@ public struct PostInvoicesInvoiceFinalize: StripeAPIEndpoint {
 		return "/v1/invoices/\(inputs.invoice)/finalize"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
 		public var auto_advance: Bool?
 		/// Specifies which fields in the response should be expanded.
@@ -357,7 +357,7 @@ public struct GetInvoicesInvoiceLines: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class InvoiceLinesList: Codable {
+	public final class InvoiceLinesList: Codable {
 		/// Details about each object.
 		public var data: [LineItem]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -393,7 +393,7 @@ public struct PostInvoicesInvoiceMarkUncollectible: StripeAPIEndpoint {
 		return "/v1/invoices/\(inputs.invoice)/mark_uncollectible"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 
@@ -416,7 +416,7 @@ public struct PostInvoicesInvoicePay: StripeAPIEndpoint {
 		return "/v1/invoices/\(inputs.invoice)/pay"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// In cases where the source used to pay the invoice has insufficient funds, passing `forgive=true` controls whether a charge should be attempted for the full amount available on the source, up to the amount to fully pay the invoice. This effectively forgives the difference between the amount available on the source and the amount due.   Passing `forgive=false` will fail the charge if the source hasn't been pre-funded with the right amount. An example for this case is with ACH Credit Transfers and wires: if the amount wired is less than the amount due by a small amount, you might want to forgive the difference. Defaults to `false`.
@@ -454,7 +454,7 @@ public struct PostInvoicesInvoiceSend: StripeAPIEndpoint {
 		return "/v1/invoices/\(inputs.invoice)/send"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 
@@ -477,7 +477,7 @@ public struct PostInvoicesInvoiceVoid: StripeAPIEndpoint {
 		return "/v1/invoices/\(inputs.invoice)/void"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 

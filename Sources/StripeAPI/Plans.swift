@@ -16,7 +16,7 @@ public struct GetPlans: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PlanList: Codable {
+	public final class PlanList: Codable {
 		/// Details about each object.
 		public var data: [Plan]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -49,7 +49,7 @@ public struct PostPlans: StripeAPIEndpoint {
 		return "/v1/plans"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the plan is currently available for new subscriptions. Defaults to `true`.
 		public var active: Bool?
 		/// Specifies a usage aggregation strategy for plans of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
@@ -109,7 +109,7 @@ public struct PostPlans: StripeAPIEndpoint {
 
 
 		/// Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
-		public class TransformUsageParam: Codable {
+		public final class TransformUsageParam: Codable {
 			public var divide_by: Int
 			public var round: RoundValues
 
@@ -188,7 +188,7 @@ public struct PostPlansPlan: StripeAPIEndpoint {
 		return "/v1/plans/\(inputs.plan)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the plan is currently available for new subscriptions.
 		public var active: Bool?
 		/// Specifies which fields in the response should be expanded.

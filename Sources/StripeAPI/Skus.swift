@@ -17,7 +17,7 @@ public struct GetSkus: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Sku]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -49,7 +49,7 @@ public struct PostSkus: StripeAPIEndpoint {
 		return "/v1/skus"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the SKU is available for purchase. Default to `true`.
 		public var active: Bool?
 		/// A dictionary of attributes and values for the attributes defined by the product. If, for example, a product's attributes are `["size", "gender"]`, a valid SKU has the following dictionary of attributes: `{"size": "Medium", "gender": "Unisex"}`.
@@ -89,7 +89,7 @@ public struct PostSkus: StripeAPIEndpoint {
 
 
 		/// Description of the SKU's inventory.
-		public class InventoryCreateSpecs: Codable {
+		public final class InventoryCreateSpecs: Codable {
 			public var quantity: Int?
 			public var type: TypeValues
 			public var value: ValueValues?
@@ -119,7 +119,7 @@ public struct PostSkus: StripeAPIEndpoint {
 
 
 		/// The dimensions of this SKU for shipping purposes.
-		public class PackageDimensionsSpecs: Codable {
+		public final class PackageDimensionsSpecs: Codable {
 			public var height: StringNumber
 			public var length: StringNumber
 			public var weight: StringNumber
@@ -170,7 +170,7 @@ public struct PostSkusId: StripeAPIEndpoint {
 		return "/v1/skus/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether this SKU is available for purchase.
 		public var active: Bool?
 		/// A dictionary of attributes and values for the attributes defined by the product. When specified, `attributes` will partially update the existing attributes dictionary on the product, with the postcondition that a value must be present for each attribute key on the product.
@@ -207,7 +207,7 @@ public struct PostSkusId: StripeAPIEndpoint {
 
 
 		/// Description of the SKU's inventory.
-		public class InventoryUpdateSpecs: Codable {
+		public final class InventoryUpdateSpecs: Codable {
 			public var quantity: Int?
 			public var type: TypeValues?
 			public var value: ValueValues?

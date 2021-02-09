@@ -17,7 +17,7 @@ public struct GetBitcoinReceivers: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [BitcoinReceiver]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -72,7 +72,7 @@ public struct GetBitcoinReceiversReceiverTransactions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class BitcoinTransactionList: Codable {
+	public final class BitcoinTransactionList: Codable {
 		/// Details about each object.
 		public var data: [BitcoinTransaction]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -113,7 +113,7 @@ public struct GetBitcoinTransactions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class BitcoinTransactionList: Codable {
+	public final class BitcoinTransactionList: Codable {
 		/// Details about each object.
 		public var data: [BitcoinTransaction]
 		/// True if this list has another page of items after this one that can be fetched.

@@ -15,7 +15,7 @@ public struct GetTopups: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class TopupList: Codable {
+	public final class TopupList: Codable {
 		public var data: [Topup]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -47,7 +47,7 @@ public struct PostTopups: StripeAPIEndpoint {
 		return "/v1/topups"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A positive integer representing how much to transfer.
 		public var amount: Int
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -106,7 +106,7 @@ public struct PostTopupsTopup: StripeAPIEndpoint {
 		return "/v1/topups/\(inputs.topup)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// An arbitrary string attached to the object. Often useful for displaying to users.
 		public var description: String?
 		/// Specifies which fields in the response should be expanded.
@@ -135,7 +135,7 @@ public struct PostTopupsTopupCancel: StripeAPIEndpoint {
 		return "/v1/topups/\(inputs.topup)/cancel"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 

@@ -8,7 +8,7 @@ public struct PostSources: StripeAPIEndpoint {
 		return "/v1/sources"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources. Not supported for `receiver` type sources, where charge amount may not be specified until funds land.
 		public var amount: Int?
 		/// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready.
@@ -61,7 +61,7 @@ public struct PostSources: StripeAPIEndpoint {
 
 
 		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
-		public class MandateParams: Codable {
+		public final class MandateParams: Codable {
 			public var acceptance: MandateAcceptanceParams?
 			public var amount: Int?
 			public var currency: String?
@@ -79,7 +79,7 @@ public struct PostSources: StripeAPIEndpoint {
 			}
 
 
-			public class MandateAcceptanceParams: Codable {
+			public final class MandateAcceptanceParams: Codable {
 				public var date: Timestamp?
 				public var ip: String?
 				public var offline: MandateOfflineAcceptanceParams?
@@ -99,7 +99,7 @@ public struct PostSources: StripeAPIEndpoint {
 				}
 
 
-				public class MandateOfflineAcceptanceParams: Codable {
+				public final class MandateOfflineAcceptanceParams: Codable {
 					public var contact_email: String
 
 					public init(contact_email: String) {
@@ -109,7 +109,7 @@ public struct PostSources: StripeAPIEndpoint {
 
 
 
-				public class MandateOnlineAcceptanceParams: Codable {
+				public final class MandateOnlineAcceptanceParams: Codable {
 					public var date: Timestamp?
 					public var ip: String?
 					public var user_agent: String?
@@ -154,7 +154,7 @@ public struct PostSources: StripeAPIEndpoint {
 
 
 		/// Information about the owner of the payment instrument that may be used or required by particular source types.
-		public class Owner: Codable {
+		public final class Owner: Codable {
 			public var address: SourceAddress?
 			public var email: String?
 			public var name: String?
@@ -170,7 +170,7 @@ public struct PostSources: StripeAPIEndpoint {
 			}
 
 
-			public class SourceAddress: Codable {
+			public final class SourceAddress: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -193,7 +193,7 @@ public struct PostSources: StripeAPIEndpoint {
 
 
 		/// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
-		public class ReceiverParams: Codable {
+		public final class ReceiverParams: Codable {
 			public var refund_attributes_method: RefundAttributesMethodValues?
 
 			/// Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
@@ -212,7 +212,7 @@ public struct PostSources: StripeAPIEndpoint {
 
 
 		/// Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
-		public class RedirectParams: Codable {
+		public final class RedirectParams: Codable {
 			public var return_url: String
 
 			/// Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
@@ -226,7 +226,7 @@ public struct PostSources: StripeAPIEndpoint {
 
 
 		/// Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
-		public class ShallowOrderSpecs: Codable {
+		public final class ShallowOrderSpecs: Codable {
 			public var items: MESSED_UP?
 			public var shipping: OrderShipping?
 
@@ -238,7 +238,7 @@ public struct PostSources: StripeAPIEndpoint {
 			}
 
 
-			public class OrderShipping: Codable {
+			public final class OrderShipping: Codable {
 				public var address: Address
 				public var carrier: String?
 				public var name: String?
@@ -254,7 +254,7 @@ public struct PostSources: StripeAPIEndpoint {
 				}
 
 
-				public class Address: Codable {
+				public final class Address: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String
@@ -320,7 +320,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 		return "/v1/sources/\(inputs.source)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Amount associated with the source.
 		public var amount: Int?
 		/// Specifies which fields in the response should be expanded.
@@ -345,7 +345,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 
 
 		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
-		public class MandateParams: Codable {
+		public final class MandateParams: Codable {
 			public var acceptance: MandateAcceptanceParams?
 			public var amount: Int?
 			public var currency: String?
@@ -363,7 +363,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 			}
 
 
-			public class MandateAcceptanceParams: Codable {
+			public final class MandateAcceptanceParams: Codable {
 				public var date: Timestamp?
 				public var ip: String?
 				public var offline: MandateOfflineAcceptanceParams?
@@ -383,7 +383,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 				}
 
 
-				public class MandateOfflineAcceptanceParams: Codable {
+				public final class MandateOfflineAcceptanceParams: Codable {
 					public var contact_email: String
 
 					public init(contact_email: String) {
@@ -393,7 +393,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 
 
 
-				public class MandateOnlineAcceptanceParams: Codable {
+				public final class MandateOnlineAcceptanceParams: Codable {
 					public var date: Timestamp?
 					public var ip: String?
 					public var user_agent: String?
@@ -438,7 +438,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 
 
 		/// Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
-		public class OrderParams: Codable {
+		public final class OrderParams: Codable {
 			public var items: MESSED_UP?
 			public var shipping: OrderShipping?
 
@@ -450,7 +450,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 			}
 
 
-			public class OrderShipping: Codable {
+			public final class OrderShipping: Codable {
 				public var address: Address
 				public var carrier: String?
 				public var name: String?
@@ -466,7 +466,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 				}
 
 
-				public class Address: Codable {
+				public final class Address: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String
@@ -491,7 +491,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 
 
 		/// Information about the owner of the payment instrument that may be used or required by particular source types.
-		public class Owner: Codable {
+		public final class Owner: Codable {
 			public var address: SourceAddress?
 			public var email: String?
 			public var name: String?
@@ -507,7 +507,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 			}
 
 
-			public class SourceAddress: Codable {
+			public final class SourceAddress: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -563,7 +563,7 @@ public struct GetSourcesSourceSourceTransactions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class ApmsSourcesSourceTransactionList: Codable {
+	public final class ApmsSourcesSourceTransactionList: Codable {
 		public var data: [SourceTransaction]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -614,7 +614,7 @@ public struct PostSourcesSourceVerify: StripeAPIEndpoint {
 		return "/v1/sources/\(inputs.source)/verify"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// The values needed to verify the source.

@@ -8,7 +8,7 @@ public struct Post3dSecure: StripeAPIEndpoint {
 		return "/v1/3d_secure"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Amount of the charge that you will create when authentication completes.
 		public var amount: Int
 		/// The ID of a card token, or the ID of a card belonging to the given customer.

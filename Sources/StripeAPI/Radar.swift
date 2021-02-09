@@ -15,7 +15,7 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class RadarEarlyFraudWarningList: Codable {
+	public final class RadarEarlyFraudWarningList: Codable {
 		public var data: [RadarEarlyFraudWarning]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -70,7 +70,7 @@ public struct GetRadarValueListItems: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [RadarValueListItem]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -102,7 +102,7 @@ public struct PostRadarValueListItems: StripeAPIEndpoint {
 		return "/v1/radar/value_list_items"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// The value of the item (whose type must match the type of the parent value list).
@@ -166,7 +166,7 @@ public struct GetRadarValueLists: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [RadarValueList]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -198,7 +198,7 @@ public struct PostRadarValueLists: StripeAPIEndpoint {
 		return "/v1/radar/value_lists"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The name of the value list for use in rules.
 		public var alias: String
 		/// Specifies which fields in the response should be expanded.
@@ -258,7 +258,7 @@ public struct PostRadarValueListsValueList: StripeAPIEndpoint {
 		return "/v1/radar/value_lists/\(inputs.value_list)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The name of the value list for use in rules.
 		public var alias: String?
 		/// Specifies which fields in the response should be expanded.

@@ -8,7 +8,7 @@ public struct PostTokens: StripeAPIEndpoint {
 		return "/v1/tokens"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Information for the account this token will represent.
 		public var account: ConnectJsAccountTokenSpecs?
 		/// The bank account this token will represent.
@@ -38,7 +38,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 		/// Information for the account this token will represent.
-		public class ConnectJsAccountTokenSpecs: Codable {
+		public final class ConnectJsAccountTokenSpecs: Codable {
 			public var business_type: BusinessTypeValues?
 			public var company: CompanySpecs?
 			public var individual: IndividualSpecs?
@@ -54,7 +54,7 @@ public struct PostTokens: StripeAPIEndpoint {
 			}
 
 
-			public class CompanySpecs: Codable {
+			public final class CompanySpecs: Codable {
 				public var address: AddressSpecs?
 				public var address_kana: JapanAddressKanaSpecs?
 				public var address_kanji: JapanAddressKanjiSpecs?
@@ -92,7 +92,7 @@ public struct PostTokens: StripeAPIEndpoint {
 				}
 
 
-				public class AddressSpecs: Codable {
+				public final class AddressSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
@@ -112,7 +112,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class JapanAddressKanaSpecs: Codable {
+				public final class JapanAddressKanaSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
@@ -134,7 +134,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class JapanAddressKanjiSpecs: Codable {
+				public final class JapanAddressKanjiSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
@@ -156,7 +156,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class VerificationSpecs: Codable {
+				public final class VerificationSpecs: Codable {
 					public var document: VerificationDocumentSpecs?
 
 					public init(document: VerificationDocumentSpecs? = nil) {
@@ -164,7 +164,7 @@ public struct PostTokens: StripeAPIEndpoint {
 					}
 
 
-					public class VerificationDocumentSpecs: Codable {
+					public final class VerificationDocumentSpecs: Codable {
 						public var back: String?
 						public var front: String?
 
@@ -198,7 +198,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-			public class IndividualSpecs: Codable {
+			public final class IndividualSpecs: Codable {
 				public var address: AddressSpecs?
 				public var address_kana: JapanAddressKanaSpecs?
 				public var address_kanji: JapanAddressKanjiSpecs?
@@ -242,7 +242,7 @@ public struct PostTokens: StripeAPIEndpoint {
 				}
 
 
-				public class AddressSpecs: Codable {
+				public final class AddressSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
@@ -262,7 +262,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class JapanAddressKanaSpecs: Codable {
+				public final class JapanAddressKanaSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
@@ -284,7 +284,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class JapanAddressKanjiSpecs: Codable {
+				public final class JapanAddressKanjiSpecs: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String?
@@ -306,7 +306,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-				public class PersonVerificationSpecs: Codable {
+				public final class PersonVerificationSpecs: Codable {
 					public var additional_document: PersonVerificationDocumentSpecs?
 					public var document: PersonVerificationDocumentSpecs?
 
@@ -316,7 +316,7 @@ public struct PostTokens: StripeAPIEndpoint {
 					}
 
 
-					public class PersonVerificationDocumentSpecs: Codable {
+					public final class PersonVerificationDocumentSpecs: Codable {
 						public var back: String?
 						public var front: String?
 
@@ -347,7 +347,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 		/// The updated CVC value this token will represent.
-		public class CvcParams: Codable {
+		public final class CvcParams: Codable {
 			public var cvc: String
 
 			/// The updated CVC value this token will represent.
@@ -361,7 +361,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 		/// Information for the person this token will represent.
-		public class PersonTokenSpecs: Codable {
+		public final class PersonTokenSpecs: Codable {
 			public var address: AddressSpecs?
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
@@ -409,7 +409,7 @@ public struct PostTokens: StripeAPIEndpoint {
 			}
 
 
-			public class AddressSpecs: Codable {
+			public final class AddressSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -429,7 +429,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanaSpecs: Codable {
+			public final class JapanAddressKanaSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -451,7 +451,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanjiSpecs: Codable {
+			public final class JapanAddressKanjiSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -473,7 +473,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-			public class PersonVerificationSpecs: Codable {
+			public final class PersonVerificationSpecs: Codable {
 				public var additional_document: PersonVerificationDocumentSpecs?
 				public var document: PersonVerificationDocumentSpecs?
 
@@ -483,7 +483,7 @@ public struct PostTokens: StripeAPIEndpoint {
 				}
 
 
-				public class PersonVerificationDocumentSpecs: Codable {
+				public final class PersonVerificationDocumentSpecs: Codable {
 					public var back: String?
 					public var front: String?
 
@@ -497,7 +497,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
-			public class RelationshipSpecs: Codable {
+			public final class RelationshipSpecs: Codable {
 				public var director: Bool?
 				public var executive: Bool?
 				public var owner: Bool?
@@ -520,7 +520,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 		/// The PII this token will represent.
-		public class PiiTokenSpecs: Codable {
+		public final class PiiTokenSpecs: Codable {
 			public var id_number: String?
 
 			/// The PII this token will represent.
@@ -533,7 +533,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 		/// The bank account this token will represent.
-		public class TokenCreateBankAccount: Codable {
+		public final class TokenCreateBankAccount: Codable {
 			public var account_holder_name: String?
 			public var account_holder_type: AccountHolderTypeValues?
 			public var account_number: String

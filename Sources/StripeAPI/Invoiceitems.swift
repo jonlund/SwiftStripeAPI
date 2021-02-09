@@ -17,7 +17,7 @@ public struct GetInvoiceitems: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Invoiceitem]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -49,7 +49,7 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 		return "/v1/invoiceitems"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The integer amount in %s of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
 		public var amount: Int?
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -107,7 +107,7 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 
 
 		/// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
-		public class OneTimePriceData: Codable {
+		public final class OneTimePriceData: Codable {
 			public var currency: String
 			public var product: String
 			public var unit_amount: Int?
@@ -128,7 +128,7 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 
 
 		/// The period associated with this invoice item.
-		public class Period: Codable {
+		public final class Period: Codable {
 			public var end: Timestamp
 			public var start: Timestamp
 
@@ -173,7 +173,7 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 		return "/v1/invoiceitems/\(inputs.invoiceitem)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The integer amount in %s of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
 		public var amount: Int?
 		/// An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
@@ -219,7 +219,7 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 
 
 		/// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
-		public class OneTimePriceData: Codable {
+		public final class OneTimePriceData: Codable {
 			public var currency: String
 			public var product: String
 			public var unit_amount: Int?
@@ -240,7 +240,7 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 
 
 		/// The period associated with this invoice item.
-		public class Period: Codable {
+		public final class Period: Codable {
 			public var end: Timestamp
 			public var start: Timestamp
 

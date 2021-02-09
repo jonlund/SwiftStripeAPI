@@ -14,7 +14,7 @@ public struct GetCoupons: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Coupon]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -46,7 +46,7 @@ public struct PostCoupons: StripeAPIEndpoint {
 		return "/v1/coupons"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
 		public var amount_off: Int?
 		/// A hash containing directions for what this Coupon will apply discounts to.
@@ -89,7 +89,7 @@ public struct PostCoupons: StripeAPIEndpoint {
 
 
 		/// A hash containing directions for what this Coupon will apply discounts to.
-		public class AppliesToParams: Codable {
+		public final class AppliesToParams: Codable {
 			public var products: [String]
 
 			/// A hash containing directions for what this Coupon will apply discounts to.
@@ -137,7 +137,7 @@ public struct PostCouponsCoupon: StripeAPIEndpoint {
 		return "/v1/coupons/\(inputs.coupon)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

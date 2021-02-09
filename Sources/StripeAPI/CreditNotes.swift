@@ -16,7 +16,7 @@ public struct GetCreditNotes: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class CreditNotesList: Codable {
+	public final class CreditNotesList: Codable {
 		public var data: [CreditNote]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 		return "/v1/credit_notes"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The integer amount in %s representing the total amount of the credit note.
 		public var amount: Int?
 		/// The integer amount in %s representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
@@ -141,7 +141,7 @@ public struct GetCreditNotesPreviewLines: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class CreditNoteLinesList: Codable {
+	public final class CreditNoteLinesList: Codable {
 		/// Details about each object.
 		public var data: [CreditNoteLineItem]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -181,7 +181,7 @@ public struct GetCreditNotesCreditNoteLines: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class CreditNoteLinesList: Codable {
+	public final class CreditNoteLinesList: Codable {
 		/// Details about each object.
 		public var data: [CreditNoteLineItem]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -232,7 +232,7 @@ public struct PostCreditNotesId: StripeAPIEndpoint {
 		return "/v1/credit_notes/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Credit note memo.
@@ -261,7 +261,7 @@ public struct PostCreditNotesIdVoid: StripeAPIEndpoint {
 		return "/v1/credit_notes/\(inputs.id)/void"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 

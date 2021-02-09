@@ -14,7 +14,7 @@ public struct GetWebhookEndpoints: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [WebhookEndpoint]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -46,7 +46,7 @@ public struct PostWebhookEndpoints: StripeAPIEndpoint {
 		return "/v1/webhook_endpoints"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Events sent to this endpoint will be generated with this Stripe Version instead of your account's default Stripe Version.
 		public var api_version: ApiVersionValues?
 		/// Whether this endpoint should receive events from connected accounts (`true`), or from your account (`false`). Defaults to `false`.
@@ -201,7 +201,7 @@ public struct PostWebhookEndpointsWebhookEndpoint: StripeAPIEndpoint {
 		return "/v1/webhook_endpoints/\(inputs.webhook_endpoint)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// An optional description of what the webhook is used for.
 		public var description: String?
 		/// Disable the webhook endpoint if set to true.

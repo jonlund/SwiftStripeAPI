@@ -16,7 +16,7 @@ public struct GetFileLinks: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [FileLink]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostFileLinks: StripeAPIEndpoint {
 		return "/v1/file_links"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// A future timestamp after which the link will no longer be usable.
@@ -95,7 +95,7 @@ public struct PostFileLinksLink: StripeAPIEndpoint {
 		return "/v1/file_links/\(inputs.link)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.

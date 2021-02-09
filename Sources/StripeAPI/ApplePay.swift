@@ -15,7 +15,7 @@ public struct GetApplePayDomains: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class ApplePayDomainList: Codable {
+	public final class ApplePayDomainList: Codable {
 		public var data: [ApplePayDomain]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -47,7 +47,7 @@ public struct PostApplePayDomains: StripeAPIEndpoint {
 		return "/v1/apple_pay/domains"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		public var domain_name: String
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?

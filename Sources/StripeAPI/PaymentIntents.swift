@@ -15,7 +15,7 @@ public struct GetPaymentIntents: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PaymentFlowsPaymentIntentList: Codable {
+	public final class PaymentFlowsPaymentIntentList: Codable {
 		public var data: [PaymentIntent]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -47,7 +47,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 		return "/v1/payment_intents"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
 		public var amount: Int
 		/// The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
@@ -137,7 +137,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
-		public class PaymentMethodDataParams: Codable {
+		public final class PaymentMethodDataParams: Codable {
 			public var alipay: Param?
 			public var au_becs_debit: Param?
 			public var bacs_debit: Param?
@@ -180,7 +180,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			}
 
 
-			public class BillingDetailsInnerParams: Codable {
+			public final class BillingDetailsInnerParams: Codable {
 				public var address: MESSED_UP?
 				public var email: String?
 				public var name: String?
@@ -196,7 +196,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 
-			public class Param: Codable {
+			public final class Param: Codable {
 				public var country: CountryValues
 
 				public init(country: CountryValues) {
@@ -234,7 +234,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 		/// Payment-method-specific configuration for this PaymentIntent.
-		public class PaymentMethodOptionsParam: Codable {
+		public final class PaymentMethodOptionsParam: Codable {
 			public var alipay: MESSED_UP?
 			public var bancontact: MESSED_UP?
 			public var card: MESSED_UP?
@@ -259,7 +259,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 		/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
-		public class SecretKeyParam: Codable {
+		public final class SecretKeyParam: Codable {
 			public var customer_acceptance: CustomerAcceptanceParam
 
 			/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
@@ -270,7 +270,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			}
 
 
-			public class CustomerAcceptanceParam: Codable {
+			public final class CustomerAcceptanceParam: Codable {
 				public var accepted_at: Timestamp?
 				public var offline: OfflineParam?
 				public var online: OnlineParam?
@@ -284,7 +284,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 				}
 
 
-				public class OfflineParam: Codable {
+				public final class OfflineParam: Codable {
 
 					public init() {
 					}
@@ -292,7 +292,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 
-				public class OnlineParam: Codable {
+				public final class OnlineParam: Codable {
 					public var ip_address: String
 					public var user_agent: String
 
@@ -314,7 +314,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 		/// Shipping information for this PaymentIntent.
-		public class Shipping: Codable {
+		public final class Shipping: Codable {
 			public var address: Address
 			public var carrier: String?
 			public var name: String
@@ -334,7 +334,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			}
 
 
-			public class Address: Codable {
+			public final class Address: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String
@@ -357,7 +357,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 		/// The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-		public class TransferDataCreationParams: Codable {
+		public final class TransferDataCreationParams: Codable {
 			public var amount: Int?
 			public var destination: String
 
@@ -417,7 +417,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 		return "/v1/payment_intents/\(inputs.intent)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
 		public var amount: Int?
 		/// The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
@@ -478,7 +478,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 
 
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
-		public class PaymentMethodDataParams: Codable {
+		public final class PaymentMethodDataParams: Codable {
 			public var alipay: Param?
 			public var au_becs_debit: Param?
 			public var bacs_debit: Param?
@@ -521,7 +521,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 			}
 
 
-			public class BillingDetailsInnerParams: Codable {
+			public final class BillingDetailsInnerParams: Codable {
 				public var address: MESSED_UP?
 				public var email: String?
 				public var name: String?
@@ -537,7 +537,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 
 
 
-			public class Param: Codable {
+			public final class Param: Codable {
 				public var country: CountryValues
 
 				public init(country: CountryValues) {
@@ -575,7 +575,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 
 
 		/// Payment-method-specific configuration for this PaymentIntent.
-		public class PaymentMethodOptionsParam: Codable {
+		public final class PaymentMethodOptionsParam: Codable {
 			public var alipay: MESSED_UP?
 			public var bancontact: MESSED_UP?
 			public var card: MESSED_UP?
@@ -600,7 +600,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 
 
 		/// The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-		public class TransferDataUpdateParams: Codable {
+		public final class TransferDataUpdateParams: Codable {
 			public var amount: Int?
 
 			/// The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
@@ -631,7 +631,7 @@ public struct PostPaymentIntentsIntentCancel: StripeAPIEndpoint {
 		return "/v1/payment_intents/\(inputs.intent)/cancel"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Reason for canceling this PaymentIntent. Possible values are `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
 		public var cancellation_reason: CancellationReasonValues?
 		/// Specifies which fields in the response should be expanded.
@@ -664,7 +664,7 @@ public struct PostPaymentIntentsIntentCapture: StripeAPIEndpoint {
 		return "/v1/payment_intents/\(inputs.intent)/capture"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Any additional amount will be automatically refunded. Defaults to the full `amount_capturable` if not provided.
 		public var amount_to_capture: Int?
 		/// The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
@@ -689,7 +689,7 @@ public struct PostPaymentIntentsIntentCapture: StripeAPIEndpoint {
 
 
 		/// The parameters used to automatically create a Transfer when the payment is captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-		public class TransferDataUpdateParams: Codable {
+		public final class TransferDataUpdateParams: Codable {
 			public var amount: Int?
 
 			/// The parameters used to automatically create a Transfer when the payment is captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
@@ -715,7 +715,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 		return "/v1/payment_intents/\(inputs.intent)/confirm"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The client secret of the PaymentIntent.
 		public var client_secret: String?
 		/// Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication).
@@ -767,7 +767,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 
 
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
-		public class PaymentMethodDataParams: Codable {
+		public final class PaymentMethodDataParams: Codable {
 			public var alipay: Param?
 			public var au_becs_debit: Param?
 			public var bacs_debit: Param?
@@ -810,7 +810,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 			}
 
 
-			public class BillingDetailsInnerParams: Codable {
+			public final class BillingDetailsInnerParams: Codable {
 				public var address: MESSED_UP?
 				public var email: String?
 				public var name: String?
@@ -826,7 +826,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 
 
 
-			public class Param: Codable {
+			public final class Param: Codable {
 				public var country: CountryValues
 
 				public init(country: CountryValues) {
@@ -864,7 +864,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 
 
 		/// Payment-method-specific configuration for this PaymentIntent.
-		public class PaymentMethodOptionsParam: Codable {
+		public final class PaymentMethodOptionsParam: Codable {
 			public var alipay: MESSED_UP?
 			public var bancontact: MESSED_UP?
 			public var card: MESSED_UP?

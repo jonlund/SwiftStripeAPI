@@ -15,7 +15,7 @@ public struct GetSubscriptionItems: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [SubscriptionItem]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -47,7 +47,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 		return "/v1/subscription_items"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
 		public var billing_thresholds: MESSED_UP?
 		/// Specifies which fields in the response should be expanded.
@@ -87,7 +87,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 
 
 		/// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
-		public class RecurringPriceData: Codable {
+		public final class RecurringPriceData: Codable {
 			public var currency: String
 			public var product: String
 			public var recurring: RecurringAdhoc
@@ -108,7 +108,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 			}
 
 
-			public class RecurringAdhoc: Codable {
+			public final class RecurringAdhoc: Codable {
 				public var interval: IntervalValues
 				public var interval_count: Int?
 
@@ -170,7 +170,7 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 		return "/v1/subscription_items/\(inputs.item)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
 		public var billing_thresholds: MESSED_UP?
 		/// Specifies which fields in the response should be expanded.
@@ -210,7 +210,7 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 
 
 		/// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
-		public class RecurringPriceData: Codable {
+		public final class RecurringPriceData: Codable {
 			public var currency: String
 			public var product: String
 			public var recurring: RecurringAdhoc
@@ -231,7 +231,7 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 			}
 
 
-			public class RecurringAdhoc: Codable {
+			public final class RecurringAdhoc: Codable {
 				public var interval: IntervalValues
 				public var interval_count: Int?
 
@@ -279,7 +279,7 @@ public struct DeleteSubscriptionItemsItem: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .DELETE }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Delete all usage for the given subscription item. Allowed only when the current plan's `usage_type` is `metered`.
 		public var clear_usage: Bool?
 		/// Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.  Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.  Prorations can be disabled by passing `none`.
@@ -318,7 +318,7 @@ public struct GetSubscriptionItemsSubscriptionItemUsageRecordSummaries: StripeAP
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [UsageRecordSummary]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -353,7 +353,7 @@ public struct PostSubscriptionItemsSubscriptionItemUsageRecords: StripeAPIEndpoi
 		return "/v1/subscription_items/\(inputs.subscription_item)/usage_records"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
 		public var action: ActionValues?
 		/// Specifies which fields in the response should be expanded.

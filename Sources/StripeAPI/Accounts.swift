@@ -14,7 +14,7 @@ public struct GetAccounts: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Account]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -46,7 +46,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 		return "/v1/accounts"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
 		public var account_token: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
@@ -104,7 +104,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 		/// Business information about the account.
-		public class BusinessProfileSpecs: Codable {
+		public final class BusinessProfileSpecs: Codable {
 			public var mcc: String?
 			public var name: String?
 			public var product_description: String?
@@ -128,7 +128,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 			}
 
 
-			public class AddressSpecs: Codable {
+			public final class AddressSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -151,7 +151,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 		/// Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
-		public class CapabilitiesParam: Codable {
+		public final class CapabilitiesParam: Codable {
 			public var au_becs_debit_payments: CapabilityParam?
 			public var bacs_debit_payments: CapabilityParam?
 			public var bancontact_payments: CapabilityParam?
@@ -199,7 +199,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 			}
 
 
-			public class CapabilityParam: Codable {
+			public final class CapabilityParam: Codable {
 				public var requested: Bool?
 
 				public init(requested: Bool? = nil) {
@@ -212,7 +212,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 		/// Information about the company or business. This field is available for any `business_type`.
-		public class CompanySpecs: Codable {
+		public final class CompanySpecs: Codable {
 			public var address: AddressSpecs?
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
@@ -252,7 +252,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 			}
 
 
-			public class AddressSpecs: Codable {
+			public final class AddressSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -272,7 +272,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanaSpecs: Codable {
+			public final class JapanAddressKanaSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -294,7 +294,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanjiSpecs: Codable {
+			public final class JapanAddressKanjiSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -316,7 +316,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class VerificationSpecs: Codable {
+			public final class VerificationSpecs: Codable {
 				public var document: VerificationDocumentSpecs?
 
 				public init(document: VerificationDocumentSpecs? = nil) {
@@ -324,7 +324,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 				}
 
 
-				public class VerificationDocumentSpecs: Codable {
+				public final class VerificationDocumentSpecs: Codable {
 					public var back: String?
 					public var front: String?
 
@@ -359,7 +359,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 		/// Documents that may be submitted to satisfy various informational requests.
-		public class DocumentsSpecs: Codable {
+		public final class DocumentsSpecs: Codable {
 			public var bank_account_ownership_verification: DocumentsParam?
 			public var company_license: DocumentsParam?
 			public var company_memorandum_of_association: DocumentsParam?
@@ -379,7 +379,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 			}
 
 
-			public class DocumentsParam: Codable {
+			public final class DocumentsParam: Codable {
 				public var files: [String]?
 
 				public init(files: [String]? = nil) {
@@ -392,7 +392,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 		/// Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
-		public class IndividualSpecs: Codable {
+		public final class IndividualSpecs: Codable {
 			public var address: AddressSpecs?
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
@@ -438,7 +438,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 			}
 
 
-			public class AddressSpecs: Codable {
+			public final class AddressSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -458,7 +458,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanaSpecs: Codable {
+			public final class JapanAddressKanaSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -480,7 +480,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanjiSpecs: Codable {
+			public final class JapanAddressKanjiSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -502,7 +502,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class PersonVerificationSpecs: Codable {
+			public final class PersonVerificationSpecs: Codable {
 				public var additional_document: PersonVerificationDocumentSpecs?
 				public var document: PersonVerificationDocumentSpecs?
 
@@ -512,7 +512,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 				}
 
 
-				public class PersonVerificationDocumentSpecs: Codable {
+				public final class PersonVerificationDocumentSpecs: Codable {
 					public var back: String?
 					public var front: String?
 
@@ -534,7 +534,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 		/// Options for customizing how the account functions within Stripe.
-		public class SettingsSpecs: Codable {
+		public final class SettingsSpecs: Codable {
 			public var branding: BrandingSettingsSpecs?
 			public var card_payments: CardPaymentsSettingsSpecs?
 			public var payments: PaymentsSettingsSpecs?
@@ -550,7 +550,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 			}
 
 
-			public class BrandingSettingsSpecs: Codable {
+			public final class BrandingSettingsSpecs: Codable {
 				public var icon: String?
 				public var logo: String?
 				public var primary_color: String?
@@ -566,7 +566,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class CardPaymentsSettingsSpecs: Codable {
+			public final class CardPaymentsSettingsSpecs: Codable {
 				public var decline_on: DeclineChargeOnSpecs?
 				public var statement_descriptor_prefix: String?
 
@@ -576,7 +576,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 				}
 
 
-				public class DeclineChargeOnSpecs: Codable {
+				public final class DeclineChargeOnSpecs: Codable {
 					public var avs_failure: Bool?
 					public var cvc_failure: Bool?
 
@@ -590,7 +590,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class PaymentsSettingsSpecs: Codable {
+			public final class PaymentsSettingsSpecs: Codable {
 				public var statement_descriptor: String?
 				public var statement_descriptor_kana: String?
 				public var statement_descriptor_kanji: String?
@@ -604,7 +604,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 
-			public class PayoutSettingsSpecs: Codable {
+			public final class PayoutSettingsSpecs: Codable {
 				public var debit_negative_balances: Bool?
 				public var schedule: TransferScheduleSpecs?
 				public var statement_descriptor: String?
@@ -616,7 +616,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 				}
 
 
-				public class TransferScheduleSpecs: Codable {
+				public final class TransferScheduleSpecs: Codable {
 					public var delay_days: String?
 					public var interval: IntervalValues?
 					public var monthly_anchor: Int?
@@ -654,7 +654,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 
 		/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
-		public class TosAcceptanceSpecs: Codable {
+		public final class TosAcceptanceSpecs: Codable {
 			public var date: Timestamp?
 			public var ip: String?
 			public var service_agreement: String?
@@ -714,7 +714,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
 		public var account_token: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
@@ -766,7 +766,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 		/// Business information about the account.
-		public class BusinessProfileSpecs: Codable {
+		public final class BusinessProfileSpecs: Codable {
 			public var mcc: String?
 			public var name: String?
 			public var product_description: String?
@@ -790,7 +790,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 			}
 
 
-			public class AddressSpecs: Codable {
+			public final class AddressSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -813,7 +813,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 		/// Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
-		public class CapabilitiesParam: Codable {
+		public final class CapabilitiesParam: Codable {
 			public var au_becs_debit_payments: CapabilityParam?
 			public var bacs_debit_payments: CapabilityParam?
 			public var bancontact_payments: CapabilityParam?
@@ -861,7 +861,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 			}
 
 
-			public class CapabilityParam: Codable {
+			public final class CapabilityParam: Codable {
 				public var requested: Bool?
 
 				public init(requested: Bool? = nil) {
@@ -874,7 +874,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 		/// Information about the company or business. This field is available for any `business_type`.
-		public class CompanySpecs: Codable {
+		public final class CompanySpecs: Codable {
 			public var address: AddressSpecs?
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
@@ -914,7 +914,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 			}
 
 
-			public class AddressSpecs: Codable {
+			public final class AddressSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -934,7 +934,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanaSpecs: Codable {
+			public final class JapanAddressKanaSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -956,7 +956,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanjiSpecs: Codable {
+			public final class JapanAddressKanjiSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -978,7 +978,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class VerificationSpecs: Codable {
+			public final class VerificationSpecs: Codable {
 				public var document: VerificationDocumentSpecs?
 
 				public init(document: VerificationDocumentSpecs? = nil) {
@@ -986,7 +986,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 				}
 
 
-				public class VerificationDocumentSpecs: Codable {
+				public final class VerificationDocumentSpecs: Codable {
 					public var back: String?
 					public var front: String?
 
@@ -1021,7 +1021,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 		/// Documents that may be submitted to satisfy various informational requests.
-		public class DocumentsSpecs: Codable {
+		public final class DocumentsSpecs: Codable {
 			public var bank_account_ownership_verification: DocumentsParam?
 			public var company_license: DocumentsParam?
 			public var company_memorandum_of_association: DocumentsParam?
@@ -1041,7 +1041,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 			}
 
 
-			public class DocumentsParam: Codable {
+			public final class DocumentsParam: Codable {
 				public var files: [String]?
 
 				public init(files: [String]? = nil) {
@@ -1054,7 +1054,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 		/// Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
-		public class IndividualSpecs: Codable {
+		public final class IndividualSpecs: Codable {
 			public var address: AddressSpecs?
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
@@ -1100,7 +1100,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 			}
 
 
-			public class AddressSpecs: Codable {
+			public final class AddressSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -1120,7 +1120,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanaSpecs: Codable {
+			public final class JapanAddressKanaSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -1142,7 +1142,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class JapanAddressKanjiSpecs: Codable {
+			public final class JapanAddressKanjiSpecs: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String?
@@ -1164,7 +1164,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class PersonVerificationSpecs: Codable {
+			public final class PersonVerificationSpecs: Codable {
 				public var additional_document: PersonVerificationDocumentSpecs?
 				public var document: PersonVerificationDocumentSpecs?
 
@@ -1174,7 +1174,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 				}
 
 
-				public class PersonVerificationDocumentSpecs: Codable {
+				public final class PersonVerificationDocumentSpecs: Codable {
 					public var back: String?
 					public var front: String?
 
@@ -1196,7 +1196,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 		/// Options for customizing how the account functions within Stripe.
-		public class SettingsSpecs: Codable {
+		public final class SettingsSpecs: Codable {
 			public var branding: BrandingSettingsSpecs?
 			public var card_payments: CardPaymentsSettingsSpecs?
 			public var payments: PaymentsSettingsSpecs?
@@ -1212,7 +1212,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 			}
 
 
-			public class BrandingSettingsSpecs: Codable {
+			public final class BrandingSettingsSpecs: Codable {
 				public var icon: String?
 				public var logo: String?
 				public var primary_color: String?
@@ -1228,7 +1228,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class CardPaymentsSettingsSpecs: Codable {
+			public final class CardPaymentsSettingsSpecs: Codable {
 				public var decline_on: DeclineChargeOnSpecs?
 				public var statement_descriptor_prefix: String?
 
@@ -1238,7 +1238,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 				}
 
 
-				public class DeclineChargeOnSpecs: Codable {
+				public final class DeclineChargeOnSpecs: Codable {
 					public var avs_failure: Bool?
 					public var cvc_failure: Bool?
 
@@ -1252,7 +1252,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class PaymentsSettingsSpecs: Codable {
+			public final class PaymentsSettingsSpecs: Codable {
 				public var statement_descriptor: String?
 				public var statement_descriptor_kana: String?
 				public var statement_descriptor_kanji: String?
@@ -1266,7 +1266,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 
-			public class PayoutSettingsSpecs: Codable {
+			public final class PayoutSettingsSpecs: Codable {
 				public var debit_negative_balances: Bool?
 				public var schedule: TransferScheduleSpecs?
 				public var statement_descriptor: String?
@@ -1278,7 +1278,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 				}
 
 
-				public class TransferScheduleSpecs: Codable {
+				public final class TransferScheduleSpecs: Codable {
 					public var delay_days: String?
 					public var interval: IntervalValues?
 					public var monthly_anchor: Int?
@@ -1316,7 +1316,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 
 		/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
-		public class TosAcceptanceSpecs: Codable {
+		public final class TosAcceptanceSpecs: Codable {
 			public var date: Timestamp?
 			public var ip: String?
 			public var service_agreement: String?
@@ -1370,7 +1370,7 @@ public struct PostAccountsAccountBankAccounts: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/bank_accounts"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
 		public var bank_account: MESSED_UP?
 		/// When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
@@ -1422,7 +1422,7 @@ public struct PostAccountsAccountBankAccountsId: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/bank_accounts/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The name of the person or business that owns the bank account.
 		public var account_holder_name: String?
 		/// The type of entity that holds the account. This can be either `individual` or `company`.
@@ -1506,7 +1506,7 @@ public struct GetAccountsAccountCapabilities: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class ListAccountCapability: Codable {
+	public final class ListAccountCapability: Codable {
 		public var data: [Capability]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -1558,7 +1558,7 @@ public struct PostAccountsAccountCapabilitiesCapability: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/capabilities/\(inputs.capability)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -1588,7 +1588,7 @@ public struct GetAccountsAccountExternalAccounts: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class ExternalAccountList: Codable {
+	public final class ExternalAccountList: Codable {
 		/// The list contains all external accounts that have been attached to the Stripe account. These may be bank accounts or cards.
 		public var data: [BankAccount]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -1624,7 +1624,7 @@ public struct PostAccountsAccountExternalAccounts: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/external_accounts"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
 		public var bank_account: MESSED_UP?
 		/// When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
@@ -1676,7 +1676,7 @@ public struct PostAccountsAccountExternalAccountsId: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/external_accounts/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The name of the person or business that owns the bank account.
 		public var account_holder_name: String?
 		/// The type of entity that holds the account. This can be either `individual` or `company`.
@@ -1759,7 +1759,7 @@ public struct PostAccountsAccountLoginLinks: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/login_links"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Where to redirect the user after they log out of their dashboard.
@@ -1786,7 +1786,7 @@ public struct PutAccountsAccountLogout: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .PUT }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 
@@ -1813,7 +1813,7 @@ public struct GetAccountsAccountPeople: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Person]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -1848,7 +1848,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/people"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The person's address.
 		public var address: AddressSpecs?
 		/// The Kana variation of the person's address (Japan only).
@@ -1921,7 +1921,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 
 
 		/// The person's address.
-		public class AddressSpecs: Codable {
+		public final class AddressSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -1944,7 +1944,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 
 
 		/// The Kana variation of the person's address (Japan only).
-		public class JapanAddressKanaSpecs: Codable {
+		public final class JapanAddressKanaSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -1969,7 +1969,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 
 
 		/// The Kanji variation of the person's address (Japan only).
-		public class JapanAddressKanjiSpecs: Codable {
+		public final class JapanAddressKanjiSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -1994,7 +1994,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 
 
 		/// The person's verification status.
-		public class PersonVerificationSpecs: Codable {
+		public final class PersonVerificationSpecs: Codable {
 			public var additional_document: PersonVerificationDocumentSpecs?
 			public var document: PersonVerificationDocumentSpecs?
 
@@ -2006,7 +2006,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 			}
 
 
-			public class PersonVerificationDocumentSpecs: Codable {
+			public final class PersonVerificationDocumentSpecs: Codable {
 				public var back: String?
 				public var front: String?
 
@@ -2021,7 +2021,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 
 
 		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
+		public final class RelationshipSpecs: Codable {
 			public var director: Bool?
 			public var executive: Bool?
 			public var owner: Bool?
@@ -2074,7 +2074,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/people/\(inputs.person)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The person's address.
 		public var address: AddressSpecs?
 		/// The Kana variation of the person's address (Japan only).
@@ -2147,7 +2147,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 
 
 		/// The person's address.
-		public class AddressSpecs: Codable {
+		public final class AddressSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2170,7 +2170,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 
 
 		/// The Kana variation of the person's address (Japan only).
-		public class JapanAddressKanaSpecs: Codable {
+		public final class JapanAddressKanaSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2195,7 +2195,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 
 
 		/// The Kanji variation of the person's address (Japan only).
-		public class JapanAddressKanjiSpecs: Codable {
+		public final class JapanAddressKanjiSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2220,7 +2220,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 
 
 		/// The person's verification status.
-		public class PersonVerificationSpecs: Codable {
+		public final class PersonVerificationSpecs: Codable {
 			public var additional_document: PersonVerificationDocumentSpecs?
 			public var document: PersonVerificationDocumentSpecs?
 
@@ -2232,7 +2232,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 			}
 
 
-			public class PersonVerificationDocumentSpecs: Codable {
+			public final class PersonVerificationDocumentSpecs: Codable {
 				public var back: String?
 				public var front: String?
 
@@ -2247,7 +2247,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 
 
 		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
+		public final class RelationshipSpecs: Codable {
 			public var director: Bool?
 			public var executive: Bool?
 			public var owner: Bool?
@@ -2303,7 +2303,7 @@ public struct GetAccountsAccountPersons: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Person]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -2338,7 +2338,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/persons"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The person's address.
 		public var address: AddressSpecs?
 		/// The Kana variation of the person's address (Japan only).
@@ -2411,7 +2411,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 
 
 		/// The person's address.
-		public class AddressSpecs: Codable {
+		public final class AddressSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2434,7 +2434,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 
 
 		/// The Kana variation of the person's address (Japan only).
-		public class JapanAddressKanaSpecs: Codable {
+		public final class JapanAddressKanaSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2459,7 +2459,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 
 
 		/// The Kanji variation of the person's address (Japan only).
-		public class JapanAddressKanjiSpecs: Codable {
+		public final class JapanAddressKanjiSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2484,7 +2484,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 
 
 		/// The person's verification status.
-		public class PersonVerificationSpecs: Codable {
+		public final class PersonVerificationSpecs: Codable {
 			public var additional_document: PersonVerificationDocumentSpecs?
 			public var document: PersonVerificationDocumentSpecs?
 
@@ -2496,7 +2496,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 			}
 
 
-			public class PersonVerificationDocumentSpecs: Codable {
+			public final class PersonVerificationDocumentSpecs: Codable {
 				public var back: String?
 				public var front: String?
 
@@ -2511,7 +2511,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 
 
 		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
+		public final class RelationshipSpecs: Codable {
 			public var director: Bool?
 			public var executive: Bool?
 			public var owner: Bool?
@@ -2564,7 +2564,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/persons/\(inputs.person)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The person's address.
 		public var address: AddressSpecs?
 		/// The Kana variation of the person's address (Japan only).
@@ -2637,7 +2637,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 
 
 		/// The person's address.
-		public class AddressSpecs: Codable {
+		public final class AddressSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2660,7 +2660,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 
 
 		/// The Kana variation of the person's address (Japan only).
-		public class JapanAddressKanaSpecs: Codable {
+		public final class JapanAddressKanaSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2685,7 +2685,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 
 
 		/// The Kanji variation of the person's address (Japan only).
-		public class JapanAddressKanjiSpecs: Codable {
+		public final class JapanAddressKanjiSpecs: Codable {
 			public var city: String?
 			public var country: String?
 			public var line1: String?
@@ -2710,7 +2710,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 
 
 		/// The person's verification status.
-		public class PersonVerificationSpecs: Codable {
+		public final class PersonVerificationSpecs: Codable {
 			public var additional_document: PersonVerificationDocumentSpecs?
 			public var document: PersonVerificationDocumentSpecs?
 
@@ -2722,7 +2722,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 			}
 
 
-			public class PersonVerificationDocumentSpecs: Codable {
+			public final class PersonVerificationDocumentSpecs: Codable {
 				public var back: String?
 				public var front: String?
 
@@ -2737,7 +2737,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 
 
 		/// The relationship that this person has with the account's legal entity.
-		public class RelationshipSpecs: Codable {
+		public final class RelationshipSpecs: Codable {
 			public var director: Bool?
 			public var executive: Bool?
 			public var owner: Bool?
@@ -2789,7 +2789,7 @@ public struct PostAccountsAccountReject: StripeAPIEndpoint {
 		return "/v1/accounts/\(inputs.account)/reject"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.

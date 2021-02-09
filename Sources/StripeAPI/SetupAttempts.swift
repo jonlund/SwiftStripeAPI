@@ -15,7 +15,7 @@ public struct GetSetupAttempts: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PaymentFlowsSetupIntentSetupAttemptList: Codable {
+	public final class PaymentFlowsSetupIntentSetupAttemptList: Codable {
 		public var data: [SetupAttempt]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool

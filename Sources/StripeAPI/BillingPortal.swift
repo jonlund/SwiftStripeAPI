@@ -8,7 +8,7 @@ public struct PostBillingPortalSessions: StripeAPIEndpoint {
 		return "/v1/billing_portal/sessions"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The ID of an existing customer.
 		public var customer: String
 		/// Specifies which fields in the response should be expanded.

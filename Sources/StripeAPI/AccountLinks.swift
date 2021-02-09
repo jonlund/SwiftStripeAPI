@@ -8,7 +8,7 @@ public struct PostAccountLinks: StripeAPIEndpoint {
 		return "/v1/account_links"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The identifier of the account to create an account link for.
 		public var account: String
 		/// Which information the platform needs to collect from the user. One of `currently_due` or `eventually_due`. Default is `currently_due`.

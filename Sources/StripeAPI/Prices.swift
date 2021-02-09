@@ -18,7 +18,7 @@ public struct GetPrices: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PriceList: Codable {
+	public final class PriceList: Codable {
 		/// Details about each object.
 		public var data: [Price]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -51,7 +51,7 @@ public struct PostPrices: StripeAPIEndpoint {
 		return "/v1/prices"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the price can be used for new purchases. Defaults to `true`.
 		public var active: Bool?
 		/// Describes how to compute the price per period. Either `per_unit` or `tiered`. `per_unit` indicates that the fixed amount (specified in `unit_amount` or `unit_amount_decimal`) will be charged per unit in `quantity` (for prices with `usage_type=licensed`), or per unit of total usage (for prices with `usage_type=metered`). `tiered` indicates that the unit pricing will be computed using a tiering strategy as defined using the `tiers` and `tiers_mode` attributes.
@@ -106,7 +106,7 @@ public struct PostPrices: StripeAPIEndpoint {
 
 
 		/// These fields can be used to create a new product that this price will belong to.
-		public class InlineProductParams: Codable {
+		public final class InlineProductParams: Codable {
 			public var active: Bool?
 			public var id: String?
 			public var metadata: String?
@@ -130,7 +130,7 @@ public struct PostPrices: StripeAPIEndpoint {
 
 
 		/// The recurring components of a price such as `interval` and `usage_type`.
-		public class Recurring: Codable {
+		public final class Recurring: Codable {
 			public var aggregate_usage: AggregateUsageValues?
 			public var interval: IntervalValues
 			public var interval_count: Int?
@@ -169,7 +169,7 @@ public struct PostPrices: StripeAPIEndpoint {
 
 
 		/// Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
-		public class TransformUsageParam: Codable {
+		public final class TransformUsageParam: Codable {
 			public var divide_by: Int
 			public var round: RoundValues
 
@@ -229,7 +229,7 @@ public struct PostPricesPrice: StripeAPIEndpoint {
 		return "/v1/prices/\(inputs.price)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the price can be used for new purchases. Defaults to `true`.
 		public var active: Bool?
 		/// Specifies which fields in the response should be expanded.

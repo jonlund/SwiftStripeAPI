@@ -16,7 +16,7 @@ public struct GetTaxRates: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [TaxRate]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostTaxRates: StripeAPIEndpoint {
 		return "/v1/tax_rates"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
 		public var active: Bool?
 		/// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -113,7 +113,7 @@ public struct PostTaxRatesTaxRate: StripeAPIEndpoint {
 		return "/v1/tax_rates/\(inputs.tax_rate)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
 		public var active: Bool?
 		/// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).

@@ -18,7 +18,7 @@ public struct GetPromotionCodes: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [PromotionCode]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -50,7 +50,7 @@ public struct PostPromotionCodes: StripeAPIEndpoint {
 		return "/v1/promotion_codes"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the promotion code is currently active.
 		public var active: Bool?
 		/// The customer-facing code. Regardless of case, this code must be unique across all active promotion codes for a specific customer. If left blank, we will generate one automatically.
@@ -84,7 +84,7 @@ public struct PostPromotionCodes: StripeAPIEndpoint {
 
 
 		/// Settings that restrict the redemption of the promotion code.
-		public class RestrictionsParams: Codable {
+		public final class RestrictionsParams: Codable {
 			public var first_time_transaction: Bool?
 			public var minimum_amount: Int?
 			public var minimum_amount_currency: String?
@@ -129,7 +129,7 @@ public struct PostPromotionCodesPromotionCode: StripeAPIEndpoint {
 		return "/v1/promotion_codes/\(inputs.promotion_code)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the promotion code is currently active. A promotion code can only be reactivated when the coupon is still valid and the promotion code is otherwise redeemable.
 		public var active: Bool?
 		/// Specifies which fields in the response should be expanded.

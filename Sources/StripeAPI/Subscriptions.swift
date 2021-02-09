@@ -18,7 +18,7 @@ public struct GetSubscriptions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Subscription]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -50,7 +50,7 @@ public struct PostSubscriptions: StripeAPIEndpoint {
 		return "/v1/subscriptions"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
 		public var add_invoice_items: MESSED_UP?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -135,7 +135,7 @@ public struct PostSubscriptions: StripeAPIEndpoint {
 
 
 		/// If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
-		public class TransferDataSpecs: Codable {
+		public final class TransferDataSpecs: Codable {
 			public var amount_percent: StringNumber?
 			public var destination: String
 
@@ -196,7 +196,7 @@ public struct PostSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
 		return "/v1/subscriptions/\(inputs.subscription_exposed_id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
 		public var add_invoice_items: MESSED_UP?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -314,7 +314,7 @@ public struct DeleteSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .DELETE }
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.

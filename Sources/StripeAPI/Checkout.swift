@@ -16,7 +16,7 @@ public struct GetCheckoutSessions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PaymentPagesCheckoutSessionList: Codable {
+	public final class PaymentPagesCheckoutSessionList: Codable {
 		public var data: [CheckoutSession]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		return "/v1/checkout/sessions"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Enables user redeemable promotion codes.
 		public var allow_promotion_codes: Bool?
 		/// Specify whether Checkout should collect the customer's billing address.
@@ -112,7 +112,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 
 
 		/// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
-		public class PaymentIntentDataParams: Codable {
+		public final class PaymentIntentDataParams: Codable {
 			public var application_fee_amount: Int?
 			public var capture_method: CaptureMethodValues?
 			public var description: String?
@@ -144,7 +144,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 			}
 
 
-			public class Shipping: Codable {
+			public final class Shipping: Codable {
 				public var address: Address
 				public var carrier: String?
 				public var name: String
@@ -160,7 +160,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 				}
 
 
-				public class Address: Codable {
+				public final class Address: Codable {
 					public var city: String?
 					public var country: String?
 					public var line1: String
@@ -182,7 +182,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 
 
 
-			public class TransferDataParams: Codable {
+			public final class TransferDataParams: Codable {
 				public var amount: Int?
 				public var destination: String
 
@@ -207,7 +207,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 
 
 		/// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
-		public class SetupIntentDataParam: Codable {
+		public final class SetupIntentDataParam: Codable {
 			public var description: String?
 			public var metadata: String?
 			public var on_behalf_of: String?
@@ -224,7 +224,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 
 
 		/// When set, provides configuration for Checkout to collect a shipping address from a customer.
-		public class ShippingAddressCollectionParams: Codable {
+		public final class ShippingAddressCollectionParams: Codable {
 			public var allowed_countries: [String]
 
 			/// When set, provides configuration for Checkout to collect a shipping address from a customer.
@@ -238,7 +238,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 
 
 		/// A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
-		public class SubscriptionDataParams: Codable {
+		public final class SubscriptionDataParams: Codable {
 			public var application_fee_percent: StringNumber?
 			public var default_tax_rates: [String]?
 			public var items: MESSED_UP?
@@ -350,7 +350,7 @@ public struct GetCheckoutSessionsSessionLineItems: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class PaymentPagesCheckoutSessionListLineItems: Codable {
+	public final class PaymentPagesCheckoutSessionListLineItems: Codable {
 		/// Details about each object.
 		public var data: [Item]
 		/// True if this list has another page of items after this one that can be fetched.

@@ -16,7 +16,7 @@ public struct GetDisputes: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Dispute]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -66,7 +66,7 @@ public struct PostDisputesDispute: StripeAPIEndpoint {
 		return "/v1/disputes/\(inputs.dispute)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
 		public var evidence: DisputeEvidenceParams?
 		/// Specifies which fields in the response should be expanded.
@@ -85,7 +85,7 @@ public struct PostDisputesDispute: StripeAPIEndpoint {
 
 
 		/// Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
-		public class DisputeEvidenceParams: Codable {
+		public final class DisputeEvidenceParams: Codable {
 			public var access_activity_log: String?
 			public var billing_address: String?
 			public var cancellation_policy: String?
@@ -163,7 +163,7 @@ public struct PostDisputesDisputeClose: StripeAPIEndpoint {
 		return "/v1/disputes/\(inputs.dispute)/close"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 

@@ -17,7 +17,7 @@ public struct GetIssuingAuthorizations: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [IssuingAuthorization]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -67,7 +67,7 @@ public struct PostIssuingAuthorizationsAuthorization: StripeAPIEndpoint {
 		return "/v1/issuing/authorizations/\(inputs.authorization)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -93,7 +93,7 @@ public struct PostIssuingAuthorizationsAuthorizationApprove: StripeAPIEndpoint {
 		return "/v1/issuing/authorizations/\(inputs.authorization)/approve"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// If the authorization's `pending_request.is_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use [`decline`](https://stripe.com/docs/api/issuing/authorizations/decline) to decline an authorization request).
 		public var amount: Int?
 		/// Specifies which fields in the response should be expanded.
@@ -122,7 +122,7 @@ public struct PostIssuingAuthorizationsAuthorizationDecline: StripeAPIEndpoint {
 		return "/v1/issuing/authorizations/\(inputs.authorization)/decline"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -155,7 +155,7 @@ public struct GetIssuingCardholders: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [IssuingCardholder]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -187,7 +187,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 		return "/v1/issuing/cardholders"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The cardholder's billing address.
 		public var billing: BillingSpecs
 		/// Additional information about a `company` cardholder.
@@ -227,7 +227,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 
 
 		/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
-		public class AuthorizationControlsParamV2: Codable {
+		public final class AuthorizationControlsParamV2: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
 			public var spending_limits: MESSED_UP?
@@ -246,7 +246,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 
 
 		/// The cardholder's billing address.
-		public class BillingSpecs: Codable {
+		public final class BillingSpecs: Codable {
 			public var address: RequiredAddress
 
 			/// The cardholder's billing address.
@@ -257,7 +257,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 			}
 
 
-			public class RequiredAddress: Codable {
+			public final class RequiredAddress: Codable {
 				public var city: String
 				public var country: String
 				public var line1: String
@@ -280,7 +280,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 
 
 		/// Additional information about a `company` cardholder.
-		public class CompanyParam: Codable {
+		public final class CompanyParam: Codable {
 			public var tax_id: String?
 
 			/// Additional information about a `company` cardholder.
@@ -293,7 +293,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 
 
 		/// Additional information about an `individual` cardholder.
-		public class IndividualParam: Codable {
+		public final class IndividualParam: Codable {
 			public var dob: DateOfBirthSpecs?
 			public var first_name: String
 			public var last_name: String
@@ -311,7 +311,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 			}
 
 
-			public class DateOfBirthSpecs: Codable {
+			public final class DateOfBirthSpecs: Codable {
 				public var day: Int
 				public var month: Int
 				public var year: Int
@@ -325,7 +325,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 
 
 
-			public class PersonVerificationParam: Codable {
+			public final class PersonVerificationParam: Codable {
 				public var document: PersonVerificationDocumentParam?
 
 				public init(document: PersonVerificationDocumentParam? = nil) {
@@ -333,7 +333,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 				}
 
 
-				public class PersonVerificationDocumentParam: Codable {
+				public final class PersonVerificationDocumentParam: Codable {
 					public var back: String?
 					public var front: String?
 
@@ -388,7 +388,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		return "/v1/issuing/cardholders/\(inputs.cardholder)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The cardholder's billing address.
 		public var billing: BillingSpecs?
 		/// Additional information about a `company` cardholder.
@@ -422,7 +422,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 
 
 		/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
-		public class AuthorizationControlsParamV2: Codable {
+		public final class AuthorizationControlsParamV2: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
 			public var spending_limits: MESSED_UP?
@@ -441,7 +441,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 
 
 		/// The cardholder's billing address.
-		public class BillingSpecs: Codable {
+		public final class BillingSpecs: Codable {
 			public var address: RequiredAddress
 
 			/// The cardholder's billing address.
@@ -452,7 +452,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 			}
 
 
-			public class RequiredAddress: Codable {
+			public final class RequiredAddress: Codable {
 				public var city: String
 				public var country: String
 				public var line1: String
@@ -475,7 +475,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 
 
 		/// Additional information about a `company` cardholder.
-		public class CompanyParam: Codable {
+		public final class CompanyParam: Codable {
 			public var tax_id: String?
 
 			/// Additional information about a `company` cardholder.
@@ -488,7 +488,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 
 
 		/// Additional information about an `individual` cardholder.
-		public class IndividualParam: Codable {
+		public final class IndividualParam: Codable {
 			public var dob: DateOfBirthSpecs?
 			public var first_name: String
 			public var last_name: String
@@ -506,7 +506,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 			}
 
 
-			public class DateOfBirthSpecs: Codable {
+			public final class DateOfBirthSpecs: Codable {
 				public var day: Int
 				public var month: Int
 				public var year: Int
@@ -520,7 +520,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 
 
 
-			public class PersonVerificationParam: Codable {
+			public final class PersonVerificationParam: Codable {
 				public var document: PersonVerificationDocumentParam?
 
 				public init(document: PersonVerificationDocumentParam? = nil) {
@@ -528,7 +528,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 				}
 
 
-				public class PersonVerificationDocumentParam: Codable {
+				public final class PersonVerificationDocumentParam: Codable {
 					public var back: String?
 					public var front: String?
 
@@ -572,7 +572,7 @@ public struct GetIssuingCards: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [IssuingCard]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -604,7 +604,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 		return "/v1/issuing/cards"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object with which the card will be associated.
 		public var cardholder: String?
 		/// The currency for the card. This currently must be `usd`.
@@ -641,7 +641,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 
 
 		/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
-		public class AuthorizationControlsParam: Codable {
+		public final class AuthorizationControlsParam: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
 			public var spending_limits: MESSED_UP?
@@ -658,7 +658,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 
 
 		/// The address where the card will be shipped.
-		public class ShippingSpecs: Codable {
+		public final class ShippingSpecs: Codable {
 			public var address: RequiredAddress
 			public var name: String
 			public var service: ServiceValues?
@@ -676,7 +676,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 			}
 
 
-			public class RequiredAddress: Codable {
+			public final class RequiredAddress: Codable {
 				public var city: String
 				public var country: String
 				public var line1: String
@@ -755,7 +755,7 @@ public struct PostIssuingCardsCard: StripeAPIEndpoint {
 		return "/v1/issuing/cards/\(inputs.card)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Reason why the `status` of this card is `canceled`.
 		public var cancellation_reason: CancellationReasonValues?
 		/// Specifies which fields in the response should be expanded.
@@ -777,7 +777,7 @@ public struct PostIssuingCardsCard: StripeAPIEndpoint {
 
 
 		/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
-		public class AuthorizationControlsParam: Codable {
+		public final class AuthorizationControlsParam: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
 			public var spending_limits: MESSED_UP?
@@ -823,7 +823,7 @@ public struct GetIssuingDisputes: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class IssuingDisputeList: Codable {
+	public final class IssuingDisputeList: Codable {
 		public var data: [IssuingDispute]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -855,7 +855,7 @@ public struct PostIssuingDisputes: StripeAPIEndpoint {
 		return "/v1/issuing/disputes"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Evidence provided for the dispute.
 		public var evidence: EvidenceParam?
 		/// Specifies which fields in the response should be expanded.
@@ -874,7 +874,7 @@ public struct PostIssuingDisputes: StripeAPIEndpoint {
 
 
 		/// Evidence provided for the dispute.
-		public class EvidenceParam: Codable {
+		public final class EvidenceParam: Codable {
 			public var canceled: MESSED_UP?
 			public var duplicate: MESSED_UP?
 			public var fraudulent: MESSED_UP?
@@ -939,7 +939,7 @@ public struct PostIssuingDisputesDispute: StripeAPIEndpoint {
 		return "/v1/issuing/disputes/\(inputs.dispute)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Evidence provided for the dispute.
 		public var evidence: EvidenceParam?
 		/// Specifies which fields in the response should be expanded.
@@ -955,7 +955,7 @@ public struct PostIssuingDisputesDispute: StripeAPIEndpoint {
 
 
 		/// Evidence provided for the dispute.
-		public class EvidenceParam: Codable {
+		public final class EvidenceParam: Codable {
 			public var canceled: MESSED_UP?
 			public var duplicate: MESSED_UP?
 			public var fraudulent: MESSED_UP?
@@ -1005,7 +1005,7 @@ public struct PostIssuingDisputesDisputeSubmit: StripeAPIEndpoint {
 		return "/v1/issuing/disputes/\(inputs.dispute)/submit"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1034,7 +1034,7 @@ public struct GetIssuingSettlements: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [IssuingSettlement]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -1084,7 +1084,7 @@ public struct PostIssuingSettlementsSettlement: StripeAPIEndpoint {
 		return "/v1/issuing/settlements/\(inputs.settlement)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1116,7 +1116,7 @@ public struct GetIssuingTransactions: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [IssuingTransaction]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -1166,7 +1166,7 @@ public struct PostIssuingTransactionsTransaction: StripeAPIEndpoint {
 		return "/v1/issuing/transactions/\(inputs.transaction)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

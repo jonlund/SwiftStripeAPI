@@ -17,7 +17,7 @@ public struct GetProducts: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Product]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -49,7 +49,7 @@ public struct PostProducts: StripeAPIEndpoint {
 		return "/v1/products"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the product is currently available for purchase. Defaults to `true`.
 		public var active: Bool?
 		/// A list of up to 5 alphanumeric attributes. Should only be set if type=`good`.
@@ -101,7 +101,7 @@ public struct PostProducts: StripeAPIEndpoint {
 
 
 		/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
-		public class PackageDimensionsSpecs: Codable {
+		public final class PackageDimensionsSpecs: Codable {
 			public var height: StringNumber
 			public var length: StringNumber
 			public var weight: StringNumber
@@ -152,7 +152,7 @@ public struct PostProductsId: StripeAPIEndpoint {
 		return "/v1/products/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Whether the product is available for purchase.
 		public var active: Bool?
 		/// A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.

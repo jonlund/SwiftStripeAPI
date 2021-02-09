@@ -16,7 +16,7 @@ public struct GetOrders: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Order]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostOrders: StripeAPIEndpoint {
 		return "/v1/orders"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A coupon code that represents a discount to be applied to this order. Must be one-time duration and in same currency as the order. An order can have multiple coupons.
 		public var coupon: String?
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -79,7 +79,7 @@ public struct PostOrders: StripeAPIEndpoint {
 
 
 		/// Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
-		public class CustomerShipping: Codable {
+		public final class CustomerShipping: Codable {
 			public var address: Address
 			public var name: String
 			public var phone: String?
@@ -95,7 +95,7 @@ public struct PostOrders: StripeAPIEndpoint {
 			}
 
 
-			public class Address: Codable {
+			public final class Address: Codable {
 				public var city: String?
 				public var country: String?
 				public var line1: String
@@ -146,7 +146,7 @@ public struct PostOrdersId: StripeAPIEndpoint {
 		return "/v1/orders/\(inputs.id)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A coupon code that represents a discount to be applied to this order. Must be one-time duration and in same currency as the order. An order can have multiple coupons.
 		public var coupon: String?
 		/// Specifies which fields in the response should be expanded.
@@ -171,7 +171,7 @@ public struct PostOrdersId: StripeAPIEndpoint {
 
 
 		/// Tracking information once the order has been fulfilled.
-		public class ShippingTrackingParams: Codable {
+		public final class ShippingTrackingParams: Codable {
 			public var carrier: String
 			public var tracking_number: String
 
@@ -209,7 +209,7 @@ public struct PostOrdersIdPay: StripeAPIEndpoint {
 		return "/v1/orders/\(inputs.id)/pay"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// A fee in %s that will be applied to the order and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the `Stripe-Account` header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees).
 		public var application_fee: Int?
 		/// The ID of an existing customer that will be charged for this order. If no customer was attached to the order at creation, either `source` or `customer` is required. Otherwise, the specified customer will be charged instead of the one attached to the order.
@@ -247,7 +247,7 @@ public struct PostOrdersIdReturns: StripeAPIEndpoint {
 		return "/v1/orders/\(inputs.id)/returns"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// List of items to return.

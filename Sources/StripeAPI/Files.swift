@@ -15,7 +15,7 @@ public struct GetFiles: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [File]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -47,7 +47,7 @@ public struct PostFiles: StripeAPIEndpoint {
 		return "/v1/files"
 	}
 
-	public class DataInput: Codable {
+	public final class DataInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// A file to upload. The file should follow the specifications of RFC 2388 (which defines file transfers for the `multipart/form-data` protocol).
@@ -66,7 +66,7 @@ public struct PostFiles: StripeAPIEndpoint {
 
 
 		/// Optional parameters to automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
-		public class FileLinkCreationParams: Codable {
+		public final class FileLinkCreationParams: Codable {
 			public var create: Bool
 			public var expires_at: Timestamp?
 			public var metadata: MESSED_UP?

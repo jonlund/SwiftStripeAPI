@@ -14,7 +14,7 @@ public struct GetReviews: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [Review]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -64,7 +64,7 @@ public struct PostReviewsReviewApprove: StripeAPIEndpoint {
 		return "/v1/reviews/\(inputs.review)/approve"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 

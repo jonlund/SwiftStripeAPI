@@ -14,7 +14,7 @@ public struct GetReportingReportRuns: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [ReportingReportRun]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -46,7 +46,7 @@ public struct PostReportingReportRuns: StripeAPIEndpoint {
 		return "/v1/reporting/report_runs"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Parameters specifying how the report should be run. Different Report Types have different required and optional parameters, listed in the [API Access to Reports](https://stripe.com/docs/reporting/statements/api) documentation.
@@ -62,7 +62,7 @@ public struct PostReportingReportRuns: StripeAPIEndpoint {
 
 
 		/// Parameters specifying how the report should be run. Different Report Types have different required and optional parameters, listed in the [API Access to Reports](https://stripe.com/docs/reporting/statements/api) documentation.
-		public class RunParameterSpecs: Codable {
+		public final class RunParameterSpecs: Codable {
 			public var columns: [String]?
 			public var connected_account: String?
 			public var currency: String?
@@ -749,7 +749,7 @@ public struct GetReportingReportTypes: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class FinancialReportingFinanceReportTypeList: Codable {
+	public final class FinancialReportingFinanceReportTypeList: Codable {
 		public var data: [ReportingReportType]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool

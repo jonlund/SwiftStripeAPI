@@ -8,7 +8,7 @@ public struct PostTerminalConnectionTokens: StripeAPIEndpoint {
 		return "/v1/terminal/connection_tokens"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// The id of the location that this connection token is scoped to. If specified the connection token will only be usable with readers assigned to that location, otherwise the connection token will be usable with all readers.
@@ -37,7 +37,7 @@ public struct GetTerminalLocations: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class TerminalLocationLocationList: Codable {
+	public final class TerminalLocationLocationList: Codable {
 		public var data: [TerminalLocation]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -69,7 +69,7 @@ public struct PostTerminalLocations: StripeAPIEndpoint {
 		return "/v1/terminal/locations"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The full address of the location.
 		public var address: RequiredCountryAddress
 		/// A name for the location.
@@ -88,7 +88,7 @@ public struct PostTerminalLocations: StripeAPIEndpoint {
 
 
 		/// The full address of the location.
-		public class RequiredCountryAddress: Codable {
+		public final class RequiredCountryAddress: Codable {
 			public var city: String?
 			public var country: String
 			public var line1: String?
@@ -140,7 +140,7 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 		return "/v1/terminal/locations/\(inputs.location)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The full address of the location.
 		public var address: RequiredCountryAddress?
 		/// A name for the location.
@@ -159,7 +159,7 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 
 
 		/// The full address of the location.
-		public class RequiredCountryAddress: Codable {
+		public final class RequiredCountryAddress: Codable {
 			public var city: String?
 			public var country: String
 			public var line1: String?
@@ -217,7 +217,7 @@ public struct GetTerminalReaders: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class TerminalReaderRetrieveReader: Codable {
+	public final class TerminalReaderRetrieveReader: Codable {
 		/// A list of readers
 		public var data: [TerminalReader]
 		/// True if this list has another page of items after this one that can be fetched.
@@ -250,7 +250,7 @@ public struct PostTerminalReaders: StripeAPIEndpoint {
 		return "/v1/terminal/readers"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Custom label given to the reader for easier identification. If no label is specified, the registration code will be used.
@@ -300,7 +300,7 @@ public struct PostTerminalReadersReader: StripeAPIEndpoint {
 		return "/v1/terminal/readers/\(inputs.reader)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// The new label of the reader.

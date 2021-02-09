@@ -16,7 +16,7 @@ public struct GetSubscriptionSchedules: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public class Output: Codable {
+	public final class Output: Codable {
 		public var data: [SubscriptionSchedule]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -48,7 +48,7 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 		return "/v1/subscription_schedules"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// The identifier of the customer to create the subscription schedule for.
 		public var customer: String?
 		/// Object representing the subscription schedule's default settings.
@@ -79,7 +79,7 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 
 
 		/// Object representing the subscription schedule's default settings.
-		public class DefaultSettingsParams: Codable {
+		public final class DefaultSettingsParams: Codable {
 			public var application_fee_percent: StringNumber?
 			public var billing_cycle_anchor: BillingCycleAnchorValues?
 			public var billing_thresholds: MESSED_UP?
@@ -101,7 +101,7 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 			}
 
 
-			public class SubscriptionSchedulesParam: Codable {
+			public final class SubscriptionSchedulesParam: Codable {
 				public var days_until_due: Int?
 
 				public init(days_until_due: Int? = nil) {
@@ -159,7 +159,7 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 		return "/v1/subscription_schedules/\(inputs.schedule)"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Object representing the subscription schedule's default settings.
 		public var default_settings: DefaultSettingsParams?
 		/// Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
@@ -184,7 +184,7 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 
 
 		/// Object representing the subscription schedule's default settings.
-		public class DefaultSettingsParams: Codable {
+		public final class DefaultSettingsParams: Codable {
 			public var application_fee_percent: StringNumber?
 			public var billing_cycle_anchor: BillingCycleAnchorValues?
 			public var billing_thresholds: MESSED_UP?
@@ -206,7 +206,7 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 			}
 
 
-			public class SubscriptionSchedulesParam: Codable {
+			public final class SubscriptionSchedulesParam: Codable {
 				public var days_until_due: Int?
 
 				public init(days_until_due: Int? = nil) {
@@ -255,7 +255,7 @@ public struct PostSubscriptionSchedulesScheduleCancel: StripeAPIEndpoint {
 		return "/v1/subscription_schedules/\(inputs.schedule)/cancel"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// If the subscription schedule is `active`, indicates if a final invoice will be generated that contains any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
@@ -284,7 +284,7 @@ public struct PostSubscriptionSchedulesScheduleRelease: StripeAPIEndpoint {
 		return "/v1/subscription_schedules/\(inputs.schedule)/release"
 	}
 
-	public class FormInput: Codable {
+	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Keep any cancellation on the subscription that the schedule has set
