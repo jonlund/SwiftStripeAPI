@@ -8,6 +8,12 @@ public struct GetReportingReportRuns: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/reporting/report_runs?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -731,6 +737,10 @@ public struct GetReportingReportRunsReportRun: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let report_run: String
+
+		public init(report_run: String) {
+			self.report_run = report_run
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/reporting/report_runs/\(inputs.report_run)"
@@ -779,6 +789,10 @@ public struct GetReportingReportTypesReportType: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let report_type: String
+
+		public init(report_type: String) {
+			self.report_type = report_type
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/reporting/report_types/\(inputs.report_type)"

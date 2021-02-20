@@ -10,6 +10,14 @@ public struct GetOrders: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let status: String
+
+		public init(customer: String, ending_before: String, limit: Int, starting_after: String, status: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.status = status
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/orders?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
@@ -126,6 +134,10 @@ public struct GetOrdersId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/orders/\(inputs.id)"
@@ -141,6 +153,10 @@ public struct PostOrdersId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/orders/\(inputs.id)"
@@ -204,6 +220,10 @@ public struct PostOrdersIdPay: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/orders/\(inputs.id)/pay"
@@ -242,6 +262,10 @@ public struct PostOrdersIdReturns: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/orders/\(inputs.id)/returns"

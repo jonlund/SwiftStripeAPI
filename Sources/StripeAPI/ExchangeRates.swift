@@ -8,6 +8,12 @@ public struct GetExchangeRates: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/exchange_rates?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -44,6 +50,10 @@ public struct GetExchangeRatesRateId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let rate_id: String
+
+		public init(rate_id: String) {
+			self.rate_id = rate_id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/exchange_rates/\(inputs.rate_id)"

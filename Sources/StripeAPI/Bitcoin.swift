@@ -11,6 +11,15 @@ public struct GetBitcoinReceivers: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let uncaptured_funds: Bool
+
+		public init(active: Bool, ending_before: String, filled: Bool, limit: Int, starting_after: String, uncaptured_funds: Bool) {
+			self.active = active
+			self.ending_before = ending_before
+			self.filled = filled
+			self.limit = limit
+			self.starting_after = starting_after
+			self.uncaptured_funds = uncaptured_funds
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/bitcoin/receivers?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&filled=\(inputs.filled.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&uncaptured_funds=\(inputs.uncaptured_funds.urlEncoded))"
@@ -47,6 +56,10 @@ public struct GetBitcoinReceiversId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/bitcoin/receivers/\(inputs.id)"
@@ -66,6 +79,14 @@ public struct GetBitcoinReceiversReceiverTransactions: StripeAPIEndpoint {
 		let limit: Int
 		let receiver: String
 		let starting_after: String
+
+		public init(customer: String, ending_before: String, limit: Int, receiver: String, starting_after: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.receiver = receiver
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/bitcoin/receivers/\(inputs.receiver)/transactions?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -107,6 +128,14 @@ public struct GetBitcoinTransactions: StripeAPIEndpoint {
 		let limit: Int
 		let receiver: String
 		let starting_after: String
+
+		public init(customer: String, ending_before: String, limit: Int, receiver: String, starting_after: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.receiver = receiver
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/bitcoin/transactions?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&receiver=\(inputs.receiver.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"

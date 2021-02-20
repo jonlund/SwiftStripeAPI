@@ -41,6 +41,10 @@ public struct Get3dSecureThreeDSecure: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let three_d_secure: String
+
+		public init(three_d_secure: String) {
+			self.three_d_secure = three_d_secure
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/3d_secure/\(inputs.three_d_secure)"

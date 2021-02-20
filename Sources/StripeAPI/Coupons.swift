@@ -8,6 +8,12 @@ public struct GetCoupons: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/coupons?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -117,6 +123,10 @@ public struct GetCouponsCoupon: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let coupon: String
+
+		public init(coupon: String) {
+			self.coupon = coupon
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/coupons/\(inputs.coupon)"
@@ -132,6 +142,10 @@ public struct PostCouponsCoupon: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let coupon: String
+
+		public init(coupon: String) {
+			self.coupon = coupon
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/coupons/\(inputs.coupon)"
@@ -161,6 +175,10 @@ public struct DeleteCouponsCoupon: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let coupon: String
+
+		public init(coupon: String) {
+			self.coupon = coupon
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/coupons/\(inputs.coupon)"

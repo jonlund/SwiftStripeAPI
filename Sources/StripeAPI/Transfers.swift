@@ -10,6 +10,14 @@ public struct GetTransfers: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let transfer_group: String
+
+		public init(destination: String, ending_before: String, limit: Int, starting_after: String, transfer_group: String) {
+			self.destination = destination
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.transfer_group = transfer_group
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers?destination=\(inputs.destination.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&transfer_group=\(inputs.transfer_group.urlEncoded))"
@@ -100,6 +108,13 @@ public struct GetTransfersIdReversals: StripeAPIEndpoint {
 		let id: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, id: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.id = id
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers/\(inputs.id)/reversals?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -137,6 +152,10 @@ public struct PostTransfersIdReversals: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers/\(inputs.id)/reversals"
@@ -172,6 +191,10 @@ public struct GetTransfersTransfer: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let transfer: String
+
+		public init(transfer: String) {
+			self.transfer = transfer
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers/\(inputs.transfer)"
@@ -187,6 +210,10 @@ public struct PostTransfersTransfer: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let transfer: String
+
+		public init(transfer: String) {
+			self.transfer = transfer
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers/\(inputs.transfer)"
@@ -217,6 +244,11 @@ public struct GetTransfersTransferReversalsId: StripeAPIEndpoint {
 	public struct Params {
 		let id: String
 		let transfer: String
+
+		public init(id: String, transfer: String) {
+			self.id = id
+			self.transfer = transfer
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers/\(inputs.transfer)/reversals/\(inputs.id)"
@@ -233,6 +265,11 @@ public struct PostTransfersTransferReversalsId: StripeAPIEndpoint {
 	public struct Params {
 		let id: String
 		let transfer: String
+
+		public init(id: String, transfer: String) {
+			self.id = id
+			self.transfer = transfer
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/transfers/\(inputs.transfer)/reversals/\(inputs.id)"

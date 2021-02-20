@@ -12,6 +12,16 @@ public struct GetBalanceTransactions: StripeAPIEndpoint {
 		let source: String
 		let starting_after: String
 		let type: String
+
+		public init(currency: String, ending_before: String, limit: Int, payout: String, source: String, starting_after: String, type: String) {
+			self.currency = currency
+			self.ending_before = ending_before
+			self.limit = limit
+			self.payout = payout
+			self.source = source
+			self.starting_after = starting_after
+			self.type = type
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/balance_transactions?currency=\(inputs.currency.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payout=\(inputs.payout.urlEncoded))&source=\(inputs.source.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
@@ -48,6 +58,10 @@ public struct GetBalanceTransactionsId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/balance_transactions/\(inputs.id)"

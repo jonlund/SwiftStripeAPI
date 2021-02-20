@@ -31,6 +31,12 @@ public struct GetTerminalLocations: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/locations?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -120,6 +126,10 @@ public struct GetTerminalLocationsLocation: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location: String
+
+		public init(location: String) {
+			self.location = location
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/locations/\(inputs.location)"
@@ -135,6 +145,10 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location: String
+
+		public init(location: String) {
+			self.location = location
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/locations/\(inputs.location)"
@@ -191,6 +205,10 @@ public struct DeleteTerminalLocationsLocation: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let location: String
+
+		public init(location: String) {
+			self.location = location
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/locations/\(inputs.location)"
@@ -211,6 +229,15 @@ public struct GetTerminalReaders: StripeAPIEndpoint {
 		let location: String
 		let starting_after: String
 		let status: String
+
+		public init(device_type: String, ending_before: String, limit: Int, location: String, starting_after: String, status: String) {
+			self.device_type = device_type
+			self.ending_before = ending_before
+			self.limit = limit
+			self.location = location
+			self.starting_after = starting_after
+			self.status = status
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/readers?device_type=\(inputs.device_type.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&location=\(inputs.location.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
@@ -280,6 +307,10 @@ public struct GetTerminalReadersReader: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let reader: String
+
+		public init(reader: String) {
+			self.reader = reader
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/readers/\(inputs.reader)"
@@ -295,6 +326,10 @@ public struct PostTerminalReadersReader: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let reader: String
+
+		public init(reader: String) {
+			self.reader = reader
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/readers/\(inputs.reader)"
@@ -324,6 +359,10 @@ public struct DeleteTerminalReadersReader: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let reader: String
+
+		public init(reader: String) {
+			self.reader = reader
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/terminal/readers/\(inputs.reader)"

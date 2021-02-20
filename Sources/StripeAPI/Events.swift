@@ -10,6 +10,14 @@ public struct GetEvents: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let type: String
+
+		public init(delivery_success: Bool, ending_before: String, limit: Int, starting_after: String, type: String) {
+			self.delivery_success = delivery_success
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.type = type
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/events?delivery_success=\(inputs.delivery_success.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
@@ -46,6 +54,10 @@ public struct GetEventsId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/events/\(inputs.id)"

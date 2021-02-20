@@ -9,6 +9,13 @@ public struct GetSubscriptionItems: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let subscription: String
+
+		public init(ending_before: String, limit: Int, starting_after: String, subscription: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.subscription = subscription
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
@@ -150,6 +157,10 @@ public struct GetSubscriptionItemsItem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let item: String
+
+		public init(item: String) {
+			self.item = item
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_items/\(inputs.item)"
@@ -165,6 +176,10 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let item: String
+
+		public init(item: String) {
+			self.item = item
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_items/\(inputs.item)"
@@ -273,6 +288,10 @@ public struct DeleteSubscriptionItemsItem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let item: String
+
+		public init(item: String) {
+			self.item = item
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_items/\(inputs.item)"
@@ -312,6 +331,13 @@ public struct GetSubscriptionItemsSubscriptionItemUsageRecordSummaries: StripeAP
 		let limit: Int
 		let starting_after: String
 		let subscription_item: String
+
+		public init(ending_before: String, limit: Int, starting_after: String, subscription_item: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.subscription_item = subscription_item
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_items/\(inputs.subscription_item)/usage_record_summaries?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -348,6 +374,10 @@ public struct PostSubscriptionItemsSubscriptionItemUsageRecords: StripeAPIEndpoi
 	public typealias paramType = Params
 	public struct Params {
 		let subscription_item: String
+
+		public init(subscription_item: String) {
+			self.subscription_item = subscription_item
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_items/\(inputs.subscription_item)/usage_records"

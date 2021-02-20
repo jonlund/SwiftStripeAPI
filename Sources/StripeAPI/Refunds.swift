@@ -10,6 +10,14 @@ public struct GetRefunds: StripeAPIEndpoint {
 		let limit: Int
 		let payment_intent: String
 		let starting_after: String
+
+		public init(charge: String, ending_before: String, limit: Int, payment_intent: String, starting_after: String) {
+			self.charge = charge
+			self.ending_before = ending_before
+			self.limit = limit
+			self.payment_intent = payment_intent
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/refunds?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -87,6 +95,10 @@ public struct GetRefundsRefund: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let refund: String
+
+		public init(refund: String) {
+			self.refund = refund
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/refunds/\(inputs.refund)"
@@ -102,6 +114,10 @@ public struct PostRefundsRefund: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let refund: String
+
+		public init(refund: String) {
+			self.refund = refund
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/refunds/\(inputs.refund)"

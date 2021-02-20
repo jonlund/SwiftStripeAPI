@@ -10,6 +10,14 @@ public struct GetPaymentMethods: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let type: String
+
+		public init(customer: String, ending_before: String, limit: Int, starting_after: String, type: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.type = type
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_methods?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
@@ -185,6 +193,10 @@ public struct GetPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payment_method: String
+
+		public init(payment_method: String) {
+			self.payment_method = payment_method
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_methods/\(inputs.payment_method)"
@@ -200,6 +212,10 @@ public struct PostPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payment_method: String
+
+		public init(payment_method: String) {
+			self.payment_method = payment_method
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_methods/\(inputs.payment_method)"
@@ -266,6 +282,10 @@ public struct PostPaymentMethodsPaymentMethodAttach: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payment_method: String
+
+		public init(payment_method: String) {
+			self.payment_method = payment_method
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_methods/\(inputs.payment_method)/attach"
@@ -292,6 +312,10 @@ public struct PostPaymentMethodsPaymentMethodDetach: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payment_method: String
+
+		public init(payment_method: String) {
+			self.payment_method = payment_method
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_methods/\(inputs.payment_method)/detach"

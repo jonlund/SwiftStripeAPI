@@ -10,6 +10,14 @@ public struct GetTaxRates: StripeAPIEndpoint {
 		let inclusive: Bool
 		let limit: Int
 		let starting_after: String
+
+		public init(active: Bool, ending_before: String, inclusive: Bool, limit: Int, starting_after: String) {
+			self.active = active
+			self.ending_before = ending_before
+			self.inclusive = inclusive
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/tax_rates?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&inclusive=\(inputs.inclusive.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -93,6 +101,10 @@ public struct GetTaxRatesTaxRate: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let tax_rate: String
+
+		public init(tax_rate: String) {
+			self.tax_rate = tax_rate
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/tax_rates/\(inputs.tax_rate)"
@@ -108,6 +120,10 @@ public struct PostTaxRatesTaxRate: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let tax_rate: String
+
+		public init(tax_rate: String) {
+			self.tax_rate = tax_rate
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/tax_rates/\(inputs.tax_rate)"

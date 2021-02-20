@@ -9,6 +9,13 @@ public struct GetPaymentIntents: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(customer: String, ending_before: String, limit: Int, starting_after: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_intents?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -397,6 +404,11 @@ public struct GetPaymentIntentsIntent: StripeAPIEndpoint {
 	public struct Params {
 		let client_secret: String
 		let intent: String
+
+		public init(client_secret: String, intent: String) {
+			self.client_secret = client_secret
+			self.intent = intent
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_intents/\(inputs.intent)?client_secret=\(inputs.client_secret.urlEncoded))"
@@ -412,6 +424,10 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let intent: String
+
+		public init(intent: String) {
+			self.intent = intent
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_intents/\(inputs.intent)"
@@ -626,6 +642,10 @@ public struct PostPaymentIntentsIntentCancel: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let intent: String
+
+		public init(intent: String) {
+			self.intent = intent
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_intents/\(inputs.intent)/cancel"
@@ -659,6 +679,10 @@ public struct PostPaymentIntentsIntentCapture: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let intent: String
+
+		public init(intent: String) {
+			self.intent = intent
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_intents/\(inputs.intent)/capture"
@@ -710,6 +734,10 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let intent: String
+
+		public init(intent: String) {
+			self.intent = intent
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payment_intents/\(inputs.intent)/confirm"

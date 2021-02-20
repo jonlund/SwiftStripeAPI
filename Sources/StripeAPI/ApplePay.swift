@@ -9,6 +9,13 @@ public struct GetApplePayDomains: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(domain_name: String, ending_before: String, limit: Int, starting_after: String) {
+			self.domain_name = domain_name
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/apple_pay/domains?domain_name=\(inputs.domain_name.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -67,6 +74,10 @@ public struct GetApplePayDomainsDomain: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let domain: String
+
+		public init(domain: String) {
+			self.domain = domain
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/apple_pay/domains/\(inputs.domain)"
@@ -82,6 +93,10 @@ public struct DeleteApplePayDomainsDomain: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let domain: String
+
+		public init(domain: String) {
+			self.domain = domain
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/apple_pay/domains/\(inputs.domain)"

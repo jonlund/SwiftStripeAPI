@@ -8,6 +8,12 @@ public struct GetWebhookEndpoints: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/webhook_endpoints?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -181,6 +187,10 @@ public struct GetWebhookEndpointsWebhookEndpoint: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let webhook_endpoint: String
+
+		public init(webhook_endpoint: String) {
+			self.webhook_endpoint = webhook_endpoint
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/webhook_endpoints/\(inputs.webhook_endpoint)"
@@ -196,6 +206,10 @@ public struct PostWebhookEndpointsWebhookEndpoint: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let webhook_endpoint: String
+
+		public init(webhook_endpoint: String) {
+			self.webhook_endpoint = webhook_endpoint
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/webhook_endpoints/\(inputs.webhook_endpoint)"
@@ -234,6 +248,10 @@ public struct DeleteWebhookEndpointsWebhookEndpoint: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let webhook_endpoint: String
+
+		public init(webhook_endpoint: String) {
+			self.webhook_endpoint = webhook_endpoint
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/webhook_endpoints/\(inputs.webhook_endpoint)"

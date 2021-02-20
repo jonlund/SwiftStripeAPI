@@ -10,6 +10,14 @@ public struct GetPayouts: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let status: String
+
+		public init(destination: String, ending_before: String, limit: Int, starting_after: String, status: String) {
+			self.destination = destination
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.status = status
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payouts?destination=\(inputs.destination.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
@@ -101,6 +109,10 @@ public struct GetPayoutsPayout: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payout: String
+
+		public init(payout: String) {
+			self.payout = payout
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payouts/\(inputs.payout)"
@@ -116,6 +128,10 @@ public struct PostPayoutsPayout: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payout: String
+
+		public init(payout: String) {
+			self.payout = payout
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payouts/\(inputs.payout)"
@@ -142,6 +158,10 @@ public struct PostPayoutsPayoutCancel: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payout: String
+
+		public init(payout: String) {
+			self.payout = payout
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payouts/\(inputs.payout)/cancel"
@@ -165,6 +185,10 @@ public struct PostPayoutsPayoutReverse: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let payout: String
+
+		public init(payout: String) {
+			self.payout = payout
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/payouts/\(inputs.payout)/reverse"

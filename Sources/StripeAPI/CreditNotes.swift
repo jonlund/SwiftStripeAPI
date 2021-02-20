@@ -10,6 +10,14 @@ public struct GetCreditNotes: StripeAPIEndpoint {
 		let invoice: String
 		let limit: Int
 		let starting_after: String
+
+		public init(customer: String, ending_before: String, invoice: String, limit: Int, starting_after: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.invoice = invoice
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/credit_notes?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -110,6 +118,17 @@ public struct GetCreditNotesPreview: StripeAPIEndpoint {
 		let reason: String
 		let refund: String
 		let refund_amount: Int
+
+		public init(amount: Int, credit_amount: Int, invoice: String, memo: String, out_of_band_amount: Int, reason: String, refund: String, refund_amount: Int) {
+			self.amount = amount
+			self.credit_amount = credit_amount
+			self.invoice = invoice
+			self.memo = memo
+			self.out_of_band_amount = out_of_band_amount
+			self.reason = reason
+			self.refund = refund
+			self.refund_amount = refund_amount
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/credit_notes/preview?amount=\(inputs.amount.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&memo=\(inputs.memo.urlEncoded))&out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&reason=\(inputs.reason.urlEncoded))&refund=\(inputs.refund.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))"
@@ -135,6 +154,20 @@ public struct GetCreditNotesPreviewLines: StripeAPIEndpoint {
 		let refund: String
 		let refund_amount: Int
 		let starting_after: String
+
+		public init(amount: Int, credit_amount: Int, ending_before: String, invoice: String, limit: Int, memo: String, out_of_band_amount: Int, reason: String, refund: String, refund_amount: Int, starting_after: String) {
+			self.amount = amount
+			self.credit_amount = credit_amount
+			self.ending_before = ending_before
+			self.invoice = invoice
+			self.limit = limit
+			self.memo = memo
+			self.out_of_band_amount = out_of_band_amount
+			self.reason = reason
+			self.refund = refund
+			self.refund_amount = refund_amount
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/credit_notes/preview/lines?amount=\(inputs.amount.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&memo=\(inputs.memo.urlEncoded))&out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&reason=\(inputs.reason.urlEncoded))&refund=\(inputs.refund.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -175,6 +208,13 @@ public struct GetCreditNotesCreditNoteLines: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(credit_note: String, ending_before: String, limit: Int, starting_after: String) {
+			self.credit_note = credit_note
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/credit_notes/\(inputs.credit_note)/lines?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -212,6 +252,10 @@ public struct GetCreditNotesId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/credit_notes/\(inputs.id)"
@@ -227,6 +271,10 @@ public struct PostCreditNotesId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/credit_notes/\(inputs.id)"
@@ -256,6 +304,10 @@ public struct PostCreditNotesIdVoid: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/credit_notes/\(inputs.id)/void"

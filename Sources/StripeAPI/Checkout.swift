@@ -10,6 +10,14 @@ public struct GetCheckoutSessions: StripeAPIEndpoint {
 		let payment_intent: String
 		let starting_after: String
 		let subscription: String
+
+		public init(ending_before: String, limit: Int, payment_intent: String, starting_after: String, subscription: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.payment_intent = payment_intent
+			self.starting_after = starting_after
+			self.subscription = subscription
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/checkout/sessions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
@@ -326,6 +334,10 @@ public struct GetCheckoutSessionsSession: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let session: String
+
+		public init(session: String) {
+			self.session = session
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/checkout/sessions/\(inputs.session)"
@@ -344,6 +356,13 @@ public struct GetCheckoutSessionsSessionLineItems: StripeAPIEndpoint {
 		let limit: Int
 		let session: String
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, session: String, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.session = session
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/checkout/sessions/\(inputs.session)/line_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"

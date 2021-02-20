@@ -8,6 +8,12 @@ public struct GetAccounts: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -694,6 +700,10 @@ public struct GetAccountsAccount: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)"
@@ -709,6 +719,10 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)"
@@ -1350,6 +1364,10 @@ public struct DeleteAccountsAccount: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)"
@@ -1365,6 +1383,10 @@ public struct PostAccountsAccountBankAccounts: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/bank_accounts"
@@ -1401,6 +1423,11 @@ public struct GetAccountsAccountBankAccountsId: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let id: String
+
+		public init(account: String, id: String) {
+			self.account = account
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/bank_accounts/\(inputs.id)"
@@ -1417,6 +1444,11 @@ public struct PostAccountsAccountBankAccountsId: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let id: String
+
+		public init(account: String, id: String) {
+			self.account = account
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/bank_accounts/\(inputs.id)"
@@ -1485,6 +1517,11 @@ public struct DeleteAccountsAccountBankAccountsId: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let id: String
+
+		public init(account: String, id: String) {
+			self.account = account
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/bank_accounts/\(inputs.id)"
@@ -1500,6 +1537,10 @@ public struct GetAccountsAccountCapabilities: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/capabilities"
@@ -1537,6 +1578,11 @@ public struct GetAccountsAccountCapabilitiesCapability: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let capability: String
+
+		public init(account: String, capability: String) {
+			self.account = account
+			self.capability = capability
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/capabilities/\(inputs.capability)"
@@ -1553,6 +1599,11 @@ public struct PostAccountsAccountCapabilitiesCapability: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let capability: String
+
+		public init(account: String, capability: String) {
+			self.account = account
+			self.capability = capability
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/capabilities/\(inputs.capability)"
@@ -1582,6 +1633,13 @@ public struct GetAccountsAccountExternalAccounts: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(account: String, ending_before: String, limit: Int, starting_after: String) {
+			self.account = account
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/external_accounts?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -1619,6 +1677,10 @@ public struct PostAccountsAccountExternalAccounts: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/external_accounts"
@@ -1655,6 +1717,11 @@ public struct GetAccountsAccountExternalAccountsId: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let id: String
+
+		public init(account: String, id: String) {
+			self.account = account
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/external_accounts/\(inputs.id)"
@@ -1671,6 +1738,11 @@ public struct PostAccountsAccountExternalAccountsId: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let id: String
+
+		public init(account: String, id: String) {
+			self.account = account
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/external_accounts/\(inputs.id)"
@@ -1739,6 +1811,11 @@ public struct DeleteAccountsAccountExternalAccountsId: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let id: String
+
+		public init(account: String, id: String) {
+			self.account = account
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/external_accounts/\(inputs.id)"
@@ -1754,6 +1831,10 @@ public struct PostAccountsAccountLoginLinks: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/login_links"
@@ -1780,6 +1861,10 @@ public struct PutAccountsAccountLogout: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/logout"
@@ -1807,6 +1892,13 @@ public struct GetAccountsAccountPeople: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(account: String, ending_before: String, limit: Int, starting_after: String) {
+			self.account = account
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/people?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -1843,6 +1935,10 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/people"
@@ -2053,6 +2149,11 @@ public struct GetAccountsAccountPeoplePerson: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let person: String
+
+		public init(account: String, person: String) {
+			self.account = account
+			self.person = person
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/people/\(inputs.person)"
@@ -2069,6 +2170,11 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let person: String
+
+		public init(account: String, person: String) {
+			self.account = account
+			self.person = person
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/people/\(inputs.person)"
@@ -2279,6 +2385,11 @@ public struct DeleteAccountsAccountPeoplePerson: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let person: String
+
+		public init(account: String, person: String) {
+			self.account = account
+			self.person = person
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/people/\(inputs.person)"
@@ -2297,6 +2408,13 @@ public struct GetAccountsAccountPersons: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(account: String, ending_before: String, limit: Int, starting_after: String) {
+			self.account = account
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/persons?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -2333,6 +2451,10 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/persons"
@@ -2543,6 +2665,11 @@ public struct GetAccountsAccountPersonsPerson: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let person: String
+
+		public init(account: String, person: String) {
+			self.account = account
+			self.person = person
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/persons/\(inputs.person)"
@@ -2559,6 +2686,11 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let person: String
+
+		public init(account: String, person: String) {
+			self.account = account
+			self.person = person
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/persons/\(inputs.person)"
@@ -2769,6 +2901,11 @@ public struct DeleteAccountsAccountPersonsPerson: StripeAPIEndpoint {
 	public struct Params {
 		let account: String
 		let person: String
+
+		public init(account: String, person: String) {
+			self.account = account
+			self.person = person
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/persons/\(inputs.person)"
@@ -2784,6 +2921,10 @@ public struct PostAccountsAccountReject: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let account: String
+
+		public init(account: String) {
+			self.account = account
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/accounts/\(inputs.account)/reject"

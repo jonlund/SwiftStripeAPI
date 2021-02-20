@@ -9,6 +9,13 @@ public struct GetTopups: StripeAPIEndpoint {
 		let limit: Int
 		let starting_after: String
 		let status: String
+
+		public init(ending_before: String, limit: Int, starting_after: String, status: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.status = status
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/topups?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
@@ -86,6 +93,10 @@ public struct GetTopupsTopup: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let topup: String
+
+		public init(topup: String) {
+			self.topup = topup
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/topups/\(inputs.topup)"
@@ -101,6 +112,10 @@ public struct PostTopupsTopup: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let topup: String
+
+		public init(topup: String) {
+			self.topup = topup
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/topups/\(inputs.topup)"
@@ -130,6 +145,10 @@ public struct PostTopupsTopupCancel: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let topup: String
+
+		public init(topup: String) {
+			self.topup = topup
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/topups/\(inputs.topup)/cancel"

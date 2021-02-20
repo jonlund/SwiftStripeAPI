@@ -9,6 +9,13 @@ public struct GetSetupAttempts: StripeAPIEndpoint {
 		let limit: Int
 		let setup_intent: String
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, setup_intent: String, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.setup_intent = setup_intent
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/setup_attempts?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&setup_intent=\(inputs.setup_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"

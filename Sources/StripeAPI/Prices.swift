@@ -12,6 +12,16 @@ public struct GetPrices: StripeAPIEndpoint {
 		let product: String
 		let starting_after: String
 		let type: String
+
+		public init(active: Bool, currency: String, ending_before: String, limit: Int, product: String, starting_after: String, type: String) {
+			self.active = active
+			self.currency = currency
+			self.ending_before = ending_before
+			self.limit = limit
+			self.product = product
+			self.starting_after = starting_after
+			self.type = type
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/prices?active=\(inputs.active.urlEncoded))&currency=\(inputs.currency.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&product=\(inputs.product.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
@@ -209,6 +219,10 @@ public struct GetPricesPrice: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let price: String
+
+		public init(price: String) {
+			self.price = price
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/prices/\(inputs.price)"
@@ -224,6 +238,10 @@ public struct PostPricesPrice: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let price: String
+
+		public init(price: String) {
+			self.price = price
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/prices/\(inputs.price)"

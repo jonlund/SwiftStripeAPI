@@ -9,6 +9,13 @@ public struct GetIssuerFraudRecords: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(charge: String, ending_before: String, limit: Int, starting_after: String) {
+			self.charge = charge
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/issuer_fraud_records?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -45,6 +52,10 @@ public struct GetIssuerFraudRecordsIssuerFraudRecord: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let issuer_fraud_record: String
+
+		public init(issuer_fraud_record: String) {
+			self.issuer_fraud_record = issuer_fraud_record
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/issuer_fraud_records/\(inputs.issuer_fraud_record)"

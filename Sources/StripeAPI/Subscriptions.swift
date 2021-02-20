@@ -12,6 +12,16 @@ public struct GetSubscriptions: StripeAPIEndpoint {
 		let price: String
 		let starting_after: String
 		let status: String
+
+		public init(collection_method: String, customer: String, ending_before: String, limit: Int, price: String, starting_after: String, status: String) {
+			self.collection_method = collection_method
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.price = price
+			self.starting_after = starting_after
+			self.status = status
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscriptions?collection_method=\(inputs.collection_method.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&price=\(inputs.price.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
@@ -176,6 +186,10 @@ public struct GetSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let subscription_exposed_id: String
+
+		public init(subscription_exposed_id: String) {
+			self.subscription_exposed_id = subscription_exposed_id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscriptions/\(inputs.subscription_exposed_id)"
@@ -191,6 +205,10 @@ public struct PostSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let subscription_exposed_id: String
+
+		public init(subscription_exposed_id: String) {
+			self.subscription_exposed_id = subscription_exposed_id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscriptions/\(inputs.subscription_exposed_id)"
@@ -308,6 +326,10 @@ public struct DeleteSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let subscription_exposed_id: String
+
+		public init(subscription_exposed_id: String) {
+			self.subscription_exposed_id = subscription_exposed_id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscriptions/\(inputs.subscription_exposed_id)"
@@ -338,6 +360,10 @@ public struct DeleteSubscriptionsSubscriptionExposedIdDiscount: StripeAPIEndpoin
 	public typealias paramType = Params
 	public struct Params {
 		let subscription_exposed_id: String
+
+		public init(subscription_exposed_id: String) {
+			self.subscription_exposed_id = subscription_exposed_id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscriptions/\(inputs.subscription_exposed_id)/discount"

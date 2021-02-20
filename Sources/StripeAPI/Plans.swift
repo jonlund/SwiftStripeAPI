@@ -10,6 +10,14 @@ public struct GetPlans: StripeAPIEndpoint {
 		let limit: Int
 		let product: String
 		let starting_after: String
+
+		public init(active: Bool, ending_before: String, limit: Int, product: String, starting_after: String) {
+			self.active = active
+			self.ending_before = ending_before
+			self.limit = limit
+			self.product = product
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/plans?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&product=\(inputs.product.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -168,6 +176,10 @@ public struct GetPlansPlan: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let plan: String
+
+		public init(plan: String) {
+			self.plan = plan
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/plans/\(inputs.plan)"
@@ -183,6 +195,10 @@ public struct PostPlansPlan: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let plan: String
+
+		public init(plan: String) {
+			self.plan = plan
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/plans/\(inputs.plan)"
@@ -221,6 +237,10 @@ public struct DeletePlansPlan: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let plan: String
+
+		public init(plan: String) {
+			self.plan = plan
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/plans/\(inputs.plan)"

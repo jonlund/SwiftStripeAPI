@@ -11,6 +11,15 @@ public struct GetInvoiceitems: StripeAPIEndpoint {
 		let limit: Int
 		let pending: Bool
 		let starting_after: String
+
+		public init(customer: String, ending_before: String, invoice: String, limit: Int, pending: Bool, starting_after: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.invoice = invoice
+			self.limit = limit
+			self.pending = pending
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoiceitems?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&pending=\(inputs.pending.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -153,6 +162,10 @@ public struct GetInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoiceitem: String
+
+		public init(invoiceitem: String) {
+			self.invoiceitem = invoiceitem
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoiceitems/\(inputs.invoiceitem)"
@@ -168,6 +181,10 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoiceitem: String
+
+		public init(invoiceitem: String) {
+			self.invoiceitem = invoiceitem
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoiceitems/\(inputs.invoiceitem)"
@@ -265,6 +282,10 @@ public struct DeleteInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoiceitem: String
+
+		public init(invoiceitem: String) {
+			self.invoiceitem = invoiceitem
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoiceitems/\(inputs.invoiceitem)"

@@ -10,6 +10,14 @@ public struct GetFileLinks: StripeAPIEndpoint {
 		let file: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, expired: Bool, file: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.expired = expired
+			self.file = file
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/file_links?ending_before=\(inputs.ending_before.urlEncoded))&expired=\(inputs.expired.urlEncoded))&file=\(inputs.file.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -75,6 +83,10 @@ public struct GetFileLinksLink: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let link: String
+
+		public init(link: String) {
+			self.link = link
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/file_links/\(inputs.link)"
@@ -90,6 +102,10 @@ public struct PostFileLinksLink: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let link: String
+
+		public init(link: String) {
+			self.link = link
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/file_links/\(inputs.link)"

@@ -32,6 +32,10 @@ public struct DeleteEphemeralKeysKey: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let key: String
+
+		public init(key: String) {
+			self.key = key
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/ephemeral_keys/\(inputs.key)"

@@ -11,6 +11,15 @@ public struct GetSkus: StripeAPIEndpoint {
 		let limit: Int
 		let product: String
 		let starting_after: String
+
+		public init(active: Bool, ending_before: String, in_stock: Bool, limit: Int, product: String, starting_after: String) {
+			self.active = active
+			self.ending_before = ending_before
+			self.in_stock = in_stock
+			self.limit = limit
+			self.product = product
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/skus?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&in_stock=\(inputs.in_stock.urlEncoded))&limit=\(inputs.limit.urlEncoded))&product=\(inputs.product.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -150,6 +159,10 @@ public struct GetSkusId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/skus/\(inputs.id)"
@@ -165,6 +178,10 @@ public struct PostSkusId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/skus/\(inputs.id)"
@@ -244,6 +261,10 @@ public struct DeleteSkusId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/skus/\(inputs.id)"

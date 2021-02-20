@@ -9,6 +9,13 @@ public struct GetApplicationFees: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(charge: String, ending_before: String, limit: Int, starting_after: String) {
+			self.charge = charge
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -46,6 +53,11 @@ public struct GetApplicationFeesFeeRefundsId: StripeAPIEndpoint {
 	public struct Params {
 		let fee: String
 		let id: String
+
+		public init(fee: String, id: String) {
+			self.fee = fee
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees/\(inputs.fee)/refunds/\(inputs.id)"
@@ -62,6 +74,11 @@ public struct PostApplicationFeesFeeRefundsId: StripeAPIEndpoint {
 	public struct Params {
 		let fee: String
 		let id: String
+
+		public init(fee: String, id: String) {
+			self.fee = fee
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees/\(inputs.fee)/refunds/\(inputs.id)"
@@ -88,6 +105,10 @@ public struct GetApplicationFeesId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees/\(inputs.id)"
@@ -102,6 +123,10 @@ public struct PostApplicationFeesIdRefund: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees/\(inputs.id)/refund"
@@ -132,6 +157,13 @@ public struct GetApplicationFeesIdRefunds: StripeAPIEndpoint {
 		let id: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, id: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.id = id
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees/\(inputs.id)/refunds?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -169,6 +201,10 @@ public struct PostApplicationFeesIdRefunds: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/application_fees/\(inputs.id)/refunds"

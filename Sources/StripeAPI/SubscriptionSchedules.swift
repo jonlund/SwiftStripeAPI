@@ -10,6 +10,14 @@ public struct GetSubscriptionSchedules: StripeAPIEndpoint {
 		let limit: Int
 		let scheduled: Bool
 		let starting_after: String
+
+		public init(customer: String, ending_before: String, limit: Int, scheduled: Bool, starting_after: String) {
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.scheduled = scheduled
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_schedules?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&scheduled=\(inputs.scheduled.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -139,6 +147,10 @@ public struct GetSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let schedule: String
+
+		public init(schedule: String) {
+			self.schedule = schedule
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_schedules/\(inputs.schedule)"
@@ -154,6 +166,10 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let schedule: String
+
+		public init(schedule: String) {
+			self.schedule = schedule
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_schedules/\(inputs.schedule)"
@@ -250,6 +266,10 @@ public struct PostSubscriptionSchedulesScheduleCancel: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let schedule: String
+
+		public init(schedule: String) {
+			self.schedule = schedule
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_schedules/\(inputs.schedule)/cancel"
@@ -279,6 +299,10 @@ public struct PostSubscriptionSchedulesScheduleRelease: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let schedule: String
+
+		public init(schedule: String) {
+			self.schedule = schedule
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/subscription_schedules/\(inputs.schedule)/release"

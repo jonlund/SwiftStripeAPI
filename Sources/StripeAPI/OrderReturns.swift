@@ -9,6 +9,13 @@ public struct GetOrderReturns: StripeAPIEndpoint {
 		let limit: Int
 		let order: String
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, order: String, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.order = order
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/order_returns?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&order=\(inputs.order.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -45,6 +52,10 @@ public struct GetOrderReturnsId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/order_returns/\(inputs.id)"

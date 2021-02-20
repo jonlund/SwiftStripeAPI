@@ -6,6 +6,10 @@ public struct GetMandatesMandate: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let mandate: String
+
+		public init(mandate: String) {
+			self.mandate = mandate
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/mandates/\(inputs.mandate)"

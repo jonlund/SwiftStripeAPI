@@ -8,6 +8,12 @@ public struct GetSigmaScheduledQueryRuns: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sigma/scheduled_query_runs?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -44,6 +50,10 @@ public struct GetSigmaScheduledQueryRunsScheduledQueryRun: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let scheduled_query_run: String
+
+		public init(scheduled_query_run: String) {
+			self.scheduled_query_run = scheduled_query_run
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sigma/scheduled_query_runs/\(inputs.scheduled_query_run)"

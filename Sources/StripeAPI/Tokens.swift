@@ -571,6 +571,10 @@ public struct GetTokensToken: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let token: String
+
+		public init(token: String) {
+			self.token = token
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/tokens/\(inputs.token)"

@@ -12,6 +12,16 @@ public struct GetInvoices: StripeAPIEndpoint {
 		let starting_after: String
 		let status: String
 		let subscription: String
+
+		public init(collection_method: String, customer: String, ending_before: String, limit: Int, starting_after: String, status: String, subscription: String) {
+			self.collection_method = collection_method
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.status = status
+			self.subscription = subscription
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices?collection_method=\(inputs.collection_method.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
@@ -152,6 +162,19 @@ public struct GetInvoicesUpcoming: StripeAPIEndpoint {
 		let subscription_proration_date: Timestamp
 		let subscription_start_date: Timestamp
 		let subscription_trial_from_plan: Bool
+
+		public init(coupon: String, customer: String, schedule: String, subscription: String, subscription_cancel_at_period_end: Bool, subscription_cancel_now: Bool, subscription_proration_behavior: String, subscription_proration_date: Timestamp, subscription_start_date: Timestamp, subscription_trial_from_plan: Bool) {
+			self.coupon = coupon
+			self.customer = customer
+			self.schedule = schedule
+			self.subscription = subscription
+			self.subscription_cancel_at_period_end = subscription_cancel_at_period_end
+			self.subscription_cancel_now = subscription_cancel_now
+			self.subscription_proration_behavior = subscription_proration_behavior
+			self.subscription_proration_date = subscription_proration_date
+			self.subscription_start_date = subscription_start_date
+			self.subscription_trial_from_plan = subscription_trial_from_plan
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/upcoming?coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))"
@@ -179,6 +202,22 @@ public struct GetInvoicesUpcomingLines: StripeAPIEndpoint {
 		let subscription_proration_date: Timestamp
 		let subscription_start_date: Timestamp
 		let subscription_trial_from_plan: Bool
+
+		public init(coupon: String, customer: String, ending_before: String, limit: Int, schedule: String, starting_after: String, subscription: String, subscription_cancel_at_period_end: Bool, subscription_cancel_now: Bool, subscription_proration_behavior: String, subscription_proration_date: Timestamp, subscription_start_date: Timestamp, subscription_trial_from_plan: Bool) {
+			self.coupon = coupon
+			self.customer = customer
+			self.ending_before = ending_before
+			self.limit = limit
+			self.schedule = schedule
+			self.starting_after = starting_after
+			self.subscription = subscription
+			self.subscription_cancel_at_period_end = subscription_cancel_at_period_end
+			self.subscription_cancel_now = subscription_cancel_now
+			self.subscription_proration_behavior = subscription_proration_behavior
+			self.subscription_proration_date = subscription_proration_date
+			self.subscription_start_date = subscription_start_date
+			self.subscription_trial_from_plan = subscription_trial_from_plan
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/upcoming/lines?coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))"
@@ -216,6 +255,10 @@ public struct GetInvoicesInvoice: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)"
@@ -231,6 +274,10 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)"
@@ -307,6 +354,10 @@ public struct DeleteInvoicesInvoice: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)"
@@ -322,6 +373,10 @@ public struct PostInvoicesInvoiceFinalize: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)/finalize"
@@ -351,6 +406,13 @@ public struct GetInvoicesInvoiceLines: StripeAPIEndpoint {
 		let invoice: String
 		let limit: Int
 		let starting_after: String
+
+		public init(ending_before: String, invoice: String, limit: Int, starting_after: String) {
+			self.ending_before = ending_before
+			self.invoice = invoice
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)/lines?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -388,6 +450,10 @@ public struct PostInvoicesInvoiceMarkUncollectible: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)/mark_uncollectible"
@@ -411,6 +477,10 @@ public struct PostInvoicesInvoicePay: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)/pay"
@@ -449,6 +519,10 @@ public struct PostInvoicesInvoiceSend: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)/send"
@@ -472,6 +546,10 @@ public struct PostInvoicesInvoiceVoid: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let invoice: String
+
+		public init(invoice: String) {
+			self.invoice = invoice
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/invoices/\(inputs.invoice)/void"

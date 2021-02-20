@@ -10,6 +10,14 @@ public struct GetRecipients: StripeAPIEndpoint {
 		let starting_after: String
 		let type: String
 		let verified: Bool
+
+		public init(ending_before: String, limit: Int, starting_after: String, type: String, verified: Bool) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.type = type
+			self.verified = verified
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/recipients?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))&verified=\(inputs.verified.urlEncoded))"
@@ -90,6 +98,10 @@ public struct GetRecipientsId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/recipients/\(inputs.id)"
@@ -105,6 +117,10 @@ public struct PostRecipientsId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/recipients/\(inputs.id)"
@@ -152,6 +168,10 @@ public struct DeleteRecipientsId: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let id: String
+
+		public init(id: String) {
+			self.id = id
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/recipients/\(inputs.id)"

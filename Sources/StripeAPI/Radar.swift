@@ -9,6 +9,13 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(charge: String, ending_before: String, limit: Int, starting_after: String) {
+			self.charge = charge
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/early_fraud_warnings?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -45,6 +52,10 @@ public struct GetRadarEarlyFraudWarningsEarlyFraudWarning: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let early_fraud_warning: String
+
+		public init(early_fraud_warning: String) {
+			self.early_fraud_warning = early_fraud_warning
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/early_fraud_warnings/\(inputs.early_fraud_warning)"
@@ -64,6 +75,14 @@ public struct GetRadarValueListItems: StripeAPIEndpoint {
 		let starting_after: String
 		let value: String
 		let value_list: String
+
+		public init(ending_before: String, limit: Int, starting_after: String, value: String, value_list: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+			self.value = value
+			self.value_list = value_list
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/value_list_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&value=\(inputs.value.urlEncoded))&value_list=\(inputs.value_list.urlEncoded))"
@@ -126,6 +145,10 @@ public struct GetRadarValueListItemsItem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let item: String
+
+		public init(item: String) {
+			self.item = item
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/value_list_items/\(inputs.item)"
@@ -141,6 +164,10 @@ public struct DeleteRadarValueListItemsItem: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let item: String
+
+		public init(item: String) {
+			self.item = item
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/value_list_items/\(inputs.item)"
@@ -160,6 +187,14 @@ public struct GetRadarValueLists: StripeAPIEndpoint {
 		let ending_before: String
 		let limit: Int
 		let starting_after: String
+
+		public init(alias: String, contains: String, ending_before: String, limit: Int, starting_after: String) {
+			self.alias = alias
+			self.contains = contains
+			self.ending_before = ending_before
+			self.limit = limit
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/value_lists?alias=\(inputs.alias.urlEncoded))&contains=\(inputs.contains.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -238,6 +273,10 @@ public struct GetRadarValueListsValueList: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let value_list: String
+
+		public init(value_list: String) {
+			self.value_list = value_list
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/value_lists/\(inputs.value_list)"
@@ -253,6 +292,10 @@ public struct PostRadarValueListsValueList: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let value_list: String
+
+		public init(value_list: String) {
+			self.value_list = value_list
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/value_lists/\(inputs.value_list)"
@@ -285,6 +328,10 @@ public struct DeleteRadarValueListsValueList: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let value_list: String
+
+		public init(value_list: String) {
+			self.value_list = value_list
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/radar/value_lists/\(inputs.value_list)"

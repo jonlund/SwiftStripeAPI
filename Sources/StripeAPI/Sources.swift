@@ -300,6 +300,11 @@ public struct GetSourcesSource: StripeAPIEndpoint {
 	public struct Params {
 		let client_secret: String
 		let source: String
+
+		public init(client_secret: String, source: String) {
+			self.client_secret = client_secret
+			self.source = source
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sources/\(inputs.source)?client_secret=\(inputs.client_secret.urlEncoded))"
@@ -315,6 +320,10 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let source: String
+
+		public init(source: String) {
+			self.source = source
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sources/\(inputs.source)"
@@ -539,6 +548,11 @@ public struct GetSourcesSourceMandateNotificationsMandateNotification: StripeAPI
 	public struct Params {
 		let mandate_notification: String
 		let source: String
+
+		public init(mandate_notification: String, source: String) {
+			self.mandate_notification = mandate_notification
+			self.source = source
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sources/\(inputs.source)/mandate_notifications/\(inputs.mandate_notification)"
@@ -557,6 +571,13 @@ public struct GetSourcesSourceSourceTransactions: StripeAPIEndpoint {
 		let limit: Int
 		let source: String
 		let starting_after: String
+
+		public init(ending_before: String, limit: Int, source: String, starting_after: String) {
+			self.ending_before = ending_before
+			self.limit = limit
+			self.source = source
+			self.starting_after = starting_after
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sources/\(inputs.source)/source_transactions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
@@ -594,6 +615,11 @@ public struct GetSourcesSourceSourceTransactionsSourceTransaction: StripeAPIEndp
 	public struct Params {
 		let source: String
 		let source_transaction: String
+
+		public init(source: String, source_transaction: String) {
+			self.source = source
+			self.source_transaction = source_transaction
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sources/\(inputs.source)/source_transactions/\(inputs.source_transaction)"
@@ -609,6 +635,10 @@ public struct PostSourcesSourceVerify: StripeAPIEndpoint {
 	public typealias paramType = Params
 	public struct Params {
 		let source: String
+
+		public init(source: String) {
+			self.source = source
+		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
 		return "/v1/sources/\(inputs.source)/verify"
