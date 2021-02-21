@@ -12,7 +12,7 @@ public typealias Timestamp = Int
 public struct Empty: Codable {
 	public init() {}
 }
-public struct MESSED_UP: Codable {}			// parsing didn't work out right
+public typealias MESSED_UP = AnyCodable
 
 public struct StringNumber: Codable {
 	public var rawValue: String
