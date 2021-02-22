@@ -4,13 +4,19 @@ public struct GetApplePayDomains: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ApplePayDomainList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let domain_name: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let domain_name: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(domain_name: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter domain_name: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(domain_name: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.domain_name = domain_name
 			self.ending_before = ending_before
 			self.limit = limit
@@ -18,7 +24,13 @@ public struct GetApplePayDomains: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/apple_pay/domains?domain_name=\(inputs.domain_name.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.domain_name?.urlEncoded { params.append("domain_name=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/apple_pay/domains?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -72,9 +84,12 @@ public struct GetApplePayDomainsDomain: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ApplePayDomain
 	public typealias paramType = Params
+	
 	public struct Params {
 		let domain: String
 
+		/// Initialize the request parameters
+		/// - Parameter domain: 
 		public init(domain: String) {
 			self.domain = domain
 		}
@@ -91,9 +106,12 @@ public struct DeleteApplePayDomainsDomain: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedApplePayDomain
 	public typealias paramType = Params
+	
 	public struct Params {
 		let domain: String
 
+		/// Initialize the request parameters
+		/// - Parameter domain: 
 		public init(domain: String) {
 			self.domain = domain
 		}

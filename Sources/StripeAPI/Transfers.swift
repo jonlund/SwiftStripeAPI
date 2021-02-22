@@ -4,14 +4,21 @@ public struct GetTransfers: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TransferList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let destination: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let transfer_group: String
+		let destination: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let transfer_group: String?
 
-		public init(destination: String, ending_before: String, limit: Int, starting_after: String, transfer_group: String) {
+		/// Initialize the request parameters
+		/// - Parameter destination: Only return transfers for the destination specified by this account ID.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter transfer_group: Only return transfers with the specified transfer group.
+		public init(destination: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, transfer_group: String? = nil) {
 			self.destination = destination
 			self.ending_before = ending_before
 			self.limit = limit
@@ -20,7 +27,14 @@ public struct GetTransfers: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/transfers?destination=\(inputs.destination.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&transfer_group=\(inputs.transfer_group.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.destination?.urlEncoded { params.append("destination=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.transfer_group?.urlEncoded { params.append("transfer_group=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/transfers?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -103,21 +117,32 @@ public struct GetTransfersIdReversals: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TransferReversalList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
 		let id: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, id: String, limit: Int, starting_after: String) {
-			self.ending_before = ending_before
+		/// Initialize the request parameters
+		/// - Parameter id: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(id: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.id = id
+			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/transfers/\(inputs.id)/reversals?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/transfers/\(inputs.id)/reversals?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -150,9 +175,12 @@ public struct PostTransfersIdReversals: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TransferReversal
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -169,11 +197,11 @@ public struct PostTransfersIdReversals: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Boolean indicating whether the application fee should be refunded when reversing this transfer. If a full transfer reversal is given, the full application fee will be refunded. Otherwise, the application fee will be refunded with an amount proportional to the amount of the transfer reversed.
 		public var refund_application_fee: Bool?
 
-		public init(amount: Int? = nil, description: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, refund_application_fee: Bool? = nil) {
+		public init(amount: Int? = nil, description: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, refund_application_fee: Bool? = nil) {
 			self.amount = amount
 			self.description = description
 			self.expand = expand
@@ -189,9 +217,12 @@ public struct GetTransfersTransfer: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Transfer
 	public typealias paramType = Params
+	
 	public struct Params {
 		let transfer: String
 
+		/// Initialize the request parameters
+		/// - Parameter transfer: 
 		public init(transfer: String) {
 			self.transfer = transfer
 		}
@@ -208,9 +239,12 @@ public struct PostTransfersTransfer: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Transfer
 	public typealias paramType = Params
+	
 	public struct Params {
 		let transfer: String
 
+		/// Initialize the request parameters
+		/// - Parameter transfer: 
 		public init(transfer: String) {
 			self.transfer = transfer
 		}
@@ -225,9 +259,9 @@ public struct PostTransfersTransfer: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(description: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(description: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.description = description
 			self.expand = expand
 			self.metadata = metadata
@@ -241,10 +275,14 @@ public struct GetTransfersTransferReversalsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TransferReversal
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 		let transfer: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
+		/// - Parameter transfer: 
 		public init(id: String, transfer: String) {
 			self.id = id
 			self.transfer = transfer
@@ -262,10 +300,14 @@ public struct PostTransfersTransferReversalsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TransferReversal
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 		let transfer: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
+		/// - Parameter transfer: 
 		public init(id: String, transfer: String) {
 			self.id = id
 			self.transfer = transfer
@@ -279,9 +321,9 @@ public struct PostTransfersTransferReversalsId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}

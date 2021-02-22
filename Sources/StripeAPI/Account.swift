@@ -24,7 +24,7 @@ public struct PostAccount: StripeAPIEndpoint {
 		/// An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
 		public var account_token: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
-		public var bank_account: MESSED_UP?
+		public var bank_account: AnyCodable?
 		/// Business information about the account.
 		public var business_profile: BusinessProfileSpecs?
 		/// The business type.
@@ -46,13 +46,13 @@ public struct PostAccount: StripeAPIEndpoint {
 		/// Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
 		public var individual: IndividualSpecs?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Options for customizing how the account functions within Stripe.
 		public var settings: SettingsSpecs?
 		/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
 		public var tos_acceptance: TosAcceptanceSpecs?
 
-		public init(account_token: String? = nil, bank_account: MESSED_UP? = nil, business_profile: BusinessProfileSpecs? = nil, business_type: BusinessTypeValues? = nil, capabilities: CapabilitiesParam? = nil, company: CompanySpecs? = nil, default_currency: String? = nil, documents: DocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, external_account: String? = nil, individual: IndividualSpecs? = nil, metadata: MESSED_UP? = nil, settings: SettingsSpecs? = nil, tos_acceptance: TosAcceptanceSpecs? = nil) {
+		public init(account_token: String? = nil, bank_account: AnyCodable? = nil, business_profile: BusinessProfileSpecs? = nil, business_type: BusinessTypeValues? = nil, capabilities: CapabilitiesParam? = nil, company: CompanySpecs? = nil, default_currency: String? = nil, documents: DocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, external_account: String? = nil, individual: IndividualSpecs? = nil, metadata: AnyCodable? = nil, settings: SettingsSpecs? = nil, tos_acceptance: TosAcceptanceSpecs? = nil) {
 			self.account_token = account_token
 			self.bank_account = bank_account
 			self.business_profile = business_profile
@@ -364,7 +364,7 @@ public struct PostAccount: StripeAPIEndpoint {
 			public var address: AddressSpecs?
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
-			public var dob: MESSED_UP?
+			public var dob: AnyCodable?
 			public var email: String?
 			public var first_name: String?
 			public var first_name_kana: String?
@@ -375,7 +375,7 @@ public struct PostAccount: StripeAPIEndpoint {
 			public var last_name_kana: String?
 			public var last_name_kanji: String?
 			public var maiden_name: String?
-			public var metadata: MESSED_UP?
+			public var metadata: AnyCodable?
 			public var phone: String?
 			public var political_exposure: PoliticalExposureValues?
 			public var ssn_last_4: String?
@@ -383,7 +383,7 @@ public struct PostAccount: StripeAPIEndpoint {
 
 			/// Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
 			/// - Parameters:
-			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: MESSED_UP? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: MESSED_UP? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 				self.address = address
 				self.address_kana = address_kana
 				self.address_kanji = address_kanji
@@ -680,7 +680,7 @@ public struct PostAccountBankAccounts: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
-		public var bank_account: MESSED_UP?
+		public var bank_account: AnyCodable?
 		/// When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
 		public var default_for_currency: Bool?
 		/// Specifies which fields in the response should be expanded.
@@ -690,7 +690,7 @@ public struct PostAccountBankAccounts: StripeAPIEndpoint {
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: Empty?
 
-		public init(bank_account: MESSED_UP? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
+		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand
@@ -706,9 +706,12 @@ public struct GetAccountBankAccountsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -725,9 +728,12 @@ public struct PostAccountBankAccountsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -762,11 +768,11 @@ public struct PostAccountBankAccountsId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Cardholder name.
 		public var name: String?
 
-		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, name: String? = nil) {
+		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
 			self.account_holder_name = account_holder_name
 			self.account_holder_type = account_holder_type
 			self.address_city = address_city
@@ -796,9 +802,12 @@ public struct DeleteAccountBankAccountsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedExternalAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -848,9 +857,12 @@ public struct GetAccountCapabilitiesCapability: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Capability
 	public typealias paramType = Params
+	
 	public struct Params {
 		let capability: String
 
+		/// Initialize the request parameters
+		/// - Parameter capability: 
 		public init(capability: String) {
 			self.capability = capability
 		}
@@ -867,9 +879,12 @@ public struct PostAccountCapabilitiesCapability: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Capability
 	public typealias paramType = Params
+	
 	public struct Params {
 		let capability: String
 
+		/// Initialize the request parameters
+		/// - Parameter capability: 
 		public init(capability: String) {
 			self.capability = capability
 		}
@@ -897,19 +912,29 @@ public struct GetAccountExternalAccounts: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ExternalAccountList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/account/external_accounts?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/account/external_accounts?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -948,7 +973,7 @@ public struct PostAccountExternalAccounts: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
-		public var bank_account: MESSED_UP?
+		public var bank_account: AnyCodable?
 		/// When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
 		public var default_for_currency: Bool?
 		/// Specifies which fields in the response should be expanded.
@@ -958,7 +983,7 @@ public struct PostAccountExternalAccounts: StripeAPIEndpoint {
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: Empty?
 
-		public init(bank_account: MESSED_UP? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
+		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand
@@ -974,9 +999,12 @@ public struct GetAccountExternalAccountsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -993,9 +1021,12 @@ public struct PostAccountExternalAccountsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -1030,11 +1061,11 @@ public struct PostAccountExternalAccountsId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Cardholder name.
 		public var name: String?
 
-		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, name: String? = nil) {
+		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
 			self.account_holder_name = account_holder_name
 			self.account_holder_type = account_holder_type
 			self.address_city = address_city
@@ -1064,9 +1095,12 @@ public struct DeleteAccountExternalAccountsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedExternalAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -1131,19 +1165,29 @@ public struct GetAccountPeople: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/account/people?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/account/people?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1188,7 +1232,7 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		/// The Kanji variation of the person's address (Japan only).
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
-		public var dob: MESSED_UP?
+		public var dob: AnyCodable?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -1212,7 +1256,7 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		/// The person's maiden name.
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -1226,7 +1270,7 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: MESSED_UP? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: MESSED_UP? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
@@ -1383,9 +1427,12 @@ public struct GetAccountPeoplePerson: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Person
 	public typealias paramType = Params
+	
 	public struct Params {
 		let person: String
 
+		/// Initialize the request parameters
+		/// - Parameter person: 
 		public init(person: String) {
 			self.person = person
 		}
@@ -1402,9 +1449,12 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Person
 	public typealias paramType = Params
+	
 	public struct Params {
 		let person: String
 
+		/// Initialize the request parameters
+		/// - Parameter person: 
 		public init(person: String) {
 			self.person = person
 		}
@@ -1422,7 +1472,7 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		/// The Kanji variation of the person's address (Japan only).
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
-		public var dob: MESSED_UP?
+		public var dob: AnyCodable?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -1446,7 +1496,7 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		/// The person's maiden name.
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -1460,7 +1510,7 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: MESSED_UP? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: MESSED_UP? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
@@ -1617,9 +1667,12 @@ public struct DeleteAccountPeoplePerson: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedPerson
 	public typealias paramType = Params
+	
 	public struct Params {
 		let person: String
 
+		/// Initialize the request parameters
+		/// - Parameter person: 
 		public init(person: String) {
 			self.person = person
 		}
@@ -1636,19 +1689,29 @@ public struct GetAccountPersons: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/account/persons?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/account/persons?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1693,7 +1756,7 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		/// The Kanji variation of the person's address (Japan only).
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
-		public var dob: MESSED_UP?
+		public var dob: AnyCodable?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -1717,7 +1780,7 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		/// The person's maiden name.
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -1731,7 +1794,7 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: MESSED_UP? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: MESSED_UP? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
@@ -1888,9 +1951,12 @@ public struct GetAccountPersonsPerson: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Person
 	public typealias paramType = Params
+	
 	public struct Params {
 		let person: String
 
+		/// Initialize the request parameters
+		/// - Parameter person: 
 		public init(person: String) {
 			self.person = person
 		}
@@ -1907,9 +1973,12 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Person
 	public typealias paramType = Params
+	
 	public struct Params {
 		let person: String
 
+		/// Initialize the request parameters
+		/// - Parameter person: 
 		public init(person: String) {
 			self.person = person
 		}
@@ -1927,7 +1996,7 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		/// The Kanji variation of the person's address (Japan only).
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
-		public var dob: MESSED_UP?
+		public var dob: AnyCodable?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -1951,7 +2020,7 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		/// The person's maiden name.
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -1965,7 +2034,7 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: MESSED_UP? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: MESSED_UP? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
@@ -2122,9 +2191,12 @@ public struct DeleteAccountPersonsPerson: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedPerson
 	public typealias paramType = Params
+	
 	public struct Params {
 		let person: String
 
+		/// Initialize the request parameters
+		/// - Parameter person: 
 		public init(person: String) {
 			self.person = person
 		}

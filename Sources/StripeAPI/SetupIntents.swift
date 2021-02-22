@@ -4,14 +4,21 @@ public struct GetSetupIntents: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PaymentFlowsSetupIntentList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let customer: String
-		let ending_before: String
-		let limit: Int
-		let payment_method: String
-		let starting_after: String
+		let customer: String?
+		let ending_before: String?
+		let limit: Int?
+		let payment_method: String?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, payment_method: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: Only return SetupIntents for the customer specified by this customer ID.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter payment_method: Only return SetupIntents associated with the specified payment method.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String? = nil, ending_before: String? = nil, limit: Int? = nil, payment_method: String? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -20,7 +27,14 @@ public struct GetSetupIntents: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/setup_intents?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_method=\(inputs.payment_method.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.payment_method?.urlEncoded { params.append("payment_method=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/setup_intents?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -233,17 +247,24 @@ public struct GetSetupIntentsIntent: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = SetupIntent
 	public typealias paramType = Params
+	
 	public struct Params {
-		let client_secret: String
 		let intent: String
+		let client_secret: String?
 
-		public init(client_secret: String, intent: String) {
-			self.client_secret = client_secret
+		/// Initialize the request parameters
+		/// - Parameter intent: 
+		/// - Parameter client_secret: The client secret of the SetupIntent. Required if a publishable key is used to retrieve the SetupIntent.
+		public init(intent: String, client_secret: String? = nil) {
 			self.intent = intent
+			self.client_secret = client_secret
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/setup_intents/\(inputs.intent)?client_secret=\(inputs.client_secret.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.client_secret?.urlEncoded { params.append("client_secret=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/setup_intents/\(inputs.intent)?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -254,9 +275,12 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SetupIntent
 	public typealias paramType = Params
+	
 	public struct Params {
 		let intent: String
 
+		/// Initialize the request parameters
+		/// - Parameter intent: 
 		public init(intent: String) {
 			self.intent = intent
 		}
@@ -273,7 +297,7 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
 		public var payment_method: String?
 		/// Payment-method-specific configuration for this SetupIntent.
@@ -281,7 +305,7 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 		/// The list of payment method types (e.g. card) that this SetupIntent is allowed to set up. If this is not provided, defaults to ["card"].
 		public var payment_method_types: [String]?
 
-		public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, payment_method: String? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil) {
+		public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, payment_method: String? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil) {
 			self.customer = customer
 			self.description = description
 			self.expand = expand
@@ -347,9 +371,12 @@ public struct PostSetupIntentsIntentCancel: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SetupIntent
 	public typealias paramType = Params
+	
 	public struct Params {
 		let intent: String
 
+		/// Initialize the request parameters
+		/// - Parameter intent: 
 		public init(intent: String) {
 			self.intent = intent
 		}
@@ -383,9 +410,12 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SetupIntent
 	public typealias paramType = Params
+	
 	public struct Params {
 		let intent: String
 
+		/// Initialize the request parameters
+		/// - Parameter intent: 
 		public init(intent: String) {
 			self.intent = intent
 		}
@@ -400,7 +430,7 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// This hash contains details about the Mandate to create
-		public var mandate_data: MESSED_UP?
+		public var mandate_data: AnyCodable?
 		/// ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
 		public var payment_method: String?
 		/// Payment-method-specific configuration for this SetupIntent.
@@ -408,7 +438,7 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 		/// The URL to redirect your customer back to after they authenticate on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter is only used for cards and other redirect-based payment methods.
 		public var return_url: String?
 
-		public init(client_secret: String? = nil, expand: [String]? = nil, mandate_data: MESSED_UP? = nil, payment_method: String? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, return_url: String? = nil) {
+		public init(client_secret: String? = nil, expand: [String]? = nil, mandate_data: AnyCodable? = nil, payment_method: String? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, return_url: String? = nil) {
 			self.client_secret = client_secret
 			self.expand = expand
 			self.mandate_data = mandate_data

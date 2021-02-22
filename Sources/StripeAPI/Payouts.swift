@@ -4,14 +4,21 @@ public struct GetPayouts: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PayoutList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let destination: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let status: String
+		let destination: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let status: String?
 
-		public init(destination: String, ending_before: String, limit: Int, starting_after: String, status: String) {
+		/// Initialize the request parameters
+		/// - Parameter destination: The ID of an external account - only return payouts sent to this external account.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: Only return payouts that have the given status: `pending`, `paid`, `failed`, or `canceled`.
+		public init(destination: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, status: String? = nil) {
 			self.destination = destination
 			self.ending_before = ending_before
 			self.limit = limit
@@ -20,7 +27,14 @@ public struct GetPayouts: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/payouts?destination=\(inputs.destination.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.destination?.urlEncoded { params.append("destination=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/payouts?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -107,9 +121,12 @@ public struct GetPayoutsPayout: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Payout
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payout: String
 
+		/// Initialize the request parameters
+		/// - Parameter payout: 
 		public init(payout: String) {
 			self.payout = payout
 		}
@@ -126,9 +143,12 @@ public struct PostPayoutsPayout: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Payout
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payout: String
 
+		/// Initialize the request parameters
+		/// - Parameter payout: 
 		public init(payout: String) {
 			self.payout = payout
 		}
@@ -141,9 +161,9 @@ public struct PostPayoutsPayout: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}
@@ -156,9 +176,12 @@ public struct PostPayoutsPayoutCancel: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Payout
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payout: String
 
+		/// Initialize the request parameters
+		/// - Parameter payout: 
 		public init(payout: String) {
 			self.payout = payout
 		}
@@ -183,9 +206,12 @@ public struct PostPayoutsPayoutReverse: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Payout
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payout: String
 
+		/// Initialize the request parameters
+		/// - Parameter payout: 
 		public init(payout: String) {
 			self.payout = payout
 		}

@@ -39,9 +39,12 @@ public struct Get3dSecureThreeDSecure: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ThreeDSecure
 	public typealias paramType = Params
+	
 	public struct Params {
 		let three_d_secure: String
 
+		/// Initialize the request parameters
+		/// - Parameter three_d_secure: 
 		public init(three_d_secure: String) {
 			self.three_d_secure = three_d_secure
 		}

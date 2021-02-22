@@ -4,14 +4,21 @@ public struct GetSubscriptionSchedules: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let customer: String
-		let ending_before: String
-		let limit: Int
-		let scheduled: Bool
-		let starting_after: String
+		let customer: String?
+		let ending_before: String?
+		let limit: Int?
+		let scheduled: Bool?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, scheduled: Bool, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: Only return subscription schedules for the given customer.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter scheduled: Only return subscription schedules that have not started yet.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String? = nil, ending_before: String? = nil, limit: Int? = nil, scheduled: Bool? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -20,7 +27,14 @@ public struct GetSubscriptionSchedules: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/subscription_schedules?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&scheduled=\(inputs.scheduled.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.scheduled?.urlEncoded { params.append("scheduled=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/subscription_schedules?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -68,13 +82,13 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 		/// Migrate an existing subscription to be managed by a subscription schedule. If this parameter is set, a subscription schedule will be created using the subscription's item(s), set to auto-renew using the subscription's interval. When using this parameter, other parameters (such as phase values) cannot be set. To create a subscription schedule with other modifications, we recommend making two separate API calls.
 		public var from_subscription: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
-		public var phases: MESSED_UP?
+		public var phases: AnyCodable?
 		/// When the subscription schedule starts. We recommend using `now` so that it starts the subscription immediately. You can also use a Unix timestamp to backdate the subscription so that it starts on a past date, or set a future date for the subscription to start on.
 		public var start_date: Int?
 
-		public init(customer: String? = nil, default_settings: DefaultSettingsParams? = nil, end_behavior: EndBehaviorValues? = nil, expand: [String]? = nil, from_subscription: String? = nil, metadata: MESSED_UP? = nil, phases: MESSED_UP? = nil, start_date: Int? = nil) {
+		public init(customer: String? = nil, default_settings: DefaultSettingsParams? = nil, end_behavior: EndBehaviorValues? = nil, expand: [String]? = nil, from_subscription: String? = nil, metadata: AnyCodable? = nil, phases: AnyCodable? = nil, start_date: Int? = nil) {
 			self.customer = customer
 			self.default_settings = default_settings
 			self.end_behavior = end_behavior
@@ -90,15 +104,15 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 		public final class DefaultSettingsParams: Codable {
 			public var application_fee_percent: StringNumber?
 			public var billing_cycle_anchor: BillingCycleAnchorValues?
-			public var billing_thresholds: MESSED_UP?
+			public var billing_thresholds: AnyCodable?
 			public var collection_method: CollectionMethodValues?
 			public var default_payment_method: String?
 			public var invoice_settings: SubscriptionSchedulesParam?
-			public var transfer_data: MESSED_UP?
+			public var transfer_data: AnyCodable?
 
 			/// Object representing the subscription schedule's default settings.
 			/// - Parameters:
-			public init(application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: MESSED_UP? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: MESSED_UP? = nil) {
+			public init(application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: AnyCodable? = nil) {
 				self.application_fee_percent = application_fee_percent
 				self.billing_cycle_anchor = billing_cycle_anchor
 				self.billing_thresholds = billing_thresholds
@@ -145,9 +159,12 @@ public struct GetSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = SubscriptionSchedule
 	public typealias paramType = Params
+	
 	public struct Params {
 		let schedule: String
 
+		/// Initialize the request parameters
+		/// - Parameter schedule: 
 		public init(schedule: String) {
 			self.schedule = schedule
 		}
@@ -164,9 +181,12 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SubscriptionSchedule
 	public typealias paramType = Params
+	
 	public struct Params {
 		let schedule: String
 
+		/// Initialize the request parameters
+		/// - Parameter schedule: 
 		public init(schedule: String) {
 			self.schedule = schedule
 		}
@@ -183,13 +203,13 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase. Note that past phases can be omitted.
-		public var phases: MESSED_UP?
+		public var phases: AnyCodable?
 		/// If the update changes the current phase, indicates if the changes should be prorated. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`.
 		public var proration_behavior: ProrationBehaviorValues?
 
-		public init(default_settings: DefaultSettingsParams? = nil, end_behavior: EndBehaviorValues? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, phases: MESSED_UP? = nil, proration_behavior: ProrationBehaviorValues? = nil) {
+		public init(default_settings: DefaultSettingsParams? = nil, end_behavior: EndBehaviorValues? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, phases: AnyCodable? = nil, proration_behavior: ProrationBehaviorValues? = nil) {
 			self.default_settings = default_settings
 			self.end_behavior = end_behavior
 			self.expand = expand
@@ -203,15 +223,15 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 		public final class DefaultSettingsParams: Codable {
 			public var application_fee_percent: StringNumber?
 			public var billing_cycle_anchor: BillingCycleAnchorValues?
-			public var billing_thresholds: MESSED_UP?
+			public var billing_thresholds: AnyCodable?
 			public var collection_method: CollectionMethodValues?
 			public var default_payment_method: String?
 			public var invoice_settings: SubscriptionSchedulesParam?
-			public var transfer_data: MESSED_UP?
+			public var transfer_data: AnyCodable?
 
 			/// Object representing the subscription schedule's default settings.
 			/// - Parameters:
-			public init(application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: MESSED_UP? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: MESSED_UP? = nil) {
+			public init(application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: AnyCodable? = nil) {
 				self.application_fee_percent = application_fee_percent
 				self.billing_cycle_anchor = billing_cycle_anchor
 				self.billing_thresholds = billing_thresholds
@@ -264,9 +284,12 @@ public struct PostSubscriptionSchedulesScheduleCancel: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SubscriptionSchedule
 	public typealias paramType = Params
+	
 	public struct Params {
 		let schedule: String
 
+		/// Initialize the request parameters
+		/// - Parameter schedule: 
 		public init(schedule: String) {
 			self.schedule = schedule
 		}
@@ -297,9 +320,12 @@ public struct PostSubscriptionSchedulesScheduleRelease: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SubscriptionSchedule
 	public typealias paramType = Params
+	
 	public struct Params {
 		let schedule: String
 
+		/// Initialize the request parameters
+		/// - Parameter schedule: 
 		public init(schedule: String) {
 			self.schedule = schedule
 		}

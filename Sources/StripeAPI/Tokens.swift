@@ -13,7 +13,7 @@ public struct PostTokens: StripeAPIEndpoint {
 		public var account: ConnectJsAccountTokenSpecs?
 		/// The bank account this token will represent.
 		public var bank_account: TokenCreateBankAccount?
-		public var card: MESSED_UP?
+		public var card: AnyCodable?
 		/// The customer (owned by the application's account) for which to create a token. This can be used only with an [OAuth access token](https://stripe.com/docs/connect/standard-accounts) or [Stripe-Account header](https://stripe.com/docs/connect/authentication). For more details, see [Cloning Saved Payment Methods](https://stripe.com/docs/connect/cloning-saved-payment-methods).
 		public var customer: String?
 		/// The updated CVC value this token will represent.
@@ -25,7 +25,7 @@ public struct PostTokens: StripeAPIEndpoint {
 		/// The PII this token will represent.
 		public var pii: PiiTokenSpecs?
 
-		public init(account: ConnectJsAccountTokenSpecs? = nil, bank_account: TokenCreateBankAccount? = nil, card: MESSED_UP? = nil, customer: String? = nil, cvc_update: CvcParams? = nil, expand: [String]? = nil, person: PersonTokenSpecs? = nil, pii: PiiTokenSpecs? = nil) {
+		public init(account: ConnectJsAccountTokenSpecs? = nil, bank_account: TokenCreateBankAccount? = nil, card: AnyCodable? = nil, customer: String? = nil, cvc_update: CvcParams? = nil, expand: [String]? = nil, person: PersonTokenSpecs? = nil, pii: PiiTokenSpecs? = nil) {
 			self.account = account
 			self.bank_account = bank_account
 			self.card = card
@@ -202,7 +202,7 @@ public struct PostTokens: StripeAPIEndpoint {
 				public var address: AddressSpecs?
 				public var address_kana: JapanAddressKanaSpecs?
 				public var address_kanji: JapanAddressKanjiSpecs?
-				public var dob: MESSED_UP?
+				public var dob: AnyCodable?
 				public var email: String?
 				public var first_name: String?
 				public var first_name_kana: String?
@@ -213,13 +213,13 @@ public struct PostTokens: StripeAPIEndpoint {
 				public var last_name_kana: String?
 				public var last_name_kanji: String?
 				public var maiden_name: String?
-				public var metadata: MESSED_UP?
+				public var metadata: AnyCodable?
 				public var phone: String?
 				public var political_exposure: PoliticalExposureValues?
 				public var ssn_last_4: String?
 				public var verification: PersonVerificationSpecs?
 
-				public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: MESSED_UP? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: MESSED_UP? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+				public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 					self.address = address
 					self.address_kana = address_kana
 					self.address_kanji = address_kanji
@@ -365,7 +365,7 @@ public struct PostTokens: StripeAPIEndpoint {
 			public var address: AddressSpecs?
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
-			public var dob: MESSED_UP?
+			public var dob: AnyCodable?
 			public var email: String?
 			public var first_name: String?
 			public var first_name_kana: String?
@@ -376,7 +376,7 @@ public struct PostTokens: StripeAPIEndpoint {
 			public var last_name_kana: String?
 			public var last_name_kanji: String?
 			public var maiden_name: String?
-			public var metadata: MESSED_UP?
+			public var metadata: AnyCodable?
 			public var phone: String?
 			public var political_exposure: String?
 			public var relationship: RelationshipSpecs?
@@ -385,7 +385,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 			/// Information for the person this token will represent.
 			/// - Parameters:
-			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: MESSED_UP? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: MESSED_UP? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 				self.address = address
 				self.address_kana = address_kana
 				self.address_kanji = address_kanji
@@ -569,9 +569,12 @@ public struct GetTokensToken: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Token
 	public typealias paramType = Params
+	
 	public struct Params {
 		let token: String
 
+		/// Initialize the request parameters
+		/// - Parameter token: 
 		public init(token: String) {
 			self.token = token
 		}

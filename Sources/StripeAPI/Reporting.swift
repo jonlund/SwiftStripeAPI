@@ -4,19 +4,29 @@ public struct GetReportingReportRuns: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/reporting/report_runs?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/reporting/report_runs?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -735,9 +745,12 @@ public struct GetReportingReportRunsReportRun: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ReportingReportRun
 	public typealias paramType = Params
+	
 	public struct Params {
 		let report_run: String
 
+		/// Initialize the request parameters
+		/// - Parameter report_run: 
 		public init(report_run: String) {
 			self.report_run = report_run
 		}
@@ -787,9 +800,12 @@ public struct GetReportingReportTypesReportType: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ReportingReportType
 	public typealias paramType = Params
+	
 	public struct Params {
 		let report_type: String
 
+		/// Initialize the request parameters
+		/// - Parameter report_type: 
 		public init(report_type: String) {
 			self.report_type = report_type
 		}

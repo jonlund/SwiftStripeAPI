@@ -4,13 +4,19 @@ public struct GetCustomers: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let email: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let email: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(email: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter email: A case-sensitive filter on the list based on the customer's `email` field. The value must be a string.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(email: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.email = email
 			self.ending_before = ending_before
 			self.limit = limit
@@ -18,7 +24,13 @@ public struct GetCustomers: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers?email=\(inputs.email.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.email?.urlEncoded { params.append("email=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/customers?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -56,7 +68,7 @@ public struct PostCustomers: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// The customer's address.
-		public var address: MESSED_UP?
+		public var address: AnyCodable?
 		/// An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
 		public var balance: Int?
 		public var coupon: String?
@@ -71,7 +83,7 @@ public struct PostCustomers: StripeAPIEndpoint {
 		/// Default invoice settings for this customer.
 		public var invoice_settings: CustomerParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// The customer's full name or business name.
 		public var name: String?
 		/// The sequence to be used on the customer's next invoice. Defaults to 1.
@@ -84,14 +96,14 @@ public struct PostCustomers: StripeAPIEndpoint {
 		/// The API ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
 		public var promotion_code: String?
 		/// The customer's shipping information. Appears on invoices emailed to this customer.
-		public var shipping: MESSED_UP?
+		public var shipping: AnyCodable?
 		public var source: String?
 		/// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
 		public var tax_exempt: TaxExemptValues?
 		/// The customer's tax IDs.
-		public var tax_id_data: MESSED_UP?
+		public var tax_id_data: AnyCodable?
 
-		public init(address: MESSED_UP? = nil, balance: Int? = nil, coupon: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: MESSED_UP? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, payment_method: String? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: MESSED_UP? = nil, source: String? = nil, tax_exempt: TaxExemptValues? = nil, tax_id_data: MESSED_UP? = nil) {
+		public init(address: AnyCodable? = nil, balance: Int? = nil, coupon: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: AnyCodable? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, payment_method: String? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: AnyCodable? = nil, source: String? = nil, tax_exempt: TaxExemptValues? = nil, tax_id_data: AnyCodable? = nil) {
 			self.address = address
 			self.balance = balance
 			self.coupon = coupon
@@ -116,13 +128,13 @@ public struct PostCustomers: StripeAPIEndpoint {
 
 		/// Default invoice settings for this customer.
 		public final class CustomerParam: Codable {
-			public var custom_fields: MESSED_UP?
+			public var custom_fields: AnyCodable?
 			public var default_payment_method: String?
 			public var footer: String?
 
 			/// Default invoice settings for this customer.
 			/// - Parameters:
-			public init(custom_fields: MESSED_UP? = nil, default_payment_method: String? = nil, footer: String? = nil) {
+			public init(custom_fields: AnyCodable? = nil, default_payment_method: String? = nil, footer: String? = nil) {
 				self.custom_fields = custom_fields
 				self.default_payment_method = default_payment_method
 				self.footer = footer
@@ -144,9 +156,12 @@ public struct GetCustomersCustomer: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Customer
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -163,9 +178,12 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Customer
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -176,13 +194,13 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// The customer's address.
-		public var address: MESSED_UP?
+		public var address: AnyCodable?
 		/// An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
 		public var balance: Int?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
-		public var bank_account: MESSED_UP?
+		public var bank_account: AnyCodable?
 		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
-		public var card: MESSED_UP?
+		public var card: AnyCodable?
 		public var coupon: String?
 		/// ID of Alipay account to make the customer's new default for invoice payments.
 		public var default_alipay_account: String?
@@ -203,7 +221,7 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 		/// Default invoice settings for this customer.
 		public var invoice_settings: CustomerParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// The customer's full name or business name.
 		public var name: String?
 		/// The sequence to be used on the customer's next invoice. Defaults to 1.
@@ -215,14 +233,14 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 		/// The API ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
 		public var promotion_code: String?
 		/// The customer's shipping information. Appears on invoices emailed to this customer.
-		public var shipping: MESSED_UP?
+		public var shipping: AnyCodable?
 		public var source: String?
 		/// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
 		public var tax_exempt: TaxExemptValues?
 		/// Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
 		public var trial_end: String?
 
-		public init(address: MESSED_UP? = nil, balance: Int? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, coupon: String? = nil, default_alipay_account: String? = nil, default_bank_account: String? = nil, default_card: String? = nil, default_source: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: MESSED_UP? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: MESSED_UP? = nil, source: String? = nil, tax_exempt: TaxExemptValues? = nil, trial_end: String? = nil) {
+		public init(address: AnyCodable? = nil, balance: Int? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, coupon: String? = nil, default_alipay_account: String? = nil, default_bank_account: String? = nil, default_card: String? = nil, default_source: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: AnyCodable? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: AnyCodable? = nil, source: String? = nil, tax_exempt: TaxExemptValues? = nil, trial_end: String? = nil) {
 			self.address = address
 			self.balance = balance
 			self.bank_account = bank_account
@@ -252,13 +270,13 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 
 		/// Default invoice settings for this customer.
 		public final class CustomerParam: Codable {
-			public var custom_fields: MESSED_UP?
+			public var custom_fields: AnyCodable?
 			public var default_payment_method: String?
 			public var footer: String?
 
 			/// Default invoice settings for this customer.
 			/// - Parameters:
-			public init(custom_fields: MESSED_UP? = nil, default_payment_method: String? = nil, footer: String? = nil) {
+			public init(custom_fields: AnyCodable? = nil, default_payment_method: String? = nil, footer: String? = nil) {
 				self.custom_fields = custom_fields
 				self.default_payment_method = default_payment_method
 				self.footer = footer
@@ -280,9 +298,12 @@ public struct DeleteCustomersCustomer: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedCustomer
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -299,13 +320,19 @@ public struct GetCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CustomerBalanceTransactionList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -313,7 +340,12 @@ public struct GetCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/balance_transactions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/customers/\(inputs.customer)/balance_transactions?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -346,9 +378,12 @@ public struct PostCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = CustomerBalanceTransaction
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -367,9 +402,9 @@ public struct PostCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.description = description
@@ -385,10 +420,14 @@ public struct GetCustomersCustomerBalanceTransactionsTransaction: StripeAPIEndpo
 	public typealias inputType = Empty
 	public typealias outputType = CustomerBalanceTransaction
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let transaction: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter transaction: 
 		public init(customer: String, transaction: String) {
 			self.customer = customer
 			self.transaction = transaction
@@ -406,10 +445,14 @@ public struct PostCustomersCustomerBalanceTransactionsTransaction: StripeAPIEndp
 	public typealias inputType = FormInput
 	public typealias outputType = CustomerBalanceTransaction
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let transaction: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter transaction: 
 		public init(customer: String, transaction: String) {
 			self.customer = customer
 			self.transaction = transaction
@@ -425,9 +468,9 @@ public struct PostCustomersCustomerBalanceTransactionsTransaction: StripeAPIEndp
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(description: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(description: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.description = description
 			self.expand = expand
 			self.metadata = metadata
@@ -441,13 +484,19 @@ public struct GetCustomersCustomerBankAccounts: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = BankAccountList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -455,7 +504,12 @@ public struct GetCustomersCustomerBankAccounts: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/bank_accounts?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/customers/\(inputs.customer)/bank_accounts?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -488,9 +542,12 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -503,9 +560,9 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
 		public var alipay_account: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
-		public var bank_account: MESSED_UP?
+		public var bank_account: AnyCodable?
 		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
-		public var card: MESSED_UP?
+		public var card: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -513,7 +570,7 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -530,10 +587,14 @@ public struct GetCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = BankAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -551,10 +612,14 @@ public struct PostCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Card
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -588,12 +653,12 @@ public struct PostCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Cardholder name.
 		public var name: String?
 		public var owner: Owner?
 
-		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, name: String? = nil, owner: Owner? = nil) {
+		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil, owner: Owner? = nil) {
 			self.account_holder_name = account_holder_name
 			self.account_holder_type = account_holder_type
 			self.address_city = address_city
@@ -659,10 +724,14 @@ public struct DeleteCustomersCustomerBankAccountsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -689,10 +758,14 @@ public struct PostCustomersCustomerBankAccountsIdVerify: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = BankAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -721,13 +794,19 @@ public struct GetCustomersCustomerCards: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CardList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -735,7 +814,12 @@ public struct GetCustomersCustomerCards: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/cards?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/customers/\(inputs.customer)/cards?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -767,9 +851,12 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -782,9 +869,9 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
 		public var alipay_account: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
-		public var bank_account: MESSED_UP?
+		public var bank_account: AnyCodable?
 		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
-		public var card: MESSED_UP?
+		public var card: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -792,7 +879,7 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -809,10 +896,14 @@ public struct GetCustomersCustomerCardsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Card
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -830,10 +921,14 @@ public struct PostCustomersCustomerCardsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Card
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -867,12 +962,12 @@ public struct PostCustomersCustomerCardsId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Cardholder name.
 		public var name: String?
 		public var owner: Owner?
 
-		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, name: String? = nil, owner: Owner? = nil) {
+		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil, owner: Owner? = nil) {
 			self.account_holder_name = account_holder_name
 			self.account_holder_type = account_holder_type
 			self.address_city = address_city
@@ -938,10 +1033,14 @@ public struct DeleteCustomersCustomerCardsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -967,9 +1066,12 @@ public struct GetCustomersCustomerDiscount: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Discount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -986,9 +1088,12 @@ public struct DeleteCustomersCustomerDiscount: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedDiscount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -1005,14 +1110,21 @@ public struct GetCustomersCustomerSources: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ApmsSourcesSourceList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
-		let ending_before: String
-		let limit: Int
-		let object: String
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let object: String?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, object: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter object: Filter sources according to a particular object type.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String, ending_before: String? = nil, limit: Int? = nil, object: String? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -1021,7 +1133,13 @@ public struct GetCustomersCustomerSources: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/sources?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&object=\(inputs.object.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.object?.urlEncoded { params.append("object=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/customers/\(inputs.customer)/sources?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1054,9 +1172,12 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -1069,9 +1190,9 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
 		public var alipay_account: String?
 		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
-		public var bank_account: MESSED_UP?
+		public var bank_account: AnyCodable?
 		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
-		public var card: MESSED_UP?
+		public var card: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1079,7 +1200,7 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: MESSED_UP? = nil, card: MESSED_UP? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -1096,10 +1217,14 @@ public struct GetCustomersCustomerSourcesId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -1117,10 +1242,14 @@ public struct PostCustomersCustomerSourcesId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Card
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -1154,12 +1283,12 @@ public struct PostCustomersCustomerSourcesId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Cardholder name.
 		public var name: String?
 		public var owner: Owner?
 
-		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, name: String? = nil, owner: Owner? = nil) {
+		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil, owner: Owner? = nil) {
 			self.account_holder_name = account_holder_name
 			self.account_holder_type = account_holder_type
 			self.address_city = address_city
@@ -1225,10 +1354,14 @@ public struct DeleteCustomersCustomerSourcesId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -1255,10 +1388,14 @@ public struct PostCustomersCustomerSourcesIdVerify: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = BankAccount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -1287,13 +1424,19 @@ public struct GetCustomersCustomerSubscriptions: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = SubscriptionList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -1301,7 +1444,12 @@ public struct GetCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/subscriptions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/customers/\(inputs.customer)/subscriptions?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1334,9 +1482,12 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Subscription
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -1347,7 +1498,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
-		public var add_invoice_items: MESSED_UP?
+		public var add_invoice_items: AnyCodable?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
 		public var application_fee_percent: StringNumber?
 		/// For new subscriptions, a past timestamp to backdate the subscription's start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
@@ -1355,7 +1506,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		/// A future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
 		public var billing_cycle_anchor: Timestamp?
 		/// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-		public var billing_thresholds: MESSED_UP?
+		public var billing_thresholds: AnyCodable?
 		/// A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
 		public var cancel_at: Timestamp?
 		/// Boolean indicating whether this subscription should cancel at the end of the current period.
@@ -1371,19 +1522,19 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		/// ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
 		public var default_source: String?
 		/// The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
-		public var default_tax_rates: MESSED_UP?
+		public var default_tax_rates: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// A list of up to 20 subscription items, each with an attached price.
-		public var items: MESSED_UP?
+		public var items: AnyCodable?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Indicates if a customer is on or off-session while an invoice payment is attempted.
 		public var off_session: Bool?
 		/// Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.  `pending_if_incomplete` is only used with updates and cannot be passed when creating a subscription.
 		public var payment_behavior: PaymentBehaviorValues?
 		/// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
-		public var pending_invoice_item_interval: MESSED_UP?
+		public var pending_invoice_item_interval: AnyCodable?
 		/// The API ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
 		public var promotion_code: String?
 		/// Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) resulting from the `billing_cycle_anchor`. Valid values are `create_prorations` or `none`.  Passing `create_prorations` will cause proration invoice items to be created when applicable. Prorations can be disabled by passing `none`. If no value is passed, the default is `create_prorations`.
@@ -1397,7 +1548,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		/// Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
 		public var trial_period_days: Int?
 
-		public init(add_invoice_items: MESSED_UP? = nil, application_fee_percent: StringNumber? = nil, backdate_start_date: Timestamp? = nil, billing_cycle_anchor: Timestamp? = nil, billing_thresholds: MESSED_UP? = nil, cancel_at: Timestamp? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: MESSED_UP? = nil, expand: [String]? = nil, items: MESSED_UP? = nil, metadata: MESSED_UP? = nil, off_session: Bool? = nil, payment_behavior: PaymentBehaviorValues? = nil, pending_invoice_item_interval: MESSED_UP? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, transfer_data: TransferDataSpecs? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil, trial_period_days: Int? = nil) {
+		public init(add_invoice_items: AnyCodable? = nil, application_fee_percent: StringNumber? = nil, backdate_start_date: Timestamp? = nil, billing_cycle_anchor: Timestamp? = nil, billing_thresholds: AnyCodable? = nil, cancel_at: Timestamp? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, payment_behavior: PaymentBehaviorValues? = nil, pending_invoice_item_interval: AnyCodable? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, transfer_data: TransferDataSpecs? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil, trial_period_days: Int? = nil) {
 			self.add_invoice_items = add_invoice_items
 			self.application_fee_percent = application_fee_percent
 			self.backdate_start_date = backdate_start_date
@@ -1466,10 +1617,14 @@ public struct GetCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPIE
 	public typealias inputType = Empty
 	public typealias outputType = Subscription
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let subscription_exposed_id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter subscription_exposed_id: 
 		public init(customer: String, subscription_exposed_id: String) {
 			self.customer = customer
 			self.subscription_exposed_id = subscription_exposed_id
@@ -1487,10 +1642,14 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 	public typealias inputType = FormInput
 	public typealias outputType = Subscription
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let subscription_exposed_id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter subscription_exposed_id: 
 		public init(customer: String, subscription_exposed_id: String) {
 			self.customer = customer
 			self.subscription_exposed_id = subscription_exposed_id
@@ -1502,13 +1661,13 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 
 	public final class FormInput: Codable {
 		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
-		public var add_invoice_items: MESSED_UP?
+		public var add_invoice_items: AnyCodable?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
 		public var application_fee_percent: StringNumber?
 		/// Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
 		public var billing_cycle_anchor: BillingCycleAnchorValues?
 		/// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-		public var billing_thresholds: MESSED_UP?
+		public var billing_thresholds: AnyCodable?
 		/// A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
 		public var cancel_at: Int?
 		/// Boolean indicating whether this subscription should cancel at the end of the current period.
@@ -1524,21 +1683,21 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 		/// ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
 		public var default_source: String?
 		/// The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription. Pass an empty string to remove previously-defined tax rates.
-		public var default_tax_rates: MESSED_UP?
+		public var default_tax_rates: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// A list of up to 20 subscription items, each with an attached price.
-		public var items: MESSED_UP?
+		public var items: AnyCodable?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Indicates if a customer is on or off-session while an invoice payment is attempted.
 		public var off_session: Bool?
 		/// If specified, payment collection for this subscription will be paused.
-		public var pause_collection: MESSED_UP?
+		public var pause_collection: AnyCodable?
 		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
 		public var payment_behavior: PaymentBehaviorValues?
 		/// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
-		public var pending_invoice_item_interval: MESSED_UP?
+		public var pending_invoice_item_interval: AnyCodable?
 		/// The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
 		public var promotion_code: String?
 		/// Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.  Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.  Prorations can be disabled by passing `none`.
@@ -1546,13 +1705,13 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 		/// If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
 		public var proration_date: Timestamp?
 		/// If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
-		public var transfer_data: MESSED_UP?
+		public var transfer_data: AnyCodable?
 		/// Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
 		public var trial_end: String?
 		/// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
 		public var trial_from_plan: Bool?
 
-		public init(add_invoice_items: MESSED_UP? = nil, application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: MESSED_UP? = nil, cancel_at: Int? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: MESSED_UP? = nil, expand: [String]? = nil, items: MESSED_UP? = nil, metadata: MESSED_UP? = nil, off_session: Bool? = nil, pause_collection: MESSED_UP? = nil, payment_behavior: PaymentBehaviorValues? = nil, pending_invoice_item_interval: MESSED_UP? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, transfer_data: MESSED_UP? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil) {
+		public init(add_invoice_items: AnyCodable? = nil, application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, cancel_at: Int? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, pause_collection: AnyCodable? = nil, payment_behavior: PaymentBehaviorValues? = nil, pending_invoice_item_interval: AnyCodable? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, transfer_data: AnyCodable? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil) {
 			self.add_invoice_items = add_invoice_items
 			self.application_fee_percent = application_fee_percent
 			self.billing_cycle_anchor = billing_cycle_anchor
@@ -1610,10 +1769,14 @@ public struct DeleteCustomersCustomerSubscriptionsSubscriptionExposedId: StripeA
 	public typealias inputType = FormInput
 	public typealias outputType = Subscription
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let subscription_exposed_id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter subscription_exposed_id: 
 		public init(customer: String, subscription_exposed_id: String) {
 			self.customer = customer
 			self.subscription_exposed_id = subscription_exposed_id
@@ -1645,10 +1808,14 @@ public struct GetCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount: St
 	public typealias inputType = Empty
 	public typealias outputType = Discount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let subscription_exposed_id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter subscription_exposed_id: 
 		public init(customer: String, subscription_exposed_id: String) {
 			self.customer = customer
 			self.subscription_exposed_id = subscription_exposed_id
@@ -1666,10 +1833,14 @@ public struct DeleteCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount:
 	public typealias inputType = Empty
 	public typealias outputType = DeletedDiscount
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let subscription_exposed_id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter subscription_exposed_id: 
 		public init(customer: String, subscription_exposed_id: String) {
 			self.customer = customer
 			self.subscription_exposed_id = subscription_exposed_id
@@ -1687,13 +1858,19 @@ public struct GetCustomersCustomerTaxIds: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TaxIDsList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -1701,7 +1878,12 @@ public struct GetCustomersCustomerTaxIds: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/customers/\(inputs.customer)/tax_ids?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/customers/\(inputs.customer)/tax_ids?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1734,9 +1916,12 @@ public struct PostCustomersCustomerTaxIds: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TaxId
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
 		public init(customer: String) {
 			self.customer = customer
 		}
@@ -1802,10 +1987,14 @@ public struct GetCustomersCustomerTaxIdsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TaxId
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id
@@ -1823,10 +2012,14 @@ public struct DeleteCustomersCustomerTaxIdsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedTaxId
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter customer: 
+		/// - Parameter id: 
 		public init(customer: String, id: String) {
 			self.customer = customer
 			self.id = id

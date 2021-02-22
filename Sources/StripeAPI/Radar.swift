@@ -4,13 +4,19 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = RadarEarlyFraudWarningList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let charge: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let charge: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(charge: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter charge: Only return early fraud warnings for the charge specified by this charge ID.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(charge: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.charge = charge
 			self.ending_before = ending_before
 			self.limit = limit
@@ -18,7 +24,13 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/radar/early_fraud_warnings?charge=\(inputs.charge.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.charge?.urlEncoded { params.append("charge=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/radar/early_fraud_warnings?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -50,9 +62,12 @@ public struct GetRadarEarlyFraudWarningsEarlyFraudWarning: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = RadarEarlyFraudWarning
 	public typealias paramType = Params
+	
 	public struct Params {
 		let early_fraud_warning: String
 
+		/// Initialize the request parameters
+		/// - Parameter early_fraud_warning: 
 		public init(early_fraud_warning: String) {
 			self.early_fraud_warning = early_fraud_warning
 		}
@@ -69,23 +84,37 @@ public struct GetRadarValueListItems: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let value: String
 		let value_list: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let value: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String, value: String, value_list: String) {
+		/// Initialize the request parameters
+		/// - Parameter value_list: Identifier for the parent value list this item belongs to.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter value: Return items belonging to the parent list whose value matches the specified value (using an "is like" match).
+		public init(value_list: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, value: String? = nil) {
+			self.value_list = value_list
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 			self.value = value
-			self.value_list = value_list
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/radar/value_list_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&value=\(inputs.value.urlEncoded))&value_list=\(inputs.value_list.urlEncoded))"
+		var params = [String]()
+		params.append("value_list=\(inputs.value_list.urlEncoded)")
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.value?.urlEncoded { params.append("value=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/radar/value_list_items?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -143,9 +172,12 @@ public struct GetRadarValueListItemsItem: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = RadarValueListItem
 	public typealias paramType = Params
+	
 	public struct Params {
 		let item: String
 
+		/// Initialize the request parameters
+		/// - Parameter item: 
 		public init(item: String) {
 			self.item = item
 		}
@@ -162,9 +194,12 @@ public struct DeleteRadarValueListItemsItem: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedRadarValueListItem
 	public typealias paramType = Params
+	
 	public struct Params {
 		let item: String
 
+		/// Initialize the request parameters
+		/// - Parameter item: 
 		public init(item: String) {
 			self.item = item
 		}
@@ -181,14 +216,21 @@ public struct GetRadarValueLists: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let alias: String
-		let contains: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let alias: String?
+		let contains: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(alias: String, contains: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter alias: The alias used to reference the value list when writing rules.
+		/// - Parameter contains: A value contained within a value list - returns all value lists containing this value.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(alias: String? = nil, contains: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.alias = alias
 			self.contains = contains
 			self.ending_before = ending_before
@@ -197,7 +239,14 @@ public struct GetRadarValueLists: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/radar/value_lists?alias=\(inputs.alias.urlEncoded))&contains=\(inputs.contains.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.alias?.urlEncoded { params.append("alias=\(a)") }
+		if let a = inputs.contains?.urlEncoded { params.append("contains=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/radar/value_lists?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -271,9 +320,12 @@ public struct GetRadarValueListsValueList: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = RadarValueList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let value_list: String
 
+		/// Initialize the request parameters
+		/// - Parameter value_list: 
 		public init(value_list: String) {
 			self.value_list = value_list
 		}
@@ -290,9 +342,12 @@ public struct PostRadarValueListsValueList: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = RadarValueList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let value_list: String
 
+		/// Initialize the request parameters
+		/// - Parameter value_list: 
 		public init(value_list: String) {
 			self.value_list = value_list
 		}
@@ -326,9 +381,12 @@ public struct DeleteRadarValueListsValueList: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedRadarValueList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let value_list: String
 
+		/// Initialize the request parameters
+		/// - Parameter value_list: 
 		public init(value_list: String) {
 			self.value_list = value_list
 		}

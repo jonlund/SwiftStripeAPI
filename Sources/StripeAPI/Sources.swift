@@ -227,12 +227,12 @@ public struct PostSources: StripeAPIEndpoint {
 
 		/// Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
 		public final class ShallowOrderSpecs: Codable {
-			public var items: MESSED_UP?
+			public var items: AnyCodable?
 			public var shipping: OrderShipping?
 
 			/// Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
 			/// - Parameters:
-			public init(items: MESSED_UP? = nil, shipping: OrderShipping? = nil) {
+			public init(items: AnyCodable? = nil, shipping: OrderShipping? = nil) {
 				self.items = items
 				self.shipping = shipping
 			}
@@ -297,17 +297,24 @@ public struct GetSourcesSource: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Source
 	public typealias paramType = Params
+	
 	public struct Params {
-		let client_secret: String
 		let source: String
+		let client_secret: String?
 
-		public init(client_secret: String, source: String) {
-			self.client_secret = client_secret
+		/// Initialize the request parameters
+		/// - Parameter source: 
+		/// - Parameter client_secret: The client secret of the source. Required if a publishable key is used to retrieve the source.
+		public init(source: String, client_secret: String? = nil) {
 			self.source = source
+			self.client_secret = client_secret
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/sources/\(inputs.source)?client_secret=\(inputs.client_secret.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.client_secret?.urlEncoded { params.append("client_secret=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/sources/\(inputs.source)?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -318,9 +325,12 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Source
 	public typealias paramType = Params
+	
 	public struct Params {
 		let source: String
 
+		/// Initialize the request parameters
+		/// - Parameter source: 
 		public init(source: String) {
 			self.source = source
 		}
@@ -337,13 +347,13 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
 		public var mandate: MandateParams?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Information about the owner of the payment instrument that may be used or required by particular source types.
 		public var owner: Owner?
 		/// Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
 		public var source_order: OrderParams?
 
-		public init(amount: Int? = nil, expand: [String]? = nil, mandate: MandateParams? = nil, metadata: MESSED_UP? = nil, owner: Owner? = nil, source_order: OrderParams? = nil) {
+		public init(amount: Int? = nil, expand: [String]? = nil, mandate: MandateParams? = nil, metadata: AnyCodable? = nil, owner: Owner? = nil, source_order: OrderParams? = nil) {
 			self.amount = amount
 			self.expand = expand
 			self.mandate = mandate
@@ -448,12 +458,12 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 
 		/// Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
 		public final class OrderParams: Codable {
-			public var items: MESSED_UP?
+			public var items: AnyCodable?
 			public var shipping: OrderShipping?
 
 			/// Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
 			/// - Parameters:
-			public init(items: MESSED_UP? = nil, shipping: OrderShipping? = nil) {
+			public init(items: AnyCodable? = nil, shipping: OrderShipping? = nil) {
 				self.items = items
 				self.shipping = shipping
 			}
@@ -545,10 +555,14 @@ public struct GetSourcesSourceMandateNotificationsMandateNotification: StripeAPI
 	public typealias inputType = Empty
 	public typealias outputType = SourceMandateNotification
 	public typealias paramType = Params
+	
 	public struct Params {
 		let mandate_notification: String
 		let source: String
 
+		/// Initialize the request parameters
+		/// - Parameter mandate_notification: 
+		/// - Parameter source: 
 		public init(mandate_notification: String, source: String) {
 			self.mandate_notification = mandate_notification
 			self.source = source
@@ -566,21 +580,32 @@ public struct GetSourcesSourceSourceTransactions: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = ApmsSourcesSourceTransactionList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
 		let source: String
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, source: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter source: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(source: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
+			self.source = source
 			self.ending_before = ending_before
 			self.limit = limit
-			self.source = source
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/sources/\(inputs.source)/source_transactions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/sources/\(inputs.source)/source_transactions?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -612,10 +637,14 @@ public struct GetSourcesSourceSourceTransactionsSourceTransaction: StripeAPIEndp
 	public typealias inputType = Empty
 	public typealias outputType = SourceTransaction
 	public typealias paramType = Params
+	
 	public struct Params {
 		let source: String
 		let source_transaction: String
 
+		/// Initialize the request parameters
+		/// - Parameter source: 
+		/// - Parameter source_transaction: 
 		public init(source: String, source_transaction: String) {
 			self.source = source
 			self.source_transaction = source_transaction
@@ -633,9 +662,12 @@ public struct PostSourcesSourceVerify: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Source
 	public typealias paramType = Params
+	
 	public struct Params {
 		let source: String
 
+		/// Initialize the request parameters
+		/// - Parameter source: 
 		public init(source: String) {
 			self.source = source
 		}

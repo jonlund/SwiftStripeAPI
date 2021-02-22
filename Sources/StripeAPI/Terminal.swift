@@ -27,19 +27,29 @@ public struct GetTerminalLocations: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TerminalLocationLocationList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/terminal/locations?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/terminal/locations?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -83,9 +93,9 @@ public struct PostTerminalLocations: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(address: RequiredCountryAddress, display_name: String, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(address: RequiredCountryAddress, display_name: String, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.address = address
 			self.display_name = display_name
 			self.expand = expand
@@ -124,9 +134,12 @@ public struct GetTerminalLocationsLocation: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TerminalLocation
 	public typealias paramType = Params
+	
 	public struct Params {
 		let location: String
 
+		/// Initialize the request parameters
+		/// - Parameter location: 
 		public init(location: String) {
 			self.location = location
 		}
@@ -143,9 +156,12 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TerminalLocation
 	public typealias paramType = Params
+	
 	public struct Params {
 		let location: String
 
+		/// Initialize the request parameters
+		/// - Parameter location: 
 		public init(location: String) {
 			self.location = location
 		}
@@ -162,9 +178,9 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(address: RequiredCountryAddress? = nil, display_name: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(address: RequiredCountryAddress? = nil, display_name: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.address = address
 			self.display_name = display_name
 			self.expand = expand
@@ -203,9 +219,12 @@ public struct DeleteTerminalLocationsLocation: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedTerminalLocation
 	public typealias paramType = Params
+	
 	public struct Params {
 		let location: String
 
+		/// Initialize the request parameters
+		/// - Parameter location: 
 		public init(location: String) {
 			self.location = location
 		}
@@ -222,15 +241,23 @@ public struct GetTerminalReaders: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TerminalReaderRetrieveReader
 	public typealias paramType = Params
+	
 	public struct Params {
-		let device_type: String
-		let ending_before: String
-		let limit: Int
-		let location: String
-		let starting_after: String
-		let status: String
+		let device_type: String?
+		let ending_before: String?
+		let limit: Int?
+		let location: String?
+		let starting_after: String?
+		let status: String?
 
-		public init(device_type: String, ending_before: String, limit: Int, location: String, starting_after: String, status: String) {
+		/// Initialize the request parameters
+		/// - Parameter device_type: Filters readers by device type
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter location: A location ID to filter the response list to only readers at the specific location
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: A status filter to filter readers to only offline or online readers
+		public init(device_type: String? = nil, ending_before: String? = nil, limit: Int? = nil, location: String? = nil, starting_after: String? = nil, status: String? = nil) {
 			self.device_type = device_type
 			self.ending_before = ending_before
 			self.limit = limit
@@ -240,7 +267,15 @@ public struct GetTerminalReaders: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/terminal/readers?device_type=\(inputs.device_type.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&location=\(inputs.location.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.device_type?.urlEncoded { params.append("device_type=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.location?.urlEncoded { params.append("location=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/terminal/readers?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -285,11 +320,11 @@ public struct PostTerminalReaders: StripeAPIEndpoint {
 		/// The location to assign the reader to. If no location is specified, the reader will be assigned to the account's default location.
 		public var location: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// A code generated by the reader used for registering to an account.
 		public var registration_code: String
 
-		public init(registration_code: String, expand: [String]? = nil, label: String? = nil, location: String? = nil, metadata: MESSED_UP? = nil) {
+		public init(registration_code: String, expand: [String]? = nil, label: String? = nil, location: String? = nil, metadata: AnyCodable? = nil) {
 			self.registration_code = registration_code
 			self.expand = expand
 			self.label = label
@@ -305,9 +340,12 @@ public struct GetTerminalReadersReader: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TerminalReader
 	public typealias paramType = Params
+	
 	public struct Params {
 		let reader: String
 
+		/// Initialize the request parameters
+		/// - Parameter reader: 
 		public init(reader: String) {
 			self.reader = reader
 		}
@@ -324,9 +362,12 @@ public struct PostTerminalReadersReader: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TerminalReader
 	public typealias paramType = Params
+	
 	public struct Params {
 		let reader: String
 
+		/// Initialize the request parameters
+		/// - Parameter reader: 
 		public init(reader: String) {
 			self.reader = reader
 		}
@@ -341,9 +382,9 @@ public struct PostTerminalReadersReader: StripeAPIEndpoint {
 		/// The new label of the reader.
 		public var label: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, label: String? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, label: String? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.label = label
 			self.metadata = metadata
@@ -357,9 +398,12 @@ public struct DeleteTerminalReadersReader: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedTerminalReader
 	public typealias paramType = Params
+	
 	public struct Params {
 		let reader: String
 
+		/// Initialize the request parameters
+		/// - Parameter reader: 
 		public init(reader: String) {
 			self.reader = reader
 		}

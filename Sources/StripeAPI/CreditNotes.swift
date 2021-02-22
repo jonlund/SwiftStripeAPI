@@ -4,14 +4,21 @@ public struct GetCreditNotes: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CreditNotesList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let customer: String
-		let ending_before: String
-		let invoice: String
-		let limit: Int
-		let starting_after: String
+		let customer: String?
+		let ending_before: String?
+		let invoice: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, invoice: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: Only return credit notes for the customer specified by this customer ID.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter invoice: Only return credit notes for the invoice specified by this invoice ID.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String? = nil, ending_before: String? = nil, invoice: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.invoice = invoice
@@ -20,7 +27,14 @@ public struct GetCreditNotes: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.invoice?.urlEncoded { params.append("invoice=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/credit_notes?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -66,7 +80,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 		/// ID of the invoice.
 		public var invoice: String
 		/// Line items that make up the credit note.
-		public var lines: MESSED_UP?
+		public var lines: AnyCodable?
 		/// The credit note's memo appears on the credit note PDF.
 		public var memo: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -80,7 +94,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 		/// The integer amount in %s representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
 		public var refund_amount: Int?
 
-		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, expand: [String]? = nil, lines: MESSED_UP? = nil, memo: String? = nil, metadata: Empty? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, refund_amount: Int? = nil) {
+		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, expand: [String]? = nil, lines: AnyCodable? = nil, memo: String? = nil, metadata: Empty? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, refund_amount: Int? = nil) {
 			self.invoice = invoice
 			self.amount = amount
 			self.credit_amount = credit_amount
@@ -109,20 +123,30 @@ public struct GetCreditNotesPreview: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CreditNote
 	public typealias paramType = Params
+	
 	public struct Params {
-		let amount: Int
-		let credit_amount: Int
 		let invoice: String
-		let memo: String
-		let out_of_band_amount: Int
-		let reason: String
-		let refund: String
-		let refund_amount: Int
+		let amount: Int?
+		let credit_amount: Int?
+		let memo: String?
+		let out_of_band_amount: Int?
+		let reason: String?
+		let refund: String?
+		let refund_amount: Int?
 
-		public init(amount: Int, credit_amount: Int, invoice: String, memo: String, out_of_band_amount: Int, reason: String, refund: String, refund_amount: Int) {
+		/// Initialize the request parameters
+		/// - Parameter invoice: ID of the invoice.
+		/// - Parameter amount: The integer amount in %s representing the total amount of the credit note.
+		/// - Parameter credit_amount: The integer amount in %s representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
+		/// - Parameter memo: The credit note's memo appears on the credit note PDF.
+		/// - Parameter out_of_band_amount: The integer amount in %s representing the amount that is credited outside of Stripe.
+		/// - Parameter reason: Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
+		/// - Parameter refund: ID of an existing refund to link this credit note to.
+		/// - Parameter refund_amount: The integer amount in %s representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, memo: String? = nil, out_of_band_amount: Int? = nil, reason: String? = nil, refund: String? = nil, refund_amount: Int? = nil) {
+			self.invoice = invoice
 			self.amount = amount
 			self.credit_amount = credit_amount
-			self.invoice = invoice
 			self.memo = memo
 			self.out_of_band_amount = out_of_band_amount
 			self.reason = reason
@@ -131,7 +155,17 @@ public struct GetCreditNotesPreview: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes/preview?amount=\(inputs.amount.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&memo=\(inputs.memo.urlEncoded))&out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&reason=\(inputs.reason.urlEncoded))&refund=\(inputs.refund.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))"
+		var params = [String]()
+		params.append("invoice=\(inputs.invoice.urlEncoded)")
+		if let a = inputs.amount?.urlEncoded { params.append("amount=\(a)") }
+		if let a = inputs.credit_amount?.urlEncoded { params.append("credit_amount=\(a)") }
+		if let a = inputs.memo?.urlEncoded { params.append("memo=\(a)") }
+		if let a = inputs.out_of_band_amount?.urlEncoded { params.append("out_of_band_amount=\(a)") }
+		if let a = inputs.reason?.urlEncoded { params.append("reason=\(a)") }
+		if let a = inputs.refund?.urlEncoded { params.append("refund=\(a)") }
+		if let a = inputs.refund_amount?.urlEncoded { params.append("refund_amount=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/credit_notes/preview?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -142,24 +176,37 @@ public struct GetCreditNotesPreviewLines: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CreditNoteLinesList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let amount: Int
-		let credit_amount: Int
-		let ending_before: String
 		let invoice: String
-		let limit: Int
-		let memo: String
-		let out_of_band_amount: Int
-		let reason: String
-		let refund: String
-		let refund_amount: Int
-		let starting_after: String
+		let amount: Int?
+		let credit_amount: Int?
+		let ending_before: String?
+		let limit: Int?
+		let memo: String?
+		let out_of_band_amount: Int?
+		let reason: String?
+		let refund: String?
+		let refund_amount: Int?
+		let starting_after: String?
 
-		public init(amount: Int, credit_amount: Int, ending_before: String, invoice: String, limit: Int, memo: String, out_of_band_amount: Int, reason: String, refund: String, refund_amount: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter invoice: ID of the invoice.
+		/// - Parameter amount: The integer amount in %s representing the total amount of the credit note.
+		/// - Parameter credit_amount: The integer amount in %s representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter memo: The credit note's memo appears on the credit note PDF.
+		/// - Parameter out_of_band_amount: The integer amount in %s representing the amount that is credited outside of Stripe.
+		/// - Parameter reason: Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
+		/// - Parameter refund: ID of an existing refund to link this credit note to.
+		/// - Parameter refund_amount: The integer amount in %s representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, ending_before: String? = nil, limit: Int? = nil, memo: String? = nil, out_of_band_amount: Int? = nil, reason: String? = nil, refund: String? = nil, refund_amount: Int? = nil, starting_after: String? = nil) {
+			self.invoice = invoice
 			self.amount = amount
 			self.credit_amount = credit_amount
 			self.ending_before = ending_before
-			self.invoice = invoice
 			self.limit = limit
 			self.memo = memo
 			self.out_of_band_amount = out_of_band_amount
@@ -170,7 +217,20 @@ public struct GetCreditNotesPreviewLines: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes/preview/lines?amount=\(inputs.amount.urlEncoded))&credit_amount=\(inputs.credit_amount.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&invoice=\(inputs.invoice.urlEncoded))&limit=\(inputs.limit.urlEncoded))&memo=\(inputs.memo.urlEncoded))&out_of_band_amount=\(inputs.out_of_band_amount.urlEncoded))&reason=\(inputs.reason.urlEncoded))&refund=\(inputs.refund.urlEncoded))&refund_amount=\(inputs.refund_amount.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		params.append("invoice=\(inputs.invoice.urlEncoded)")
+		if let a = inputs.amount?.urlEncoded { params.append("amount=\(a)") }
+		if let a = inputs.credit_amount?.urlEncoded { params.append("credit_amount=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.memo?.urlEncoded { params.append("memo=\(a)") }
+		if let a = inputs.out_of_band_amount?.urlEncoded { params.append("out_of_band_amount=\(a)") }
+		if let a = inputs.reason?.urlEncoded { params.append("reason=\(a)") }
+		if let a = inputs.refund?.urlEncoded { params.append("refund=\(a)") }
+		if let a = inputs.refund_amount?.urlEncoded { params.append("refund_amount=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/credit_notes/preview/lines?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -203,13 +263,19 @@ public struct GetCreditNotesCreditNoteLines: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CreditNoteLinesList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let credit_note: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(credit_note: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter credit_note: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(credit_note: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.credit_note = credit_note
 			self.ending_before = ending_before
 			self.limit = limit
@@ -217,7 +283,12 @@ public struct GetCreditNotesCreditNoteLines: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/credit_notes/\(inputs.credit_note)/lines?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/credit_notes/\(inputs.credit_note)/lines?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -250,9 +321,12 @@ public struct GetCreditNotesId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CreditNote
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -269,9 +343,12 @@ public struct PostCreditNotesId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = CreditNote
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -302,9 +379,12 @@ public struct PostCreditNotesIdVoid: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = CreditNote
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}

@@ -4,13 +4,19 @@ public struct GetTopups: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = TopupList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let status: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let status: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String, status: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: Only return top-ups that have the given status. One of `canceled`, `failed`, `pending` or `succeeded`.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, status: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
@@ -18,7 +24,13 @@ public struct GetTopups: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/topups?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/topups?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -64,7 +76,7 @@ public struct PostTopups: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// The ID of a source to transfer funds from. For most users, this should be left unspecified which will use the bank account that was set up in the dashboard for the specified currency. In test mode, this can be a test bank token (see [Testing Top-ups](https://stripe.com/docs/connect/testing#testing-top-ups)).
 		public var source: String?
 		/// Extra information about a top-up for the source's bank statement. Limited to 15 ASCII characters.
@@ -72,7 +84,7 @@ public struct PostTopups: StripeAPIEndpoint {
 		/// A string that identifies this top-up as part of a group.
 		public var transfer_group: String?
 
-		public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, source: String? = nil, statement_descriptor: String? = nil, transfer_group: String? = nil) {
+		public init(amount: Int, currency: String, description: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, source: String? = nil, statement_descriptor: String? = nil, transfer_group: String? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.description = description
@@ -91,9 +103,12 @@ public struct GetTopupsTopup: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Topup
 	public typealias paramType = Params
+	
 	public struct Params {
 		let topup: String
 
+		/// Initialize the request parameters
+		/// - Parameter topup: 
 		public init(topup: String) {
 			self.topup = topup
 		}
@@ -110,9 +125,12 @@ public struct PostTopupsTopup: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Topup
 	public typealias paramType = Params
+	
 	public struct Params {
 		let topup: String
 
+		/// Initialize the request parameters
+		/// - Parameter topup: 
 		public init(topup: String) {
 			self.topup = topup
 		}
@@ -127,9 +145,9 @@ public struct PostTopupsTopup: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(description: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(description: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.description = description
 			self.expand = expand
 			self.metadata = metadata
@@ -143,9 +161,12 @@ public struct PostTopupsTopupCancel: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Topup
 	public typealias paramType = Params
+	
 	public struct Params {
 		let topup: String
 
+		/// Initialize the request parameters
+		/// - Parameter topup: 
 		public init(topup: String) {
 			self.topup = topup
 		}

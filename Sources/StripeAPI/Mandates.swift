@@ -4,9 +4,12 @@ public struct GetMandatesMandate: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Mandate
 	public typealias paramType = Params
+	
 	public struct Params {
 		let mandate: String
 
+		/// Initialize the request parameters
+		/// - Parameter mandate: 
 		public init(mandate: String) {
 			self.mandate = mandate
 		}

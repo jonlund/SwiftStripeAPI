@@ -4,15 +4,23 @@ public struct GetProducts: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let active: Bool
-		let ending_before: String
-		let limit: Int
-		let shippable: Bool
-		let starting_after: String
-		let url: String
+		let active: Bool?
+		let ending_before: String?
+		let limit: Int?
+		let shippable: Bool?
+		let starting_after: String?
+		let url: String?
 
-		public init(active: Bool, ending_before: String, limit: Int, shippable: Bool, starting_after: String, url: String) {
+		/// Initialize the request parameters
+		/// - Parameter active: Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter shippable: Only return products that can be shipped (i.e., physical, not digital products).
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter url: Only return products with the given url.
+		public init(active: Bool? = nil, ending_before: String? = nil, limit: Int? = nil, shippable: Bool? = nil, starting_after: String? = nil, url: String? = nil) {
 			self.active = active
 			self.ending_before = ending_before
 			self.limit = limit
@@ -22,7 +30,15 @@ public struct GetProducts: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/products?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&shippable=\(inputs.shippable.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&url=\(inputs.url.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.active?.urlEncoded { params.append("active=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.shippable?.urlEncoded { params.append("shippable=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.url?.urlEncoded { params.append("url=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/products?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -139,9 +155,12 @@ public struct GetProductsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Product
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -158,9 +177,12 @@ public struct PostProductsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Product
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -173,7 +195,7 @@ public struct PostProductsId: StripeAPIEndpoint {
 		/// Whether the product is available for purchase.
 		public var active: Bool?
 		/// A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.
-		public var attributes: MESSED_UP?
+		public var attributes: AnyCodable?
 		/// A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
 		public var caption: String?
 		/// An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if `type=good`.
@@ -183,13 +205,13 @@ public struct PostProductsId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
-		public var images: MESSED_UP?
+		public var images: AnyCodable?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
 		public var name: String?
 		/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
-		public var package_dimensions: MESSED_UP?
+		public var package_dimensions: AnyCodable?
 		/// Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.
 		public var shippable: Bool?
 		/// An arbitrary string to be displayed on your customer's credit card or bank statement. While most banks display this information consistently, some may display it incorrectly or not at all.  This may be up to 22 characters. The statement description may not include `<`, `>`, `\`, `"`, `'` characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped.  It must contain at least one letter. May only be set if `type=service`.
@@ -199,7 +221,7 @@ public struct PostProductsId: StripeAPIEndpoint {
 		/// A URL of a publicly-accessible webpage for this product. May only be set if `type=good`.
 		public var url: String?
 
-		public init(active: Bool? = nil, attributes: MESSED_UP? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, images: MESSED_UP? = nil, metadata: MESSED_UP? = nil, name: String? = nil, package_dimensions: MESSED_UP? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
+		public init(active: Bool? = nil, attributes: AnyCodable? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, images: AnyCodable? = nil, metadata: AnyCodable? = nil, name: String? = nil, package_dimensions: AnyCodable? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
 			self.active = active
 			self.attributes = attributes
 			self.caption = caption
@@ -224,9 +246,12 @@ public struct DeleteProductsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedProduct
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}

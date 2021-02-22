@@ -4,14 +4,21 @@ public struct GetOrders: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let status: String
+		let customer: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let status: String?
 
-		public init(customer: String, ending_before: String, limit: Int, starting_after: String, status: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: Only return orders for the given customer.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: Only return orders that have the given status. One of `created`, `paid`, `fulfilled`, or `refunded`.
+		public init(customer: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, status: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -20,7 +27,14 @@ public struct GetOrders: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/orders?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/orders?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -68,13 +82,13 @@ public struct PostOrders: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// List of items constituting the order. An order can have up to 25 items.
-		public var items: MESSED_UP?
+		public var items: AnyCodable?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: Empty?
 		/// Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
 		public var shipping: CustomerShipping?
 
-		public init(currency: String, coupon: String? = nil, customer: String? = nil, email: String? = nil, expand: [String]? = nil, items: MESSED_UP? = nil, metadata: Empty? = nil, shipping: CustomerShipping? = nil) {
+		public init(currency: String, coupon: String? = nil, customer: String? = nil, email: String? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: Empty? = nil, shipping: CustomerShipping? = nil) {
 			self.currency = currency
 			self.coupon = coupon
 			self.customer = customer
@@ -132,9 +146,12 @@ public struct GetOrdersId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Order
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -151,9 +168,12 @@ public struct PostOrdersId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Order
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -168,7 +188,7 @@ public struct PostOrdersId: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// The shipping method to select for fulfilling this order. If specified, must be one of the `id`s of a shipping method in the `shipping_methods` array. If specified, will overwrite the existing selected shipping method, updating `items` as necessary.
 		public var selected_shipping_method: String?
 		/// Tracking information once the order has been fulfilled.
@@ -176,7 +196,7 @@ public struct PostOrdersId: StripeAPIEndpoint {
 		/// Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More detail in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
 		public var status: StatusValues?
 
-		public init(coupon: String? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, selected_shipping_method: String? = nil, shipping: ShippingTrackingParams? = nil, status: StatusValues? = nil) {
+		public init(coupon: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, selected_shipping_method: String? = nil, shipping: ShippingTrackingParams? = nil, status: StatusValues? = nil) {
 			self.coupon = coupon
 			self.expand = expand
 			self.metadata = metadata
@@ -218,9 +238,12 @@ public struct PostOrdersIdPay: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Order
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -260,9 +283,12 @@ public struct PostOrdersIdReturns: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = OrderReturn
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -275,9 +301,9 @@ public struct PostOrdersIdReturns: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// List of items to return.
-		public var items: MESSED_UP?
+		public var items: AnyCodable?
 
-		public init(expand: [String]? = nil, items: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, items: AnyCodable? = nil) {
 			self.expand = expand
 			self.items = items
 		}

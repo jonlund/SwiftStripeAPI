@@ -4,23 +4,37 @@ public struct GetPaymentMethods: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PaymentFlowsPaymentMethodList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
 		let type: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(customer: String, ending_before: String, limit: Int, starting_after: String, type: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: The ID of the customer whose PaymentMethods will be retrieved.
+		/// - Parameter type: A required filter on the list, based on the object `type` field.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(customer: String, type: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.customer = customer
+			self.type = type
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
-			self.type = type
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/payment_methods?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
+		var params = [String]()
+		params.append("customer=\(inputs.customer.urlEncoded)")
+		params.append("type=\(inputs.type.urlEncoded)")
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/payment_methods?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -68,7 +82,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 		/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
 		public var billing_details: BillingDetailsInnerParams?
 		/// If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When providing a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
-		public var card: MESSED_UP?
+		public var card: AnyCodable?
 		/// The `Customer` to whom the original PaymentMethod is attached.
 		public var customer: String?
 		/// If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
@@ -100,7 +114,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 		/// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
 		public var type: TypeValues?
 
-		public init(alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, card: MESSED_UP? = nil, customer: String? = nil, eps: Param? = nil, expand: [String]? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: Empty? = nil, oxxo: Param? = nil, p24: Param? = nil, payment_method: String? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, type: TypeValues? = nil) {
+		public init(alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, card: AnyCodable? = nil, customer: String? = nil, eps: Param? = nil, expand: [String]? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: Empty? = nil, oxxo: Param? = nil, p24: Param? = nil, payment_method: String? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, type: TypeValues? = nil) {
 			self.alipay = alipay
 			self.au_becs_debit = au_becs_debit
 			self.bacs_debit = bacs_debit
@@ -127,14 +141,14 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 
 		/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
 		public final class BillingDetailsInnerParams: Codable {
-			public var address: MESSED_UP?
+			public var address: AnyCodable?
 			public var email: String?
 			public var name: String?
 			public var phone: String?
 
 			/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
 			/// - Parameters:
-			public init(address: MESSED_UP? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+			public init(address: AnyCodable? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
 				self.address = address
 				self.email = email
 				self.name = name
@@ -191,9 +205,12 @@ public struct GetPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PaymentMethod
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payment_method: String
 
+		/// Initialize the request parameters
+		/// - Parameter payment_method: 
 		public init(payment_method: String) {
 			self.payment_method = payment_method
 		}
@@ -210,9 +227,12 @@ public struct PostPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentMethod
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payment_method: String
 
+		/// Initialize the request parameters
+		/// - Parameter payment_method: 
 		public init(payment_method: String) {
 			self.payment_method = payment_method
 		}
@@ -229,9 +249,9 @@ public struct PostPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(billing_details: BillingDetailsInnerParams? = nil, card: UpdateApiParam? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(billing_details: BillingDetailsInnerParams? = nil, card: UpdateApiParam? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.billing_details = billing_details
 			self.card = card
 			self.expand = expand
@@ -241,14 +261,14 @@ public struct PostPaymentMethodsPaymentMethod: StripeAPIEndpoint {
 
 		/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
 		public final class BillingDetailsInnerParams: Codable {
-			public var address: MESSED_UP?
+			public var address: AnyCodable?
 			public var email: String?
 			public var name: String?
 			public var phone: String?
 
 			/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
 			/// - Parameters:
-			public init(address: MESSED_UP? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
+			public init(address: AnyCodable? = nil, email: String? = nil, name: String? = nil, phone: String? = nil) {
 				self.address = address
 				self.email = email
 				self.name = name
@@ -280,9 +300,12 @@ public struct PostPaymentMethodsPaymentMethodAttach: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentMethod
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payment_method: String
 
+		/// Initialize the request parameters
+		/// - Parameter payment_method: 
 		public init(payment_method: String) {
 			self.payment_method = payment_method
 		}
@@ -310,9 +333,12 @@ public struct PostPaymentMethodsPaymentMethodDetach: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentMethod
 	public typealias paramType = Params
+	
 	public struct Params {
 		let payment_method: String
 
+		/// Initialize the request parameters
+		/// - Parameter payment_method: 
 		public init(payment_method: String) {
 			self.payment_method = payment_method
 		}

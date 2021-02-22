@@ -4,16 +4,25 @@ public struct GetInvoices: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = InvoicesList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let collection_method: String
-		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let status: String
-		let subscription: String
+		let collection_method: String?
+		let customer: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let status: String?
+		let subscription: String?
 
-		public init(collection_method: String, customer: String, ending_before: String, limit: Int, starting_after: String, status: String, subscription: String) {
+		/// Initialize the request parameters
+		/// - Parameter collection_method: The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
+		/// - Parameter customer: Only return invoices for the customer specified by this customer ID.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
+		/// - Parameter subscription: Only return invoices for the subscription specified by this subscription ID.
+		public init(collection_method: String? = nil, customer: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, status: String? = nil, subscription: String? = nil) {
 			self.collection_method = collection_method
 			self.customer = customer
 			self.ending_before = ending_before
@@ -24,7 +33,16 @@ public struct GetInvoices: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices?collection_method=\(inputs.collection_method.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.collection_method?.urlEncoded { params.append("collection_method=\(a)") }
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		if let a = inputs.subscription?.urlEncoded { params.append("subscription=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/invoices?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -62,7 +80,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
-		public var account_tax_ids: MESSED_UP?
+		public var account_tax_ids: AnyCodable?
 		/// A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
 		public var application_fee_amount: Int?
 		/// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
@@ -70,7 +88,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 		/// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
 		public var collection_method: CollectionMethodValues?
 		/// A list of up to 4 custom fields to be displayed on the invoice.
-		public var custom_fields: MESSED_UP?
+		public var custom_fields: AnyCodable?
 		/// The ID of the customer who will be billed.
 		public var customer: String
 		/// The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -84,7 +102,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 		/// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
 		public var description: String?
 		/// The coupons to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice's customer. Pass an empty string to avoid inheriting any discounts.
-		public var discounts: MESSED_UP?
+		public var discounts: AnyCodable?
 		/// The date on which payment for this invoice is due. Valid only for invoices where `collection_method=send_invoice`.
 		public var due_date: Timestamp?
 		/// Specifies which fields in the response should be expanded.
@@ -92,7 +110,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 		/// Footer to be displayed on the invoice.
 		public var footer: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
 		public var statement_descriptor: String?
 		/// The ID of the subscription to invoice, if any. If not set, the created invoice will include all pending invoice items for the customer. If set, the created invoice will only include pending invoice items for that subscription and pending invoice items not associated with any subscription. The subscription's billing cycle and regular subscription events won't be affected.
@@ -100,7 +118,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 		/// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
 		public var transfer_data: TransferDataSpecs?
 
-		public init(customer: String, account_tax_ids: MESSED_UP? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: MESSED_UP? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [String]? = nil, description: String? = nil, discounts: MESSED_UP? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: MESSED_UP? = nil, statement_descriptor: String? = nil, subscription: String? = nil, transfer_data: TransferDataSpecs? = nil) {
+		public init(customer: String, account_tax_ids: AnyCodable? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: AnyCodable? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [String]? = nil, description: String? = nil, discounts: AnyCodable? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: AnyCodable? = nil, statement_descriptor: String? = nil, subscription: String? = nil, transfer_data: TransferDataSpecs? = nil) {
 			self.customer = customer
 			self.account_tax_ids = account_tax_ids
 			self.application_fee_amount = application_fee_amount
@@ -151,19 +169,31 @@ public struct GetInvoicesUpcoming: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
-		let coupon: String
-		let customer: String
-		let schedule: String
-		let subscription: String
-		let subscription_cancel_at_period_end: Bool
-		let subscription_cancel_now: Bool
-		let subscription_proration_behavior: String
-		let subscription_proration_date: Timestamp
-		let subscription_start_date: Timestamp
-		let subscription_trial_from_plan: Bool
+		let coupon: String?
+		let customer: String?
+		let schedule: String?
+		let subscription: String?
+		let subscription_cancel_at_period_end: Bool?
+		let subscription_cancel_now: Bool?
+		let subscription_proration_behavior: String?
+		let subscription_proration_date: Timestamp?
+		let subscription_start_date: Timestamp?
+		let subscription_trial_from_plan: Bool?
 
-		public init(coupon: String, customer: String, schedule: String, subscription: String, subscription_cancel_at_period_end: Bool, subscription_cancel_now: Bool, subscription_proration_behavior: String, subscription_proration_date: Timestamp, subscription_start_date: Timestamp, subscription_trial_from_plan: Bool) {
+		/// Initialize the request parameters
+		/// - Parameter coupon: The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+		/// - Parameter customer: The identifier of the customer whose upcoming invoice you'd like to retrieve.
+		/// - Parameter schedule: The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+		/// - Parameter subscription: The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+		/// - Parameter subscription_cancel_at_period_end: Boolean indicating whether this subscription should cancel at the end of the current period.
+		/// - Parameter subscription_cancel_now: This simulates the subscription being canceled or expired immediately.
+		/// - Parameter subscription_proration_behavior: Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.  Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.  Prorations can be disabled by passing `none`.
+		/// - Parameter subscription_proration_date: If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+		/// - Parameter subscription_start_date: Date a subscription is intended to start (can be future or past)
+		/// - Parameter subscription_trial_from_plan: Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
+		public init(coupon: String? = nil, customer: String? = nil, schedule: String? = nil, subscription: String? = nil, subscription_cancel_at_period_end: Bool? = nil, subscription_cancel_now: Bool? = nil, subscription_proration_behavior: String? = nil, subscription_proration_date: Timestamp? = nil, subscription_start_date: Timestamp? = nil, subscription_trial_from_plan: Bool? = nil) {
 			self.coupon = coupon
 			self.customer = customer
 			self.schedule = schedule
@@ -177,7 +207,19 @@ public struct GetInvoicesUpcoming: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices/upcoming?coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.coupon?.urlEncoded { params.append("coupon=\(a)") }
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.schedule?.urlEncoded { params.append("schedule=\(a)") }
+		if let a = inputs.subscription?.urlEncoded { params.append("subscription=\(a)") }
+		if let a = inputs.subscription_cancel_at_period_end?.urlEncoded { params.append("subscription_cancel_at_period_end=\(a)") }
+		if let a = inputs.subscription_cancel_now?.urlEncoded { params.append("subscription_cancel_now=\(a)") }
+		if let a = inputs.subscription_proration_behavior?.urlEncoded { params.append("subscription_proration_behavior=\(a)") }
+		if let a = inputs.subscription_proration_date?.urlEncoded { params.append("subscription_proration_date=\(a)") }
+		if let a = inputs.subscription_start_date?.urlEncoded { params.append("subscription_start_date=\(a)") }
+		if let a = inputs.subscription_trial_from_plan?.urlEncoded { params.append("subscription_trial_from_plan=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/invoices/upcoming?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -188,22 +230,37 @@ public struct GetInvoicesUpcomingLines: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = InvoiceLinesList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let coupon: String
-		let customer: String
-		let ending_before: String
-		let limit: Int
-		let schedule: String
-		let starting_after: String
-		let subscription: String
-		let subscription_cancel_at_period_end: Bool
-		let subscription_cancel_now: Bool
-		let subscription_proration_behavior: String
-		let subscription_proration_date: Timestamp
-		let subscription_start_date: Timestamp
-		let subscription_trial_from_plan: Bool
+		let coupon: String?
+		let customer: String?
+		let ending_before: String?
+		let limit: Int?
+		let schedule: String?
+		let starting_after: String?
+		let subscription: String?
+		let subscription_cancel_at_period_end: Bool?
+		let subscription_cancel_now: Bool?
+		let subscription_proration_behavior: String?
+		let subscription_proration_date: Timestamp?
+		let subscription_start_date: Timestamp?
+		let subscription_trial_from_plan: Bool?
 
-		public init(coupon: String, customer: String, ending_before: String, limit: Int, schedule: String, starting_after: String, subscription: String, subscription_cancel_at_period_end: Bool, subscription_cancel_now: Bool, subscription_proration_behavior: String, subscription_proration_date: Timestamp, subscription_start_date: Timestamp, subscription_trial_from_plan: Bool) {
+		/// Initialize the request parameters
+		/// - Parameter coupon: The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+		/// - Parameter customer: The identifier of the customer whose upcoming invoice you'd like to retrieve.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter schedule: The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter subscription: The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+		/// - Parameter subscription_cancel_at_period_end: Boolean indicating whether this subscription should cancel at the end of the current period.
+		/// - Parameter subscription_cancel_now: This simulates the subscription being canceled or expired immediately.
+		/// - Parameter subscription_proration_behavior: Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.  Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.  Prorations can be disabled by passing `none`.
+		/// - Parameter subscription_proration_date: If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+		/// - Parameter subscription_start_date: Date a subscription is intended to start (can be future or past)
+		/// - Parameter subscription_trial_from_plan: Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
+		public init(coupon: String? = nil, customer: String? = nil, ending_before: String? = nil, limit: Int? = nil, schedule: String? = nil, starting_after: String? = nil, subscription: String? = nil, subscription_cancel_at_period_end: Bool? = nil, subscription_cancel_now: Bool? = nil, subscription_proration_behavior: String? = nil, subscription_proration_date: Timestamp? = nil, subscription_start_date: Timestamp? = nil, subscription_trial_from_plan: Bool? = nil) {
 			self.coupon = coupon
 			self.customer = customer
 			self.ending_before = ending_before
@@ -220,7 +277,22 @@ public struct GetInvoicesUpcomingLines: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices/upcoming/lines?coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&schedule=\(inputs.schedule.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))&subscription_cancel_at_period_end=\(inputs.subscription_cancel_at_period_end.urlEncoded))&subscription_cancel_now=\(inputs.subscription_cancel_now.urlEncoded))&subscription_proration_behavior=\(inputs.subscription_proration_behavior.urlEncoded))&subscription_proration_date=\(inputs.subscription_proration_date.urlEncoded))&subscription_start_date=\(inputs.subscription_start_date.urlEncoded))&subscription_trial_from_plan=\(inputs.subscription_trial_from_plan.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.coupon?.urlEncoded { params.append("coupon=\(a)") }
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.schedule?.urlEncoded { params.append("schedule=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.subscription?.urlEncoded { params.append("subscription=\(a)") }
+		if let a = inputs.subscription_cancel_at_period_end?.urlEncoded { params.append("subscription_cancel_at_period_end=\(a)") }
+		if let a = inputs.subscription_cancel_now?.urlEncoded { params.append("subscription_cancel_now=\(a)") }
+		if let a = inputs.subscription_proration_behavior?.urlEncoded { params.append("subscription_proration_behavior=\(a)") }
+		if let a = inputs.subscription_proration_date?.urlEncoded { params.append("subscription_proration_date=\(a)") }
+		if let a = inputs.subscription_start_date?.urlEncoded { params.append("subscription_start_date=\(a)") }
+		if let a = inputs.subscription_trial_from_plan?.urlEncoded { params.append("subscription_trial_from_plan=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/invoices/upcoming/lines?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -253,9 +325,12 @@ public struct GetInvoicesInvoice: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}
@@ -272,9 +347,12 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}
@@ -285,7 +363,7 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
-		public var account_tax_ids: MESSED_UP?
+		public var account_tax_ids: AnyCodable?
 		/// A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
 		public var application_fee_amount: Int?
 		/// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice.
@@ -293,7 +371,7 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 		/// Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
 		public var collection_method: CollectionMethodValues?
 		/// A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
-		public var custom_fields: MESSED_UP?
+		public var custom_fields: AnyCodable?
 		/// The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
 		public var days_until_due: Int?
 		/// ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
@@ -301,11 +379,11 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 		/// ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
 		public var default_source: String?
 		/// The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-defined tax rates.
-		public var default_tax_rates: MESSED_UP?
+		public var default_tax_rates: AnyCodable?
 		/// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
 		public var description: String?
 		/// The discounts that will apply to the invoice. Pass an empty string to remove previously-defined discounts.
-		public var discounts: MESSED_UP?
+		public var discounts: AnyCodable?
 		/// The date on which payment for this invoice is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
 		public var due_date: Timestamp?
 		/// Specifies which fields in the response should be expanded.
@@ -313,13 +391,13 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 		/// Footer to be displayed on the invoice.
 		public var footer: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
 		public var statement_descriptor: String?
 		/// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
-		public var transfer_data: MESSED_UP?
+		public var transfer_data: AnyCodable?
 
-		public init(account_tax_ids: MESSED_UP? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: MESSED_UP? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: MESSED_UP? = nil, description: String? = nil, discounts: MESSED_UP? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: MESSED_UP? = nil, statement_descriptor: String? = nil, transfer_data: MESSED_UP? = nil) {
+		public init(account_tax_ids: AnyCodable? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: AnyCodable? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, description: String? = nil, discounts: AnyCodable? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: AnyCodable? = nil, statement_descriptor: String? = nil, transfer_data: AnyCodable? = nil) {
 			self.account_tax_ids = account_tax_ids
 			self.application_fee_amount = application_fee_amount
 			self.auto_advance = auto_advance
@@ -352,9 +430,12 @@ public struct DeleteInvoicesInvoice: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedInvoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}
@@ -371,9 +452,12 @@ public struct PostInvoicesInvoiceFinalize: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}
@@ -401,21 +485,32 @@ public struct GetInvoicesInvoiceLines: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = InvoiceLinesList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
 		let invoice: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, invoice: String, limit: Int, starting_after: String) {
-			self.ending_before = ending_before
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(invoice: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.invoice = invoice
+			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/invoices/\(inputs.invoice)/lines?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/invoices/\(inputs.invoice)/lines?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -448,9 +543,12 @@ public struct PostInvoicesInvoiceMarkUncollectible: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}
@@ -475,9 +573,12 @@ public struct PostInvoicesInvoicePay: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}
@@ -517,9 +618,12 @@ public struct PostInvoicesInvoiceSend: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}
@@ -544,9 +648,12 @@ public struct PostInvoicesInvoiceVoid: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoice
 	public typealias paramType = Params
+	
 	public struct Params {
 		let invoice: String
 
+		/// Initialize the request parameters
+		/// - Parameter invoice: 
 		public init(invoice: String) {
 			self.invoice = invoice
 		}

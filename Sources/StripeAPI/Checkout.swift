@@ -4,14 +4,21 @@ public struct GetCheckoutSessions: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PaymentPagesCheckoutSessionList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let payment_intent: String
-		let starting_after: String
-		let subscription: String
+		let ending_before: String?
+		let limit: Int?
+		let payment_intent: String?
+		let starting_after: String?
+		let subscription: String?
 
-		public init(ending_before: String, limit: Int, payment_intent: String, starting_after: String, subscription: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter payment_intent: Only return the Checkout Session for the PaymentIntent specified.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter subscription: Only return the Checkout Session for the subscription specified.
+		public init(ending_before: String? = nil, limit: Int? = nil, payment_intent: String? = nil, starting_after: String? = nil, subscription: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.payment_intent = payment_intent
@@ -20,7 +27,14 @@ public struct GetCheckoutSessions: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/checkout/sessions?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.payment_intent?.urlEncoded { params.append("payment_intent=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.subscription?.urlEncoded { params.append("subscription=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/checkout/sessions?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -70,11 +84,11 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		/// If provided, this value will be used when the Customer object is created. If not provided, customers will be asked to enter their email address. Use this parameter to prefill customer data if you already have an email on file. To access information about the customer once a session is complete, use the `customer` field.
 		public var customer_email: String?
 		/// The coupon or promotion code to apply to this Session. Currently, only up to one may be specified.
-		public var discounts: MESSED_UP?
+		public var discounts: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices). One-time Prices in `subscription` mode will be on the initial invoice only.  There is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
-		public var line_items: MESSED_UP?
+		public var line_items: AnyCodable?
 		/// The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
 		public var locale: LocaleValues?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -96,7 +110,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		/// The URL to which Stripe should send customers when payment or setup is complete. If you’d like access to the Checkout Session for the successful payment, read more about it in the guide on [fulfilling orders](https://stripe.com/docs/payments/checkout/fulfill-orders).
 		public var success_url: String
 
-		public init(cancel_url: String, payment_method_types: [String], success_url: String, allow_promotion_codes: Bool? = nil, billing_address_collection: BillingAddressCollectionValues? = nil, client_reference_id: String? = nil, customer: String? = nil, customer_email: String? = nil, discounts: MESSED_UP? = nil, expand: [String]? = nil, line_items: MESSED_UP? = nil, locale: LocaleValues? = nil, metadata: Empty? = nil, mode: ModeValues? = nil, payment_intent_data: PaymentIntentDataParams? = nil, setup_intent_data: SetupIntentDataParam? = nil, shipping_address_collection: ShippingAddressCollectionParams? = nil, submit_type: SubmitTypeValues? = nil, subscription_data: SubscriptionDataParams? = nil) {
+		public init(cancel_url: String, payment_method_types: [String], success_url: String, allow_promotion_codes: Bool? = nil, billing_address_collection: BillingAddressCollectionValues? = nil, client_reference_id: String? = nil, customer: String? = nil, customer_email: String? = nil, discounts: AnyCodable? = nil, expand: [String]? = nil, line_items: AnyCodable? = nil, locale: LocaleValues? = nil, metadata: Empty? = nil, mode: ModeValues? = nil, payment_intent_data: PaymentIntentDataParams? = nil, setup_intent_data: SetupIntentDataParam? = nil, shipping_address_collection: ShippingAddressCollectionParams? = nil, submit_type: SubmitTypeValues? = nil, subscription_data: SubscriptionDataParams? = nil) {
 			self.cancel_url = cancel_url
 			self.payment_method_types = payment_method_types
 			self.success_url = success_url
@@ -249,14 +263,14 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		public final class SubscriptionDataParams: Codable {
 			public var application_fee_percent: StringNumber?
 			public var default_tax_rates: [String]?
-			public var items: MESSED_UP?
+			public var items: AnyCodable?
 			public var metadata: Empty?
 			public var trial_end: Timestamp?
 			public var trial_period_days: Int?
 
 			/// A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
 			/// - Parameters:
-			public init(application_fee_percent: StringNumber? = nil, default_tax_rates: [String]? = nil, items: MESSED_UP? = nil, metadata: Empty? = nil, trial_end: Timestamp? = nil, trial_period_days: Int? = nil) {
+			public init(application_fee_percent: StringNumber? = nil, default_tax_rates: [String]? = nil, items: AnyCodable? = nil, metadata: Empty? = nil, trial_end: Timestamp? = nil, trial_period_days: Int? = nil) {
 				self.application_fee_percent = application_fee_percent
 				self.default_tax_rates = default_tax_rates
 				self.items = items
@@ -332,9 +346,12 @@ public struct GetCheckoutSessionsSession: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = CheckoutSession
 	public typealias paramType = Params
+	
 	public struct Params {
 		let session: String
 
+		/// Initialize the request parameters
+		/// - Parameter session: 
 		public init(session: String) {
 			self.session = session
 		}
@@ -351,21 +368,32 @@ public struct GetCheckoutSessionsSessionLineItems: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PaymentPagesCheckoutSessionListLineItems
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
 		let session: String
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, session: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter session: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(session: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
+			self.session = session
 			self.ending_before = ending_before
 			self.limit = limit
-			self.session = session
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/checkout/sessions/\(inputs.session)/line_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/checkout/sessions/\(inputs.session)/line_items?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 

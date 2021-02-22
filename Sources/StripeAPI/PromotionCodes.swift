@@ -4,16 +4,25 @@ public struct GetPromotionCodes: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let active: Bool
-		let code: String
-		let coupon: String
-		let customer: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let active: Bool?
+		let code: String?
+		let coupon: String?
+		let customer: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(active: Bool, code: String, coupon: String, customer: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter active: Filter promotion codes by whether they are active.
+		/// - Parameter code: Only return promotion codes that have this case-insensitive code.
+		/// - Parameter coupon: Only return promotion codes for this coupon.
+		/// - Parameter customer: Only return promotion codes that are restricted to this customer.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(active: Bool? = nil, code: String? = nil, coupon: String? = nil, customer: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.active = active
 			self.code = code
 			self.coupon = coupon
@@ -24,7 +33,16 @@ public struct GetPromotionCodes: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/promotion_codes?active=\(inputs.active.urlEncoded))&code=\(inputs.code.urlEncoded))&coupon=\(inputs.coupon.urlEncoded))&customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.active?.urlEncoded { params.append("active=\(a)") }
+		if let a = inputs.code?.urlEncoded { params.append("code=\(a)") }
+		if let a = inputs.coupon?.urlEncoded { params.append("coupon=\(a)") }
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/promotion_codes?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -117,9 +135,12 @@ public struct GetPromotionCodesPromotionCode: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PromotionCode
 	public typealias paramType = Params
+	
 	public struct Params {
 		let promotion_code: String
 
+		/// Initialize the request parameters
+		/// - Parameter promotion_code: 
 		public init(promotion_code: String) {
 			self.promotion_code = promotion_code
 		}
@@ -136,9 +157,12 @@ public struct PostPromotionCodesPromotionCode: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PromotionCode
 	public typealias paramType = Params
+	
 	public struct Params {
 		let promotion_code: String
 
+		/// Initialize the request parameters
+		/// - Parameter promotion_code: 
 		public init(promotion_code: String) {
 			self.promotion_code = promotion_code
 		}
@@ -153,9 +177,9 @@ public struct PostPromotionCodesPromotionCode: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(active: Bool? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(active: Bool? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.active = active
 			self.expand = expand
 			self.metadata = metadata

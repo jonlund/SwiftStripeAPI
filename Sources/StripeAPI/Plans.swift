@@ -4,14 +4,21 @@ public struct GetPlans: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = PlanList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let active: Bool
-		let ending_before: String
-		let limit: Int
-		let product: String
-		let starting_after: String
+		let active: Bool?
+		let ending_before: String?
+		let limit: Int?
+		let product: String?
+		let starting_after: String?
 
-		public init(active: Bool, ending_before: String, limit: Int, product: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter active: Only return plans that are active or inactive (e.g., pass `false` to list all inactive plans).
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter product: Only return plans for the given product.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(active: Bool? = nil, ending_before: String? = nil, limit: Int? = nil, product: String? = nil, starting_after: String? = nil) {
 			self.active = active
 			self.ending_before = ending_before
 			self.limit = limit
@@ -20,7 +27,14 @@ public struct GetPlans: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/plans?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&product=\(inputs.product.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.active?.urlEncoded { params.append("active=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.product?.urlEncoded { params.append("product=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/plans?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -79,12 +93,12 @@ public struct PostPlans: StripeAPIEndpoint {
 		/// The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
 		public var interval_count: Int?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// A brief description of the plan, hidden from customers.
 		public var nickname: String?
-		public var product: MESSED_UP?
+		public var product: AnyCodable?
 		/// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
-		public var tiers: MESSED_UP?
+		public var tiers: AnyCodable?
 		/// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can successively change as the quantity grows.
 		public var tiers_mode: TiersModeValues?
 		/// Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
@@ -94,7 +108,7 @@ public struct PostPlans: StripeAPIEndpoint {
 		/// Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
 		public var usage_type: UsageTypeValues?
 
-		public init(currency: String, interval: IntervalValues, active: Bool? = nil, aggregate_usage: AggregateUsageValues? = nil, amount: Int? = nil, amount_decimal: StringNumber? = nil, billing_scheme: BillingSchemeValues? = nil, expand: [String]? = nil, id: String? = nil, interval_count: Int? = nil, metadata: MESSED_UP? = nil, nickname: String? = nil, product: MESSED_UP? = nil, tiers: MESSED_UP? = nil, tiers_mode: TiersModeValues? = nil, transform_usage: TransformUsageParam? = nil, trial_period_days: Int? = nil, usage_type: UsageTypeValues? = nil) {
+		public init(currency: String, interval: IntervalValues, active: Bool? = nil, aggregate_usage: AggregateUsageValues? = nil, amount: Int? = nil, amount_decimal: StringNumber? = nil, billing_scheme: BillingSchemeValues? = nil, expand: [String]? = nil, id: String? = nil, interval_count: Int? = nil, metadata: AnyCodable? = nil, nickname: String? = nil, product: AnyCodable? = nil, tiers: AnyCodable? = nil, tiers_mode: TiersModeValues? = nil, transform_usage: TransformUsageParam? = nil, trial_period_days: Int? = nil, usage_type: UsageTypeValues? = nil) {
 			self.currency = currency
 			self.interval = interval
 			self.active = active
@@ -174,9 +188,12 @@ public struct GetPlansPlan: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Plan
 	public typealias paramType = Params
+	
 	public struct Params {
 		let plan: String
 
+		/// Initialize the request parameters
+		/// - Parameter plan: 
 		public init(plan: String) {
 			self.plan = plan
 		}
@@ -193,9 +210,12 @@ public struct PostPlansPlan: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Plan
 	public typealias paramType = Params
+	
 	public struct Params {
 		let plan: String
 
+		/// Initialize the request parameters
+		/// - Parameter plan: 
 		public init(plan: String) {
 			self.plan = plan
 		}
@@ -210,7 +230,7 @@ public struct PostPlansPlan: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// A brief description of the plan, hidden from customers.
 		public var nickname: String?
 		/// The product the plan belongs to. This cannot be changed once it has been used in a subscription or subscription schedule.
@@ -218,7 +238,7 @@ public struct PostPlansPlan: StripeAPIEndpoint {
 		/// Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
 		public var trial_period_days: Int?
 
-		public init(active: Bool? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, nickname: String? = nil, product: String? = nil, trial_period_days: Int? = nil) {
+		public init(active: Bool? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, nickname: String? = nil, product: String? = nil, trial_period_days: Int? = nil) {
 			self.active = active
 			self.expand = expand
 			self.metadata = metadata
@@ -235,9 +255,12 @@ public struct DeletePlansPlan: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedPlan
 	public typealias paramType = Params
+	
 	public struct Params {
 		let plan: String
 
+		/// Initialize the request parameters
+		/// - Parameter plan: 
 		public init(plan: String) {
 			self.plan = plan
 		}

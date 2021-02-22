@@ -4,15 +4,23 @@ public struct GetSkus: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let active: Bool
-		let ending_before: String
-		let in_stock: Bool
-		let limit: Int
-		let product: String
-		let starting_after: String
+		let active: Bool?
+		let ending_before: String?
+		let in_stock: Bool?
+		let limit: Int?
+		let product: String?
+		let starting_after: String?
 
-		public init(active: Bool, ending_before: String, in_stock: Bool, limit: Int, product: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter active: Only return SKUs that are active or inactive (e.g., pass `false` to list all inactive products).
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter in_stock: Only return SKUs that are either in stock or out of stock (e.g., pass `false` to list all SKUs that are out of stock). If no value is provided, all SKUs are returned.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter product: The ID of the product whose SKUs will be retrieved. Must be a product with type `good`.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(active: Bool? = nil, ending_before: String? = nil, in_stock: Bool? = nil, limit: Int? = nil, product: String? = nil, starting_after: String? = nil) {
 			self.active = active
 			self.ending_before = ending_before
 			self.in_stock = in_stock
@@ -22,7 +30,15 @@ public struct GetSkus: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/skus?active=\(inputs.active.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&in_stock=\(inputs.in_stock.urlEncoded))&limit=\(inputs.limit.urlEncoded))&product=\(inputs.product.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.active?.urlEncoded { params.append("active=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.in_stock?.urlEncoded { params.append("in_stock=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.product?.urlEncoded { params.append("product=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/skus?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -157,9 +173,12 @@ public struct GetSkusId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Sku
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -176,9 +195,12 @@ public struct PostSkusId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Sku
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}
@@ -201,15 +223,15 @@ public struct PostSkusId: StripeAPIEndpoint {
 		/// Description of the SKU's inventory.
 		public var inventory: InventoryUpdateSpecs?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// The dimensions of this SKU for shipping purposes.
-		public var package_dimensions: MESSED_UP?
+		public var package_dimensions: AnyCodable?
 		/// The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
 		public var price: Int?
 		/// The ID of the product that this SKU should belong to. The product must exist, have the same set of attribute names as the SKU's current product, and be of type `good`.
 		public var product: String?
 
-		public init(active: Bool? = nil, attributes: Empty? = nil, currency: String? = nil, expand: [String]? = nil, image: String? = nil, inventory: InventoryUpdateSpecs? = nil, metadata: MESSED_UP? = nil, package_dimensions: MESSED_UP? = nil, price: Int? = nil, product: String? = nil) {
+		public init(active: Bool? = nil, attributes: Empty? = nil, currency: String? = nil, expand: [String]? = nil, image: String? = nil, inventory: InventoryUpdateSpecs? = nil, metadata: AnyCodable? = nil, package_dimensions: AnyCodable? = nil, price: Int? = nil, product: String? = nil) {
 			self.active = active
 			self.attributes = attributes
 			self.currency = currency
@@ -259,9 +281,12 @@ public struct DeleteSkusId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedSku
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}

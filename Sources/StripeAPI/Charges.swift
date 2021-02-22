@@ -4,15 +4,23 @@ public struct GetCharges: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let customer: String
-		let ending_before: String
-		let limit: Int
-		let payment_intent: String
-		let starting_after: String
-		let transfer_group: String
+		let customer: String?
+		let ending_before: String?
+		let limit: Int?
+		let payment_intent: String?
+		let starting_after: String?
+		let transfer_group: String?
 
-		public init(customer: String, ending_before: String, limit: Int, payment_intent: String, starting_after: String, transfer_group: String) {
+		/// Initialize the request parameters
+		/// - Parameter customer: Only return charges for the customer specified by this customer ID.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter payment_intent: Only return charges that were created by the PaymentIntent specified by this PaymentIntent ID.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter transfer_group: Only return charges for this transfer group.
+		public init(customer: String? = nil, ending_before: String? = nil, limit: Int? = nil, payment_intent: String? = nil, starting_after: String? = nil, transfer_group: String? = nil) {
 			self.customer = customer
 			self.ending_before = ending_before
 			self.limit = limit
@@ -22,7 +30,15 @@ public struct GetCharges: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/charges?customer=\(inputs.customer.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&payment_intent=\(inputs.payment_intent.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&transfer_group=\(inputs.transfer_group.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.customer?.urlEncoded { params.append("customer=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.payment_intent?.urlEncoded { params.append("payment_intent=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.transfer_group?.urlEncoded { params.append("transfer_group=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/charges?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -67,18 +83,18 @@ public struct PostCharges: StripeAPIEndpoint {
 		/// Whether to immediately capture the charge. Defaults to `true`. When `false`, the charge issues an authorization (or pre-authorization), and will need to be [captured](https://stripe.com/docs/api#capture_charge) later. Uncaptured charges expire in _seven days_. For more information, see the [authorizing charges and settling later](https://stripe.com/docs/charges/placing-a-hold) documentation.
 		public var capture: Bool?
 		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
-		public var card: MESSED_UP?
+		public var card: AnyCodable?
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 		public var currency: String?
 		/// The ID of an existing customer that will be charged in this request.
 		public var customer: String?
 		/// An arbitrary string which you can attach to a `Charge` object. It is displayed when in the web interface alongside the charge. Note that if you use Stripe to send automatic email receipts to your customers, your receipt emails will include the `description` of the charge(s) that they are describing.
 		public var description: String?
-		public var destination: MESSED_UP?
+		public var destination: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// The Stripe account ID for which these funds are intended. Automatically set if you use the `destination` parameter. For details, see [Creating Separate Charges and Transfers](https://stripe.com/docs/connect/charges-transfers#on-behalf-of).
 		public var on_behalf_of: String?
 		/// The email address to which this charge's [receipt](https://stripe.com/docs/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and no receipts will be sent for test mode charges. If this charge is for a [Customer](https://stripe.com/docs/api/customers/object), the email address specified here will override the customer's email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
@@ -96,7 +112,7 @@ public struct PostCharges: StripeAPIEndpoint {
 		/// A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#transfer-options).
 		public var transfer_group: String?
 
-		public init(amount: Int? = nil, application_fee: Int? = nil, application_fee_amount: Int? = nil, capture: Bool? = nil, card: MESSED_UP? = nil, currency: String? = nil, customer: String? = nil, description: String? = nil, destination: MESSED_UP? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, on_behalf_of: String? = nil, receipt_email: String? = nil, shipping: Shipping? = nil, source: String? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataSpecs? = nil, transfer_group: String? = nil) {
+		public init(amount: Int? = nil, application_fee: Int? = nil, application_fee_amount: Int? = nil, capture: Bool? = nil, card: AnyCodable? = nil, currency: String? = nil, customer: String? = nil, description: String? = nil, destination: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil, receipt_email: String? = nil, shipping: Shipping? = nil, source: String? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataSpecs? = nil, transfer_group: String? = nil) {
 			self.amount = amount
 			self.application_fee = application_fee
 			self.application_fee_amount = application_fee_amount
@@ -185,9 +201,12 @@ public struct GetChargesCharge: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Charge
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -204,9 +223,12 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Charge
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -225,7 +247,7 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 		/// A set of key-value pairs you can attach to a charge giving information about its riskiness. If you believe a charge is fraudulent, include a `user_report` key with a value of `fraudulent`. If you believe a charge is safe, include a `user_report` key with a value of `safe`. Stripe will use the information you send to improve our fraud detection algorithms.
 		public var fraud_details: FraudDetails?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// This is the email address that the receipt for this charge will be sent to. If this field is updated, then a new email receipt will be sent to the updated address.
 		public var receipt_email: String?
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
@@ -233,7 +255,7 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 		/// A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
 		public var transfer_group: String?
 
-		public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, fraud_details: FraudDetails? = nil, metadata: MESSED_UP? = nil, receipt_email: String? = nil, shipping: Shipping? = nil, transfer_group: String? = nil) {
+		public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, fraud_details: FraudDetails? = nil, metadata: AnyCodable? = nil, receipt_email: String? = nil, shipping: Shipping? = nil, transfer_group: String? = nil) {
 			self.customer = customer
 			self.description = description
 			self.expand = expand
@@ -314,9 +336,12 @@ public struct PostChargesChargeCapture: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Charge
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -378,9 +403,12 @@ public struct GetChargesChargeDispute: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Dispute
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -396,9 +424,12 @@ public struct PostChargesChargeDispute: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Dispute
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -413,11 +444,11 @@ public struct PostChargesChargeDispute: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Whether to immediately submit evidence to the bank. If `false`, evidence is staged on the dispute. Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making another request with this attribute set to `true` (the default).
 		public var submit: Bool?
 
-		public init(evidence: DisputeEvidenceParams? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, submit: Bool? = nil) {
+		public init(evidence: DisputeEvidenceParams? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, submit: Bool? = nil) {
 			self.evidence = evidence
 			self.expand = expand
 			self.metadata = metadata
@@ -496,9 +527,12 @@ public struct PostChargesChargeDisputeClose: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Dispute
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -523,9 +557,12 @@ public struct PostChargesChargeRefund: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Charge
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -539,13 +576,13 @@ public struct PostChargesChargeRefund: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		public var payment_intent: String?
 		public var reason: ReasonValues?
 		public var refund_application_fee: Bool?
 		public var reverse_transfer: Bool?
 
-		public init(amount: Int? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, payment_intent: String? = nil, reason: ReasonValues? = nil, refund_application_fee: Bool? = nil, reverse_transfer: Bool? = nil) {
+		public init(amount: Int? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, payment_intent: String? = nil, reason: ReasonValues? = nil, refund_application_fee: Bool? = nil, reverse_transfer: Bool? = nil) {
 			self.amount = amount
 			self.expand = expand
 			self.metadata = metadata
@@ -569,13 +606,19 @@ public struct GetChargesChargeRefunds: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = RefundList
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(charge: String, ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter charge: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(charge: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.charge = charge
 			self.ending_before = ending_before
 			self.limit = limit
@@ -583,7 +626,12 @@ public struct GetChargesChargeRefunds: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/charges/\(inputs.charge)/refunds?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/charges/\(inputs.charge)/refunds?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -616,9 +664,12 @@ public struct PostChargesChargeRefunds: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Refund
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
 		public init(charge: String) {
 			self.charge = charge
 		}
@@ -632,13 +683,13 @@ public struct PostChargesChargeRefunds: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		public var payment_intent: String?
 		public var reason: ReasonValues?
 		public var refund_application_fee: Bool?
 		public var reverse_transfer: Bool?
 
-		public init(amount: Int? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, payment_intent: String? = nil, reason: ReasonValues? = nil, refund_application_fee: Bool? = nil, reverse_transfer: Bool? = nil) {
+		public init(amount: Int? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, payment_intent: String? = nil, reason: ReasonValues? = nil, refund_application_fee: Bool? = nil, reverse_transfer: Bool? = nil) {
 			self.amount = amount
 			self.expand = expand
 			self.metadata = metadata
@@ -662,10 +713,14 @@ public struct GetChargesChargeRefundsRefund: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Refund
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 		let refund: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
+		/// - Parameter refund: 
 		public init(charge: String, refund: String) {
 			self.charge = charge
 			self.refund = refund
@@ -683,10 +738,14 @@ public struct PostChargesChargeRefundsRefund: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Refund
 	public typealias paramType = Params
+	
 	public struct Params {
 		let charge: String
 		let refund: String
 
+		/// Initialize the request parameters
+		/// - Parameter charge: 
+		/// - Parameter refund: 
 		public init(charge: String, refund: String) {
 			self.charge = charge
 			self.refund = refund
@@ -699,9 +758,9 @@ public struct PostChargesChargeRefundsRefund: StripeAPIEndpoint {
 	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}

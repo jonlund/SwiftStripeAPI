@@ -4,13 +4,19 @@ public struct GetFiles: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let purpose: String
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let purpose: String?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, purpose: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter purpose: The file purpose to filter queries by. If none is provided, files will not be filtered by purpose.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, purpose: String? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.purpose = purpose
@@ -18,7 +24,13 @@ public struct GetFiles: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/files?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&purpose=\(inputs.purpose.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.purpose?.urlEncoded { params.append("purpose=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/files?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -76,12 +88,12 @@ public struct PostFiles: StripeAPIEndpoint {
 		public final class FileLinkCreationParams: Codable {
 			public var create: Bool
 			public var expires_at: Timestamp?
-			public var metadata: MESSED_UP?
+			public var metadata: AnyCodable?
 
 			/// Optional parameters to automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
 			/// - Parameters:
 			///   - create: 
-			public init(create: Bool, expires_at: Timestamp? = nil, metadata: MESSED_UP? = nil) {
+			public init(create: Bool, expires_at: Timestamp? = nil, metadata: AnyCodable? = nil) {
 				self.create = create
 				self.expires_at = expires_at
 				self.metadata = metadata
@@ -109,9 +121,12 @@ public struct GetFilesFile: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = File
 	public typealias paramType = Params
+	
 	public struct Params {
 		let file: String
 
+		/// Initialize the request parameters
+		/// - Parameter file: 
 		public init(file: String) {
 			self.file = file
 		}

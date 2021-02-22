@@ -30,9 +30,12 @@ public struct DeleteEphemeralKeysKey: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = EphemeralKey
 	public typealias paramType = Params
+	
 	public struct Params {
 		let key: String
 
+		/// Initialize the request parameters
+		/// - Parameter key: 
 		public init(key: String) {
 			self.key = key
 		}

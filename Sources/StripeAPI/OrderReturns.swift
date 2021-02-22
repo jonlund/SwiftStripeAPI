@@ -4,13 +4,19 @@ public struct GetOrderReturns: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let order: String
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let order: String?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, order: String, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter order: The order to retrieve returns for.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, order: String? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.order = order
@@ -18,7 +24,13 @@ public struct GetOrderReturns: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/order_returns?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&order=\(inputs.order.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.order?.urlEncoded { params.append("order=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/order_returns?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -50,9 +62,12 @@ public struct GetOrderReturnsId: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = OrderReturn
 	public typealias paramType = Params
+	
 	public struct Params {
 		let id: String
 
+		/// Initialize the request parameters
+		/// - Parameter id: 
 		public init(id: String) {
 			self.id = id
 		}

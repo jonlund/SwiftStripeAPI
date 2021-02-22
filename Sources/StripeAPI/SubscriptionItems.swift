@@ -4,21 +4,33 @@ public struct GetSubscriptionItems: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
 		let subscription: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String, subscription: String) {
+		/// Initialize the request parameters
+		/// - Parameter subscription: The ID of the subscription whose items will be retrieved.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(subscription: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
+			self.subscription = subscription
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
-			self.subscription = subscription
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/subscription_items?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&subscription=\(inputs.subscription.urlEncoded))"
+		var params = [String]()
+		params.append("subscription=\(inputs.subscription.urlEncoded)")
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/subscription_items?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -56,7 +68,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-		public var billing_thresholds: MESSED_UP?
+		public var billing_thresholds: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -76,9 +88,9 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 		/// The identifier of the subscription to modify.
 		public var subscription: String
 		/// A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
-		public var tax_rates: MESSED_UP?
+		public var tax_rates: AnyCodable?
 
-		public init(subscription: String, billing_thresholds: MESSED_UP? = nil, expand: [String]? = nil, metadata: Empty? = nil, payment_behavior: PaymentBehaviorValues? = nil, price: String? = nil, price_data: RecurringPriceData? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, quantity: Int? = nil, tax_rates: MESSED_UP? = nil) {
+		public init(subscription: String, billing_thresholds: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, payment_behavior: PaymentBehaviorValues? = nil, price: String? = nil, price_data: RecurringPriceData? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, quantity: Int? = nil, tax_rates: AnyCodable? = nil) {
 			self.subscription = subscription
 			self.billing_thresholds = billing_thresholds
 			self.expand = expand
@@ -155,9 +167,12 @@ public struct GetSubscriptionItemsItem: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = SubscriptionItem
 	public typealias paramType = Params
+	
 	public struct Params {
 		let item: String
 
+		/// Initialize the request parameters
+		/// - Parameter item: 
 		public init(item: String) {
 			self.item = item
 		}
@@ -174,9 +189,12 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SubscriptionItem
 	public typealias paramType = Params
+	
 	public struct Params {
 		let item: String
 
+		/// Initialize the request parameters
+		/// - Parameter item: 
 		public init(item: String) {
 			self.item = item
 		}
@@ -187,11 +205,11 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-		public var billing_thresholds: MESSED_UP?
+		public var billing_thresholds: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Indicates if a customer is on or off-session while an invoice payment is attempted.
 		public var off_session: Bool?
 		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
@@ -207,9 +225,9 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 		/// The quantity you'd like to apply to the subscription item you're creating.
 		public var quantity: Int?
 		/// A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
-		public var tax_rates: MESSED_UP?
+		public var tax_rates: AnyCodable?
 
-		public init(billing_thresholds: MESSED_UP? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, off_session: Bool? = nil, payment_behavior: PaymentBehaviorValues? = nil, price: String? = nil, price_data: RecurringPriceData? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, quantity: Int? = nil, tax_rates: MESSED_UP? = nil) {
+		public init(billing_thresholds: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, payment_behavior: PaymentBehaviorValues? = nil, price: String? = nil, price_data: RecurringPriceData? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, quantity: Int? = nil, tax_rates: AnyCodable? = nil) {
 			self.billing_thresholds = billing_thresholds
 			self.expand = expand
 			self.metadata = metadata
@@ -286,9 +304,12 @@ public struct DeleteSubscriptionItemsItem: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = DeletedSubscriptionItem
 	public typealias paramType = Params
+	
 	public struct Params {
 		let item: String
 
+		/// Initialize the request parameters
+		/// - Parameter item: 
 		public init(item: String) {
 			self.item = item
 		}
@@ -326,21 +347,32 @@ public struct GetSubscriptionItemsSubscriptionItemUsageRecordSummaries: StripeAP
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
 		let subscription_item: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String, subscription_item: String) {
+		/// Initialize the request parameters
+		/// - Parameter subscription_item: 
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(subscription_item: String, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
+			self.subscription_item = subscription_item
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
-			self.subscription_item = subscription_item
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/subscription_items/\(inputs.subscription_item)/usage_record_summaries?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/subscription_items/\(inputs.subscription_item)/usage_record_summaries?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -372,9 +404,12 @@ public struct PostSubscriptionItemsSubscriptionItemUsageRecords: StripeAPIEndpoi
 	public typealias inputType = FormInput
 	public typealias outputType = UsageRecord
 	public typealias paramType = Params
+	
 	public struct Params {
 		let subscription_item: String
 
+		/// Initialize the request parameters
+		/// - Parameter subscription_item: 
 		public init(subscription_item: String) {
 			self.subscription_item = subscription_item
 		}

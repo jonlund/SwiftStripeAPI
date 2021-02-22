@@ -4,15 +4,23 @@ public struct GetIssuingAuthorizations: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let card: String
-		let cardholder: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let status: String
+		let card: String?
+		let cardholder: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let status: String?
 
-		public init(card: String, cardholder: String, ending_before: String, limit: Int, starting_after: String, status: String) {
+		/// Initialize the request parameters
+		/// - Parameter card: Only return authorizations that belong to the given card.
+		/// - Parameter cardholder: Only return authorizations that belong to the given cardholder.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: Only return authorizations with the given status. One of `pending`, `closed`, or `reversed`.
+		public init(card: String? = nil, cardholder: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, status: String? = nil) {
 			self.card = card
 			self.cardholder = cardholder
 			self.ending_before = ending_before
@@ -22,7 +30,15 @@ public struct GetIssuingAuthorizations: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/authorizations?card=\(inputs.card.urlEncoded))&cardholder=\(inputs.cardholder.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.card?.urlEncoded { params.append("card=\(a)") }
+		if let a = inputs.cardholder?.urlEncoded { params.append("cardholder=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/issuing/authorizations?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -54,9 +70,12 @@ public struct GetIssuingAuthorizationsAuthorization: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = IssuingAuthorization
 	public typealias paramType = Params
+	
 	public struct Params {
 		let authorization: String
 
+		/// Initialize the request parameters
+		/// - Parameter authorization: 
 		public init(authorization: String) {
 			self.authorization = authorization
 		}
@@ -73,9 +92,12 @@ public struct PostIssuingAuthorizationsAuthorization: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingAuthorization
 	public typealias paramType = Params
+	
 	public struct Params {
 		let authorization: String
 
+		/// Initialize the request parameters
+		/// - Parameter authorization: 
 		public init(authorization: String) {
 			self.authorization = authorization
 		}
@@ -88,9 +110,9 @@ public struct PostIssuingAuthorizationsAuthorization: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}
@@ -103,9 +125,12 @@ public struct PostIssuingAuthorizationsAuthorizationApprove: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingAuthorization
 	public typealias paramType = Params
+	
 	public struct Params {
 		let authorization: String
 
+		/// Initialize the request parameters
+		/// - Parameter authorization: 
 		public init(authorization: String) {
 			self.authorization = authorization
 		}
@@ -120,9 +145,9 @@ public struct PostIssuingAuthorizationsAuthorizationApprove: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(amount: Int? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(amount: Int? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.amount = amount
 			self.expand = expand
 			self.metadata = metadata
@@ -136,9 +161,12 @@ public struct PostIssuingAuthorizationsAuthorizationDecline: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingAuthorization
 	public typealias paramType = Params
+	
 	public struct Params {
 		let authorization: String
 
+		/// Initialize the request parameters
+		/// - Parameter authorization: 
 		public init(authorization: String) {
 			self.authorization = authorization
 		}
@@ -151,9 +179,9 @@ public struct PostIssuingAuthorizationsAuthorizationDecline: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}
@@ -166,16 +194,25 @@ public struct GetIssuingCardholders: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let email: String
-		let ending_before: String
-		let limit: Int
-		let phone_number: String
-		let starting_after: String
-		let status: String
-		let type: String
+		let email: String?
+		let ending_before: String?
+		let limit: Int?
+		let phone_number: String?
+		let starting_after: String?
+		let status: String?
+		let type: String?
 
-		public init(email: String, ending_before: String, limit: Int, phone_number: String, starting_after: String, status: String, type: String) {
+		/// Initialize the request parameters
+		/// - Parameter email: Only return cardholders that have the given email address.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter phone_number: Only return cardholders that have the given phone number.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: Only return cardholders that have the given status. One of `active`, `inactive`, or `blocked`.
+		/// - Parameter type: Only return cardholders that have the given type. One of `individual` or `company`.
+		public init(email: String? = nil, ending_before: String? = nil, limit: Int? = nil, phone_number: String? = nil, starting_after: String? = nil, status: String? = nil, type: String? = nil) {
 			self.email = email
 			self.ending_before = ending_before
 			self.limit = limit
@@ -186,7 +223,16 @@ public struct GetIssuingCardholders: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/cardholders?email=\(inputs.email.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&phone_number=\(inputs.phone_number.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&type=\(inputs.type.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.email?.urlEncoded { params.append("email=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.phone_number?.urlEncoded { params.append("phone_number=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		if let a = inputs.type?.urlEncoded { params.append("type=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/issuing/cardholders?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -265,12 +311,12 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 		public final class AuthorizationControlsParamV2: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
-			public var spending_limits: MESSED_UP?
+			public var spending_limits: AnyCodable?
 			public var spending_limits_currency: String?
 
 			/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 			/// - Parameters:
-			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: MESSED_UP? = nil, spending_limits_currency: String? = nil) {
+			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: AnyCodable? = nil, spending_limits_currency: String? = nil) {
 				self.allowed_categories = allowed_categories
 				self.blocked_categories = blocked_categories
 				self.spending_limits = spending_limits
@@ -401,9 +447,12 @@ public struct GetIssuingCardholdersCardholder: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = IssuingCardholder
 	public typealias paramType = Params
+	
 	public struct Params {
 		let cardholder: String
 
+		/// Initialize the request parameters
+		/// - Parameter cardholder: 
 		public init(cardholder: String) {
 			self.cardholder = cardholder
 		}
@@ -420,9 +469,12 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingCardholder
 	public typealias paramType = Params
+	
 	public struct Params {
 		let cardholder: String
 
+		/// Initialize the request parameters
+		/// - Parameter cardholder: 
 		public init(cardholder: String) {
 			self.cardholder = cardholder
 		}
@@ -468,12 +520,12 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		public final class AuthorizationControlsParamV2: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
-			public var spending_limits: MESSED_UP?
+			public var spending_limits: AnyCodable?
 			public var spending_limits_currency: String?
 
 			/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 			/// - Parameters:
-			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: MESSED_UP? = nil, spending_limits_currency: String? = nil) {
+			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: AnyCodable? = nil, spending_limits_currency: String? = nil) {
 				self.allowed_categories = allowed_categories
 				self.blocked_categories = blocked_categories
 				self.spending_limits = spending_limits
@@ -599,18 +651,29 @@ public struct GetIssuingCards: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let cardholder: String
-		let ending_before: String
-		let exp_month: Int
-		let exp_year: Int
-		let last4: String
-		let limit: Int
-		let starting_after: String
-		let status: String
-		let type: String
+		let cardholder: String?
+		let ending_before: String?
+		let exp_month: Int?
+		let exp_year: Int?
+		let last4: String?
+		let limit: Int?
+		let starting_after: String?
+		let status: String?
+		let type: String?
 
-		public init(cardholder: String, ending_before: String, exp_month: Int, exp_year: Int, last4: String, limit: Int, starting_after: String, status: String, type: String) {
+		/// Initialize the request parameters
+		/// - Parameter cardholder: Only return cards belonging to the Cardholder with the provided ID.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter exp_month: Only return cards that have the given expiration month.
+		/// - Parameter exp_year: Only return cards that have the given expiration year.
+		/// - Parameter last4: Only return cards that have the given last four digits.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: Only return cards that have the given status. One of `active`, `inactive`, or `canceled`.
+		/// - Parameter type: Only return cards that have the given type. One of `virtual` or `physical`.
+		public init(cardholder: String? = nil, ending_before: String? = nil, exp_month: Int? = nil, exp_year: Int? = nil, last4: String? = nil, limit: Int? = nil, starting_after: String? = nil, status: String? = nil, type: String? = nil) {
 			self.cardholder = cardholder
 			self.ending_before = ending_before
 			self.exp_month = exp_month
@@ -623,7 +686,18 @@ public struct GetIssuingCards: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/cards?cardholder=\(inputs.cardholder.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&exp_month=\(inputs.exp_month.urlEncoded))&exp_year=\(inputs.exp_year.urlEncoded))&last4=\(inputs.last4.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&type=\(inputs.type.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.cardholder?.urlEncoded { params.append("cardholder=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.exp_month?.urlEncoded { params.append("exp_month=\(a)") }
+		if let a = inputs.exp_year?.urlEncoded { params.append("exp_year=\(a)") }
+		if let a = inputs.last4?.urlEncoded { params.append("last4=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		if let a = inputs.type?.urlEncoded { params.append("type=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/issuing/cards?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -699,11 +773,11 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 		public final class AuthorizationControlsParam: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
-			public var spending_limits: MESSED_UP?
+			public var spending_limits: AnyCodable?
 
 			/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 			/// - Parameters:
-			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: MESSED_UP? = nil) {
+			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: AnyCodable? = nil) {
 				self.allowed_categories = allowed_categories
 				self.blocked_categories = blocked_categories
 				self.spending_limits = spending_limits
@@ -788,9 +862,12 @@ public struct GetIssuingCardsCard: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = IssuingCard
 	public typealias paramType = Params
+	
 	public struct Params {
 		let card: String
 
+		/// Initialize the request parameters
+		/// - Parameter card: 
 		public init(card: String) {
 			self.card = card
 		}
@@ -807,9 +884,12 @@ public struct PostIssuingCardsCard: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingCard
 	public typealias paramType = Params
+	
 	public struct Params {
 		let card: String
 
+		/// Initialize the request parameters
+		/// - Parameter card: 
 		public init(card: String) {
 			self.card = card
 		}
@@ -824,13 +904,13 @@ public struct PostIssuingCardsCard: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 		public var spending_controls: AuthorizationControlsParam?
 		/// Dictates whether authorizations can be approved on this card. If this card is being canceled because it was lost or stolen, this information should be provided as `cancellation_reason`.
 		public var status: StatusValues?
 
-		public init(cancellation_reason: CancellationReasonValues? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil, spending_controls: AuthorizationControlsParam? = nil, status: StatusValues? = nil) {
+		public init(cancellation_reason: CancellationReasonValues? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, spending_controls: AuthorizationControlsParam? = nil, status: StatusValues? = nil) {
 			self.cancellation_reason = cancellation_reason
 			self.expand = expand
 			self.metadata = metadata
@@ -843,11 +923,11 @@ public struct PostIssuingCardsCard: StripeAPIEndpoint {
 		public final class AuthorizationControlsParam: Codable {
 			public var allowed_categories: [String]?
 			public var blocked_categories: [String]?
-			public var spending_limits: MESSED_UP?
+			public var spending_limits: AnyCodable?
 
 			/// Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 			/// - Parameters:
-			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: MESSED_UP? = nil) {
+			public init(allowed_categories: [String]? = nil, blocked_categories: [String]? = nil, spending_limits: AnyCodable? = nil) {
 				self.allowed_categories = allowed_categories
 				self.blocked_categories = blocked_categories
 				self.spending_limits = spending_limits
@@ -874,14 +954,21 @@ public struct GetIssuingDisputes: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = IssuingDisputeList
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let status: String
-		let transaction: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let status: String?
+		let transaction: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String, status: String, transaction: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter status: Select Issuing disputes with the given status.
+		/// - Parameter transaction: Select the Issuing dispute for the given transaction.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, status: String? = nil, transaction: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
@@ -890,7 +977,14 @@ public struct GetIssuingDisputes: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/disputes?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&status=\(inputs.status.urlEncoded))&transaction=\(inputs.transaction.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.status?.urlEncoded { params.append("status=\(a)") }
+		if let a = inputs.transaction?.urlEncoded { params.append("transaction=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/issuing/disputes?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -946,18 +1040,18 @@ public struct PostIssuingDisputes: StripeAPIEndpoint {
 
 		/// Evidence provided for the dispute.
 		public final class EvidenceParam: Codable {
-			public var canceled: MESSED_UP?
-			public var duplicate: MESSED_UP?
-			public var fraudulent: MESSED_UP?
-			public var merchandise_not_as_described: MESSED_UP?
-			public var not_received: MESSED_UP?
-			public var other: MESSED_UP?
+			public var canceled: AnyCodable?
+			public var duplicate: AnyCodable?
+			public var fraudulent: AnyCodable?
+			public var merchandise_not_as_described: AnyCodable?
+			public var not_received: AnyCodable?
+			public var other: AnyCodable?
 			public var reason: ReasonValues?
-			public var service_not_as_described: MESSED_UP?
+			public var service_not_as_described: AnyCodable?
 
 			/// Evidence provided for the dispute.
 			/// - Parameters:
-			public init(canceled: MESSED_UP? = nil, duplicate: MESSED_UP? = nil, fraudulent: MESSED_UP? = nil, merchandise_not_as_described: MESSED_UP? = nil, not_received: MESSED_UP? = nil, other: MESSED_UP? = nil, reason: ReasonValues? = nil, service_not_as_described: MESSED_UP? = nil) {
+			public init(canceled: AnyCodable? = nil, duplicate: AnyCodable? = nil, fraudulent: AnyCodable? = nil, merchandise_not_as_described: AnyCodable? = nil, not_received: AnyCodable? = nil, other: AnyCodable? = nil, reason: ReasonValues? = nil, service_not_as_described: AnyCodable? = nil) {
 				self.canceled = canceled
 				self.duplicate = duplicate
 				self.fraudulent = fraudulent
@@ -988,9 +1082,12 @@ public struct GetIssuingDisputesDispute: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = IssuingDispute
 	public typealias paramType = Params
+	
 	public struct Params {
 		let dispute: String
 
+		/// Initialize the request parameters
+		/// - Parameter dispute: 
 		public init(dispute: String) {
 			self.dispute = dispute
 		}
@@ -1007,9 +1104,12 @@ public struct PostIssuingDisputesDispute: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingDispute
 	public typealias paramType = Params
+	
 	public struct Params {
 		let dispute: String
 
+		/// Initialize the request parameters
+		/// - Parameter dispute: 
 		public init(dispute: String) {
 			self.dispute = dispute
 		}
@@ -1024,9 +1124,9 @@ public struct PostIssuingDisputesDispute: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(evidence: EvidenceParam? = nil, expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(evidence: EvidenceParam? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.evidence = evidence
 			self.expand = expand
 			self.metadata = metadata
@@ -1035,18 +1135,18 @@ public struct PostIssuingDisputesDispute: StripeAPIEndpoint {
 
 		/// Evidence provided for the dispute.
 		public final class EvidenceParam: Codable {
-			public var canceled: MESSED_UP?
-			public var duplicate: MESSED_UP?
-			public var fraudulent: MESSED_UP?
-			public var merchandise_not_as_described: MESSED_UP?
-			public var not_received: MESSED_UP?
-			public var other: MESSED_UP?
+			public var canceled: AnyCodable?
+			public var duplicate: AnyCodable?
+			public var fraudulent: AnyCodable?
+			public var merchandise_not_as_described: AnyCodable?
+			public var not_received: AnyCodable?
+			public var other: AnyCodable?
 			public var reason: ReasonValues?
-			public var service_not_as_described: MESSED_UP?
+			public var service_not_as_described: AnyCodable?
 
 			/// Evidence provided for the dispute.
 			/// - Parameters:
-			public init(canceled: MESSED_UP? = nil, duplicate: MESSED_UP? = nil, fraudulent: MESSED_UP? = nil, merchandise_not_as_described: MESSED_UP? = nil, not_received: MESSED_UP? = nil, other: MESSED_UP? = nil, reason: ReasonValues? = nil, service_not_as_described: MESSED_UP? = nil) {
+			public init(canceled: AnyCodable? = nil, duplicate: AnyCodable? = nil, fraudulent: AnyCodable? = nil, merchandise_not_as_described: AnyCodable? = nil, not_received: AnyCodable? = nil, other: AnyCodable? = nil, reason: ReasonValues? = nil, service_not_as_described: AnyCodable? = nil) {
 				self.canceled = canceled
 				self.duplicate = duplicate
 				self.fraudulent = fraudulent
@@ -1077,9 +1177,12 @@ public struct PostIssuingDisputesDisputeSubmit: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingDispute
 	public typealias paramType = Params
+	
 	public struct Params {
 		let dispute: String
 
+		/// Initialize the request parameters
+		/// - Parameter dispute: 
 		public init(dispute: String) {
 			self.dispute = dispute
 		}
@@ -1092,9 +1195,9 @@ public struct PostIssuingDisputesDisputeSubmit: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}
@@ -1107,19 +1210,29 @@ public struct GetIssuingSettlements: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/settlements?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/issuing/settlements?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1151,9 +1264,12 @@ public struct GetIssuingSettlementsSettlement: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = IssuingSettlement
 	public typealias paramType = Params
+	
 	public struct Params {
 		let settlement: String
 
+		/// Initialize the request parameters
+		/// - Parameter settlement: 
 		public init(settlement: String) {
 			self.settlement = settlement
 		}
@@ -1170,9 +1286,12 @@ public struct PostIssuingSettlementsSettlement: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingSettlement
 	public typealias paramType = Params
+	
 	public struct Params {
 		let settlement: String
 
+		/// Initialize the request parameters
+		/// - Parameter settlement: 
 		public init(settlement: String) {
 			self.settlement = settlement
 		}
@@ -1200,15 +1319,23 @@ public struct GetIssuingTransactions: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let card: String
-		let cardholder: String
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
-		let type: String
+		let card: String?
+		let cardholder: String?
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
+		let type: String?
 
-		public init(card: String, cardholder: String, ending_before: String, limit: Int, starting_after: String, type: String) {
+		/// Initialize the request parameters
+		/// - Parameter card: Only return transactions that belong to the given card.
+		/// - Parameter cardholder: Only return transactions that belong to the given cardholder.
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		/// - Parameter type: Only return transactions that have the given type. One of `capture` or `refund`.
+		public init(card: String? = nil, cardholder: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil, type: String? = nil) {
 			self.card = card
 			self.cardholder = cardholder
 			self.ending_before = ending_before
@@ -1218,7 +1345,15 @@ public struct GetIssuingTransactions: StripeAPIEndpoint {
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/issuing/transactions?card=\(inputs.card.urlEncoded))&cardholder=\(inputs.cardholder.urlEncoded))&ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))&type=\(inputs.type.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.card?.urlEncoded { params.append("card=\(a)") }
+		if let a = inputs.cardholder?.urlEncoded { params.append("cardholder=\(a)") }
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		if let a = inputs.type?.urlEncoded { params.append("type=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/issuing/transactions?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -1250,9 +1385,12 @@ public struct GetIssuingTransactionsTransaction: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = IssuingTransaction
 	public typealias paramType = Params
+	
 	public struct Params {
 		let transaction: String
 
+		/// Initialize the request parameters
+		/// - Parameter transaction: 
 		public init(transaction: String) {
 			self.transaction = transaction
 		}
@@ -1269,9 +1407,12 @@ public struct PostIssuingTransactionsTransaction: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingTransaction
 	public typealias paramType = Params
+	
 	public struct Params {
 		let transaction: String
 
+		/// Initialize the request parameters
+		/// - Parameter transaction: 
 		public init(transaction: String) {
 			self.transaction = transaction
 		}
@@ -1284,9 +1425,9 @@ public struct PostIssuingTransactionsTransaction: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}

@@ -4,19 +4,29 @@ public struct GetCoupons: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Output
 	public typealias paramType = Params
+	
 	public struct Params {
-		let ending_before: String
-		let limit: Int
-		let starting_after: String
+		let ending_before: String?
+		let limit: Int?
+		let starting_after: String?
 
-		public init(ending_before: String, limit: Int, starting_after: String) {
+		/// Initialize the request parameters
+		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+		public init(ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
 			self.ending_before = ending_before
 			self.limit = limit
 			self.starting_after = starting_after
 		}
 	}
 	public static func endpoint(for inputs: Params) throws -> String {
-		return "/v1/coupons?ending_before=\(inputs.ending_before.urlEncoded))&limit=\(inputs.limit.urlEncoded))&starting_after=\(inputs.starting_after.urlEncoded))"
+		var params = [String]()
+		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
+		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
+		let query = params.joined(separator: "&")
+		return "/v1/coupons?\(query)"
 	}
 	public static var method: HTTPMethod { return .GET }
 
@@ -70,7 +80,7 @@ public struct PostCoupons: StripeAPIEndpoint {
 		/// A positive integer specifying the number of times the coupon can be redeemed before it's no longer valid. For example, you might have a 50% off coupon that the first 20 readers of your blog can use.
 		public var max_redemptions: Int?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
 		public var name: String?
 		/// A positive float larger than 0, and smaller or equal to 100, that represents the discount the coupon will apply (required if `amount_off` is not passed).
@@ -78,7 +88,7 @@ public struct PostCoupons: StripeAPIEndpoint {
 		/// Unix timestamp specifying the last time at which the coupon can be redeemed. After the redeem_by date, the coupon can no longer be applied to new customers.
 		public var redeem_by: Timestamp?
 
-		public init(duration: DurationValues, amount_off: Int? = nil, applies_to: AppliesToParams? = nil, currency: String? = nil, duration_in_months: Int? = nil, expand: [String]? = nil, id: String? = nil, max_redemptions: Int? = nil, metadata: MESSED_UP? = nil, name: String? = nil, percent_off: StringNumber? = nil, redeem_by: Timestamp? = nil) {
+		public init(duration: DurationValues, amount_off: Int? = nil, applies_to: AppliesToParams? = nil, currency: String? = nil, duration_in_months: Int? = nil, expand: [String]? = nil, id: String? = nil, max_redemptions: Int? = nil, metadata: AnyCodable? = nil, name: String? = nil, percent_off: StringNumber? = nil, redeem_by: Timestamp? = nil) {
 			self.duration = duration
 			self.amount_off = amount_off
 			self.applies_to = applies_to
@@ -121,9 +131,12 @@ public struct GetCouponsCoupon: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = Coupon
 	public typealias paramType = Params
+	
 	public struct Params {
 		let coupon: String
 
+		/// Initialize the request parameters
+		/// - Parameter coupon: 
 		public init(coupon: String) {
 			self.coupon = coupon
 		}
@@ -140,9 +153,12 @@ public struct PostCouponsCoupon: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Coupon
 	public typealias paramType = Params
+	
 	public struct Params {
 		let coupon: String
 
+		/// Initialize the request parameters
+		/// - Parameter coupon: 
 		public init(coupon: String) {
 			self.coupon = coupon
 		}
@@ -155,11 +171,11 @@ public struct PostCouponsCoupon: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: MESSED_UP?
+		public var metadata: AnyCodable?
 		/// Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
 		public var name: String?
 
-		public init(expand: [String]? = nil, metadata: MESSED_UP? = nil, name: String? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 			self.name = name
@@ -173,9 +189,12 @@ public struct DeleteCouponsCoupon: StripeAPIEndpoint {
 	public typealias inputType = Empty
 	public typealias outputType = DeletedCoupon
 	public typealias paramType = Params
+	
 	public struct Params {
 		let coupon: String
 
+		/// Initialize the request parameters
+		/// - Parameter coupon: 
 		public init(coupon: String) {
 			self.coupon = coupon
 		}
