@@ -885,3 +885,66 @@ public final class SubscriptionBillingThresholds: Codable {
 //		case taxRate = "tax_rate"
 //	}
 //}
+
+
+/// A Reader represents a physical device for accepting payment details.  Related guide: [Connecting to a Reader](https://stripe.com/docs/terminal/readers/connecting).
+public final class TerminalReader: Codable {
+	/// The current software version of the reader.
+	public var device_sw_version: String?
+	/// Type of reader, one of `bbpos_chipper2x` or `verifone_P400`.
+	public var device_type: DeviceTypeValues
+	/// Unique identifier for the object.
+	public var id: String
+	/// The local IP address of the reader.
+	public var ip_address: String?
+	/// Custom label given to the reader for easier identification.
+	public var label: String
+	/// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+	public var livemode: Bool
+	/// The location identifier of the reader.
+	public var location: String?
+	/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+	public var metadata: Empty
+	/// String representing the object's type. Objects of the same type share the same value.
+	public var object: ObjectValues
+	/// Serial number of the reader.
+	public var serial_number: String
+	/// The networking status of the reader.
+	public var status: String?
+	
+	/// A Reader represents a physical device for accepting payment details.  Related guide: [Connecting to a Reader](https://stripe.com/docs/terminal/readers/connecting).
+	/// - Parameters:
+	///   - device_sw_version: The current software version of the reader.
+	///   - device_type: Type of reader, one of `bbpos_chipper2x` or `verifone_P400`.
+	///   - id: Unique identifier for the object.
+	///   - ip_address: The local IP address of the reader.
+	///   - label: Custom label given to the reader for easier identification.
+	///   - livemode: Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+	///   - location: The location identifier of the reader.
+	///   - metadata: Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+	///   - object: String representing the object's type. Objects of the same type share the same value.
+	///   - serial_number: Serial number of the reader.
+	///   - status: The networking status of the reader.
+	public init(device_type: DeviceTypeValues, id: String, label: String, livemode: Bool, metadata: Empty, object: ObjectValues, serial_number: String, device_sw_version: String? = nil, ip_address: String? = nil, location: String? = nil, status: String? = nil) {
+		self.device_type = device_type
+		self.id = id
+		self.label = label
+		self.livemode = livemode
+		self.metadata = metadata
+		self.object = object
+		self.serial_number = serial_number
+		self.device_sw_version = device_sw_version
+		self.ip_address = ip_address
+		self.location = location
+		self.status = status
+	}
+	
+	public enum DeviceTypeValues: String, Codable {
+		case bbposChipper2X = "bbpos_chipper2x"
+		case verifoneP400 = "verifone_P400"
+	}
+	
+	public enum ObjectValues: String, Codable {
+		case terminalReader = "terminal.reader"
+	}
+}
