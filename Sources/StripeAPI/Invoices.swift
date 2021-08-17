@@ -1,7 +1,7 @@
 
 /// You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
 public struct GetInvoices: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = InvoicesList
 	public typealias paramType = Params
 	
@@ -73,8 +73,8 @@ public struct GetInvoices: StripeAPIEndpoint {
 public struct PostInvoices: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoice
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/invoices"
 	}
 
@@ -166,7 +166,7 @@ public struct PostInvoices: StripeAPIEndpoint {
 
 /// At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.  Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer’s discount.  You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a <code>proration_date</code> parameter when doing the actual subscription update. The value passed in should be the same as the <code>subscription_proration_date</code> returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where <code>period[start]</code> is equal to the <code>subscription_proration_date</code> on the upcoming invoice resource.
 public struct GetInvoicesUpcoming: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Invoice
 	public typealias paramType = Params
 	
@@ -227,7 +227,7 @@ public struct GetInvoicesUpcoming: StripeAPIEndpoint {
 
 /// When retrieving an upcoming invoice, you’ll get a <strong>lines</strong> property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
 public struct GetInvoicesUpcomingLines: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = InvoiceLinesList
 	public typealias paramType = Params
 	
@@ -322,7 +322,7 @@ public struct GetInvoicesUpcomingLines: StripeAPIEndpoint {
 
 /// Retrieves the invoice with the given ID.
 public struct GetInvoicesInvoice: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Invoice
 	public typealias paramType = Params
 	
@@ -427,7 +427,7 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 
 /// Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be <a href="#void_invoice">voided</a>.
 public struct DeleteInvoicesInvoice: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedInvoice
 	public typealias paramType = Params
 	
@@ -482,7 +482,7 @@ public struct PostInvoicesInvoiceFinalize: StripeAPIEndpoint {
 
 /// When retrieving an invoice, you’ll get a <strong>lines</strong> property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
 public struct GetInvoicesInvoiceLines: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = InvoiceLinesList
 	public typealias paramType = Params
 	

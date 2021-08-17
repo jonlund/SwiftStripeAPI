@@ -1,7 +1,7 @@
 
 /// Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
 public struct GetFiles: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -61,8 +61,8 @@ public struct GetFiles: StripeAPIEndpoint {
 public struct PostFiles: StripeAPIEndpoint {
 	public typealias inputType = DataInput
 	public typealias outputType = File
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/files"
 	}
 
@@ -118,7 +118,7 @@ public struct PostFiles: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object. To access file contents, see the <a href="/docs/file-upload#download-file-contents">File Upload Guide</a>.
 public struct GetFilesFile: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = File
 	public typealias paramType = Params
 	

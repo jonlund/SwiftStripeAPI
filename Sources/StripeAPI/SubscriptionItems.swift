@@ -1,7 +1,7 @@
 
 /// Returns a list of your subscription items for a given subscription.
 public struct GetSubscriptionItems: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -61,8 +61,8 @@ public struct GetSubscriptionItems: StripeAPIEndpoint {
 public struct PostSubscriptionItems: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SubscriptionItem
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/subscription_items"
 	}
 
@@ -72,7 +72,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
 		public var payment_behavior: PaymentBehaviorValues?
 		/// The ID of the price object.
@@ -90,7 +90,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 		/// A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
 		public var tax_rates: AnyCodable?
 
-		public init(subscription: String, billing_thresholds: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, payment_behavior: PaymentBehaviorValues? = nil, price: String? = nil, price_data: RecurringPriceData? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, quantity: Int? = nil, tax_rates: AnyCodable? = nil) {
+		public init(subscription: String, billing_thresholds: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, payment_behavior: PaymentBehaviorValues? = nil, price: String? = nil, price_data: RecurringPriceData? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, quantity: Int? = nil, tax_rates: AnyCodable? = nil) {
 			self.subscription = subscription
 			self.billing_thresholds = billing_thresholds
 			self.expand = expand
@@ -164,7 +164,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 
 /// Retrieves the subscription item with the given ID.
 public struct GetSubscriptionItemsItem: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = SubscriptionItem
 	public typealias paramType = Params
 	
@@ -344,7 +344,7 @@ public struct DeleteSubscriptionItemsItem: StripeAPIEndpoint {
 
 /// For the specified subscription item, returns a list of summary objects. Each object in the list provides usage information that’s been summarized from multiple usage records and over a subscription billing period (e.g., 15 usage records in the month of September).  The list is sorted in reverse-chronological order (newest first). The first list item represents the most current usage period that hasn’t ended yet. Since new usage records can still be added, the returned summary information for the subscription item’s ID should be seen as unstable until the subscription billing period ends.
 public struct GetSubscriptionItemsSubscriptionItemUsageRecordSummaries: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	

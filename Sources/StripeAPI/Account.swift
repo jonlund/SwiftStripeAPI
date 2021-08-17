@@ -1,10 +1,10 @@
 
 /// Retrieves the details of an account.
 public struct GetAccount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Account
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account"
 	}
 	public static var method: HTTPMethod { return .GET }
@@ -15,8 +15,8 @@ public struct GetAccount: StripeAPIEndpoint {
 public struct PostAccount: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Account
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account"
 	}
 
@@ -653,8 +653,8 @@ public struct PostAccount: StripeAPIEndpoint {
 public struct DeleteAccount: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = DeletedAccount
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account"
 	}
 	public static var method: HTTPMethod { return .DELETE }
@@ -673,8 +673,8 @@ public struct DeleteAccount: StripeAPIEndpoint {
 public struct PostAccountBankAccounts: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ExternalAccount
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account/bank_accounts"
 	}
 
@@ -688,9 +688,9 @@ public struct PostAccountBankAccounts: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var external_account: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
+		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: AnyCodable? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand
@@ -703,7 +703,7 @@ public struct PostAccountBankAccounts: StripeAPIEndpoint {
 
 /// Retrieve a specified external account for a given account.
 public struct GetAccountBankAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
 	
@@ -799,7 +799,7 @@ public struct PostAccountBankAccountsId: StripeAPIEndpoint {
 
 /// Delete a specified external account for a given account.
 public struct DeleteAccountBankAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedExternalAccount
 	public typealias paramType = Params
 	
@@ -821,10 +821,10 @@ public struct DeleteAccountBankAccountsId: StripeAPIEndpoint {
 
 /// Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
 public struct GetAccountCapabilities: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ListAccountCapability
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account/capabilities"
 	}
 	public static var method: HTTPMethod { return .GET }
@@ -854,7 +854,7 @@ public struct GetAccountCapabilities: StripeAPIEndpoint {
 
 /// Retrieves information about the specified Account Capability.
 public struct GetAccountCapabilitiesCapability: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Capability
 	public typealias paramType = Params
 	
@@ -909,7 +909,7 @@ public struct PostAccountCapabilitiesCapability: StripeAPIEndpoint {
 
 /// List external accounts for an account.
 public struct GetAccountExternalAccounts: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ExternalAccountList
 	public typealias paramType = Params
 	
@@ -966,8 +966,8 @@ public struct GetAccountExternalAccounts: StripeAPIEndpoint {
 public struct PostAccountExternalAccounts: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ExternalAccount
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account/external_accounts"
 	}
 
@@ -981,9 +981,9 @@ public struct PostAccountExternalAccounts: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var external_account: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
+		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: AnyCodable? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand
@@ -996,7 +996,7 @@ public struct PostAccountExternalAccounts: StripeAPIEndpoint {
 
 /// Retrieve a specified external account for a given account.
 public struct GetAccountExternalAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
 	
@@ -1092,7 +1092,7 @@ public struct PostAccountExternalAccountsId: StripeAPIEndpoint {
 
 /// Delete a specified external account for a given account.
 public struct DeleteAccountExternalAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedExternalAccount
 	public typealias paramType = Params
 	
@@ -1116,8 +1116,8 @@ public struct DeleteAccountExternalAccountsId: StripeAPIEndpoint {
 public struct PostAccountLoginLinks: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = LoginLink
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account/login_links"
 	}
 
@@ -1141,8 +1141,8 @@ public struct PostAccountLoginLinks: StripeAPIEndpoint {
 public struct PutAccountLogout: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = LightAccountLogout
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account/logout"
 	}
 	public static var method: HTTPMethod { return .PUT }
@@ -1162,7 +1162,7 @@ public struct PutAccountLogout: StripeAPIEndpoint {
 
 /// Returns a list of people associated with the account’s legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
 public struct GetAccountPeople: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -1218,8 +1218,8 @@ public struct GetAccountPeople: StripeAPIEndpoint {
 public struct PostAccountPeople: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Person
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account/people"
 	}
 
@@ -1424,7 +1424,7 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 
 /// Retrieves an existing person.
 public struct GetAccountPeoplePerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Person
 	public typealias paramType = Params
 	
@@ -1664,7 +1664,7 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 
 /// Deletes an existing person’s relationship to the account’s legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the <code>account_opener</code>. If your integration is using the <code>executive</code> parameter, you cannot delete the only verified <code>executive</code> on file.
 public struct DeleteAccountPeoplePerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedPerson
 	public typealias paramType = Params
 	
@@ -1686,7 +1686,7 @@ public struct DeleteAccountPeoplePerson: StripeAPIEndpoint {
 
 /// Returns a list of people associated with the account’s legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
 public struct GetAccountPersons: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -1742,8 +1742,8 @@ public struct GetAccountPersons: StripeAPIEndpoint {
 public struct PostAccountPersons: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Person
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/account/persons"
 	}
 
@@ -1948,7 +1948,7 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 
 /// Retrieves an existing person.
 public struct GetAccountPersonsPerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Person
 	public typealias paramType = Params
 	
@@ -2188,7 +2188,7 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 
 /// Deletes an existing person’s relationship to the account’s legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the <code>account_opener</code>. If your integration is using the <code>executive</code> parameter, you cannot delete the only verified <code>executive</code> on file.
 public struct DeleteAccountPersonsPerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedPerson
 	public typealias paramType = Params
 	

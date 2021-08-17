@@ -1,7 +1,7 @@
 
 /// Returns a list of file links.
 public struct GetFileLinks: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetFileLinks: StripeAPIEndpoint {
 public struct PostFileLinks: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = FileLink
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/file_links"
 	}
 
@@ -92,7 +92,7 @@ public struct PostFileLinks: StripeAPIEndpoint {
 
 /// Retrieves the file link with the given ID.
 public struct GetFileLinksLink: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = FileLink
 	public typealias paramType = Params
 	

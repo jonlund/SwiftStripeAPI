@@ -1,7 +1,7 @@
 
 /// Returns a list of your receivers. Receivers are returned sorted by creation date, with the most recently created receivers appearing first.
 public struct GetBitcoinReceivers: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -67,7 +67,7 @@ public struct GetBitcoinReceivers: StripeAPIEndpoint {
 
 /// Retrieves the Bitcoin receiver with the given ID.
 public struct GetBitcoinReceiversId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BitcoinReceiver
 	public typealias paramType = Params
 	
@@ -89,7 +89,7 @@ public struct GetBitcoinReceiversId: StripeAPIEndpoint {
 
 /// List bitcoin transacitons for a given receiver.
 public struct GetBitcoinReceiversReceiverTransactions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BitcoinTransactionList
 	public typealias paramType = Params
 	
@@ -151,7 +151,7 @@ public struct GetBitcoinReceiversReceiverTransactions: StripeAPIEndpoint {
 
 /// List bitcoin transacitons for a given receiver.
 public struct GetBitcoinTransactions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BitcoinTransactionList
 	public typealias paramType = Params
 	

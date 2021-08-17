@@ -1,7 +1,7 @@
 
 /// Returns a list of Issuing <code>Authorization</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetIssuingAuthorizations: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -67,7 +67,7 @@ public struct GetIssuingAuthorizations: StripeAPIEndpoint {
 
 /// Retrieves an Issuing <code>Authorization</code> object.
 public struct GetIssuingAuthorizationsAuthorization: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuingAuthorization
 	public typealias paramType = Params
 	
@@ -191,7 +191,7 @@ public struct PostIssuingAuthorizationsAuthorizationDecline: StripeAPIEndpoint {
 
 /// Returns a list of Issuing <code>Cardholder</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetIssuingCardholders: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -263,8 +263,8 @@ public struct GetIssuingCardholders: StripeAPIEndpoint {
 public struct PostIssuingCardholders: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingCardholder
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/issuing/cardholders"
 	}
 
@@ -280,7 +280,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 		/// Additional information about an `individual` cardholder.
 		public var individual: IndividualParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The cardholder's name. This will be printed on cards issued to them.
 		public var name: String
 		/// The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already.
@@ -292,7 +292,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 		/// One of `individual` or `company`.
 		public var type: TypeValues
 
-		public init(billing: BillingSpecs, name: String, type: TypeValues, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: Empty? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
+		public init(billing: BillingSpecs, name: String, type: TypeValues, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: AnyCodable? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
 			self.billing = billing
 			self.name = name
 			self.type = type
@@ -444,7 +444,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 
 /// Retrieves an Issuing <code>Cardholder</code> object.
 public struct GetIssuingCardholdersCardholder: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuingCardholder
 	public typealias paramType = Params
 	
@@ -495,7 +495,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		/// Additional information about an `individual` cardholder.
 		public var individual: IndividualParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The cardholder's phone number.
 		public var phone_number: String?
 		/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
@@ -503,7 +503,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		/// Specifies whether to permit authorizations on this cardholder's cards.
 		public var status: StatusValues?
 
-		public init(billing: BillingSpecs? = nil, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: Empty? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
+		public init(billing: BillingSpecs? = nil, company: CompanyParam? = nil, email: String? = nil, expand: [String]? = nil, individual: IndividualParam? = nil, metadata: AnyCodable? = nil, phone_number: String? = nil, spending_controls: AuthorizationControlsParamV2? = nil, status: StatusValues? = nil) {
 			self.billing = billing
 			self.company = company
 			self.email = email
@@ -648,7 +648,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 
 /// Returns a list of Issuing <code>Card</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetIssuingCards: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -728,8 +728,8 @@ public struct GetIssuingCards: StripeAPIEndpoint {
 public struct PostIssuingCards: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingCard
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/issuing/cards"
 	}
 
@@ -741,7 +741,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The card this is meant to be a replacement for (if any).
 		public var replacement_for: String?
 		/// If `replacement_for` is specified, this should indicate why that card is being replaced.
@@ -755,7 +755,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 		/// The type of card to issue. Possible values are `physical` or `virtual`.
 		public var type: TypeValues
 
-		public init(currency: String, type: TypeValues, cardholder: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, replacement_for: String? = nil, replacement_reason: ReplacementReasonValues? = nil, shipping: ShippingSpecs? = nil, spending_controls: AuthorizationControlsParam? = nil, status: StatusValues? = nil) {
+		public init(currency: String, type: TypeValues, cardholder: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, replacement_for: String? = nil, replacement_reason: ReplacementReasonValues? = nil, shipping: ShippingSpecs? = nil, spending_controls: AuthorizationControlsParam? = nil, status: StatusValues? = nil) {
 			self.currency = currency
 			self.type = type
 			self.cardholder = cardholder
@@ -859,7 +859,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 
 /// Retrieves an Issuing <code>Card</code> object.
 public struct GetIssuingCardsCard: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuingCard
 	public typealias paramType = Params
 	
@@ -951,7 +951,7 @@ public struct PostIssuingCardsCard: StripeAPIEndpoint {
 
 /// Returns a list of Issuing <code>Dispute</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetIssuingDisputes: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuingDisputeList
 	public typealias paramType = Params
 	
@@ -1015,8 +1015,8 @@ public struct GetIssuingDisputes: StripeAPIEndpoint {
 public struct PostIssuingDisputes: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = IssuingDispute
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/issuing/disputes"
 	}
 
@@ -1026,11 +1026,11 @@ public struct PostIssuingDisputes: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The ID of the issuing transaction to create a dispute for.
 		public var transaction: String
 
-		public init(transaction: String, evidence: EvidenceParam? = nil, expand: [String]? = nil, metadata: Empty? = nil) {
+		public init(transaction: String, evidence: EvidenceParam? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.transaction = transaction
 			self.evidence = evidence
 			self.expand = expand
@@ -1079,7 +1079,7 @@ public struct PostIssuingDisputes: StripeAPIEndpoint {
 
 /// Retrieves an Issuing <code>Dispute</code> object.
 public struct GetIssuingDisputesDispute: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuingDispute
 	public typealias paramType = Params
 	
@@ -1207,7 +1207,7 @@ public struct PostIssuingDisputesDisputeSubmit: StripeAPIEndpoint {
 
 /// Returns a list of Issuing <code>Settlement</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetIssuingSettlements: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -1261,7 +1261,7 @@ public struct GetIssuingSettlements: StripeAPIEndpoint {
 
 /// Retrieves an Issuing <code>Settlement</code> object.
 public struct GetIssuingSettlementsSettlement: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuingSettlement
 	public typealias paramType = Params
 	
@@ -1304,9 +1304,9 @@ public struct PostIssuingSettlementsSettlement: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: Empty? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}
@@ -1316,7 +1316,7 @@ public struct PostIssuingSettlementsSettlement: StripeAPIEndpoint {
 
 /// Returns a list of Issuing <code>Transaction</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetIssuingTransactions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -1382,7 +1382,7 @@ public struct GetIssuingTransactions: StripeAPIEndpoint {
 
 /// Retrieves an Issuing <code>Transaction</code> object.
 public struct GetIssuingTransactionsTransaction: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuingTransaction
 	public typealias paramType = Params
 	

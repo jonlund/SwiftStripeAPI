@@ -1,7 +1,7 @@
 
 /// Lists all Country Spec objects available in the API.
 public struct GetCountrySpecs: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -55,7 +55,7 @@ public struct GetCountrySpecs: StripeAPIEndpoint {
 
 /// Returns a Country Spec for a given Country code.
 public struct GetCountrySpecsCountry: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CountrySpec
 	public typealias paramType = Params
 	

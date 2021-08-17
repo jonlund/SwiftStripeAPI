@@ -1,7 +1,7 @@
 
 /// Returns a list of your disputes.
 public struct GetDisputes: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -63,7 +63,7 @@ public struct GetDisputes: StripeAPIEndpoint {
 
 /// Retrieves the dispute with the given ID.
 public struct GetDisputesDispute: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Dispute
 	public typealias paramType = Params
 	

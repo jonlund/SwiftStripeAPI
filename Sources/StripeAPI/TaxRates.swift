@@ -1,7 +1,7 @@
 
 /// Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
 public struct GetTaxRates: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetTaxRates: StripeAPIEndpoint {
 public struct PostTaxRates: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TaxRate
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/tax_rates"
 	}
 
@@ -86,13 +86,13 @@ public struct PostTaxRates: StripeAPIEndpoint {
 		/// The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer’s invoice.
 		public var jurisdiction: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// This represents the tax rate percent out of 100.
 		public var percentage: StringNumber
 		/// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
 		public var state: String?
 
-		public init(display_name: String, inclusive: Bool, percentage: StringNumber, active: Bool? = nil, country: String? = nil, description: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: Empty? = nil, state: String? = nil) {
+		public init(display_name: String, inclusive: Bool, percentage: StringNumber, active: Bool? = nil, country: String? = nil, description: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: AnyCodable? = nil, state: String? = nil) {
 			self.display_name = display_name
 			self.inclusive = inclusive
 			self.percentage = percentage
@@ -110,7 +110,7 @@ public struct PostTaxRates: StripeAPIEndpoint {
 
 /// Retrieves a tax rate with the given ID
 public struct GetTaxRatesTaxRate: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TaxRate
 	public typealias paramType = Params
 	

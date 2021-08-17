@@ -3,8 +3,8 @@
 public struct Post3dSecure: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ThreeDSecure
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/3d_secure"
 	}
 
@@ -36,7 +36,7 @@ public struct Post3dSecure: StripeAPIEndpoint {
 
 /// Retrieves a 3D Secure object.
 public struct Get3dSecureThreeDSecure: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ThreeDSecure
 	public typealias paramType = Params
 	

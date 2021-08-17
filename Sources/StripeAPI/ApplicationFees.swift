@@ -1,7 +1,7 @@
 
 /// Returns a list of application fees you’ve previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
 public struct GetApplicationFees: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -59,7 +59,7 @@ public struct GetApplicationFees: StripeAPIEndpoint {
 
 /// By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
 public struct GetApplicationFeesFeeRefundsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = FeeRefund
 	public typealias paramType = Params
 	
@@ -120,7 +120,7 @@ public struct PostApplicationFeesFeeRefundsId: StripeAPIEndpoint {
 
 /// Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
 public struct GetApplicationFeesId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ApplicationFee
 	public typealias paramType = Params
 	
@@ -175,7 +175,7 @@ public struct PostApplicationFeesIdRefund: StripeAPIEndpoint {
 
 /// You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the <code>limit</code> and <code>starting_after</code> parameters to page through additional refunds.
 public struct GetApplicationFeesIdRefunds: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = FeeRefundList
 	public typealias paramType = Params
 	
@@ -256,9 +256,9 @@ public struct PostApplicationFeesIdRefunds: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(amount: Int? = nil, expand: [String]? = nil, metadata: Empty? = nil) {
+		public init(amount: Int? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.amount = amount
 			self.expand = expand
 			self.metadata = metadata

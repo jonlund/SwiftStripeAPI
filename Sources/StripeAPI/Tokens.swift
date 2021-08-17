@@ -3,8 +3,8 @@
 public struct PostTokens: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Token
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/tokens"
 	}
 
@@ -566,7 +566,7 @@ public struct PostTokens: StripeAPIEndpoint {
 
 /// Retrieves the token with the given ID.
 public struct GetTokensToken: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Token
 	public typealias paramType = Params
 	

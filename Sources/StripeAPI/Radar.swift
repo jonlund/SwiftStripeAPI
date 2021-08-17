@@ -1,7 +1,7 @@
 
 /// Returns a list of early fraud warnings.
 public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = RadarEarlyFraudWarningList
 	public typealias paramType = Params
 	
@@ -59,7 +59,7 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 
 /// Retrieves the details of an early fraud warning that has previously been created.   Please refer to the <a href="#early_fraud_warning_object">early fraud warning</a> object reference for more details.
 public struct GetRadarEarlyFraudWarningsEarlyFraudWarning: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = RadarEarlyFraudWarning
 	public typealias paramType = Params
 	
@@ -81,7 +81,7 @@ public struct GetRadarEarlyFraudWarningsEarlyFraudWarning: StripeAPIEndpoint {
 
 /// Returns a list of <code>ValueListItem</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetRadarValueListItems: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -145,8 +145,8 @@ public struct GetRadarValueListItems: StripeAPIEndpoint {
 public struct PostRadarValueListItems: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = RadarValueListItem
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/radar/value_list_items"
 	}
 
@@ -169,7 +169,7 @@ public struct PostRadarValueListItems: StripeAPIEndpoint {
 
 /// Retrieves a <code>ValueListItem</code> object.
 public struct GetRadarValueListItemsItem: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = RadarValueListItem
 	public typealias paramType = Params
 	
@@ -191,7 +191,7 @@ public struct GetRadarValueListItemsItem: StripeAPIEndpoint {
 
 /// Deletes a <code>ValueListItem</code> object, removing it from its parent value list.
 public struct DeleteRadarValueListItemsItem: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedRadarValueListItem
 	public typealias paramType = Params
 	
@@ -213,7 +213,7 @@ public struct DeleteRadarValueListItemsItem: StripeAPIEndpoint {
 
 /// Returns a list of <code>ValueList</code> objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetRadarValueLists: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -277,8 +277,8 @@ public struct GetRadarValueLists: StripeAPIEndpoint {
 public struct PostRadarValueLists: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = RadarValueList
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/radar/value_lists"
 	}
 
@@ -290,11 +290,11 @@ public struct PostRadarValueLists: StripeAPIEndpoint {
 		/// Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`. Use `string` if the item type is unknown or mixed.
 		public var item_type: ItemTypeValues?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The human-readable name of the value list.
 		public var name: String
 
-		public init(alias: String, name: String, expand: [String]? = nil, item_type: ItemTypeValues? = nil, metadata: Empty? = nil) {
+		public init(alias: String, name: String, expand: [String]? = nil, item_type: ItemTypeValues? = nil, metadata: AnyCodable? = nil) {
 			self.alias = alias
 			self.name = name
 			self.expand = expand
@@ -317,7 +317,7 @@ public struct PostRadarValueLists: StripeAPIEndpoint {
 
 /// Retrieves a <code>ValueList</code> object.
 public struct GetRadarValueListsValueList: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = RadarValueList
 	public typealias paramType = Params
 	
@@ -362,11 +362,11 @@ public struct PostRadarValueListsValueList: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The human-readable name of the value list.
 		public var name: String?
 
-		public init(alias: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, name: String? = nil) {
+		public init(alias: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
 			self.alias = alias
 			self.expand = expand
 			self.metadata = metadata
@@ -378,7 +378,7 @@ public struct PostRadarValueListsValueList: StripeAPIEndpoint {
 
 /// Deletes a <code>ValueList</code> object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
 public struct DeleteRadarValueListsValueList: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedRadarValueList
 	public typealias paramType = Params
 	

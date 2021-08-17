@@ -1,7 +1,7 @@
 
 /// Returns a list of <code>Review</code> objects that have <code>open</code> set to <code>true</code>. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
 public struct GetReviews: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -55,7 +55,7 @@ public struct GetReviews: StripeAPIEndpoint {
 
 /// Retrieves a <code>Review</code> object.
 public struct GetReviewsReview: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Review
 	public typealias paramType = Params
 	

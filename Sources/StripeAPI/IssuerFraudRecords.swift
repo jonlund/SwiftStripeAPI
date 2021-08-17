@@ -1,7 +1,7 @@
 
 /// Returns a list of issuer fraud records.
 public struct GetIssuerFraudRecords: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = RadarIssuerFraudRecordList
 	public typealias paramType = Params
 	
@@ -59,7 +59,7 @@ public struct GetIssuerFraudRecords: StripeAPIEndpoint {
 
 /// Retrieves the details of an issuer fraud record that has previously been created.   Please refer to the <a href="#issuer_fraud_record_object">issuer fraud record</a> object reference for more details.
 public struct GetIssuerFraudRecordsIssuerFraudRecord: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = IssuerFraudRecord
 	public typealias paramType = Params
 	

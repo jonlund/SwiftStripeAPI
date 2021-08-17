@@ -1,7 +1,7 @@
 
 /// Returns a list of top-ups.
 public struct GetTopups: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TopupList
 	public typealias paramType = Params
 	
@@ -61,8 +61,8 @@ public struct GetTopups: StripeAPIEndpoint {
 public struct PostTopups: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Topup
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/topups"
 	}
 
@@ -100,7 +100,7 @@ public struct PostTopups: StripeAPIEndpoint {
 
 /// Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
 public struct GetTopupsTopup: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Topup
 	public typealias paramType = Params
 	

@@ -1,7 +1,7 @@
 
 /// Returns a list of your webhook endpoints.
 public struct GetWebhookEndpoints: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -57,8 +57,8 @@ public struct GetWebhookEndpoints: StripeAPIEndpoint {
 public struct PostWebhookEndpoints: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = WebhookEndpoint
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/webhook_endpoints"
 	}
 
@@ -192,7 +192,7 @@ public struct PostWebhookEndpoints: StripeAPIEndpoint {
 
 /// Retrieves the webhook endpoint with the given ID.
 public struct GetWebhookEndpointsWebhookEndpoint: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = WebhookEndpoint
 	public typealias paramType = Params
 	
@@ -259,7 +259,7 @@ public struct PostWebhookEndpointsWebhookEndpoint: StripeAPIEndpoint {
 
 /// You can also delete webhook endpoints via the <a href="https://dashboard.stripe.com/account/webhooks">webhook endpoint management</a> page of the Stripe dashboard.
 public struct DeleteWebhookEndpointsWebhookEndpoint: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedWebhookEndpoint
 	public typealias paramType = Params
 	

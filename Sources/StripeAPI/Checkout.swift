@@ -1,7 +1,7 @@
 
 /// Returns a list of Checkout Sessions.
 public struct GetCheckoutSessions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PaymentPagesCheckoutSessionList
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetCheckoutSessions: StripeAPIEndpoint {
 public struct PostCheckoutSessions: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = CheckoutSession
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/checkout/sessions"
 	}
 
@@ -92,7 +92,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		/// The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
 		public var locale: LocaleValues?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The mode of the Checkout Session. Required when using prices or `setup` mode. Pass `subscription` if the Checkout Session includes at least one recurring item.
 		public var mode: ModeValues?
 		/// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
@@ -110,7 +110,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		/// The URL to which Stripe should send customers when payment or setup is complete. If you’d like access to the Checkout Session for the successful payment, read more about it in the guide on [fulfilling orders](https://stripe.com/docs/payments/checkout/fulfill-orders).
 		public var success_url: String
 
-		public init(cancel_url: String, payment_method_types: [String], success_url: String, allow_promotion_codes: Bool? = nil, billing_address_collection: BillingAddressCollectionValues? = nil, client_reference_id: String? = nil, customer: String? = nil, customer_email: String? = nil, discounts: AnyCodable? = nil, expand: [String]? = nil, line_items: AnyCodable? = nil, locale: LocaleValues? = nil, metadata: Empty? = nil, mode: ModeValues? = nil, payment_intent_data: PaymentIntentDataParams? = nil, setup_intent_data: SetupIntentDataParam? = nil, shipping_address_collection: ShippingAddressCollectionParams? = nil, submit_type: SubmitTypeValues? = nil, subscription_data: SubscriptionDataParams? = nil) {
+		public init(cancel_url: String, payment_method_types: [String], success_url: String, allow_promotion_codes: Bool? = nil, billing_address_collection: BillingAddressCollectionValues? = nil, client_reference_id: String? = nil, customer: String? = nil, customer_email: String? = nil, discounts: AnyCodable? = nil, expand: [String]? = nil, line_items: AnyCodable? = nil, locale: LocaleValues? = nil, metadata: AnyCodable? = nil, mode: ModeValues? = nil, payment_intent_data: PaymentIntentDataParams? = nil, setup_intent_data: SetupIntentDataParam? = nil, shipping_address_collection: ShippingAddressCollectionParams? = nil, submit_type: SubmitTypeValues? = nil, subscription_data: SubscriptionDataParams? = nil) {
 			self.cancel_url = cancel_url
 			self.payment_method_types = payment_method_types
 			self.success_url = success_url
@@ -138,7 +138,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 			public var application_fee_amount: Int?
 			public var capture_method: CaptureMethodValues?
 			public var description: String?
-			public var metadata: Empty?
+			public var metadata: AnyCodable?
 			public var on_behalf_of: String?
 			public var receipt_email: String?
 			public var setup_future_usage: SetupFutureUsageValues?
@@ -150,7 +150,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 
 			/// A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
 			/// - Parameters:
-			public init(application_fee_amount: Int? = nil, capture_method: CaptureMethodValues? = nil, description: String? = nil, metadata: Empty? = nil, on_behalf_of: String? = nil, receipt_email: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: Shipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataParams? = nil, transfer_group: String? = nil) {
+			public init(application_fee_amount: Int? = nil, capture_method: CaptureMethodValues? = nil, description: String? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil, receipt_email: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: Shipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataParams? = nil, transfer_group: String? = nil) {
 				self.application_fee_amount = application_fee_amount
 				self.capture_method = capture_method
 				self.description = description
@@ -231,12 +231,12 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 		/// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
 		public final class SetupIntentDataParam: Codable {
 			public var description: String?
-			public var metadata: Empty?
+			public var metadata: AnyCodable?
 			public var on_behalf_of: String?
 
 			/// A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
 			/// - Parameters:
-			public init(description: String? = nil, metadata: Empty? = nil, on_behalf_of: String? = nil) {
+			public init(description: String? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil) {
 				self.description = description
 				self.metadata = metadata
 				self.on_behalf_of = on_behalf_of
@@ -264,13 +264,13 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 			public var application_fee_percent: StringNumber?
 			public var default_tax_rates: [String]?
 			public var items: AnyCodable?
-			public var metadata: Empty?
+			public var metadata: AnyCodable?
 			public var trial_end: Timestamp?
 			public var trial_period_days: Int?
 
 			/// A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
 			/// - Parameters:
-			public init(application_fee_percent: StringNumber? = nil, default_tax_rates: [String]? = nil, items: AnyCodable? = nil, metadata: Empty? = nil, trial_end: Timestamp? = nil, trial_period_days: Int? = nil) {
+			public init(application_fee_percent: StringNumber? = nil, default_tax_rates: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, trial_end: Timestamp? = nil, trial_period_days: Int? = nil) {
 				self.application_fee_percent = application_fee_percent
 				self.default_tax_rates = default_tax_rates
 				self.items = items
@@ -343,7 +343,7 @@ public struct PostCheckoutSessions: StripeAPIEndpoint {
 
 /// Retrieves a Session object.
 public struct GetCheckoutSessionsSession: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CheckoutSession
 	public typealias paramType = Params
 	
@@ -365,7 +365,7 @@ public struct GetCheckoutSessionsSession: StripeAPIEndpoint {
 
 /// When retrieving a Checkout Session, there is an includable <strong>line_items</strong> property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
 public struct GetCheckoutSessionsSessionLineItems: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PaymentPagesCheckoutSessionListLineItems
 	public typealias paramType = Params
 	

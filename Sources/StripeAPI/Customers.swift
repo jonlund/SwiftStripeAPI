@@ -1,7 +1,7 @@
 
 /// Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
 public struct GetCustomers: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -61,8 +61,8 @@ public struct GetCustomers: StripeAPIEndpoint {
 public struct PostCustomers: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Customer
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/customers"
 	}
 
@@ -153,7 +153,7 @@ public struct PostCustomers: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
 public struct GetCustomersCustomer: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Customer
 	public typealias paramType = Params
 	
@@ -295,7 +295,7 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 
 /// Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
 public struct DeleteCustomersCustomer: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedCustomer
 	public typealias paramType = Params
 	
@@ -317,7 +317,7 @@ public struct DeleteCustomersCustomer: StripeAPIEndpoint {
 
 /// Returns a list of transactions that updated the customer’s <a href="/docs/billing/customer/balance">balances</a>.
 public struct GetCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CustomerBalanceTransactionList
 	public typealias paramType = Params
 	
@@ -417,7 +417,7 @@ public struct PostCustomersCustomerBalanceTransactions: StripeAPIEndpoint {
 
 /// Retrieves a specific customer balance transaction that updated the customer’s <a href="/docs/billing/customer/balance">balances</a>.
 public struct GetCustomersCustomerBalanceTransactionsTransaction: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CustomerBalanceTransaction
 	public typealias paramType = Params
 	
@@ -481,7 +481,7 @@ public struct PostCustomersCustomerBalanceTransactionsTransaction: StripeAPIEndp
 
 /// You can see a list of the bank accounts belonging to a Customer. Note that the 10 most recent sources are always available by default on the Customer. If you need more than those 10, you can use this API method and the <code>limit</code> and <code>starting_after</code> parameters to page through additional bank accounts.
 public struct GetCustomersCustomerBankAccounts: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BankAccountList
 	public typealias paramType = Params
 	
@@ -566,11 +566,11 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -584,7 +584,7 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 
 /// By default, you can see the 10 most recent sources stored on a Customer directly on the object, but you can also retrieve details about a specific bank account stored on the Stripe account.
 public struct GetCustomersCustomerBankAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BankAccount
 	public typealias paramType = Params
 	
@@ -791,7 +791,7 @@ public struct PostCustomersCustomerBankAccountsIdVerify: StripeAPIEndpoint {
 
 /// You can see a list of the cards belonging to a customer. Note that the 10 most recent sources are always available on the <code>Customer</code> object. If you need more than those 10, you can use this API method and the <code>limit</code> and <code>starting_after</code> parameters to page through additional cards.
 public struct GetCustomersCustomerCards: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CardList
 	public typealias paramType = Params
 	
@@ -875,11 +875,11 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -893,7 +893,7 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 
 /// You can always see the 10 most recent cards directly on a customer; this method lets you retrieve details about a specific card stored on the customer.
 public struct GetCustomersCustomerCardsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Card
 	public typealias paramType = Params
 	
@@ -1063,7 +1063,7 @@ public struct DeleteCustomersCustomerCardsId: StripeAPIEndpoint {
 }
 
 public struct GetCustomersCustomerDiscount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Discount
 	public typealias paramType = Params
 	
@@ -1085,7 +1085,7 @@ public struct GetCustomersCustomerDiscount: StripeAPIEndpoint {
 
 /// Removes the currently applied discount on a customer.
 public struct DeleteCustomersCustomerDiscount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedDiscount
 	public typealias paramType = Params
 	
@@ -1107,7 +1107,7 @@ public struct DeleteCustomersCustomerDiscount: StripeAPIEndpoint {
 
 /// List sources for a specified customer.
 public struct GetCustomersCustomerSources: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ApmsSourcesSourceList
 	public typealias paramType = Params
 	
@@ -1196,11 +1196,11 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var source: String?
 
-		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
+		public init(alipay_account: String? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, source: String? = nil) {
 			self.alipay_account = alipay_account
 			self.bank_account = bank_account
 			self.card = card
@@ -1214,7 +1214,7 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 
 /// Retrieve a specified source for a given customer.
 public struct GetCustomersCustomerSourcesId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PaymentSource
 	public typealias paramType = Params
 	
@@ -1421,7 +1421,7 @@ public struct PostCustomersCustomerSourcesIdVerify: StripeAPIEndpoint {
 
 /// You can see a list of the customer’s active subscriptions. Note that the 10 most recent active subscriptions are always available by default on the customer object. If you need more than those 10, you can use the limit and starting_after parameters to page through additional subscriptions.
 public struct GetCustomersCustomerSubscriptions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = SubscriptionList
 	public typealias paramType = Params
 	
@@ -1614,7 +1614,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 
 /// Retrieves the subscription with the given ID.
 public struct GetCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Subscription
 	public typealias paramType = Params
 	
@@ -1805,7 +1805,7 @@ public struct DeleteCustomersCustomerSubscriptionsSubscriptionExposedId: StripeA
 }
 
 public struct GetCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Discount
 	public typealias paramType = Params
 	
@@ -1830,7 +1830,7 @@ public struct GetCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount: St
 
 /// Removes the currently applied discount on a customer.
 public struct DeleteCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedDiscount
 	public typealias paramType = Params
 	
@@ -1855,7 +1855,7 @@ public struct DeleteCustomersCustomerSubscriptionsSubscriptionExposedIdDiscount:
 
 /// Returns a list of tax IDs for a customer.
 public struct GetCustomersCustomerTaxIds: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TaxIDsList
 	public typealias paramType = Params
 	
@@ -1984,7 +1984,7 @@ public struct PostCustomersCustomerTaxIds: StripeAPIEndpoint {
 
 /// Retrieves the <code>TaxID</code> object with the given identifier.
 public struct GetCustomersCustomerTaxIdsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TaxId
 	public typealias paramType = Params
 	
@@ -2009,7 +2009,7 @@ public struct GetCustomersCustomerTaxIdsId: StripeAPIEndpoint {
 
 /// Deletes an existing <code>TaxID</code> object.
 public struct DeleteCustomersCustomerTaxIdsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedTaxId
 	public typealias paramType = Params
 	

@@ -1,7 +1,7 @@
 
 /// List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in <a href="/docs/api/events/object">event object</a> <code>api_version</code> attribute (not according to your current Stripe API version or <code>Stripe-Version</code> header).
 public struct GetEvents: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = NotificationEventList
 	public typealias paramType = Params
 	
@@ -63,7 +63,7 @@ public struct GetEvents: StripeAPIEndpoint {
 
 /// Retrieves the details of an event. Supply the unique identifier of the event, which you might have received in a webhook.
 public struct GetEventsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Event
 	public typealias paramType = Params
 	

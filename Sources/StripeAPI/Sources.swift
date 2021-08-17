@@ -3,8 +3,8 @@
 public struct PostSources: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Source
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/sources"
 	}
 
@@ -21,7 +21,7 @@ public struct PostSources: StripeAPIEndpoint {
 		public var flow: FlowValues?
 		/// Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
 		public var mandate: MandateParams?
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The source to share.
 		public var original_source: String?
 		/// Information about the owner of the payment instrument that may be used or required by particular source types.
@@ -40,7 +40,7 @@ public struct PostSources: StripeAPIEndpoint {
 		public var type: String?
 		public var usage: UsageValues?
 
-		public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, flow: FlowValues? = nil, mandate: MandateParams? = nil, metadata: Empty? = nil, original_source: String? = nil, owner: Owner? = nil, receiver: ReceiverParams? = nil, redirect: RedirectParams? = nil, source_order: ShallowOrderSpecs? = nil, statement_descriptor: String? = nil, token: String? = nil, type: String? = nil, usage: UsageValues? = nil) {
+		public init(amount: Int? = nil, currency: String? = nil, customer: String? = nil, expand: [String]? = nil, flow: FlowValues? = nil, mandate: MandateParams? = nil, metadata: AnyCodable? = nil, original_source: String? = nil, owner: Owner? = nil, receiver: ReceiverParams? = nil, redirect: RedirectParams? = nil, source_order: ShallowOrderSpecs? = nil, statement_descriptor: String? = nil, token: String? = nil, type: String? = nil, usage: UsageValues? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.customer = customer
@@ -294,7 +294,7 @@ public struct PostSources: StripeAPIEndpoint {
 
 /// Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
 public struct GetSourcesSource: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Source
 	public typealias paramType = Params
 	
@@ -552,7 +552,7 @@ public struct PostSourcesSource: StripeAPIEndpoint {
 
 /// Retrieves a new Source MandateNotification.
 public struct GetSourcesSourceMandateNotificationsMandateNotification: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = SourceMandateNotification
 	public typealias paramType = Params
 	
@@ -577,7 +577,7 @@ public struct GetSourcesSourceMandateNotificationsMandateNotification: StripeAPI
 
 /// List source transactions for a given source.
 public struct GetSourcesSourceSourceTransactions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ApmsSourcesSourceTransactionList
 	public typealias paramType = Params
 	
@@ -634,7 +634,7 @@ public struct GetSourcesSourceSourceTransactions: StripeAPIEndpoint {
 
 /// Retrieve an existing source transaction object. Supply the unique source ID from a source creation request and the source transaction ID and Stripe will return the corresponding up-to-date source object information.
 public struct GetSourcesSourceSourceTransactionsSourceTransaction: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = SourceTransaction
 	public typealias paramType = Params
 	

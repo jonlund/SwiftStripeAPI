@@ -1,7 +1,7 @@
 
 /// Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
 public struct GetPayouts: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PayoutList
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetPayouts: StripeAPIEndpoint {
 public struct PostPayouts: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Payout
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/payouts"
 	}
 
@@ -82,7 +82,7 @@ public struct PostPayouts: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces for more information](https://stripe.com/blog/instant-payouts-for-marketplaces).)
 		public var method: MethodValues?
 		/// The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account`, `card`, or `fpx`.
@@ -90,7 +90,7 @@ public struct PostPayouts: StripeAPIEndpoint {
 		/// A string to be displayed on the recipient's bank or card statement. This may be at most 22 characters. Attempting to use a `statement_descriptor` longer than 22 characters will return an error. Note: Most banks will truncate this information and/or display it inconsistently. Some may not display it at all.
 		public var statement_descriptor: String?
 
-		public init(amount: Int, currency: String, description: String? = nil, destination: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, method: MethodValues? = nil, source_type: SourceTypeValues? = nil, statement_descriptor: String? = nil) {
+		public init(amount: Int, currency: String, description: String? = nil, destination: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, method: MethodValues? = nil, source_type: SourceTypeValues? = nil, statement_descriptor: String? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.description = description
@@ -118,7 +118,7 @@ public struct PostPayouts: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
 public struct GetPayoutsPayout: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Payout
 	public typealias paramType = Params
 	
@@ -224,9 +224,9 @@ public struct PostPayoutsPayoutReverse: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, metadata: Empty? = nil) {
+		public init(expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.metadata = metadata
 		}

@@ -1,7 +1,7 @@
 
 /// Returns a list of your promotion codes.
 public struct GetPromotionCodes: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -73,8 +73,8 @@ public struct GetPromotionCodes: StripeAPIEndpoint {
 public struct PostPromotionCodes: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PromotionCode
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/promotion_codes"
 	}
 
@@ -94,11 +94,11 @@ public struct PostPromotionCodes: StripeAPIEndpoint {
 		/// A positive integer specifying the number of times the promotion code can be redeemed. If the coupon has specified a `max_redemptions`, then this value cannot be greater than the coupon's `max_redemptions`.
 		public var max_redemptions: Int?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// Settings that restrict the redemption of the promotion code.
 		public var restrictions: RestrictionsParams?
 
-		public init(coupon: String, active: Bool? = nil, code: String? = nil, customer: String? = nil, expand: [String]? = nil, expires_at: Timestamp? = nil, max_redemptions: Int? = nil, metadata: Empty? = nil, restrictions: RestrictionsParams? = nil) {
+		public init(coupon: String, active: Bool? = nil, code: String? = nil, customer: String? = nil, expand: [String]? = nil, expires_at: Timestamp? = nil, max_redemptions: Int? = nil, metadata: AnyCodable? = nil, restrictions: RestrictionsParams? = nil) {
 			self.coupon = coupon
 			self.active = active
 			self.code = code
@@ -132,7 +132,7 @@ public struct PostPromotionCodes: StripeAPIEndpoint {
 
 /// Retrieves the promotion code with the given ID.
 public struct GetPromotionCodesPromotionCode: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PromotionCode
 	public typealias paramType = Params
 	

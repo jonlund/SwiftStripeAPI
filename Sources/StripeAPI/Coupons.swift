@@ -1,7 +1,7 @@
 
 /// Returns a list of your coupons.
 public struct GetCoupons: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -57,8 +57,8 @@ public struct GetCoupons: StripeAPIEndpoint {
 public struct PostCoupons: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Coupon
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/coupons"
 	}
 
@@ -128,7 +128,7 @@ public struct PostCoupons: StripeAPIEndpoint {
 
 /// Retrieves the coupon with the given ID.
 public struct GetCouponsCoupon: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Coupon
 	public typealias paramType = Params
 	
@@ -186,7 +186,7 @@ public struct PostCouponsCoupon: StripeAPIEndpoint {
 
 /// You can delete coupons via the <a href="https://dashboard.stripe.com/coupons">coupon management</a> page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can’t redeem the coupon. You can also delete coupons via the API.
 public struct DeleteCouponsCoupon: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedCoupon
 	public typealias paramType = Params
 	

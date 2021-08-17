@@ -1,7 +1,7 @@
 
 /// List apple pay domains.
 public struct GetApplePayDomains: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ApplePayDomainList
 	public typealias paramType = Params
 	
@@ -61,8 +61,8 @@ public struct GetApplePayDomains: StripeAPIEndpoint {
 public struct PostApplePayDomains: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ApplePayDomain
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/apple_pay/domains"
 	}
 
@@ -81,7 +81,7 @@ public struct PostApplePayDomains: StripeAPIEndpoint {
 
 /// Retrieve an apple pay domain.
 public struct GetApplePayDomainsDomain: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ApplePayDomain
 	public typealias paramType = Params
 	
@@ -103,7 +103,7 @@ public struct GetApplePayDomainsDomain: StripeAPIEndpoint {
 
 /// Delete an apple pay domain.
 public struct DeleteApplePayDomainsDomain: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedApplePayDomain
 	public typealias paramType = Params
 	

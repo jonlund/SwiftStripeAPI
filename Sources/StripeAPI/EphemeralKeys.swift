@@ -3,8 +3,8 @@
 public struct PostEphemeralKeys: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = EphemeralKey
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/ephemeral_keys"
 	}
 

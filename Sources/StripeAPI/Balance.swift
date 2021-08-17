@@ -1,10 +1,10 @@
 
 /// Retrieves the current account balance, based on the authentication that was used to make the request.  For a sample request, see <a href="/docs/connect/account-balances#accounting-for-negative-balances">Accounting for negative balances</a>.
 public struct GetBalance: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Balance
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/balance"
 	}
 	public static var method: HTTPMethod { return .GET }
@@ -13,7 +13,7 @@ public struct GetBalance: StripeAPIEndpoint {
 
 /// Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.  Note that this endpoint was previously called “Balance history” and used the path <code>/v1/balance/history</code>.
 public struct GetBalanceHistory: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BalanceTransactionsList
 	public typealias paramType = Params
 	
@@ -83,7 +83,7 @@ public struct GetBalanceHistory: StripeAPIEndpoint {
 
 /// Retrieves the balance transaction with the given ID.  Note that this endpoint previously used the path <code>/v1/balance/history/:id</code>.
 public struct GetBalanceHistoryId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BalanceTransaction
 	public typealias paramType = Params
 	

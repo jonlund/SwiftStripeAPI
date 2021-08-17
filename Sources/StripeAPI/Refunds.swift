@@ -1,7 +1,7 @@
 
 /// Returns a list of all refunds you’ve previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
 public struct GetRefunds: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetRefunds: StripeAPIEndpoint {
 public struct PostRefunds: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Refund
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/refunds"
 	}
 
@@ -104,7 +104,7 @@ public struct PostRefunds: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing refund.
 public struct GetRefundsRefund: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Refund
 	public typealias paramType = Params
 	

@@ -1,7 +1,7 @@
 
 /// Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
 public struct GetProducts: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -69,8 +69,8 @@ public struct GetProducts: StripeAPIEndpoint {
 public struct PostProducts: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Product
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/products"
 	}
 
@@ -92,7 +92,7 @@ public struct PostProducts: StripeAPIEndpoint {
 		/// A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
 		public var images: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
 		public var name: String
 		/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
@@ -106,7 +106,7 @@ public struct PostProducts: StripeAPIEndpoint {
 		/// A URL of a publicly-accessible webpage for this product. May only be set if type=`good`.
 		public var url: String?
 
-		public init(name: String, active: Bool? = nil, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, metadata: Empty? = nil, package_dimensions: PackageDimensionsSpecs? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
+		public init(name: String, active: Bool? = nil, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, metadata: AnyCodable? = nil, package_dimensions: PackageDimensionsSpecs? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
 			self.name = name
 			self.active = active
 			self.attributes = attributes
@@ -152,7 +152,7 @@ public struct PostProducts: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
 public struct GetProductsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Product
 	public typealias paramType = Params
 	
@@ -243,7 +243,7 @@ public struct PostProductsId: StripeAPIEndpoint {
 
 /// Delete a product. Deleting a product is only possible if it has no prices associated with it. Additionally, deleting a product with <code>type=good</code> is only possible if it has no SKUs associated with it.
 public struct DeleteProductsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedProduct
 	public typealias paramType = Params
 	

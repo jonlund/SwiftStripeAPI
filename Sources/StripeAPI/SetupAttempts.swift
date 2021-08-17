@@ -1,7 +1,7 @@
 
 /// Returns a list of SetupAttempts associated with a provided SetupIntent.
 public struct GetSetupAttempts: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PaymentFlowsSetupIntentSetupAttemptList
 	public typealias paramType = Params
 	

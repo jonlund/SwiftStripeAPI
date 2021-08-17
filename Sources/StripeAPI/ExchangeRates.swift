@@ -1,7 +1,7 @@
 
 /// Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
 public struct GetExchangeRates: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -55,7 +55,7 @@ public struct GetExchangeRates: StripeAPIEndpoint {
 
 /// Retrieves the exchange rates from the given currency to every supported currency.
 public struct GetExchangeRatesRateId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ExchangeRate
 	public typealias paramType = Params
 	

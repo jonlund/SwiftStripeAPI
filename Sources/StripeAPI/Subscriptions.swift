@@ -1,7 +1,7 @@
 
 /// By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify <code>status=canceled</code>.
 public struct GetSubscriptions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -73,8 +73,8 @@ public struct GetSubscriptions: StripeAPIEndpoint {
 public struct PostSubscriptions: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Subscription
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/subscriptions"
 	}
 
@@ -199,7 +199,7 @@ public struct PostSubscriptions: StripeAPIEndpoint {
 
 /// Retrieves the subscription with the given ID.
 public struct GetSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Subscription
 	public typealias paramType = Params
 	
@@ -382,7 +382,7 @@ public struct DeleteSubscriptionsSubscriptionExposedId: StripeAPIEndpoint {
 
 /// Removes the currently applied discount on a subscription.
 public struct DeleteSubscriptionsSubscriptionExposedIdDiscount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedDiscount
 	public typealias paramType = Params
 	

@@ -1,7 +1,7 @@
 
 /// Returns a list of scheduled query runs.
 public struct GetSigmaScheduledQueryRuns: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -55,7 +55,7 @@ public struct GetSigmaScheduledQueryRuns: StripeAPIEndpoint {
 
 /// Retrieves the details of an scheduled query run.
 public struct GetSigmaScheduledQueryRunsScheduledQueryRun: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ScheduledQueryRun
 	public typealias paramType = Params
 	

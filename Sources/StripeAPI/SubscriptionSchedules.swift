@@ -1,7 +1,7 @@
 
 /// Retrieves the list of your subscription schedules.
 public struct GetSubscriptionSchedules: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetSubscriptionSchedules: StripeAPIEndpoint {
 public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SubscriptionSchedule
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/subscription_schedules"
 	}
 
@@ -156,7 +156,7 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
 public struct GetSubscriptionSchedulesSchedule: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = SubscriptionSchedule
 	public typealias paramType = Params
 	

@@ -1,7 +1,7 @@
 
 /// Returns a list of Report Runs, with the most recent appearing first. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
 public struct GetReportingReportRuns: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -57,8 +57,8 @@ public struct GetReportingReportRuns: StripeAPIEndpoint {
 public struct PostReportingReportRuns: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ReportingReportRun
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/reporting/report_runs"
 	}
 
@@ -742,7 +742,7 @@ public struct PostReportingReportRuns: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing Report Run. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
 public struct GetReportingReportRunsReportRun: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ReportingReportRun
 	public typealias paramType = Params
 	
@@ -764,10 +764,10 @@ public struct GetReportingReportRunsReportRun: StripeAPIEndpoint {
 
 /// Returns a full list of Report Types. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
 public struct GetReportingReportTypes: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = FinancialReportingFinanceReportTypeList
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/reporting/report_types"
 	}
 	public static var method: HTTPMethod { return .GET }
@@ -797,7 +797,7 @@ public struct GetReportingReportTypes: StripeAPIEndpoint {
 
 /// Retrieves the details of a Report Type. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
 public struct GetReportingReportTypesReportType: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ReportingReportType
 	public typealias paramType = Params
 	

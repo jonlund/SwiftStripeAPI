@@ -1,7 +1,7 @@
 
 /// Returns a list of your plans.
 public struct GetPlans: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PlanList
 	public typealias paramType = Params
 	
@@ -66,8 +66,8 @@ public struct GetPlans: StripeAPIEndpoint {
 public struct PostPlans: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Plan
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/plans"
 	}
 
@@ -185,7 +185,7 @@ public struct PostPlans: StripeAPIEndpoint {
 
 /// Retrieves the plan with the given ID.
 public struct GetPlansPlan: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Plan
 	public typealias paramType = Params
 	
@@ -252,7 +252,7 @@ public struct PostPlansPlan: StripeAPIEndpoint {
 
 /// Deleting plans means new subscribers can’t be added. Existing subscribers aren’t affected.
 public struct DeletePlansPlan: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedPlan
 	public typealias paramType = Params
 	

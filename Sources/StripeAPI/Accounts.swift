@@ -1,7 +1,7 @@
 
 /// Returns a list of accounts connected to your platform via <a href="/docs/connect">Connect</a>. If you’re not a platform, the list is empty.
 public struct GetAccounts: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -57,8 +57,8 @@ public struct GetAccounts: StripeAPIEndpoint {
 public struct PostAccounts: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Account
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/accounts"
 	}
 
@@ -705,7 +705,7 @@ public struct PostAccounts: StripeAPIEndpoint {
 
 /// Retrieves the details of an account.
 public struct GetAccountsAccount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Account
 	public typealias paramType = Params
 	
@@ -1375,7 +1375,7 @@ public struct PostAccountsAccount: StripeAPIEndpoint {
 
 /// With <a href="/docs/connect">Connect</a>, you can delete Custom or Express accounts you manage.  Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.  If you want to delete your own account, use the <a href="https://dashboard.stripe.com/account">account information tab in your account settings</a> instead.
 public struct DeleteAccountsAccount: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedAccount
 	public typealias paramType = Params
 	
@@ -1424,9 +1424,9 @@ public struct PostAccountsAccountBankAccounts: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var external_account: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
+		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: AnyCodable? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand
@@ -1439,7 +1439,7 @@ public struct PostAccountsAccountBankAccounts: StripeAPIEndpoint {
 
 /// Retrieve a specified external account for a given account.
 public struct GetAccountsAccountBankAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
 	
@@ -1541,7 +1541,7 @@ public struct PostAccountsAccountBankAccountsId: StripeAPIEndpoint {
 
 /// Delete a specified external account for a given account.
 public struct DeleteAccountsAccountBankAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedExternalAccount
 	public typealias paramType = Params
 	
@@ -1566,7 +1566,7 @@ public struct DeleteAccountsAccountBankAccountsId: StripeAPIEndpoint {
 
 /// Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
 public struct GetAccountsAccountCapabilities: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ListAccountCapability
 	public typealias paramType = Params
 	
@@ -1609,7 +1609,7 @@ public struct GetAccountsAccountCapabilities: StripeAPIEndpoint {
 
 /// Retrieves information about the specified Account Capability.
 public struct GetAccountsAccountCapabilitiesCapability: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Capability
 	public typealias paramType = Params
 	
@@ -1670,7 +1670,7 @@ public struct PostAccountsAccountCapabilitiesCapability: StripeAPIEndpoint {
 
 /// List external accounts for an account.
 public struct GetAccountsAccountExternalAccounts: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ExternalAccountList
 	public typealias paramType = Params
 	
@@ -1755,9 +1755,9 @@ public struct PostAccountsAccountExternalAccounts: StripeAPIEndpoint {
 		/// Please refer to full [documentation](https://stripe.com/docs/api) instead.
 		public var external_account: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: Empty? = nil) {
+		public init(bank_account: AnyCodable? = nil, default_for_currency: Bool? = nil, expand: [String]? = nil, external_account: String? = nil, metadata: AnyCodable? = nil) {
 			self.bank_account = bank_account
 			self.default_for_currency = default_for_currency
 			self.expand = expand
@@ -1770,7 +1770,7 @@ public struct PostAccountsAccountExternalAccounts: StripeAPIEndpoint {
 
 /// Retrieve a specified external account for a given account.
 public struct GetAccountsAccountExternalAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = ExternalAccount
 	public typealias paramType = Params
 	
@@ -1872,7 +1872,7 @@ public struct PostAccountsAccountExternalAccountsId: StripeAPIEndpoint {
 
 /// Delete a specified external account for a given account.
 public struct DeleteAccountsAccountExternalAccountsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedExternalAccount
 	public typealias paramType = Params
 	
@@ -1961,7 +1961,7 @@ public struct PutAccountsAccountLogout: StripeAPIEndpoint {
 
 /// Returns a list of people associated with the account’s legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
 public struct GetAccountsAccountPeople: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -2234,7 +2234,7 @@ public struct PostAccountsAccountPeople: StripeAPIEndpoint {
 
 /// Retrieves an existing person.
 public struct GetAccountsAccountPeoplePerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Person
 	public typealias paramType = Params
 	
@@ -2478,7 +2478,7 @@ public struct PostAccountsAccountPeoplePerson: StripeAPIEndpoint {
 
 /// Deletes an existing person’s relationship to the account’s legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the <code>account_opener</code>. If your integration is using the <code>executive</code> parameter, you cannot delete the only verified <code>executive</code> on file.
 public struct DeleteAccountsAccountPeoplePerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedPerson
 	public typealias paramType = Params
 	
@@ -2503,7 +2503,7 @@ public struct DeleteAccountsAccountPeoplePerson: StripeAPIEndpoint {
 
 /// Returns a list of people associated with the account’s legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
 public struct GetAccountsAccountPersons: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -2776,7 +2776,7 @@ public struct PostAccountsAccountPersons: StripeAPIEndpoint {
 
 /// Retrieves an existing person.
 public struct GetAccountsAccountPersonsPerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Person
 	public typealias paramType = Params
 	
@@ -3020,7 +3020,7 @@ public struct PostAccountsAccountPersonsPerson: StripeAPIEndpoint {
 
 /// Deletes an existing person’s relationship to the account’s legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the <code>account_opener</code>. If your integration is using the <code>executive</code> parameter, you cannot delete the only verified <code>executive</code> on file.
 public struct DeleteAccountsAccountPersonsPerson: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedPerson
 	public typealias paramType = Params
 	

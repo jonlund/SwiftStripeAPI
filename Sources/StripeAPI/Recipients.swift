@@ -1,7 +1,7 @@
 
 /// Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
 public struct GetRecipients: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetRecipients: StripeAPIEndpoint {
 public struct PostRecipients: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Recipient
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/recipients"
 	}
 
@@ -107,7 +107,7 @@ public struct PostRecipients: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing recipient. You need only supply the unique recipient identifier that was returned upon recipient creation.
 public struct GetRecipientsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Recipient
 	public typealias paramType = Params
 	
@@ -183,7 +183,7 @@ public struct PostRecipientsId: StripeAPIEndpoint {
 
 /// Permanently deletes a recipient. It cannot be undone.
 public struct DeleteRecipientsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedRecipient
 	public typealias paramType = Params
 	

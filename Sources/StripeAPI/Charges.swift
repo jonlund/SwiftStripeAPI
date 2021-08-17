@@ -1,7 +1,7 @@
 
 /// Returns a list of charges you’ve previously created. The charges are returned in sorted order, with the most recent charges appearing first.
 public struct GetCharges: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -69,8 +69,8 @@ public struct GetCharges: StripeAPIEndpoint {
 public struct PostCharges: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Charge
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/charges"
 	}
 
@@ -198,7 +198,7 @@ public struct PostCharges: StripeAPIEndpoint {
 
 /// Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
 public struct GetChargesCharge: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Charge
 	public typealias paramType = Params
 	
@@ -400,7 +400,7 @@ public struct PostChargesChargeCapture: StripeAPIEndpoint {
 
 /// Retrieve a dispute for a specified charge.
 public struct GetChargesChargeDispute: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Dispute
 	public typealias paramType = Params
 	
@@ -603,7 +603,7 @@ public struct PostChargesChargeRefund: StripeAPIEndpoint {
 
 /// You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent refunds are always available by default on the charge object. If you need more than those 10, you can use this API method and the <code>limit</code> and <code>starting_after</code> parameters to page through additional refunds.
 public struct GetChargesChargeRefunds: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = RefundList
 	public typealias paramType = Params
 	
@@ -710,7 +710,7 @@ public struct PostChargesChargeRefunds: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing refund.
 public struct GetChargesChargeRefundsRefund: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Refund
 	public typealias paramType = Params
 	

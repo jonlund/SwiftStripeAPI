@@ -1,7 +1,7 @@
 
 /// Returns a list of SetupIntents.
 public struct GetSetupIntents: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PaymentFlowsSetupIntentList
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetSetupIntents: StripeAPIEndpoint {
 public struct PostSetupIntents: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = SetupIntent
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/setup_intents"
 	}
 
@@ -82,7 +82,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 		/// This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
 		public var mandate_data: SecretKeyParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The Stripe account ID for which this SetupIntent is created.
 		public var on_behalf_of: String?
 		/// ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
@@ -98,7 +98,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 		/// Indicates how the payment method is intended to be used in the future. If not provided, this value defaults to `off_session`.
 		public var usage: UsageValues?
 
-		public init(confirm: Bool? = nil, customer: String? = nil, description: String? = nil, expand: [String]? = nil, mandate_data: SecretKeyParam? = nil, metadata: Empty? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil, return_url: String? = nil, single_use: SetupIntentSingleUseParams? = nil, usage: UsageValues? = nil) {
+		public init(confirm: Bool? = nil, customer: String? = nil, description: String? = nil, expand: [String]? = nil, mandate_data: SecretKeyParam? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil, return_url: String? = nil, single_use: SetupIntentSingleUseParams? = nil, usage: UsageValues? = nil) {
 			self.confirm = confirm
 			self.customer = customer
 			self.description = description
@@ -244,7 +244,7 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 
 /// Retrieves the details of a SetupIntent that has previously been created.   Client-side retrieval using a publishable key is allowed when the <code>client_secret</code> is provided in the query string.   When retrieved with a publishable key, only a subset of properties will be returned. Please refer to the <a href="#setup_intent_object">SetupIntent</a> object reference for more details.
 public struct GetSetupIntentsIntent: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = SetupIntent
 	public typealias paramType = Params
 	

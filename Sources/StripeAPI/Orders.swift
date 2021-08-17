@@ -1,7 +1,7 @@
 
 /// Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
 public struct GetOrders: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetOrders: StripeAPIEndpoint {
 public struct PostOrders: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Order
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/orders"
 	}
 
@@ -84,11 +84,11 @@ public struct PostOrders: StripeAPIEndpoint {
 		/// List of items constituting the order. An order can have up to 25 items.
 		public var items: AnyCodable?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
 		public var shipping: CustomerShipping?
 
-		public init(currency: String, coupon: String? = nil, customer: String? = nil, email: String? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: Empty? = nil, shipping: CustomerShipping? = nil) {
+		public init(currency: String, coupon: String? = nil, customer: String? = nil, email: String? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, shipping: CustomerShipping? = nil) {
 			self.currency = currency
 			self.coupon = coupon
 			self.customer = customer
@@ -143,7 +143,7 @@ public struct PostOrders: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
 public struct GetOrdersId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Order
 	public typealias paramType = Params
 	
@@ -262,11 +262,11 @@ public struct PostOrdersIdPay: StripeAPIEndpoint {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// A [Token](https://stripe.com/docs/api#tokens)'s or a [Source](https://stripe.com/docs/api#sources)'s ID, as returned by [Elements](https://stripe.com/docs/elements). If no customer was attached to the order at creation, either `source` or `customer` is required. Otherwise, the specified source will be charged intead of the customer attached to the order.
 		public var source: String?
 
-		public init(application_fee: Int? = nil, customer: String? = nil, email: String? = nil, expand: [String]? = nil, metadata: Empty? = nil, source: String? = nil) {
+		public init(application_fee: Int? = nil, customer: String? = nil, email: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, source: String? = nil) {
 			self.application_fee = application_fee
 			self.customer = customer
 			self.email = email

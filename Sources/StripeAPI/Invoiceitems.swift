@@ -1,7 +1,7 @@
 
 /// Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
 public struct GetInvoiceitems: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -69,8 +69,8 @@ public struct GetInvoiceitems: StripeAPIEndpoint {
 public struct PostInvoiceitems: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Invoiceitem
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/invoiceitems"
 	}
 
@@ -173,7 +173,7 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 
 /// Retrieves the invoice item with the given ID.
 public struct GetInvoiceitemsInvoiceitem: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Invoiceitem
 	public typealias paramType = Params
 	
@@ -299,7 +299,7 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 
 /// Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they’re not attached to invoices, or if it’s attached to a draft invoice.
 public struct DeleteInvoiceitemsInvoiceitem: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedInvoiceitem
 	public typealias paramType = Params
 	

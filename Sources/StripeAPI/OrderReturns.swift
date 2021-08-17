@@ -1,7 +1,7 @@
 
 /// Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
 public struct GetOrderReturns: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Output
 	public typealias paramType = Params
 	
@@ -59,7 +59,7 @@ public struct GetOrderReturns: StripeAPIEndpoint {
 
 /// Retrieves the details of an existing order return. Supply the unique order ID from either an order return creation request or the order return list, and Stripe will return the corresponding order information.
 public struct GetOrderReturnsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = OrderReturn
 	public typealias paramType = Params
 	

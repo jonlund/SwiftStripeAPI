@@ -3,8 +3,8 @@
 public struct PostTerminalConnectionTokens: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TerminalConnectionToken
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/terminal/connection_tokens"
 	}
 
@@ -24,7 +24,7 @@ public struct PostTerminalConnectionTokens: StripeAPIEndpoint {
 
 /// Returns a list of <code>Location</code> objects.
 public struct GetTerminalLocations: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TerminalLocationLocationList
 	public typealias paramType = Params
 	
@@ -80,8 +80,8 @@ public struct GetTerminalLocations: StripeAPIEndpoint {
 public struct PostTerminalLocations: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TerminalLocation
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/terminal/locations"
 	}
 
@@ -131,7 +131,7 @@ public struct PostTerminalLocations: StripeAPIEndpoint {
 
 /// Retrieves a <code>Location</code> object.
 public struct GetTerminalLocationsLocation: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TerminalLocation
 	public typealias paramType = Params
 	
@@ -216,7 +216,7 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 
 /// Deletes a <code>Location</code> object.
 public struct DeleteTerminalLocationsLocation: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedTerminalLocation
 	public typealias paramType = Params
 	
@@ -238,7 +238,7 @@ public struct DeleteTerminalLocationsLocation: StripeAPIEndpoint {
 
 /// Returns a list of <code>Reader</code> objects.
 public struct GetTerminalReaders: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TerminalReaderRetrieveReader
 	public typealias paramType = Params
 	
@@ -307,8 +307,8 @@ public struct GetTerminalReaders: StripeAPIEndpoint {
 public struct PostTerminalReaders: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = TerminalReader
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/terminal/readers"
 	}
 
@@ -337,7 +337,7 @@ public struct PostTerminalReaders: StripeAPIEndpoint {
 
 /// Retrieves a <code>Reader</code> object.
 public struct GetTerminalReadersReader: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = TerminalReader
 	public typealias paramType = Params
 	
@@ -395,7 +395,7 @@ public struct PostTerminalReadersReader: StripeAPIEndpoint {
 
 /// Deletes a <code>Reader</code> object.
 public struct DeleteTerminalReadersReader: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = DeletedTerminalReader
 	public typealias paramType = Params
 	

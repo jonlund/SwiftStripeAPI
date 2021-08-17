@@ -1,7 +1,7 @@
 
 /// Retrieves a Mandate object.
 public struct GetMandatesMandate: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Mandate
 	public typealias paramType = Params
 	

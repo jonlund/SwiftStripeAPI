@@ -1,7 +1,7 @@
 
 /// Returns a list of PaymentMethods for a given Customer
 public struct GetPaymentMethods: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PaymentFlowsPaymentMethodList
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetPaymentMethods: StripeAPIEndpoint {
 public struct PostPaymentMethods: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentMethod
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/payment_methods"
 	}
 
@@ -100,7 +100,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 		/// If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
 		public var interac_present: Param?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
 		public var oxxo: Param?
 		/// If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
@@ -114,7 +114,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 		/// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
 		public var type: TypeValues?
 
-		public init(alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, card: AnyCodable? = nil, customer: String? = nil, eps: Param? = nil, expand: [String]? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: Empty? = nil, oxxo: Param? = nil, p24: Param? = nil, payment_method: String? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, type: TypeValues? = nil) {
+		public init(alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, card: AnyCodable? = nil, customer: String? = nil, eps: Param? = nil, expand: [String]? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, payment_method: String? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, type: TypeValues? = nil) {
 			self.alipay = alipay
 			self.au_becs_debit = au_becs_debit
 			self.bacs_debit = bacs_debit
@@ -202,7 +202,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 
 /// Retrieves a PaymentMethod object.
 public struct GetPaymentMethodsPaymentMethod: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PaymentMethod
 	public typealias paramType = Params
 	

@@ -1,7 +1,7 @@
 
 /// Returns a list of credit notes.
 public struct GetCreditNotes: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CreditNotesList
 	public typealias paramType = Params
 	
@@ -65,8 +65,8 @@ public struct GetCreditNotes: StripeAPIEndpoint {
 public struct PostCreditNotes: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = CreditNote
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/credit_notes"
 	}
 
@@ -84,7 +84,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 		/// The credit note's memo appears on the credit note PDF.
 		public var memo: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// The integer amount in %s representing the amount that is credited outside of Stripe.
 		public var out_of_band_amount: Int?
 		/// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
@@ -94,7 +94,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 		/// The integer amount in %s representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
 		public var refund_amount: Int?
 
-		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, expand: [String]? = nil, lines: AnyCodable? = nil, memo: String? = nil, metadata: Empty? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, refund_amount: Int? = nil) {
+		public init(invoice: String, amount: Int? = nil, credit_amount: Int? = nil, expand: [String]? = nil, lines: AnyCodable? = nil, memo: String? = nil, metadata: AnyCodable? = nil, out_of_band_amount: Int? = nil, reason: ReasonValues? = nil, refund: String? = nil, refund_amount: Int? = nil) {
 			self.invoice = invoice
 			self.amount = amount
 			self.credit_amount = credit_amount
@@ -120,7 +120,7 @@ public struct PostCreditNotes: StripeAPIEndpoint {
 
 /// Get a preview of a credit note without creating it.
 public struct GetCreditNotesPreview: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CreditNote
 	public typealias paramType = Params
 	
@@ -173,7 +173,7 @@ public struct GetCreditNotesPreview: StripeAPIEndpoint {
 
 /// When retrieving a credit note preview, you’ll get a <strong>lines</strong> property containing the first handful of those items. This URL you can retrieve the full (paginated) list of line items.
 public struct GetCreditNotesPreviewLines: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CreditNoteLinesList
 	public typealias paramType = Params
 	
@@ -260,7 +260,7 @@ public struct GetCreditNotesPreviewLines: StripeAPIEndpoint {
 
 /// When retrieving a credit note, you’ll get a <strong>lines</strong> property containing the the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
 public struct GetCreditNotesCreditNoteLines: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CreditNoteLinesList
 	public typealias paramType = Params
 	
@@ -318,7 +318,7 @@ public struct GetCreditNotesCreditNoteLines: StripeAPIEndpoint {
 
 /// Retrieves the credit note object with the given identifier.
 public struct GetCreditNotesId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = CreditNote
 	public typealias paramType = Params
 	
@@ -363,9 +363,9 @@ public struct PostCreditNotesId: StripeAPIEndpoint {
 		/// Credit note memo.
 		public var memo: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 
-		public init(expand: [String]? = nil, memo: String? = nil, metadata: Empty? = nil) {
+		public init(expand: [String]? = nil, memo: String? = nil, metadata: AnyCodable? = nil) {
 			self.expand = expand
 			self.memo = memo
 			self.metadata = metadata

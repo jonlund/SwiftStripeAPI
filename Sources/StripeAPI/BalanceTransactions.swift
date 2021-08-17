@@ -1,7 +1,7 @@
 
 /// Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.  Note that this endpoint was previously called “Balance history” and used the path <code>/v1/balance/history</code>.
 public struct GetBalanceTransactions: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BalanceTransactionsList
 	public typealias paramType = Params
 	
@@ -71,7 +71,7 @@ public struct GetBalanceTransactions: StripeAPIEndpoint {
 
 /// Retrieves the balance transaction with the given ID.  Note that this endpoint previously used the path <code>/v1/balance/history/:id</code>.
 public struct GetBalanceTransactionsId: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = BalanceTransaction
 	public typealias paramType = Params
 	

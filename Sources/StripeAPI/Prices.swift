@@ -1,7 +1,7 @@
 
 /// Returns a list of your prices.
 public struct GetPrices: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = PriceList
 	public typealias paramType = Params
 	
@@ -74,8 +74,8 @@ public struct GetPrices: StripeAPIEndpoint {
 public struct PostPrices: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Price
-	public typealias paramType = Empty
-	public static func endpoint(for inputs: Empty) throws -> String {
+	public typealias paramType = AnyCodable
+	public static func endpoint(for inputs: AnyCodable) throws -> String {
 		return "/v1/prices"
 	}
 
@@ -91,7 +91,7 @@ public struct PostPrices: StripeAPIEndpoint {
 		/// A lookup key used to retrieve prices dynamically from a static string.
 		public var lookup_key: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-		public var metadata: Empty?
+		public var metadata: AnyCodable?
 		/// A brief description of the price, hidden from customers.
 		public var nickname: String?
 		/// The ID of the product that this price will belong to.
@@ -113,7 +113,7 @@ public struct PostPrices: StripeAPIEndpoint {
 		/// Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
 		public var unit_amount_decimal: StringNumber?
 
-		public init(currency: String, active: Bool? = nil, billing_scheme: BillingSchemeValues? = nil, expand: [String]? = nil, lookup_key: String? = nil, metadata: Empty? = nil, nickname: String? = nil, product: String? = nil, product_data: InlineProductParams? = nil, recurring: Recurring? = nil, tiers: AnyCodable? = nil, tiers_mode: TiersModeValues? = nil, transfer_lookup_key: Bool? = nil, transform_quantity: TransformUsageParam? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+		public init(currency: String, active: Bool? = nil, billing_scheme: BillingSchemeValues? = nil, expand: [String]? = nil, lookup_key: String? = nil, metadata: AnyCodable? = nil, nickname: String? = nil, product: String? = nil, product_data: InlineProductParams? = nil, recurring: Recurring? = nil, tiers: AnyCodable? = nil, tiers_mode: TiersModeValues? = nil, transfer_lookup_key: Bool? = nil, transform_quantity: TransformUsageParam? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 			self.currency = currency
 			self.active = active
 			self.billing_scheme = billing_scheme
@@ -137,7 +137,7 @@ public struct PostPrices: StripeAPIEndpoint {
 		public final class InlineProductParams: Codable {
 			public var active: Bool?
 			public var id: String?
-			public var metadata: Empty?
+			public var metadata: AnyCodable?
 			public var name: String
 			public var statement_descriptor: String?
 			public var unit_label: String?
@@ -145,7 +145,7 @@ public struct PostPrices: StripeAPIEndpoint {
 			/// These fields can be used to create a new product that this price will belong to.
 			/// - Parameters:
 			///   - name: 
-			public init(name: String, active: Bool? = nil, id: String? = nil, metadata: Empty? = nil, statement_descriptor: String? = nil, unit_label: String? = nil) {
+			public init(name: String, active: Bool? = nil, id: String? = nil, metadata: AnyCodable? = nil, statement_descriptor: String? = nil, unit_label: String? = nil) {
 				self.name = name
 				self.active = active
 				self.id = id
@@ -232,7 +232,7 @@ public struct PostPrices: StripeAPIEndpoint {
 
 /// Retrieves the price with the given ID.
 public struct GetPricesPrice: StripeAPIEndpoint {
-	public typealias inputType = Empty
+	public typealias inputType = AnyCodable
 	public typealias outputType = Price
 	public typealias paramType = Params
 	
