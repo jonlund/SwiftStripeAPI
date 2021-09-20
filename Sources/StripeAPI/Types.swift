@@ -14670,6 +14670,7 @@ public final class TerminalReader: Codable {
 	public enum DeviceTypeValues: String, Codable {
 		case bbposChipper2X = "bbpos_chipper2x"
 		case verifoneP400 = "verifone_P400"
+		case bbposWiseposE = "bbpos_wisepos_e"
 	}
 
 	public enum ObjectValues: String, Codable {
