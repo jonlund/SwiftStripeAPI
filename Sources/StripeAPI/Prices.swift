@@ -100,6 +100,8 @@ public struct PostPrices: StripeAPIEndpoint {
 		public var product_data: InlineProductParams?
 		/// The recurring components of a price such as `interval` and `usage_type`.
 		public var recurring: Recurring?
+		/// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+		public var tax_behavior: TaxBehaviorValues?
 		/// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
 		public var tiers: AnyCodable?
 		/// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can successively change as the quantity grows.
@@ -113,7 +115,7 @@ public struct PostPrices: StripeAPIEndpoint {
 		/// Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
 		public var unit_amount_decimal: StringNumber?
 
-		public init(currency: String, active: Bool? = nil, billing_scheme: BillingSchemeValues? = nil, expand: [String]? = nil, lookup_key: String? = nil, metadata: AnyCodable? = nil, nickname: String? = nil, product: String? = nil, product_data: InlineProductParams? = nil, recurring: Recurring? = nil, tiers: AnyCodable? = nil, tiers_mode: TiersModeValues? = nil, transfer_lookup_key: Bool? = nil, transform_quantity: TransformUsageParam? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+		public init(currency: String, active: Bool? = nil, billing_scheme: BillingSchemeValues? = nil, expand: [String]? = nil, lookup_key: String? = nil, metadata: AnyCodable? = nil, nickname: String? = nil, product: String? = nil, product_data: InlineProductParams? = nil, recurring: Recurring? = nil, tax_behavior: TaxBehaviorValues? = nil, tiers: AnyCodable? = nil, tiers_mode: TiersModeValues? = nil, transfer_lookup_key: Bool? = nil, transform_quantity: TransformUsageParam? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 			self.currency = currency
 			self.active = active
 			self.billing_scheme = billing_scheme
@@ -124,6 +126,7 @@ public struct PostPrices: StripeAPIEndpoint {
 			self.product = product
 			self.product_data = product_data
 			self.recurring = recurring
+			self.tax_behavior = tax_behavior
 			self.tiers = tiers
 			self.tiers_mode = tiers_mode
 			self.transfer_lookup_key = transfer_lookup_key
@@ -140,17 +143,19 @@ public struct PostPrices: StripeAPIEndpoint {
 			public var metadata: AnyCodable?
 			public var name: String
 			public var statement_descriptor: String?
+			public var tax_code: String?
 			public var unit_label: String?
 
 			/// These fields can be used to create a new product that this price will belong to.
 			/// - Parameters:
 			///   - name: 
-			public init(name: String, active: Bool? = nil, id: String? = nil, metadata: AnyCodable? = nil, statement_descriptor: String? = nil, unit_label: String? = nil) {
+			public init(name: String, active: Bool? = nil, id: String? = nil, metadata: AnyCodable? = nil, statement_descriptor: String? = nil, tax_code: String? = nil, unit_label: String? = nil) {
 				self.name = name
 				self.active = active
 				self.id = id
 				self.metadata = metadata
 				self.statement_descriptor = statement_descriptor
+				self.tax_code = tax_code
 				self.unit_label = unit_label
 			}
 		}
@@ -222,6 +227,12 @@ public struct PostPrices: StripeAPIEndpoint {
 			case tiered = "tiered"
 		}
 
+		public enum TaxBehaviorValues: String, Codable {
+			case exclusive = "exclusive"
+			case inclusive = "inclusive"
+			case unspecified = "unspecified"
+		}
+
 		public enum TiersModeValues: String, Codable {
 			case graduated = "graduated"
 			case volume = "volume"
@@ -282,16 +293,25 @@ public struct PostPricesPrice: StripeAPIEndpoint {
 		public var metadata: AnyCodable?
 		/// A brief description of the price, hidden from customers.
 		public var nickname: String?
+		/// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+		public var tax_behavior: TaxBehaviorValues?
 		/// If set to true, will atomically remove the lookup key from the existing price, and assign it to this price.
 		public var transfer_lookup_key: Bool?
 
-		public init(active: Bool? = nil, expand: [String]? = nil, lookup_key: String? = nil, metadata: AnyCodable? = nil, nickname: String? = nil, transfer_lookup_key: Bool? = nil) {
+		public init(active: Bool? = nil, expand: [String]? = nil, lookup_key: String? = nil, metadata: AnyCodable? = nil, nickname: String? = nil, tax_behavior: TaxBehaviorValues? = nil, transfer_lookup_key: Bool? = nil) {
 			self.active = active
 			self.expand = expand
 			self.lookup_key = lookup_key
 			self.metadata = metadata
 			self.nickname = nickname
+			self.tax_behavior = tax_behavior
 			self.transfer_lookup_key = transfer_lookup_key
+		}
+
+		public enum TaxBehaviorValues: String, Codable {
+			case exclusive = "exclusive"
+			case inclusive = "inclusive"
+			case unspecified = "unspecified"
 		}
 	}
 

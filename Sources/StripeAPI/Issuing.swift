@@ -283,7 +283,7 @@ public struct PostIssuingCardholders: StripeAPIEndpoint {
 		public var metadata: AnyCodable?
 		/// The cardholder's name. This will be printed on cards issued to them.
 		public var name: String
-		/// The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already.
+		/// The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://stripe.com/docs/issuing/3d-secure#when-is-3d-secure-applied) for more details.
 		public var phone_number: String?
 		/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 		public var spending_controls: AuthorizationControlsParamV2?
@@ -496,7 +496,7 @@ public struct PostIssuingCardholdersCardholder: StripeAPIEndpoint {
 		public var individual: IndividualParam?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
-		/// The cardholder's phone number.
+		/// The cardholder's phone number. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://stripe.com/docs/issuing/3d-secure) for more details.
 		public var phone_number: String?
 		/// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 		public var spending_controls: AuthorizationControlsParamV2?
@@ -736,7 +736,7 @@ public struct PostIssuingCards: StripeAPIEndpoint {
 	public final class FormInput: Codable {
 		/// The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object with which the card will be associated.
 		public var cardholder: String?
-		/// The currency for the card. This currently must be `usd`.
+		/// The currency for the card.
 		public var currency: String
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?

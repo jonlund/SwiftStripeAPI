@@ -135,6 +135,7 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 		public final class OneTimePriceData: Codable {
 			public var currency: String
 			public var product: String
+			public var tax_behavior: TaxBehaviorValues?
 			public var unit_amount: Int?
 			public var unit_amount_decimal: StringNumber?
 
@@ -142,11 +143,18 @@ public struct PostInvoiceitems: StripeAPIEndpoint {
 			/// - Parameters:
 			///   - currency: 
 			///   - product: 
-			public init(currency: String, product: String, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+			public init(currency: String, product: String, tax_behavior: TaxBehaviorValues? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 				self.currency = currency
 				self.product = product
+				self.tax_behavior = tax_behavior
 				self.unit_amount = unit_amount
 				self.unit_amount_decimal = unit_amount_decimal
+			}
+
+			public enum TaxBehaviorValues: String, Codable {
+				case exclusive = "exclusive"
+				case inclusive = "inclusive"
+				case unspecified = "unspecified"
 			}
 		}
 
@@ -261,6 +269,7 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 		public final class OneTimePriceData: Codable {
 			public var currency: String
 			public var product: String
+			public var tax_behavior: TaxBehaviorValues?
 			public var unit_amount: Int?
 			public var unit_amount_decimal: StringNumber?
 
@@ -268,11 +277,18 @@ public struct PostInvoiceitemsInvoiceitem: StripeAPIEndpoint {
 			/// - Parameters:
 			///   - currency: 
 			///   - product: 
-			public init(currency: String, product: String, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+			public init(currency: String, product: String, tax_behavior: TaxBehaviorValues? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 				self.currency = currency
 				self.product = product
+				self.tax_behavior = tax_behavior
 				self.unit_amount = unit_amount
 				self.unit_amount_decimal = unit_amount_decimal
+			}
+
+			public enum TaxBehaviorValues: String, Codable {
+				case exclusive = "exclusive"
+				case inclusive = "inclusive"
+				case unspecified = "unspecified"
 			}
 		}
 

@@ -178,10 +178,13 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 				public enum StructureValues: String, Codable {
+					case freeZoneEstablishment = "free_zone_establishment"
+					case freeZoneLlc = "free_zone_llc"
 					case governmentInstrumentality = "government_instrumentality"
 					case governmentalUnit = "governmental_unit"
 					case incorporatedNonProfit = "incorporated_non_profit"
 					case limitedLiabilityPartnership = "limited_liability_partnership"
+					case llc = "llc"
 					case multiMemberLlc = "multi_member_llc"
 					case privateCompany = "private_company"
 					case privateCorporation = "private_corporation"
@@ -189,6 +192,8 @@ public struct PostTokens: StripeAPIEndpoint {
 					case publicCompany = "public_company"
 					case publicCorporation = "public_corporation"
 					case publicPartnership = "public_partnership"
+					case singleMemberLlc = "single_member_llc"
+					case soleEstablishment = "sole_establishment"
 					case soleProprietorship = "sole_proprietorship"
 					case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
 					case unincorporatedAssociation = "unincorporated_association"
@@ -207,6 +212,7 @@ public struct PostTokens: StripeAPIEndpoint {
 				public var first_name: String?
 				public var first_name_kana: String?
 				public var first_name_kanji: String?
+				public var full_name_aliases: [String]?
 				public var gender: String?
 				public var id_number: String?
 				public var last_name: String?
@@ -219,7 +225,7 @@ public struct PostTokens: StripeAPIEndpoint {
 				public var ssn_last_4: String?
 				public var verification: PersonVerificationSpecs?
 
-				public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+				public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, full_name_aliases: [String]? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 					self.address = address
 					self.address_kana = address_kana
 					self.address_kanji = address_kanji
@@ -228,6 +234,7 @@ public struct PostTokens: StripeAPIEndpoint {
 					self.first_name = first_name
 					self.first_name_kana = first_name_kana
 					self.first_name_kanji = first_name_kanji
+					self.full_name_aliases = full_name_aliases
 					self.gender = gender
 					self.id_number = id_number
 					self.last_name = last_name
@@ -366,10 +373,12 @@ public struct PostTokens: StripeAPIEndpoint {
 			public var address_kana: JapanAddressKanaSpecs?
 			public var address_kanji: JapanAddressKanjiSpecs?
 			public var dob: AnyCodable?
+			public var documents: PersonDocumentsSpecs?
 			public var email: String?
 			public var first_name: String?
 			public var first_name_kana: String?
 			public var first_name_kanji: String?
+			public var full_name_aliases: [String]?
 			public var gender: String?
 			public var id_number: String?
 			public var last_name: String?
@@ -377,6 +386,7 @@ public struct PostTokens: StripeAPIEndpoint {
 			public var last_name_kanji: String?
 			public var maiden_name: String?
 			public var metadata: AnyCodable?
+			public var nationality: String?
 			public var phone: String?
 			public var political_exposure: String?
 			public var relationship: RelationshipSpecs?
@@ -385,15 +395,17 @@ public struct PostTokens: StripeAPIEndpoint {
 
 			/// Information for the person this token will represent.
 			/// - Parameters:
-			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, documents: PersonDocumentsSpecs? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, full_name_aliases: [String]? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, nationality: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 				self.address = address
 				self.address_kana = address_kana
 				self.address_kanji = address_kanji
 				self.dob = dob
+				self.documents = documents
 				self.email = email
 				self.first_name = first_name
 				self.first_name_kana = first_name_kana
 				self.first_name_kanji = first_name_kanji
+				self.full_name_aliases = full_name_aliases
 				self.gender = gender
 				self.id_number = id_number
 				self.last_name = last_name
@@ -401,6 +413,7 @@ public struct PostTokens: StripeAPIEndpoint {
 				self.last_name_kanji = last_name_kanji
 				self.maiden_name = maiden_name
 				self.metadata = metadata
+				self.nationality = nationality
 				self.phone = phone
 				self.political_exposure = political_exposure
 				self.relationship = relationship
@@ -473,6 +486,30 @@ public struct PostTokens: StripeAPIEndpoint {
 
 
 
+			public final class PersonDocumentsSpecs: Codable {
+				public var company_authorization: DocumentsParam?
+				public var passport: DocumentsParam?
+				public var visa: DocumentsParam?
+
+				public init(company_authorization: DocumentsParam? = nil, passport: DocumentsParam? = nil, visa: DocumentsParam? = nil) {
+					self.company_authorization = company_authorization
+					self.passport = passport
+					self.visa = visa
+				}
+
+
+				public final class DocumentsParam: Codable {
+					public var files: [String]?
+
+					public init(files: [String]? = nil) {
+						self.files = files
+					}
+				}
+
+			}
+
+
+
 			public final class PersonVerificationSpecs: Codable {
 				public var additional_document: PersonVerificationDocumentSpecs?
 				public var document: PersonVerificationDocumentSpecs?
@@ -537,6 +574,7 @@ public struct PostTokens: StripeAPIEndpoint {
 			public var account_holder_name: String?
 			public var account_holder_type: AccountHolderTypeValues?
 			public var account_number: String
+			public var account_type: AccountTypeValues?
 			public var country: String
 			public var currency: String?
 			public var routing_number: String?
@@ -545,11 +583,12 @@ public struct PostTokens: StripeAPIEndpoint {
 			/// - Parameters:
 			///   - account_number: 
 			///   - country: 
-			public init(account_number: String, country: String, account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, currency: String? = nil, routing_number: String? = nil) {
+			public init(account_number: String, country: String, account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, account_type: AccountTypeValues? = nil, currency: String? = nil, routing_number: String? = nil) {
 				self.account_number = account_number
 				self.country = country
 				self.account_holder_name = account_holder_name
 				self.account_holder_type = account_holder_type
+				self.account_type = account_type
 				self.currency = currency
 				self.routing_number = routing_number
 			}
@@ -557,6 +596,13 @@ public struct PostTokens: StripeAPIEndpoint {
 			public enum AccountHolderTypeValues: String, Codable {
 				case company = "company"
 				case individual = "individual"
+			}
+
+			public enum AccountTypeValues: String, Codable {
+				case checking = "checking"
+				case futsu = "futsu"
+				case savings = "savings"
+				case toza = "toza"
 			}
 		}
 

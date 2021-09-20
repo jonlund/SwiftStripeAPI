@@ -61,7 +61,7 @@ public struct GetPaymentMethods: StripeAPIEndpoint {
 
 }
 
-/// Creates a PaymentMethod object. Read the <a href="/docs/stripe-js/reference#stripe-create-payment-method">Stripe.js reference</a> to learn how to create PaymentMethods via Stripe.js.
+/// Creates a PaymentMethod object. Read the <a href="/docs/stripe-js/reference#stripe-create-payment-method">Stripe.js reference</a> to learn how to create PaymentMethods via Stripe.js.  Instead of creating a PaymentMethod directly, we recommend using the <a href="/docs/payments/accept-a-payment">PaymentIntents</a> API to accept a payment immediately or the <a href="/docs/payments/save-and-reuse">SetupIntent</a> API to collect payment method details ahead of a future payment.
 public struct PostPaymentMethods: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = PaymentMethod
@@ -71,6 +71,10 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
+		/// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+		public var acss_debit: PaymentMethodParam?
+		/// If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+		public var afterpay_clearpay: Param?
 		/// If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
 		public var alipay: Param?
 		/// If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -81,6 +85,8 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 		public var bancontact: Param?
 		/// Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
 		public var billing_details: BillingDetailsInnerParams?
+		/// If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+		public var boleto: Param?
 		/// If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When providing a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
 		public var card: AnyCodable?
 		/// The `Customer` to whom the original PaymentMethod is attached.
@@ -113,13 +119,18 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 		public var sofort: Param?
 		/// The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
 		public var type: TypeValues?
+		/// If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+		public var wechat_pay: Param?
 
-		public init(alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, card: AnyCodable? = nil, customer: String? = nil, eps: Param? = nil, expand: [String]? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, payment_method: String? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, type: TypeValues? = nil) {
+		public init(acss_debit: PaymentMethodParam? = nil, afterpay_clearpay: Param? = nil, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, boleto: Param? = nil, card: AnyCodable? = nil, customer: String? = nil, eps: Param? = nil, expand: [String]? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, payment_method: String? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, type: TypeValues? = nil, wechat_pay: Param? = nil) {
+			self.acss_debit = acss_debit
+			self.afterpay_clearpay = afterpay_clearpay
 			self.alipay = alipay
 			self.au_becs_debit = au_becs_debit
 			self.bacs_debit = bacs_debit
 			self.bancontact = bancontact
 			self.billing_details = billing_details
+			self.boleto = boleto
 			self.card = card
 			self.customer = customer
 			self.eps = eps
@@ -136,6 +147,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 			self.sepa_debit = sepa_debit
 			self.sofort = sofort
 			self.type = type
+			self.wechat_pay = wechat_pay
 		}
 
 
@@ -158,33 +170,43 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 
 
 
-		/// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+		/// If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
 		public final class Param: Codable {
-			public var country: CountryValues
 
-			/// If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
-			/// - Parameters:
-			///   - country: 
-			public init(country: CountryValues) {
-				self.country = country
+			/// If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+			public init() {
 			}
+		}
 
-			public enum CountryValues: String, Codable {
-				case optionAT = "AT"
-				case optionBE = "BE"
-				case optionDE = "DE"
-				case optionES = "ES"
-				case optionIT = "IT"
-				case optionNL = "NL"
+
+
+		/// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+		public final class PaymentMethodParam: Codable {
+			public var account_number: String
+			public var institution_number: String
+			public var transit_number: String
+
+			/// If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+			/// - Parameters:
+			///   - account_number: 
+			///   - institution_number: 
+			///   - transit_number: 
+			public init(account_number: String, institution_number: String, transit_number: String) {
+				self.account_number = account_number
+				self.institution_number = institution_number
+				self.transit_number = transit_number
 			}
 		}
 
 
 		public enum TypeValues: String, Codable {
+			case acssDebit = "acss_debit"
+			case afterpayClearpay = "afterpay_clearpay"
 			case alipay = "alipay"
 			case auBecsDebit = "au_becs_debit"
 			case bacsDebit = "bacs_debit"
 			case bancontact = "bancontact"
+			case boleto = "boleto"
 			case card = "card"
 			case eps = "eps"
 			case fpx = "fpx"
@@ -195,6 +217,7 @@ public struct PostPaymentMethods: StripeAPIEndpoint {
 			case p24 = "p24"
 			case sepaDebit = "sepa_debit"
 			case sofort = "sofort"
+			case wechatPay = "wechat_pay"
 		}
 	}
 

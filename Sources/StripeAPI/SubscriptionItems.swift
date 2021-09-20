@@ -73,7 +73,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
-		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription’s invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
 		public var payment_behavior: PaymentBehaviorValues?
 		/// The ID of the price object.
 		public var price: String?
@@ -110,6 +110,7 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 			public var currency: String
 			public var product: String
 			public var recurring: RecurringAdhoc
+			public var tax_behavior: TaxBehaviorValues?
 			public var unit_amount: Int?
 			public var unit_amount_decimal: StringNumber?
 
@@ -118,10 +119,11 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 			///   - currency: 
 			///   - product: 
 			///   - recurring: 
-			public init(currency: String, product: String, recurring: RecurringAdhoc, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+			public init(currency: String, product: String, recurring: RecurringAdhoc, tax_behavior: TaxBehaviorValues? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 				self.currency = currency
 				self.product = product
 				self.recurring = recurring
+				self.tax_behavior = tax_behavior
 				self.unit_amount = unit_amount
 				self.unit_amount_decimal = unit_amount_decimal
 			}
@@ -144,11 +146,18 @@ public struct PostSubscriptionItems: StripeAPIEndpoint {
 				}
 			}
 
+
+			public enum TaxBehaviorValues: String, Codable {
+				case exclusive = "exclusive"
+				case inclusive = "inclusive"
+				case unspecified = "unspecified"
+			}
 		}
 
 
 		public enum PaymentBehaviorValues: String, Codable {
 			case allowIncomplete = "allow_incomplete"
+			case defaultIncomplete = "default_incomplete"
 			case errorIfIncomplete = "error_if_incomplete"
 			case pendingIfIncomplete = "pending_if_incomplete"
 		}
@@ -212,9 +221,9 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 		public var metadata: AnyCodable?
 		/// Indicates if a customer is on or off-session while an invoice payment is attempted.
 		public var off_session: Bool?
-		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription’s invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
 		public var payment_behavior: PaymentBehaviorValues?
-		/// The ID of the price object.
+		/// The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
 		public var price: String?
 		/// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
 		public var price_data: RecurringPriceData?
@@ -247,6 +256,7 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 			public var currency: String
 			public var product: String
 			public var recurring: RecurringAdhoc
+			public var tax_behavior: TaxBehaviorValues?
 			public var unit_amount: Int?
 			public var unit_amount_decimal: StringNumber?
 
@@ -255,10 +265,11 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 			///   - currency: 
 			///   - product: 
 			///   - recurring: 
-			public init(currency: String, product: String, recurring: RecurringAdhoc, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
+			public init(currency: String, product: String, recurring: RecurringAdhoc, tax_behavior: TaxBehaviorValues? = nil, unit_amount: Int? = nil, unit_amount_decimal: StringNumber? = nil) {
 				self.currency = currency
 				self.product = product
 				self.recurring = recurring
+				self.tax_behavior = tax_behavior
 				self.unit_amount = unit_amount
 				self.unit_amount_decimal = unit_amount_decimal
 			}
@@ -281,11 +292,18 @@ public struct PostSubscriptionItemsItem: StripeAPIEndpoint {
 				}
 			}
 
+
+			public enum TaxBehaviorValues: String, Codable {
+				case exclusive = "exclusive"
+				case inclusive = "inclusive"
+				case unspecified = "unspecified"
+			}
 		}
 
 
 		public enum PaymentBehaviorValues: String, Codable {
 			case allowIncomplete = "allow_incomplete"
+			case defaultIncomplete = "default_incomplete"
 			case errorIfIncomplete = "error_if_incomplete"
 			case pendingIfIncomplete = "pending_if_incomplete"
 		}

@@ -117,12 +117,14 @@ public struct PostSetupIntents: StripeAPIEndpoint {
 
 		/// Payment-method-specific configuration for this SetupIntent.
 		public final class PaymentMethodOptionsParam: Codable {
+			public var acss_debit: SetupIntentPaymentMethodOptionsParam?
 			public var card: SetupIntentParam?
 			public var sepa_debit: SetupIntentPaymentMethodOptionsParam?
 
 			/// Payment-method-specific configuration for this SetupIntent.
 			/// - Parameters:
-			public init(card: SetupIntentParam? = nil, sepa_debit: SetupIntentPaymentMethodOptionsParam? = nil) {
+			public init(acss_debit: SetupIntentPaymentMethodOptionsParam? = nil, card: SetupIntentParam? = nil, sepa_debit: SetupIntentPaymentMethodOptionsParam? = nil) {
+				self.acss_debit = acss_debit
 				self.card = card
 				self.sepa_debit = sepa_debit
 			}
@@ -318,12 +320,14 @@ public struct PostSetupIntentsIntent: StripeAPIEndpoint {
 
 		/// Payment-method-specific configuration for this SetupIntent.
 		public final class PaymentMethodOptionsParam: Codable {
+			public var acss_debit: SetupIntentPaymentMethodOptionsParam?
 			public var card: SetupIntentParam?
 			public var sepa_debit: SetupIntentPaymentMethodOptionsParam?
 
 			/// Payment-method-specific configuration for this SetupIntent.
 			/// - Parameters:
-			public init(card: SetupIntentParam? = nil, sepa_debit: SetupIntentPaymentMethodOptionsParam? = nil) {
+			public init(acss_debit: SetupIntentPaymentMethodOptionsParam? = nil, card: SetupIntentParam? = nil, sepa_debit: SetupIntentPaymentMethodOptionsParam? = nil) {
+				self.acss_debit = acss_debit
 				self.card = card
 				self.sepa_debit = sepa_debit
 			}
@@ -450,12 +454,14 @@ public struct PostSetupIntentsIntentConfirm: StripeAPIEndpoint {
 
 		/// Payment-method-specific configuration for this SetupIntent.
 		public final class PaymentMethodOptionsParam: Codable {
+			public var acss_debit: SetupIntentPaymentMethodOptionsParam?
 			public var card: SetupIntentParam?
 			public var sepa_debit: SetupIntentPaymentMethodOptionsParam?
 
 			/// Payment-method-specific configuration for this SetupIntent.
 			/// - Parameters:
-			public init(card: SetupIntentParam? = nil, sepa_debit: SetupIntentPaymentMethodOptionsParam? = nil) {
+			public init(acss_debit: SetupIntentPaymentMethodOptionsParam? = nil, card: SetupIntentParam? = nil, sepa_debit: SetupIntentPaymentMethodOptionsParam? = nil) {
+				self.acss_debit = acss_debit
 				self.card = card
 				self.sepa_debit = sepa_debit
 			}

@@ -69,8 +69,8 @@ public struct PostCoupons: StripeAPIEndpoint {
 		public var applies_to: AppliesToParams?
 		/// Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
 		public var currency: String?
-		/// Specifies how long the discount will be in effect. Can be `forever`, `once`, or `repeating`.
-		public var duration: DurationValues
+		/// Specifies how long the discount will be in effect if used on a subscription. Can be `forever`, `once`, or `repeating`. Defaults to `once`.
+		public var duration: DurationValues?
 		/// Required only if `duration` is `repeating`, in which case it must be a positive integer that specifies the number of months the discount will be in effect.
 		public var duration_in_months: Int?
 		/// Specifies which fields in the response should be expanded.
@@ -88,11 +88,11 @@ public struct PostCoupons: StripeAPIEndpoint {
 		/// Unix timestamp specifying the last time at which the coupon can be redeemed. After the redeem_by date, the coupon can no longer be applied to new customers.
 		public var redeem_by: Timestamp?
 
-		public init(duration: DurationValues, amount_off: Int? = nil, applies_to: AppliesToParams? = nil, currency: String? = nil, duration_in_months: Int? = nil, expand: [String]? = nil, id: String? = nil, max_redemptions: Int? = nil, metadata: AnyCodable? = nil, name: String? = nil, percent_off: StringNumber? = nil, redeem_by: Timestamp? = nil) {
-			self.duration = duration
+		public init(amount_off: Int? = nil, applies_to: AppliesToParams? = nil, currency: String? = nil, duration: DurationValues? = nil, duration_in_months: Int? = nil, expand: [String]? = nil, id: String? = nil, max_redemptions: Int? = nil, metadata: AnyCodable? = nil, name: String? = nil, percent_off: StringNumber? = nil, redeem_by: Timestamp? = nil) {
 			self.amount_off = amount_off
 			self.applies_to = applies_to
 			self.currency = currency
+			self.duration = duration
 			self.duration_in_months = duration_in_months
 			self.expand = expand
 			self.id = id
@@ -106,12 +106,11 @@ public struct PostCoupons: StripeAPIEndpoint {
 
 		/// A hash containing directions for what this Coupon will apply discounts to.
 		public final class AppliesToParams: Codable {
-			public var products: [String]
+			public var products: [String]?
 
 			/// A hash containing directions for what this Coupon will apply discounts to.
 			/// - Parameters:
-			///   - products: 
-			public init(products: [String]) {
+			public init(products: [String]? = nil) {
 				self.products = products
 			}
 		}

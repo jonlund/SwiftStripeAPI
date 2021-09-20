@@ -98,12 +98,14 @@ public struct PostCustomers: StripeAPIEndpoint {
 		/// The customer's shipping information. Appears on invoices emailed to this customer.
 		public var shipping: AnyCodable?
 		public var source: String?
+		/// Tax details about the customer.
+		public var tax: TaxParam?
 		/// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
 		public var tax_exempt: TaxExemptValues?
 		/// The customer's tax IDs.
 		public var tax_id_data: AnyCodable?
 
-		public init(address: AnyCodable? = nil, balance: Int? = nil, coupon: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: AnyCodable? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, payment_method: String? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: AnyCodable? = nil, source: String? = nil, tax_exempt: TaxExemptValues? = nil, tax_id_data: AnyCodable? = nil) {
+		public init(address: AnyCodable? = nil, balance: Int? = nil, coupon: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: AnyCodable? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, payment_method: String? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: AnyCodable? = nil, source: String? = nil, tax: TaxParam? = nil, tax_exempt: TaxExemptValues? = nil, tax_id_data: AnyCodable? = nil) {
 			self.address = address
 			self.balance = balance
 			self.coupon = coupon
@@ -121,6 +123,7 @@ public struct PostCustomers: StripeAPIEndpoint {
 			self.promotion_code = promotion_code
 			self.shipping = shipping
 			self.source = source
+			self.tax = tax
 			self.tax_exempt = tax_exempt
 			self.tax_id_data = tax_id_data
 		}
@@ -138,6 +141,19 @@ public struct PostCustomers: StripeAPIEndpoint {
 				self.custom_fields = custom_fields
 				self.default_payment_method = default_payment_method
 				self.footer = footer
+			}
+		}
+
+
+
+		/// Tax details about the customer.
+		public final class TaxParam: Codable {
+			public var ip_address: String?
+
+			/// Tax details about the customer.
+			/// - Parameters:
+			public init(ip_address: String? = nil) {
+				self.ip_address = ip_address
 			}
 		}
 
@@ -197,9 +213,9 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 		public var address: AnyCodable?
 		/// An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
 		public var balance: Int?
-		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
+		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's bank account details.
 		public var bank_account: AnyCodable?
-		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
+		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/js).
 		public var card: AnyCodable?
 		public var coupon: String?
 		/// ID of Alipay account to make the customer's new default for invoice payments.
@@ -235,12 +251,14 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 		/// The customer's shipping information. Appears on invoices emailed to this customer.
 		public var shipping: AnyCodable?
 		public var source: String?
+		/// Tax details about the customer.
+		public var tax: TaxParam?
 		/// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
 		public var tax_exempt: TaxExemptValues?
 		/// Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
 		public var trial_end: String?
 
-		public init(address: AnyCodable? = nil, balance: Int? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, coupon: String? = nil, default_alipay_account: String? = nil, default_bank_account: String? = nil, default_card: String? = nil, default_source: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: AnyCodable? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: AnyCodable? = nil, source: String? = nil, tax_exempt: TaxExemptValues? = nil, trial_end: String? = nil) {
+		public init(address: AnyCodable? = nil, balance: Int? = nil, bank_account: AnyCodable? = nil, card: AnyCodable? = nil, coupon: String? = nil, default_alipay_account: String? = nil, default_bank_account: String? = nil, default_card: String? = nil, default_source: String? = nil, description: String? = nil, email: String? = nil, expand: [String]? = nil, invoice_prefix: String? = nil, invoice_settings: CustomerParam? = nil, metadata: AnyCodable? = nil, name: String? = nil, next_invoice_sequence: Int? = nil, phone: String? = nil, preferred_locales: [String]? = nil, promotion_code: String? = nil, shipping: AnyCodable? = nil, source: String? = nil, tax: TaxParam? = nil, tax_exempt: TaxExemptValues? = nil, trial_end: String? = nil) {
 			self.address = address
 			self.balance = balance
 			self.bank_account = bank_account
@@ -263,6 +281,7 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 			self.promotion_code = promotion_code
 			self.shipping = shipping
 			self.source = source
+			self.tax = tax
 			self.tax_exempt = tax_exempt
 			self.trial_end = trial_end
 		}
@@ -280,6 +299,19 @@ public struct PostCustomersCustomer: StripeAPIEndpoint {
 				self.custom_fields = custom_fields
 				self.default_payment_method = default_payment_method
 				self.footer = footer
+			}
+		}
+
+
+
+		/// Tax details about the customer.
+		public final class TaxParam: Codable {
+			public var ip_address: String?
+
+			/// Tax details about the customer.
+			/// - Parameters:
+			public init(ip_address: String? = nil) {
+				self.ip_address = ip_address
 			}
 		}
 
@@ -557,11 +589,11 @@ public struct PostCustomersCustomerBankAccounts: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
-		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
+		/// A token returned by [Stripe.js](https://stripe.com/docs/js) representing the user’s Alipay account details.
 		public var alipay_account: String?
-		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
+		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's bank account details.
 		public var bank_account: AnyCodable?
-		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
+		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/js).
 		public var card: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
@@ -866,11 +898,11 @@ public struct PostCustomersCustomerCards: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
-		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
+		/// A token returned by [Stripe.js](https://stripe.com/docs/js) representing the user’s Alipay account details.
 		public var alipay_account: String?
-		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
+		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's bank account details.
 		public var bank_account: AnyCodable?
-		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
+		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/js).
 		public var card: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
@@ -1187,11 +1219,11 @@ public struct PostCustomersCustomerSources: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
-		/// A token returned by [Stripe.js](https://stripe.com/docs/stripe.js) representing the user’s Alipay account details.
+		/// A token returned by [Stripe.js](https://stripe.com/docs/js) representing the user’s Alipay account details.
 		public var alipay_account: String?
-		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
+		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's bank account details.
 		public var bank_account: AnyCodable?
-		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
+		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/js).
 		public var card: AnyCodable?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
@@ -1497,10 +1529,12 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
-		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
+		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 20 items.
 		public var add_invoice_items: AnyCodable?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
 		public var application_fee_percent: StringNumber?
+		/// Automatic tax settings for this subscription.
+		public var automatic_tax: AutomaticTaxConfig?
 		/// For new subscriptions, a past timestamp to backdate the subscription's start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
 		public var backdate_start_date: Timestamp?
 		/// A future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
@@ -1513,7 +1547,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		public var cancel_at_period_end: Bool?
 		/// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
 		public var collection_method: CollectionMethodValues?
-		/// The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
+		/// The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
 		public var coupon: String?
 		/// Number of days a customer has to pay invoices generated by this subscription. Valid only for subscriptions where `collection_method` is set to `send_invoice`.
 		public var days_until_due: Int?
@@ -1531,8 +1565,10 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		public var metadata: AnyCodable?
 		/// Indicates if a customer is on or off-session while an invoice payment is attempted.
 		public var off_session: Bool?
-		/// Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.  `pending_if_incomplete` is only used with updates and cannot be passed when creating a subscription.
+		/// Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `default_incomplete` to create Subscriptions with `status=incomplete` when the first invoice requires payment, otherwise start as active. Subscriptions transition to `status=active` when successfully confirming the payment intent on the first invoice. This allows simpler management of scenarios where additional user actions are needed to pay a subscription’s invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method. If the payment intent is not confirmed within 23 hours subscriptions transition to `status=incomplete_expired`, which is a terminal state.  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.  `pending_if_incomplete` is only used with updates and cannot be passed when creating a subscription.
 		public var payment_behavior: PaymentBehaviorValues?
+		/// Payment settings to pass to invoices created by the subscription.
+		public var payment_settings: PaymentSettings?
 		/// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
 		public var pending_invoice_item_interval: AnyCodable?
 		/// The API ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
@@ -1548,9 +1584,10 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 		/// Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
 		public var trial_period_days: Int?
 
-		public init(add_invoice_items: AnyCodable? = nil, application_fee_percent: StringNumber? = nil, backdate_start_date: Timestamp? = nil, billing_cycle_anchor: Timestamp? = nil, billing_thresholds: AnyCodable? = nil, cancel_at: Timestamp? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, payment_behavior: PaymentBehaviorValues? = nil, pending_invoice_item_interval: AnyCodable? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, transfer_data: TransferDataSpecs? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil, trial_period_days: Int? = nil) {
+		public init(add_invoice_items: AnyCodable? = nil, application_fee_percent: StringNumber? = nil, automatic_tax: AutomaticTaxConfig? = nil, backdate_start_date: Timestamp? = nil, billing_cycle_anchor: Timestamp? = nil, billing_thresholds: AnyCodable? = nil, cancel_at: Timestamp? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, payment_behavior: PaymentBehaviorValues? = nil, payment_settings: PaymentSettings? = nil, pending_invoice_item_interval: AnyCodable? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, transfer_data: TransferDataSpecs? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil, trial_period_days: Int? = nil) {
 			self.add_invoice_items = add_invoice_items
 			self.application_fee_percent = application_fee_percent
+			self.automatic_tax = automatic_tax
 			self.backdate_start_date = backdate_start_date
 			self.billing_cycle_anchor = billing_cycle_anchor
 			self.billing_thresholds = billing_thresholds
@@ -1567,6 +1604,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 			self.metadata = metadata
 			self.off_session = off_session
 			self.payment_behavior = payment_behavior
+			self.payment_settings = payment_settings
 			self.pending_invoice_item_interval = pending_invoice_item_interval
 			self.promotion_code = promotion_code
 			self.proration_behavior = proration_behavior
@@ -1575,6 +1613,49 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 			self.trial_from_plan = trial_from_plan
 			self.trial_period_days = trial_period_days
 		}
+
+
+		/// Automatic tax settings for this subscription.
+		public final class AutomaticTaxConfig: Codable {
+			public var enabled: Bool
+
+			/// Automatic tax settings for this subscription.
+			/// - Parameters:
+			///   - enabled: 
+			public init(enabled: Bool) {
+				self.enabled = enabled
+			}
+		}
+
+
+
+		/// Payment settings to pass to invoices created by the subscription.
+		public final class PaymentSettings: Codable {
+			public var payment_method_options: PaymentMethodOptions?
+			public var payment_method_types: AnyCodable?
+
+			/// Payment settings to pass to invoices created by the subscription.
+			/// - Parameters:
+			public init(payment_method_options: PaymentMethodOptions? = nil, payment_method_types: AnyCodable? = nil) {
+				self.payment_method_options = payment_method_options
+				self.payment_method_types = payment_method_types
+			}
+
+
+			public final class PaymentMethodOptions: Codable {
+				public var acss_debit: AnyCodable?
+				public var bancontact: AnyCodable?
+				public var card: AnyCodable?
+
+				public init(acss_debit: AnyCodable? = nil, bancontact: AnyCodable? = nil, card: AnyCodable? = nil) {
+					self.acss_debit = acss_debit
+					self.bancontact = bancontact
+					self.card = card
+				}
+			}
+
+		}
+
 
 
 		/// If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
@@ -1599,6 +1680,7 @@ public struct PostCustomersCustomerSubscriptions: StripeAPIEndpoint {
 
 		public enum PaymentBehaviorValues: String, Codable {
 			case allowIncomplete = "allow_incomplete"
+			case defaultIncomplete = "default_incomplete"
 			case errorIfIncomplete = "error_if_incomplete"
 			case pendingIfIncomplete = "pending_if_incomplete"
 		}
@@ -1660,10 +1742,12 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 	}
 
 	public final class FormInput: Codable {
-		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
+		/// A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 20 items.
 		public var add_invoice_items: AnyCodable?
 		/// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
 		public var application_fee_percent: StringNumber?
+		/// Automatic tax settings for this subscription.
+		public var automatic_tax: AutomaticTaxConfig?
 		/// Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
 		public var billing_cycle_anchor: BillingCycleAnchorValues?
 		/// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
@@ -1674,7 +1758,7 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 		public var cancel_at_period_end: Bool?
 		/// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
 		public var collection_method: CollectionMethodValues?
-		/// The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
+		/// The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
 		public var coupon: String?
 		/// Number of days a customer has to pay invoices generated by this subscription. Valid only for subscriptions where `collection_method` is set to `send_invoice`.
 		public var days_until_due: Int?
@@ -1694,8 +1778,10 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 		public var off_session: Bool?
 		/// If specified, payment collection for this subscription will be paused.
 		public var pause_collection: AnyCodable?
-		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+		/// Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.  Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription’s invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.  Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).  Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
 		public var payment_behavior: PaymentBehaviorValues?
+		/// Payment settings to pass to invoices created by the subscription.
+		public var payment_settings: PaymentSettings?
 		/// Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
 		public var pending_invoice_item_interval: AnyCodable?
 		/// The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
@@ -1711,9 +1797,10 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 		/// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
 		public var trial_from_plan: Bool?
 
-		public init(add_invoice_items: AnyCodable? = nil, application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, cancel_at: Int? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, pause_collection: AnyCodable? = nil, payment_behavior: PaymentBehaviorValues? = nil, pending_invoice_item_interval: AnyCodable? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, transfer_data: AnyCodable? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil) {
+		public init(add_invoice_items: AnyCodable? = nil, application_fee_percent: StringNumber? = nil, automatic_tax: AutomaticTaxConfig? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, cancel_at: Int? = nil, cancel_at_period_end: Bool? = nil, collection_method: CollectionMethodValues? = nil, coupon: String? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, expand: [String]? = nil, items: AnyCodable? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, pause_collection: AnyCodable? = nil, payment_behavior: PaymentBehaviorValues? = nil, payment_settings: PaymentSettings? = nil, pending_invoice_item_interval: AnyCodable? = nil, promotion_code: String? = nil, proration_behavior: ProrationBehaviorValues? = nil, proration_date: Timestamp? = nil, transfer_data: AnyCodable? = nil, trial_end: String? = nil, trial_from_plan: Bool? = nil) {
 			self.add_invoice_items = add_invoice_items
 			self.application_fee_percent = application_fee_percent
+			self.automatic_tax = automatic_tax
 			self.billing_cycle_anchor = billing_cycle_anchor
 			self.billing_thresholds = billing_thresholds
 			self.cancel_at = cancel_at
@@ -1730,6 +1817,7 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 			self.off_session = off_session
 			self.pause_collection = pause_collection
 			self.payment_behavior = payment_behavior
+			self.payment_settings = payment_settings
 			self.pending_invoice_item_interval = pending_invoice_item_interval
 			self.promotion_code = promotion_code
 			self.proration_behavior = proration_behavior
@@ -1738,6 +1826,49 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 			self.trial_end = trial_end
 			self.trial_from_plan = trial_from_plan
 		}
+
+
+		/// Automatic tax settings for this subscription.
+		public final class AutomaticTaxConfig: Codable {
+			public var enabled: Bool
+
+			/// Automatic tax settings for this subscription.
+			/// - Parameters:
+			///   - enabled: 
+			public init(enabled: Bool) {
+				self.enabled = enabled
+			}
+		}
+
+
+
+		/// Payment settings to pass to invoices created by the subscription.
+		public final class PaymentSettings: Codable {
+			public var payment_method_options: PaymentMethodOptions?
+			public var payment_method_types: AnyCodable?
+
+			/// Payment settings to pass to invoices created by the subscription.
+			/// - Parameters:
+			public init(payment_method_options: PaymentMethodOptions? = nil, payment_method_types: AnyCodable? = nil) {
+				self.payment_method_options = payment_method_options
+				self.payment_method_types = payment_method_types
+			}
+
+
+			public final class PaymentMethodOptions: Codable {
+				public var acss_debit: AnyCodable?
+				public var bancontact: AnyCodable?
+				public var card: AnyCodable?
+
+				public init(acss_debit: AnyCodable? = nil, bancontact: AnyCodable? = nil, card: AnyCodable? = nil) {
+					self.acss_debit = acss_debit
+					self.bancontact = bancontact
+					self.card = card
+				}
+			}
+
+		}
+
 
 		public enum BillingCycleAnchorValues: String, Codable {
 			case now = "now"
@@ -1751,6 +1882,7 @@ public struct PostCustomersCustomerSubscriptionsSubscriptionExposedId: StripeAPI
 
 		public enum PaymentBehaviorValues: String, Codable {
 			case allowIncomplete = "allow_incomplete"
+			case defaultIncomplete = "default_incomplete"
 			case errorIfIncomplete = "error_if_incomplete"
 			case pendingIfIncomplete = "pending_if_incomplete"
 		}
@@ -1933,7 +2065,7 @@ public struct PostCustomersCustomerTaxIds: StripeAPIEndpoint {
 	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
-		/// Type of the tax ID, one of `ae_trn`, `au_abn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `hk_br`, `id_npwp`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `us_ein`, or `za_vat`
+		/// Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `hk_br`, `id_npwp`, `il_vat`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `us_ein`, or `za_vat`
 		public var type: TypeValues
 		/// Value of the tax ID.
 		public var value: String
@@ -1947,16 +2079,23 @@ public struct PostCustomersCustomerTaxIds: StripeAPIEndpoint {
 		public enum TypeValues: String, Codable {
 			case aeTrn = "ae_trn"
 			case auAbn = "au_abn"
+			case auArn = "au_arn"
 			case brCnpj = "br_cnpj"
 			case brCpf = "br_cpf"
 			case caBn = "ca_bn"
+			case caGstHst = "ca_gst_hst"
+			case caPstBc = "ca_pst_bc"
+			case caPstMb = "ca_pst_mb"
+			case caPstSk = "ca_pst_sk"
 			case caQst = "ca_qst"
 			case chVat = "ch_vat"
 			case clTin = "cl_tin"
 			case esCif = "es_cif"
 			case euVat = "eu_vat"
+			case gbVat = "gb_vat"
 			case hkBr = "hk_br"
 			case idNpwp = "id_npwp"
+			case ilVat = "il_vat"
 			case inGst = "in_gst"
 			case jpCn = "jp_cn"
 			case jpRn = "jp_rn"

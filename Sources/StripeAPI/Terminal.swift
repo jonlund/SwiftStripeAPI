@@ -11,7 +11,7 @@ public struct PostTerminalConnectionTokens: StripeAPIEndpoint {
 	public final class FormInput: Codable {
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
-		/// The id of the location that this connection token is scoped to. If specified the connection token will only be usable with readers assigned to that location, otherwise the connection token will be usable with all readers.
+		/// The id of the location that this connection token is scoped to. If specified the connection token will only be usable with readers assigned to that location, otherwise the connection token will be usable with all readers. Note that location scoping only applies to internet-connected readers. For more details, see [the docs on scoping connection tokens](https://stripe.com/docs/terminal/readers/fleet-management#connection-tokens).
 		public var location: String?
 
 		public init(expand: [String]? = nil, location: String? = nil) {
@@ -87,7 +87,7 @@ public struct PostTerminalLocations: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// The full address of the location.
-		public var address: RequiredCountryAddress
+		public var address: CreateLocationAddressParam
 		/// A name for the location.
 		public var display_name: String
 		/// Specifies which fields in the response should be expanded.
@@ -95,7 +95,7 @@ public struct PostTerminalLocations: StripeAPIEndpoint {
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
 
-		public init(address: RequiredCountryAddress, display_name: String, expand: [String]? = nil, metadata: AnyCodable? = nil) {
+		public init(address: CreateLocationAddressParam, display_name: String, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.address = address
 			self.display_name = display_name
 			self.expand = expand
@@ -104,7 +104,7 @@ public struct PostTerminalLocations: StripeAPIEndpoint {
 
 
 		/// The full address of the location.
-		public final class RequiredCountryAddress: Codable {
+		public final class CreateLocationAddressParam: Codable {
 			public var city: String?
 			public var country: String
 			public var line1: String?
@@ -172,7 +172,7 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 
 	public final class FormInput: Codable {
 		/// The full address of the location.
-		public var address: RequiredCountryAddress?
+		public var address: OptionalFieldsAddress?
 		/// A name for the location.
 		public var display_name: String?
 		/// Specifies which fields in the response should be expanded.
@@ -180,7 +180,7 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
 
-		public init(address: RequiredCountryAddress? = nil, display_name: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
+		public init(address: OptionalFieldsAddress? = nil, display_name: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil) {
 			self.address = address
 			self.display_name = display_name
 			self.expand = expand
@@ -189,9 +189,9 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 
 
 		/// The full address of the location.
-		public final class RequiredCountryAddress: Codable {
+		public final class OptionalFieldsAddress: Codable {
 			public var city: String?
-			public var country: String
+			public var country: String?
 			public var line1: String?
 			public var line2: String?
 			public var postal_code: String?
@@ -199,10 +199,9 @@ public struct PostTerminalLocationsLocation: StripeAPIEndpoint {
 
 			/// The full address of the location.
 			/// - Parameters:
-			///   - country: 
-			public init(country: String, city: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-				self.country = country
+			public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
 				self.city = city
+				self.country = country
 				self.line1 = line1
 				self.line2 = line2
 				self.postal_code = postal_code

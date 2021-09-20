@@ -82,7 +82,7 @@ public struct PostCharges: StripeAPIEndpoint {
 		public var application_fee_amount: Int?
 		/// Whether to immediately capture the charge. Defaults to `true`. When `false`, the charge issues an authorization (or pre-authorization), and will need to be [captured](https://stripe.com/docs/api#capture_charge) later. Uncaptured charges expire in _seven days_. For more information, see the [authorizing charges and settling later](https://stripe.com/docs/charges/placing-a-hold) documentation.
 		public var capture: Bool?
-		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js).
+		/// A token, like the ones returned by [Stripe.js](https://stripe.com/docs/js).
 		public var card: AnyCodable?
 		/// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 		public var currency: String?
@@ -100,7 +100,7 @@ public struct PostCharges: StripeAPIEndpoint {
 		/// The email address to which this charge's [receipt](https://stripe.com/docs/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and no receipts will be sent for test mode charges. If this charge is for a [Customer](https://stripe.com/docs/api/customers/object), the email address specified here will override the customer's email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
 		public var receipt_email: String?
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-		public var shipping: Shipping?
+		public var shipping: OptionalFieldsShipping?
 		/// A payment source to be charged. This can be the ID of a [card](https://stripe.com/docs/api#cards) (i.e., credit or debit card), a [bank account](https://stripe.com/docs/api#bank_accounts), a [source](https://stripe.com/docs/api#sources), a [token](https://stripe.com/docs/api#tokens), or a [connected account](https://stripe.com/docs/connect/account-debits#charging-a-connected-account). For certain sources---namely, [cards](https://stripe.com/docs/api#cards), [bank accounts](https://stripe.com/docs/api#bank_accounts), and attached [sources](https://stripe.com/docs/api#sources)---you must also pass the ID of the associated customer.
 		public var source: String?
 		/// For card charges, use `statement_descriptor_suffix` instead. Otherwise, you can use this value as the complete description of a charge on your customers’ statements. Must contain at least one letter, maximum 22 characters.
@@ -112,7 +112,7 @@ public struct PostCharges: StripeAPIEndpoint {
 		/// A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#transfer-options).
 		public var transfer_group: String?
 
-		public init(amount: Int? = nil, application_fee: Int? = nil, application_fee_amount: Int? = nil, capture: Bool? = nil, card: AnyCodable? = nil, currency: String? = nil, customer: String? = nil, description: String? = nil, destination: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil, receipt_email: String? = nil, shipping: Shipping? = nil, source: String? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataSpecs? = nil, transfer_group: String? = nil) {
+		public init(amount: Int? = nil, application_fee: Int? = nil, application_fee_amount: Int? = nil, capture: Bool? = nil, card: AnyCodable? = nil, currency: String? = nil, customer: String? = nil, description: String? = nil, destination: AnyCodable? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil, receipt_email: String? = nil, shipping: OptionalFieldsShipping? = nil, source: String? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataSpecs? = nil, transfer_group: String? = nil) {
 			self.amount = amount
 			self.application_fee = application_fee
 			self.application_fee_amount = application_fee_amount
@@ -136,8 +136,8 @@ public struct PostCharges: StripeAPIEndpoint {
 
 
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-		public final class Shipping: Codable {
-			public var address: Address
+		public final class OptionalFieldsShipping: Codable {
+			public var address: OptionalFieldsAddress
 			public var carrier: String?
 			public var name: String
 			public var phone: String?
@@ -147,7 +147,7 @@ public struct PostCharges: StripeAPIEndpoint {
 			/// - Parameters:
 			///   - address: 
 			///   - name: 
-			public init(address: Address, name: String, carrier: String? = nil, phone: String? = nil, tracking_number: String? = nil) {
+			public init(address: OptionalFieldsAddress, name: String, carrier: String? = nil, phone: String? = nil, tracking_number: String? = nil) {
 				self.address = address
 				self.name = name
 				self.carrier = carrier
@@ -156,18 +156,18 @@ public struct PostCharges: StripeAPIEndpoint {
 			}
 
 
-			public final class Address: Codable {
+			public final class OptionalFieldsAddress: Codable {
 				public var city: String?
 				public var country: String?
-				public var line1: String
+				public var line1: String?
 				public var line2: String?
 				public var postal_code: String?
 				public var state: String?
 
-				public init(line1: String, city: String? = nil, country: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.line1 = line1
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
 					self.city = city
 					self.country = country
+					self.line1 = line1
 					self.line2 = line2
 					self.postal_code = postal_code
 					self.state = state
@@ -251,11 +251,11 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 		/// This is the email address that the receipt for this charge will be sent to. If this field is updated, then a new email receipt will be sent to the updated address.
 		public var receipt_email: String?
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-		public var shipping: Shipping?
+		public var shipping: OptionalFieldsShipping?
 		/// A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
 		public var transfer_group: String?
 
-		public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, fraud_details: FraudDetails? = nil, metadata: AnyCodable? = nil, receipt_email: String? = nil, shipping: Shipping? = nil, transfer_group: String? = nil) {
+		public init(customer: String? = nil, description: String? = nil, expand: [String]? = nil, fraud_details: FraudDetails? = nil, metadata: AnyCodable? = nil, receipt_email: String? = nil, shipping: OptionalFieldsShipping? = nil, transfer_group: String? = nil) {
 			self.customer = customer
 			self.description = description
 			self.expand = expand
@@ -287,8 +287,8 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 
 
 		/// Shipping information for the charge. Helps prevent fraud on charges for physical goods.
-		public final class Shipping: Codable {
-			public var address: Address
+		public final class OptionalFieldsShipping: Codable {
+			public var address: OptionalFieldsAddress
 			public var carrier: String?
 			public var name: String
 			public var phone: String?
@@ -298,7 +298,7 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 			/// - Parameters:
 			///   - address: 
 			///   - name: 
-			public init(address: Address, name: String, carrier: String? = nil, phone: String? = nil, tracking_number: String? = nil) {
+			public init(address: OptionalFieldsAddress, name: String, carrier: String? = nil, phone: String? = nil, tracking_number: String? = nil) {
 				self.address = address
 				self.name = name
 				self.carrier = carrier
@@ -307,18 +307,18 @@ public struct PostChargesCharge: StripeAPIEndpoint {
 			}
 
 
-			public final class Address: Codable {
+			public final class OptionalFieldsAddress: Codable {
 				public var city: String?
 				public var country: String?
-				public var line1: String
+				public var line1: String?
 				public var line2: String?
 				public var postal_code: String?
 				public var state: String?
 
-				public init(line1: String, city: String? = nil, country: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.line1 = line1
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
 					self.city = city
 					self.country = country
+					self.line1 = line1
 					self.line2 = line2
 					self.postal_code = postal_code
 					self.state = state

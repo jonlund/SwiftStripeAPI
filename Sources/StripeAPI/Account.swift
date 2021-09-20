@@ -11,7 +11,7 @@ public struct GetAccount: StripeAPIEndpoint {
 
 }
 
-/// Updates a connected <a href="/docs/connect/accounts">Express or Custom account</a> by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked <strong>Custom Only</strong> below.) Parameters marked <strong>Custom and Express</strong> are supported by both account types.  To update your own account, use the <a href="https://dashboard.stripe.com/account">Dashboard</a>. Refer to our <a href="/docs/connect/updating-accounts">Connect</a> documentation to learn more about updating accounts.
+/// Updates a <a href="/docs/connect/accounts">connected account</a> by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked <strong>Custom Only</strong> below.) Parameters marked <strong>Custom and Express</strong> are not supported for Standard accounts.  To update your own account, use the <a href="https://dashboard.stripe.com/account">Dashboard</a>. Refer to our <a href="/docs/connect/updating-accounts">Connect</a> documentation to learn more about updating accounts.
 public struct PostAccount: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = Account
@@ -23,7 +23,7 @@ public struct PostAccount: StripeAPIEndpoint {
 	public final class FormInput: Codable {
 		/// An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
 		public var account_token: String?
-		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
+		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's bank account details.
 		public var bank_account: AnyCodable?
 		/// Business information about the account.
 		public var business_profile: BusinessProfileSpecs?
@@ -41,18 +41,18 @@ public struct PostAccount: StripeAPIEndpoint {
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
-		/// A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won’t be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation. <br><br>By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
+		/// A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won’t be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation. <br><br>By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
 		public var external_account: String?
 		/// Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
 		public var individual: IndividualSpecs?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
 		/// Options for customizing how the account functions within Stripe.
-		public var settings: SettingsSpecs?
+		public var settings: SettingsSpecsUpdate?
 		/// Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
 		public var tos_acceptance: TosAcceptanceSpecs?
 
-		public init(account_token: String? = nil, bank_account: AnyCodable? = nil, business_profile: BusinessProfileSpecs? = nil, business_type: BusinessTypeValues? = nil, capabilities: CapabilitiesParam? = nil, company: CompanySpecs? = nil, default_currency: String? = nil, documents: DocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, external_account: String? = nil, individual: IndividualSpecs? = nil, metadata: AnyCodable? = nil, settings: SettingsSpecs? = nil, tos_acceptance: TosAcceptanceSpecs? = nil) {
+		public init(account_token: String? = nil, bank_account: AnyCodable? = nil, business_profile: BusinessProfileSpecs? = nil, business_type: BusinessTypeValues? = nil, capabilities: CapabilitiesParam? = nil, company: CompanySpecs? = nil, default_currency: String? = nil, documents: DocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, external_account: String? = nil, individual: IndividualSpecs? = nil, metadata: AnyCodable? = nil, settings: SettingsSpecsUpdate? = nil, tos_acceptance: TosAcceptanceSpecs? = nil) {
 			self.account_token = account_token
 			self.bank_account = bank_account
 			self.business_profile = business_profile
@@ -120,9 +120,12 @@ public struct PostAccount: StripeAPIEndpoint {
 
 		/// Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
 		public final class CapabilitiesParam: Codable {
+			public var acss_debit_payments: CapabilityParam?
+			public var afterpay_clearpay_payments: CapabilityParam?
 			public var au_becs_debit_payments: CapabilityParam?
 			public var bacs_debit_payments: CapabilityParam?
 			public var bancontact_payments: CapabilityParam?
+			public var boleto_payments: CapabilityParam?
 			public var card_issuing: CapabilityParam?
 			public var card_payments: CapabilityParam?
 			public var cartes_bancaires_payments: CapabilityParam?
@@ -143,10 +146,13 @@ public struct PostAccount: StripeAPIEndpoint {
 
 			/// Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
 			/// - Parameters:
-			public init(au_becs_debit_payments: CapabilityParam? = nil, bacs_debit_payments: CapabilityParam? = nil, bancontact_payments: CapabilityParam? = nil, card_issuing: CapabilityParam? = nil, card_payments: CapabilityParam? = nil, cartes_bancaires_payments: CapabilityParam? = nil, eps_payments: CapabilityParam? = nil, fpx_payments: CapabilityParam? = nil, giropay_payments: CapabilityParam? = nil, grabpay_payments: CapabilityParam? = nil, ideal_payments: CapabilityParam? = nil, jcb_payments: CapabilityParam? = nil, legacy_payments: CapabilityParam? = nil, oxxo_payments: CapabilityParam? = nil, p24_payments: CapabilityParam? = nil, sepa_debit_payments: CapabilityParam? = nil, sofort_payments: CapabilityParam? = nil, tax_reporting_us_1099_k: CapabilityParam? = nil, tax_reporting_us_1099_misc: CapabilityParam? = nil, transfers: CapabilityParam? = nil) {
+			public init(acss_debit_payments: CapabilityParam? = nil, afterpay_clearpay_payments: CapabilityParam? = nil, au_becs_debit_payments: CapabilityParam? = nil, bacs_debit_payments: CapabilityParam? = nil, bancontact_payments: CapabilityParam? = nil, boleto_payments: CapabilityParam? = nil, card_issuing: CapabilityParam? = nil, card_payments: CapabilityParam? = nil, cartes_bancaires_payments: CapabilityParam? = nil, eps_payments: CapabilityParam? = nil, fpx_payments: CapabilityParam? = nil, giropay_payments: CapabilityParam? = nil, grabpay_payments: CapabilityParam? = nil, ideal_payments: CapabilityParam? = nil, jcb_payments: CapabilityParam? = nil, legacy_payments: CapabilityParam? = nil, oxxo_payments: CapabilityParam? = nil, p24_payments: CapabilityParam? = nil, sepa_debit_payments: CapabilityParam? = nil, sofort_payments: CapabilityParam? = nil, tax_reporting_us_1099_k: CapabilityParam? = nil, tax_reporting_us_1099_misc: CapabilityParam? = nil, transfers: CapabilityParam? = nil) {
+				self.acss_debit_payments = acss_debit_payments
+				self.afterpay_clearpay_payments = afterpay_clearpay_payments
 				self.au_becs_debit_payments = au_becs_debit_payments
 				self.bacs_debit_payments = bacs_debit_payments
 				self.bancontact_payments = bancontact_payments
+				self.boleto_payments = boleto_payments
 				self.card_issuing = card_issuing
 				self.card_payments = card_payments
 				self.cartes_bancaires_payments = cartes_bancaires_payments
@@ -306,10 +312,13 @@ public struct PostAccount: StripeAPIEndpoint {
 
 
 			public enum StructureValues: String, Codable {
+				case freeZoneEstablishment = "free_zone_establishment"
+				case freeZoneLlc = "free_zone_llc"
 				case governmentInstrumentality = "government_instrumentality"
 				case governmentalUnit = "governmental_unit"
 				case incorporatedNonProfit = "incorporated_non_profit"
 				case limitedLiabilityPartnership = "limited_liability_partnership"
+				case llc = "llc"
 				case multiMemberLlc = "multi_member_llc"
 				case privateCompany = "private_company"
 				case privateCorporation = "private_corporation"
@@ -317,6 +326,8 @@ public struct PostAccount: StripeAPIEndpoint {
 				case publicCompany = "public_company"
 				case publicCorporation = "public_corporation"
 				case publicPartnership = "public_partnership"
+				case singleMemberLlc = "single_member_llc"
+				case soleEstablishment = "sole_establishment"
 				case soleProprietorship = "sole_proprietorship"
 				case taxExemptGovernmentInstrumentality = "tax_exempt_government_instrumentality"
 				case unincorporatedAssociation = "unincorporated_association"
@@ -369,6 +380,7 @@ public struct PostAccount: StripeAPIEndpoint {
 			public var first_name: String?
 			public var first_name_kana: String?
 			public var first_name_kanji: String?
+			public var full_name_aliases: [String]?
 			public var gender: String?
 			public var id_number: String?
 			public var last_name: String?
@@ -383,7 +395,7 @@ public struct PostAccount: StripeAPIEndpoint {
 
 			/// Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
 			/// - Parameters:
-			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+			public init(address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, full_name_aliases: [String]? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, phone: String? = nil, political_exposure: PoliticalExposureValues? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 				self.address = address
 				self.address_kana = address_kana
 				self.address_kanji = address_kanji
@@ -392,6 +404,7 @@ public struct PostAccount: StripeAPIEndpoint {
 				self.first_name = first_name
 				self.first_name_kana = first_name_kana
 				self.first_name_kanji = first_name_kanji
+				self.full_name_aliases = full_name_aliases
 				self.gender = gender
 				self.id_number = id_number
 				self.last_name = last_name
@@ -502,16 +515,18 @@ public struct PostAccount: StripeAPIEndpoint {
 
 
 		/// Options for customizing how the account functions within Stripe.
-		public final class SettingsSpecs: Codable {
+		public final class SettingsSpecsUpdate: Codable {
 			public var branding: BrandingSettingsSpecs?
+			public var card_issuing: CardIssuingSettingsSpecs?
 			public var card_payments: CardPaymentsSettingsSpecs?
 			public var payments: PaymentsSettingsSpecs?
 			public var payouts: PayoutSettingsSpecs?
 
 			/// Options for customizing how the account functions within Stripe.
 			/// - Parameters:
-			public init(branding: BrandingSettingsSpecs? = nil, card_payments: CardPaymentsSettingsSpecs? = nil, payments: PaymentsSettingsSpecs? = nil, payouts: PayoutSettingsSpecs? = nil) {
+			public init(branding: BrandingSettingsSpecs? = nil, card_issuing: CardIssuingSettingsSpecs? = nil, card_payments: CardPaymentsSettingsSpecs? = nil, payments: PaymentsSettingsSpecs? = nil, payouts: PayoutSettingsSpecs? = nil) {
 				self.branding = branding
+				self.card_issuing = card_issuing
 				self.card_payments = card_payments
 				self.payments = payments
 				self.payouts = payouts
@@ -530,6 +545,30 @@ public struct PostAccount: StripeAPIEndpoint {
 					self.primary_color = primary_color
 					self.secondary_color = secondary_color
 				}
+			}
+
+
+
+			public final class CardIssuingSettingsSpecs: Codable {
+				public var tos_acceptance: SettingsTermsOfServiceSpecs?
+
+				public init(tos_acceptance: SettingsTermsOfServiceSpecs? = nil) {
+					self.tos_acceptance = tos_acceptance
+				}
+
+
+				public final class SettingsTermsOfServiceSpecs: Codable {
+					public var date: Timestamp?
+					public var ip: String?
+					public var user_agent: String?
+
+					public init(date: Timestamp? = nil, ip: String? = nil, user_agent: String? = nil) {
+						self.date = date
+						self.ip = ip
+						self.user_agent = user_agent
+					}
+				}
+
 			}
 
 
@@ -649,7 +688,7 @@ public struct PostAccount: StripeAPIEndpoint {
 
 }
 
-/// With <a href="/docs/connect">Connect</a>, you can delete Custom or Express accounts you manage.  Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.  If you want to delete your own account, use the <a href="https://dashboard.stripe.com/account">account information tab in your account settings</a> instead.
+/// With <a href="/docs/connect">Connect</a>, you can delete accounts you manage.  Accounts created using test-mode keys can be deleted at any time. Custom or Express accounts created using live-mode keys can only be deleted once all balances are zero.  If you want to delete your own account, use the <a href="https://dashboard.stripe.com/account">account information tab in your account settings</a> instead.
 public struct DeleteAccount: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = DeletedAccount
@@ -679,7 +718,7 @@ public struct PostAccountBankAccounts: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
-		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
+		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's bank account details.
 		public var bank_account: AnyCodable?
 		/// When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
 		public var default_for_currency: Bool?
@@ -723,7 +762,7 @@ public struct GetAccountBankAccountsId: StripeAPIEndpoint {
 
 }
 
-/// Updates the metadata, account holder name, and account holder type of a bank account belonging to a <a href="/docs/connect/custom-accounts">Custom account</a>, and optionally sets it as the default for its currency. Other bank account details are not editable by design.  You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
+/// Updates the metadata, account holder name, account holder type of a bank account belonging to a <a href="/docs/connect/custom-accounts">Custom account</a>, and optionally sets it as the default for its currency. Other bank account details are not editable by design.  You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
 public struct PostAccountBankAccountsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ExternalAccount
@@ -747,6 +786,8 @@ public struct PostAccountBankAccountsId: StripeAPIEndpoint {
 		public var account_holder_name: String?
 		/// The type of entity that holds the account. This can be either `individual` or `company`.
 		public var account_holder_type: AccountHolderTypeValues?
+		/// The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
+		public var account_type: AccountTypeValues?
 		/// City/District/Suburb/Town/Village.
 		public var address_city: String?
 		/// Billing address country, if provided when creating card.
@@ -772,9 +813,10 @@ public struct PostAccountBankAccountsId: StripeAPIEndpoint {
 		/// Cardholder name.
 		public var name: String?
 
-		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
+		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, account_type: AccountTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
 			self.account_holder_name = account_holder_name
 			self.account_holder_type = account_holder_type
+			self.account_type = account_type
 			self.address_city = address_city
 			self.address_country = address_country
 			self.address_line1 = address_line1
@@ -792,6 +834,13 @@ public struct PostAccountBankAccountsId: StripeAPIEndpoint {
 		public enum AccountHolderTypeValues: String, Codable {
 			case company = "company"
 			case individual = "individual"
+		}
+
+		public enum AccountTypeValues: String, Codable {
+			case checking = "checking"
+			case futsu = "futsu"
+			case savings = "savings"
+			case toza = "toza"
 		}
 	}
 
@@ -972,7 +1021,7 @@ public struct PostAccountExternalAccounts: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
-		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary containing a user's bank account details.
+		/// Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's bank account details.
 		public var bank_account: AnyCodable?
 		/// When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
 		public var default_for_currency: Bool?
@@ -1016,7 +1065,7 @@ public struct GetAccountExternalAccountsId: StripeAPIEndpoint {
 
 }
 
-/// Updates the metadata, account holder name, and account holder type of a bank account belonging to a <a href="/docs/connect/custom-accounts">Custom account</a>, and optionally sets it as the default for its currency. Other bank account details are not editable by design.  You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
+/// Updates the metadata, account holder name, account holder type of a bank account belonging to a <a href="/docs/connect/custom-accounts">Custom account</a>, and optionally sets it as the default for its currency. Other bank account details are not editable by design.  You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
 public struct PostAccountExternalAccountsId: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ExternalAccount
@@ -1040,6 +1089,8 @@ public struct PostAccountExternalAccountsId: StripeAPIEndpoint {
 		public var account_holder_name: String?
 		/// The type of entity that holds the account. This can be either `individual` or `company`.
 		public var account_holder_type: AccountHolderTypeValues?
+		/// The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
+		public var account_type: AccountTypeValues?
 		/// City/District/Suburb/Town/Village.
 		public var address_city: String?
 		/// Billing address country, if provided when creating card.
@@ -1065,9 +1116,10 @@ public struct PostAccountExternalAccountsId: StripeAPIEndpoint {
 		/// Cardholder name.
 		public var name: String?
 
-		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
+		public init(account_holder_name: String? = nil, account_holder_type: AccountHolderTypeValues? = nil, account_type: AccountTypeValues? = nil, address_city: String? = nil, address_country: String? = nil, address_line1: String? = nil, address_line2: String? = nil, address_state: String? = nil, address_zip: String? = nil, default_for_currency: Bool? = nil, exp_month: String? = nil, exp_year: String? = nil, expand: [String]? = nil, metadata: AnyCodable? = nil, name: String? = nil) {
 			self.account_holder_name = account_holder_name
 			self.account_holder_type = account_holder_type
+			self.account_type = account_type
 			self.address_city = address_city
 			self.address_country = address_country
 			self.address_line1 = address_line1
@@ -1085,6 +1137,13 @@ public struct PostAccountExternalAccountsId: StripeAPIEndpoint {
 		public enum AccountHolderTypeValues: String, Codable {
 			case company = "company"
 			case individual = "individual"
+		}
+
+		public enum AccountTypeValues: String, Codable {
+			case checking = "checking"
+			case futsu = "futsu"
+			case savings = "savings"
+			case toza = "toza"
 		}
 	}
 
@@ -1132,29 +1191,6 @@ public struct PostAccountLoginLinks: StripeAPIEndpoint {
 			self.account = account
 			self.expand = expand
 			self.redirect_url = redirect_url
-		}
-	}
-
-}
-
-/// Invalidates all sessions for a light account, for a platform to use during platform logout.  <strong>You may only log out <a href="/docs/connect/express-accounts">Express accounts</a> connected to your platform</strong>.
-public struct PutAccountLogout: StripeAPIEndpoint {
-	public typealias inputType = FormInput
-	public typealias outputType = LightAccountLogout
-	public typealias paramType = AnyCodable
-	public static func endpoint(for inputs: AnyCodable) throws -> String {
-		return "/v1/account/logout"
-	}
-	public static var method: HTTPMethod { return .PUT }
-
-	public final class FormInput: Codable {
-		public var account: String
-		/// Specifies which fields in the response should be expanded.
-		public var expand: [String]?
-
-		public init(account: String, expand: [String]? = nil) {
-			self.account = account
-			self.expand = expand
 		}
 	}
 
@@ -1233,6 +1269,8 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
 		public var dob: AnyCodable?
+		/// Documents that may be submitted to satisfy various informational requests.
+		public var documents: PersonDocumentsSpecs?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -1243,9 +1281,11 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		public var first_name_kana: String?
 		/// The Kanji variation of the person's first name (Japan only).
 		public var first_name_kanji: String?
+		/// A list of alternate names or aliases that the person is known by.
+		public var full_name_aliases: [String]?
 		/// The person's gender (International regulations require either "male" or "female").
 		public var gender: String?
-		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
 		public var id_number: String?
 		/// The person's last name.
 		public var last_name: String?
@@ -1257,6 +1297,8 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
+		/// The country where the person is a national. Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)), or "XX" if unavailable.
+		public var nationality: String?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -1270,17 +1312,19 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, documents: PersonDocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, full_name_aliases: [String]? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, nationality: String? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
 			self.address_kanji = address_kanji
 			self.dob = dob
+			self.documents = documents
 			self.email = email
 			self.expand = expand
 			self.first_name = first_name
 			self.first_name_kana = first_name_kana
 			self.first_name_kanji = first_name_kanji
+			self.full_name_aliases = full_name_aliases
 			self.gender = gender
 			self.id_number = id_number
 			self.last_name = last_name
@@ -1288,6 +1332,7 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 			self.last_name_kanji = last_name_kanji
 			self.maiden_name = maiden_name
 			self.metadata = metadata
+			self.nationality = nationality
 			self.person_token = person_token
 			self.phone = phone
 			self.political_exposure = political_exposure
@@ -1366,6 +1411,33 @@ public struct PostAccountPeople: StripeAPIEndpoint {
 				self.state = state
 				self.town = town
 			}
+		}
+
+
+
+		/// Documents that may be submitted to satisfy various informational requests.
+		public final class PersonDocumentsSpecs: Codable {
+			public var company_authorization: DocumentsParam?
+			public var passport: DocumentsParam?
+			public var visa: DocumentsParam?
+
+			/// Documents that may be submitted to satisfy various informational requests.
+			/// - Parameters:
+			public init(company_authorization: DocumentsParam? = nil, passport: DocumentsParam? = nil, visa: DocumentsParam? = nil) {
+				self.company_authorization = company_authorization
+				self.passport = passport
+				self.visa = visa
+			}
+
+
+			public final class DocumentsParam: Codable {
+				public var files: [String]?
+
+				public init(files: [String]? = nil) {
+					self.files = files
+				}
+			}
+
 		}
 
 
@@ -1473,6 +1545,8 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
 		public var dob: AnyCodable?
+		/// Documents that may be submitted to satisfy various informational requests.
+		public var documents: PersonDocumentsSpecs?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -1483,9 +1557,11 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		public var first_name_kana: String?
 		/// The Kanji variation of the person's first name (Japan only).
 		public var first_name_kanji: String?
+		/// A list of alternate names or aliases that the person is known by.
+		public var full_name_aliases: [String]?
 		/// The person's gender (International regulations require either "male" or "female").
 		public var gender: String?
-		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
 		public var id_number: String?
 		/// The person's last name.
 		public var last_name: String?
@@ -1497,6 +1573,8 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
+		/// The country where the person is a national. Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)), or "XX" if unavailable.
+		public var nationality: String?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -1510,17 +1588,19 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, documents: PersonDocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, full_name_aliases: [String]? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, nationality: String? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
 			self.address_kanji = address_kanji
 			self.dob = dob
+			self.documents = documents
 			self.email = email
 			self.expand = expand
 			self.first_name = first_name
 			self.first_name_kana = first_name_kana
 			self.first_name_kanji = first_name_kanji
+			self.full_name_aliases = full_name_aliases
 			self.gender = gender
 			self.id_number = id_number
 			self.last_name = last_name
@@ -1528,6 +1608,7 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 			self.last_name_kanji = last_name_kanji
 			self.maiden_name = maiden_name
 			self.metadata = metadata
+			self.nationality = nationality
 			self.person_token = person_token
 			self.phone = phone
 			self.political_exposure = political_exposure
@@ -1606,6 +1687,33 @@ public struct PostAccountPeoplePerson: StripeAPIEndpoint {
 				self.state = state
 				self.town = town
 			}
+		}
+
+
+
+		/// Documents that may be submitted to satisfy various informational requests.
+		public final class PersonDocumentsSpecs: Codable {
+			public var company_authorization: DocumentsParam?
+			public var passport: DocumentsParam?
+			public var visa: DocumentsParam?
+
+			/// Documents that may be submitted to satisfy various informational requests.
+			/// - Parameters:
+			public init(company_authorization: DocumentsParam? = nil, passport: DocumentsParam? = nil, visa: DocumentsParam? = nil) {
+				self.company_authorization = company_authorization
+				self.passport = passport
+				self.visa = visa
+			}
+
+
+			public final class DocumentsParam: Codable {
+				public var files: [String]?
+
+				public init(files: [String]? = nil) {
+					self.files = files
+				}
+			}
+
 		}
 
 
@@ -1757,6 +1865,8 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
 		public var dob: AnyCodable?
+		/// Documents that may be submitted to satisfy various informational requests.
+		public var documents: PersonDocumentsSpecs?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -1767,9 +1877,11 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		public var first_name_kana: String?
 		/// The Kanji variation of the person's first name (Japan only).
 		public var first_name_kanji: String?
+		/// A list of alternate names or aliases that the person is known by.
+		public var full_name_aliases: [String]?
 		/// The person's gender (International regulations require either "male" or "female").
 		public var gender: String?
-		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
 		public var id_number: String?
 		/// The person's last name.
 		public var last_name: String?
@@ -1781,6 +1893,8 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
+		/// The country where the person is a national. Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)), or "XX" if unavailable.
+		public var nationality: String?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -1794,17 +1908,19 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, documents: PersonDocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, full_name_aliases: [String]? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, nationality: String? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
 			self.address_kanji = address_kanji
 			self.dob = dob
+			self.documents = documents
 			self.email = email
 			self.expand = expand
 			self.first_name = first_name
 			self.first_name_kana = first_name_kana
 			self.first_name_kanji = first_name_kanji
+			self.full_name_aliases = full_name_aliases
 			self.gender = gender
 			self.id_number = id_number
 			self.last_name = last_name
@@ -1812,6 +1928,7 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 			self.last_name_kanji = last_name_kanji
 			self.maiden_name = maiden_name
 			self.metadata = metadata
+			self.nationality = nationality
 			self.person_token = person_token
 			self.phone = phone
 			self.political_exposure = political_exposure
@@ -1890,6 +2007,33 @@ public struct PostAccountPersons: StripeAPIEndpoint {
 				self.state = state
 				self.town = town
 			}
+		}
+
+
+
+		/// Documents that may be submitted to satisfy various informational requests.
+		public final class PersonDocumentsSpecs: Codable {
+			public var company_authorization: DocumentsParam?
+			public var passport: DocumentsParam?
+			public var visa: DocumentsParam?
+
+			/// Documents that may be submitted to satisfy various informational requests.
+			/// - Parameters:
+			public init(company_authorization: DocumentsParam? = nil, passport: DocumentsParam? = nil, visa: DocumentsParam? = nil) {
+				self.company_authorization = company_authorization
+				self.passport = passport
+				self.visa = visa
+			}
+
+
+			public final class DocumentsParam: Codable {
+				public var files: [String]?
+
+				public init(files: [String]? = nil) {
+					self.files = files
+				}
+			}
+
 		}
 
 
@@ -1997,6 +2141,8 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		public var address_kanji: JapanAddressKanjiSpecs?
 		/// The person's date of birth.
 		public var dob: AnyCodable?
+		/// Documents that may be submitted to satisfy various informational requests.
+		public var documents: PersonDocumentsSpecs?
 		/// The person's email address.
 		public var email: String?
 		/// Specifies which fields in the response should be expanded.
@@ -2007,9 +2153,11 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		public var first_name_kana: String?
 		/// The Kanji variation of the person's first name (Japan only).
 		public var first_name_kanji: String?
+		/// A list of alternate names or aliases that the person is known by.
+		public var full_name_aliases: [String]?
 		/// The person's gender (International regulations require either "male" or "female").
 		public var gender: String?
-		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+		/// The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
 		public var id_number: String?
 		/// The person's last name.
 		public var last_name: String?
@@ -2021,6 +2169,8 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		public var maiden_name: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
+		/// The country where the person is a national. Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)), or "XX" if unavailable.
+		public var nationality: String?
 		/// A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
 		public var person_token: String?
 		/// The person's phone number.
@@ -2034,17 +2184,19 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 		/// The person's verification status.
 		public var verification: PersonVerificationSpecs?
 
-		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
+		public init(account: String? = nil, address: AddressSpecs? = nil, address_kana: JapanAddressKanaSpecs? = nil, address_kanji: JapanAddressKanjiSpecs? = nil, dob: AnyCodable? = nil, documents: PersonDocumentsSpecs? = nil, email: String? = nil, expand: [String]? = nil, first_name: String? = nil, first_name_kana: String? = nil, first_name_kanji: String? = nil, full_name_aliases: [String]? = nil, gender: String? = nil, id_number: String? = nil, last_name: String? = nil, last_name_kana: String? = nil, last_name_kanji: String? = nil, maiden_name: String? = nil, metadata: AnyCodable? = nil, nationality: String? = nil, person_token: String? = nil, phone: String? = nil, political_exposure: String? = nil, relationship: RelationshipSpecs? = nil, ssn_last_4: String? = nil, verification: PersonVerificationSpecs? = nil) {
 			self.account = account
 			self.address = address
 			self.address_kana = address_kana
 			self.address_kanji = address_kanji
 			self.dob = dob
+			self.documents = documents
 			self.email = email
 			self.expand = expand
 			self.first_name = first_name
 			self.first_name_kana = first_name_kana
 			self.first_name_kanji = first_name_kanji
+			self.full_name_aliases = full_name_aliases
 			self.gender = gender
 			self.id_number = id_number
 			self.last_name = last_name
@@ -2052,6 +2204,7 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 			self.last_name_kanji = last_name_kanji
 			self.maiden_name = maiden_name
 			self.metadata = metadata
+			self.nationality = nationality
 			self.person_token = person_token
 			self.phone = phone
 			self.political_exposure = political_exposure
@@ -2130,6 +2283,33 @@ public struct PostAccountPersonsPerson: StripeAPIEndpoint {
 				self.state = state
 				self.town = town
 			}
+		}
+
+
+
+		/// Documents that may be submitted to satisfy various informational requests.
+		public final class PersonDocumentsSpecs: Codable {
+			public var company_authorization: DocumentsParam?
+			public var passport: DocumentsParam?
+			public var visa: DocumentsParam?
+
+			/// Documents that may be submitted to satisfy various informational requests.
+			/// - Parameters:
+			public init(company_authorization: DocumentsParam? = nil, passport: DocumentsParam? = nil, visa: DocumentsParam? = nil) {
+				self.company_authorization = company_authorization
+				self.passport = passport
+				self.visa = visa
+			}
+
+
+			public final class DocumentsParam: Codable {
+				public var files: [String]?
+
+				public init(files: [String]? = nil) {
+					self.files = files
+				}
+			}
+
 		}
 
 

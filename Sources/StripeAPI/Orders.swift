@@ -2,7 +2,7 @@
 /// Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
 public struct GetOrders: StripeAPIEndpoint {
 	public typealias inputType = AnyCodable
-	public typealias outputType = Output
+	public typealias outputType = OrdersLegacyResourceOrderList
 	public typealias paramType = Params
 	
 	public struct Params {
@@ -38,7 +38,7 @@ public struct GetOrders: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public final class Output: Codable {
+	public final class OrdersLegacyResourceOrderList: Codable {
 		public var data: [Order]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -102,7 +102,7 @@ public struct PostOrders: StripeAPIEndpoint {
 
 		/// Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
 		public final class CustomerShipping: Codable {
-			public var address: Address
+			public var address: OptionalFieldsAddress
 			public var name: String
 			public var phone: String?
 
@@ -110,25 +110,25 @@ public struct PostOrders: StripeAPIEndpoint {
 			/// - Parameters:
 			///   - address: 
 			///   - name: 
-			public init(address: Address, name: String, phone: String? = nil) {
+			public init(address: OptionalFieldsAddress, name: String, phone: String? = nil) {
 				self.address = address
 				self.name = name
 				self.phone = phone
 			}
 
 
-			public final class Address: Codable {
+			public final class OptionalFieldsAddress: Codable {
 				public var city: String?
 				public var country: String?
-				public var line1: String
+				public var line1: String?
 				public var line2: String?
 				public var postal_code: String?
 				public var state: String?
 
-				public init(line1: String, city: String? = nil, country: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.line1 = line1
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
 					self.city = city
 					self.country = country
+					self.line1 = line1
 					self.line2 = line2
 					self.postal_code = postal_code
 					self.state = state

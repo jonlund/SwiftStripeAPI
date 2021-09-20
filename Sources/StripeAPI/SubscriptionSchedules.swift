@@ -103,6 +103,7 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 		/// Object representing the subscription schedule's default settings.
 		public final class DefaultSettingsParams: Codable {
 			public var application_fee_percent: StringNumber?
+			public var automatic_tax: AutomaticTaxConfig?
 			public var billing_cycle_anchor: BillingCycleAnchorValues?
 			public var billing_thresholds: AnyCodable?
 			public var collection_method: CollectionMethodValues?
@@ -112,8 +113,9 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 
 			/// Object representing the subscription schedule's default settings.
 			/// - Parameters:
-			public init(application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: AnyCodable? = nil) {
+			public init(application_fee_percent: StringNumber? = nil, automatic_tax: AutomaticTaxConfig? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: AnyCodable? = nil) {
 				self.application_fee_percent = application_fee_percent
+				self.automatic_tax = automatic_tax
 				self.billing_cycle_anchor = billing_cycle_anchor
 				self.billing_thresholds = billing_thresholds
 				self.collection_method = collection_method
@@ -121,6 +123,16 @@ public struct PostSubscriptionSchedules: StripeAPIEndpoint {
 				self.invoice_settings = invoice_settings
 				self.transfer_data = transfer_data
 			}
+
+
+			public final class AutomaticTaxConfig: Codable {
+				public var enabled: Bool
+
+				public init(enabled: Bool) {
+					self.enabled = enabled
+				}
+			}
+
 
 
 			public final class SubscriptionSchedulesParam: Codable {
@@ -222,6 +234,7 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 		/// Object representing the subscription schedule's default settings.
 		public final class DefaultSettingsParams: Codable {
 			public var application_fee_percent: StringNumber?
+			public var automatic_tax: AutomaticTaxConfig?
 			public var billing_cycle_anchor: BillingCycleAnchorValues?
 			public var billing_thresholds: AnyCodable?
 			public var collection_method: CollectionMethodValues?
@@ -231,8 +244,9 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 
 			/// Object representing the subscription schedule's default settings.
 			/// - Parameters:
-			public init(application_fee_percent: StringNumber? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: AnyCodable? = nil) {
+			public init(application_fee_percent: StringNumber? = nil, automatic_tax: AutomaticTaxConfig? = nil, billing_cycle_anchor: BillingCycleAnchorValues? = nil, billing_thresholds: AnyCodable? = nil, collection_method: CollectionMethodValues? = nil, default_payment_method: String? = nil, invoice_settings: SubscriptionSchedulesParam? = nil, transfer_data: AnyCodable? = nil) {
 				self.application_fee_percent = application_fee_percent
+				self.automatic_tax = automatic_tax
 				self.billing_cycle_anchor = billing_cycle_anchor
 				self.billing_thresholds = billing_thresholds
 				self.collection_method = collection_method
@@ -240,6 +254,16 @@ public struct PostSubscriptionSchedulesSchedule: StripeAPIEndpoint {
 				self.invoice_settings = invoice_settings
 				self.transfer_data = transfer_data
 			}
+
+
+			public final class AutomaticTaxConfig: Codable {
+				public var enabled: Bool
+
+				public init(enabled: Bool) {
+					self.enabled = enabled
+				}
+			}
+
 
 
 			public final class SubscriptionSchedulesParam: Codable {

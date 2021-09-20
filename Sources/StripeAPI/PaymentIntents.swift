@@ -96,7 +96,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 		public var off_session: Bool?
 		/// The Stripe account ID for which these funds are intended. For details, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
 		public var on_behalf_of: String?
-		/// ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.  If this parameter is omitted with `confirm=true`, `customer.default_source` will be attached as this PaymentIntent's payment instrument to improve the migration experience for users of the Charges API. We recommend that you explicitly provide the `payment_method` going forward.
+		/// ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.  If this parameter is omitted with `confirm=true`, `customer.default_source` will be attached as this PaymentIntent's payment instrument to improve the migration experience for users of the Charges API. We recommend that you explicitly provide the `payment_method` going forward.
 		public var payment_method: String?
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 		public var payment_method_data: PaymentMethodDataParams?
@@ -111,7 +111,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 		/// Indicates that you intend to make future payments with this PaymentIntent's payment method.  Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.  When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
 		public var setup_future_usage: SetupFutureUsageValues?
 		/// Shipping information for this PaymentIntent.
-		public var shipping: Shipping?
+		public var shipping: OptionalFieldsShipping?
 		/// For non-card charges, you can use this value as the complete description that appears on your customers’ statements. Must contain at least one letter, maximum 22 characters.
 		public var statement_descriptor: String?
 		/// Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that’s set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
@@ -123,7 +123,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 		/// Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
 		public var use_stripe_sdk: Bool?
 
-		public init(amount: Int, currency: String, application_fee_amount: Int? = nil, capture_method: CaptureMethodValues? = nil, confirm: Bool? = nil, confirmation_method: ConfirmationMethodValues? = nil, customer: String? = nil, description: String? = nil, error_on_requires_action: Bool? = nil, expand: [String]? = nil, mandate: String? = nil, mandate_data: SecretKeyParam? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_data: PaymentMethodDataParams? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil, receipt_email: String? = nil, return_url: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: Shipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataCreationParams? = nil, transfer_group: String? = nil, use_stripe_sdk: Bool? = nil) {
+		public init(amount: Int, currency: String, application_fee_amount: Int? = nil, capture_method: CaptureMethodValues? = nil, confirm: Bool? = nil, confirmation_method: ConfirmationMethodValues? = nil, customer: String? = nil, description: String? = nil, error_on_requires_action: Bool? = nil, expand: [String]? = nil, mandate: String? = nil, mandate_data: SecretKeyParam? = nil, metadata: AnyCodable? = nil, off_session: Bool? = nil, on_behalf_of: String? = nil, payment_method: String? = nil, payment_method_data: PaymentMethodDataParams? = nil, payment_method_options: PaymentMethodOptionsParam? = nil, payment_method_types: [String]? = nil, receipt_email: String? = nil, return_url: String? = nil, setup_future_usage: SetupFutureUsageValues? = nil, shipping: OptionalFieldsShipping? = nil, statement_descriptor: String? = nil, statement_descriptor_suffix: String? = nil, transfer_data: TransferDataCreationParams? = nil, transfer_group: String? = nil, use_stripe_sdk: Bool? = nil) {
 			self.amount = amount
 			self.currency = currency
 			self.application_fee_amount = application_fee_amount
@@ -155,13 +155,59 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 		}
 
 
+		/// Shipping information for this PaymentIntent.
+		public final class OptionalFieldsShipping: Codable {
+			public var address: OptionalFieldsAddress
+			public var carrier: String?
+			public var name: String
+			public var phone: String?
+			public var tracking_number: String?
+
+			/// Shipping information for this PaymentIntent.
+			/// - Parameters:
+			///   - address: 
+			///   - name: 
+			public init(address: OptionalFieldsAddress, name: String, carrier: String? = nil, phone: String? = nil, tracking_number: String? = nil) {
+				self.address = address
+				self.name = name
+				self.carrier = carrier
+				self.phone = phone
+				self.tracking_number = tracking_number
+			}
+
+
+			public final class OptionalFieldsAddress: Codable {
+				public var city: String?
+				public var country: String?
+				public var line1: String?
+				public var line2: String?
+				public var postal_code: String?
+				public var state: String?
+
+				public init(city: String? = nil, country: String? = nil, line1: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
+					self.city = city
+					self.country = country
+					self.line1 = line1
+					self.line2 = line2
+					self.postal_code = postal_code
+					self.state = state
+				}
+			}
+
+		}
+
+
+
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 		public final class PaymentMethodDataParams: Codable {
+			public var acss_debit: PaymentMethodParam?
+			public var afterpay_clearpay: Param?
 			public var alipay: Param?
 			public var au_becs_debit: Param?
 			public var bacs_debit: Param?
 			public var bancontact: Param?
 			public var billing_details: BillingDetailsInnerParams?
+			public var boleto: Param?
 			public var eps: Param?
 			public var fpx: Param?
 			public var giropay: Param?
@@ -174,17 +220,21 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 			public var sepa_debit: Param?
 			public var sofort: Param?
 			public var type: TypeValues
+			public var wechat_pay: Param?
 
 			/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 			/// - Parameters:
 			///   - type: 
-			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
+			public init(type: TypeValues, acss_debit: PaymentMethodParam? = nil, afterpay_clearpay: Param? = nil, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, boleto: Param? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, wechat_pay: Param? = nil) {
 				self.type = type
+				self.acss_debit = acss_debit
+				self.afterpay_clearpay = afterpay_clearpay
 				self.alipay = alipay
 				self.au_becs_debit = au_becs_debit
 				self.bacs_debit = bacs_debit
 				self.bancontact = bancontact
 				self.billing_details = billing_details
+				self.boleto = boleto
 				self.eps = eps
 				self.fpx = fpx
 				self.giropay = giropay
@@ -196,6 +246,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 				self.p24 = p24
 				self.sepa_debit = sepa_debit
 				self.sofort = sofort
+				self.wechat_pay = wechat_pay
 			}
 
 
@@ -216,28 +267,34 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 
 			public final class Param: Codable {
-				public var country: CountryValues
 
-				public init(country: CountryValues) {
-					self.country = country
+				public init() {
 				}
+			}
 
-				public enum CountryValues: String, Codable {
-					case optionAT = "AT"
-					case optionBE = "BE"
-					case optionDE = "DE"
-					case optionES = "ES"
-					case optionIT = "IT"
-					case optionNL = "NL"
+
+
+			public final class PaymentMethodParam: Codable {
+				public var account_number: String
+				public var institution_number: String
+				public var transit_number: String
+
+				public init(account_number: String, institution_number: String, transit_number: String) {
+					self.account_number = account_number
+					self.institution_number = institution_number
+					self.transit_number = transit_number
 				}
 			}
 
 
 			public enum TypeValues: String, Codable {
+				case acssDebit = "acss_debit"
+				case afterpayClearpay = "afterpay_clearpay"
 				case alipay = "alipay"
 				case auBecsDebit = "au_becs_debit"
 				case bacsDebit = "bacs_debit"
 				case bancontact = "bancontact"
+				case boleto = "boleto"
 				case eps = "eps"
 				case fpx = "fpx"
 				case giropay = "giropay"
@@ -247,6 +304,7 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 				case p24 = "p24"
 				case sepaDebit = "sepa_debit"
 				case sofort = "sofort"
+				case wechatPay = "wechat_pay"
 			}
 		}
 
@@ -254,24 +312,36 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 
 		/// Payment-method-specific configuration for this PaymentIntent.
 		public final class PaymentMethodOptionsParam: Codable {
+			public var acss_debit: AnyCodable?
+			public var afterpay_clearpay: AnyCodable?
 			public var alipay: AnyCodable?
 			public var bancontact: AnyCodable?
+			public var boleto: AnyCodable?
 			public var card: AnyCodable?
+			public var card_present: AnyCodable?
+			public var ideal: AnyCodable?
 			public var oxxo: AnyCodable?
 			public var p24: AnyCodable?
 			public var sepa_debit: AnyCodable?
 			public var sofort: AnyCodable?
+			public var wechat_pay: AnyCodable?
 
 			/// Payment-method-specific configuration for this PaymentIntent.
 			/// - Parameters:
-			public init(alipay: AnyCodable? = nil, bancontact: AnyCodable? = nil, card: AnyCodable? = nil, oxxo: AnyCodable? = nil, p24: AnyCodable? = nil, sepa_debit: AnyCodable? = nil, sofort: AnyCodable? = nil) {
+			public init(acss_debit: AnyCodable? = nil, afterpay_clearpay: AnyCodable? = nil, alipay: AnyCodable? = nil, bancontact: AnyCodable? = nil, boleto: AnyCodable? = nil, card: AnyCodable? = nil, card_present: AnyCodable? = nil, ideal: AnyCodable? = nil, oxxo: AnyCodable? = nil, p24: AnyCodable? = nil, sepa_debit: AnyCodable? = nil, sofort: AnyCodable? = nil, wechat_pay: AnyCodable? = nil) {
+				self.acss_debit = acss_debit
+				self.afterpay_clearpay = afterpay_clearpay
 				self.alipay = alipay
 				self.bancontact = bancontact
+				self.boleto = boleto
 				self.card = card
+				self.card_present = card_present
+				self.ideal = ideal
 				self.oxxo = oxxo
 				self.p24 = p24
 				self.sepa_debit = sepa_debit
 				self.sofort = sofort
+				self.wechat_pay = wechat_pay
 			}
 		}
 
@@ -325,49 +395,6 @@ public struct PostPaymentIntents: StripeAPIEndpoint {
 				public enum TypeValues: String, Codable {
 					case offline = "offline"
 					case online = "online"
-				}
-			}
-
-		}
-
-
-
-		/// Shipping information for this PaymentIntent.
-		public final class Shipping: Codable {
-			public var address: Address
-			public var carrier: String?
-			public var name: String
-			public var phone: String?
-			public var tracking_number: String?
-
-			/// Shipping information for this PaymentIntent.
-			/// - Parameters:
-			///   - address: 
-			///   - name: 
-			public init(address: Address, name: String, carrier: String? = nil, phone: String? = nil, tracking_number: String? = nil) {
-				self.address = address
-				self.name = name
-				self.carrier = carrier
-				self.phone = phone
-				self.tracking_number = tracking_number
-			}
-
-
-			public final class Address: Codable {
-				public var city: String?
-				public var country: String?
-				public var line1: String
-				public var line2: String?
-				public var postal_code: String?
-				public var state: String?
-
-				public init(line1: String, city: String? = nil, country: String? = nil, line2: String? = nil, postal_code: String? = nil, state: String? = nil) {
-					self.line1 = line1
-					self.city = city
-					self.country = country
-					self.line2 = line2
-					self.postal_code = postal_code
-					self.state = state
 				}
 			}
 
@@ -470,7 +497,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 		public var expand: [String]?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
-		/// ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
+		/// ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
 		public var payment_method: String?
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 		public var payment_method_data: PaymentMethodDataParams?
@@ -517,11 +544,14 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 		public final class PaymentMethodDataParams: Codable {
+			public var acss_debit: PaymentMethodParam?
+			public var afterpay_clearpay: Param?
 			public var alipay: Param?
 			public var au_becs_debit: Param?
 			public var bacs_debit: Param?
 			public var bancontact: Param?
 			public var billing_details: BillingDetailsInnerParams?
+			public var boleto: Param?
 			public var eps: Param?
 			public var fpx: Param?
 			public var giropay: Param?
@@ -534,17 +564,21 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 			public var sepa_debit: Param?
 			public var sofort: Param?
 			public var type: TypeValues
+			public var wechat_pay: Param?
 
 			/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 			/// - Parameters:
 			///   - type: 
-			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
+			public init(type: TypeValues, acss_debit: PaymentMethodParam? = nil, afterpay_clearpay: Param? = nil, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, boleto: Param? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, wechat_pay: Param? = nil) {
 				self.type = type
+				self.acss_debit = acss_debit
+				self.afterpay_clearpay = afterpay_clearpay
 				self.alipay = alipay
 				self.au_becs_debit = au_becs_debit
 				self.bacs_debit = bacs_debit
 				self.bancontact = bancontact
 				self.billing_details = billing_details
+				self.boleto = boleto
 				self.eps = eps
 				self.fpx = fpx
 				self.giropay = giropay
@@ -556,6 +590,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 				self.p24 = p24
 				self.sepa_debit = sepa_debit
 				self.sofort = sofort
+				self.wechat_pay = wechat_pay
 			}
 
 
@@ -576,28 +611,34 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 
 
 			public final class Param: Codable {
-				public var country: CountryValues
 
-				public init(country: CountryValues) {
-					self.country = country
+				public init() {
 				}
+			}
 
-				public enum CountryValues: String, Codable {
-					case optionAT = "AT"
-					case optionBE = "BE"
-					case optionDE = "DE"
-					case optionES = "ES"
-					case optionIT = "IT"
-					case optionNL = "NL"
+
+
+			public final class PaymentMethodParam: Codable {
+				public var account_number: String
+				public var institution_number: String
+				public var transit_number: String
+
+				public init(account_number: String, institution_number: String, transit_number: String) {
+					self.account_number = account_number
+					self.institution_number = institution_number
+					self.transit_number = transit_number
 				}
 			}
 
 
 			public enum TypeValues: String, Codable {
+				case acssDebit = "acss_debit"
+				case afterpayClearpay = "afterpay_clearpay"
 				case alipay = "alipay"
 				case auBecsDebit = "au_becs_debit"
 				case bacsDebit = "bacs_debit"
 				case bancontact = "bancontact"
+				case boleto = "boleto"
 				case eps = "eps"
 				case fpx = "fpx"
 				case giropay = "giropay"
@@ -607,6 +648,7 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 				case p24 = "p24"
 				case sepaDebit = "sepa_debit"
 				case sofort = "sofort"
+				case wechatPay = "wechat_pay"
 			}
 		}
 
@@ -614,24 +656,36 @@ public struct PostPaymentIntentsIntent: StripeAPIEndpoint {
 
 		/// Payment-method-specific configuration for this PaymentIntent.
 		public final class PaymentMethodOptionsParam: Codable {
+			public var acss_debit: AnyCodable?
+			public var afterpay_clearpay: AnyCodable?
 			public var alipay: AnyCodable?
 			public var bancontact: AnyCodable?
+			public var boleto: AnyCodable?
 			public var card: AnyCodable?
+			public var card_present: AnyCodable?
+			public var ideal: AnyCodable?
 			public var oxxo: AnyCodable?
 			public var p24: AnyCodable?
 			public var sepa_debit: AnyCodable?
 			public var sofort: AnyCodable?
+			public var wechat_pay: AnyCodable?
 
 			/// Payment-method-specific configuration for this PaymentIntent.
 			/// - Parameters:
-			public init(alipay: AnyCodable? = nil, bancontact: AnyCodable? = nil, card: AnyCodable? = nil, oxxo: AnyCodable? = nil, p24: AnyCodable? = nil, sepa_debit: AnyCodable? = nil, sofort: AnyCodable? = nil) {
+			public init(acss_debit: AnyCodable? = nil, afterpay_clearpay: AnyCodable? = nil, alipay: AnyCodable? = nil, bancontact: AnyCodable? = nil, boleto: AnyCodable? = nil, card: AnyCodable? = nil, card_present: AnyCodable? = nil, ideal: AnyCodable? = nil, oxxo: AnyCodable? = nil, p24: AnyCodable? = nil, sepa_debit: AnyCodable? = nil, sofort: AnyCodable? = nil, wechat_pay: AnyCodable? = nil) {
+				self.acss_debit = acss_debit
+				self.afterpay_clearpay = afterpay_clearpay
 				self.alipay = alipay
 				self.bancontact = bancontact
+				self.boleto = boleto
 				self.card = card
+				self.card_present = card_present
+				self.ideal = ideal
 				self.oxxo = oxxo
 				self.p24 = p24
 				self.sepa_debit = sepa_debit
 				self.sofort = sofort
+				self.wechat_pay = wechat_pay
 			}
 		}
 
@@ -787,7 +841,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 		public var mandate_data: AnyCodable?
 		/// Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
 		public var off_session: Bool?
-		/// ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
+		/// ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
 		public var payment_method: String?
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 		public var payment_method_data: PaymentMethodDataParams?
@@ -827,11 +881,14 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 
 		/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 		public final class PaymentMethodDataParams: Codable {
+			public var acss_debit: PaymentMethodParam?
+			public var afterpay_clearpay: Param?
 			public var alipay: Param?
 			public var au_becs_debit: Param?
 			public var bacs_debit: Param?
 			public var bancontact: Param?
 			public var billing_details: BillingDetailsInnerParams?
+			public var boleto: Param?
 			public var eps: Param?
 			public var fpx: Param?
 			public var giropay: Param?
@@ -844,17 +901,21 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 			public var sepa_debit: Param?
 			public var sofort: Param?
 			public var type: TypeValues
+			public var wechat_pay: Param?
 
 			/// If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method) property on the PaymentIntent.
 			/// - Parameters:
 			///   - type: 
-			public init(type: TypeValues, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil) {
+			public init(type: TypeValues, acss_debit: PaymentMethodParam? = nil, afterpay_clearpay: Param? = nil, alipay: Param? = nil, au_becs_debit: Param? = nil, bacs_debit: Param? = nil, bancontact: Param? = nil, billing_details: BillingDetailsInnerParams? = nil, boleto: Param? = nil, eps: Param? = nil, fpx: Param? = nil, giropay: Param? = nil, grabpay: Param? = nil, ideal: Param? = nil, interac_present: Param? = nil, metadata: AnyCodable? = nil, oxxo: Param? = nil, p24: Param? = nil, sepa_debit: Param? = nil, sofort: Param? = nil, wechat_pay: Param? = nil) {
 				self.type = type
+				self.acss_debit = acss_debit
+				self.afterpay_clearpay = afterpay_clearpay
 				self.alipay = alipay
 				self.au_becs_debit = au_becs_debit
 				self.bacs_debit = bacs_debit
 				self.bancontact = bancontact
 				self.billing_details = billing_details
+				self.boleto = boleto
 				self.eps = eps
 				self.fpx = fpx
 				self.giropay = giropay
@@ -866,6 +927,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 				self.p24 = p24
 				self.sepa_debit = sepa_debit
 				self.sofort = sofort
+				self.wechat_pay = wechat_pay
 			}
 
 
@@ -886,28 +948,34 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 
 
 			public final class Param: Codable {
-				public var country: CountryValues
 
-				public init(country: CountryValues) {
-					self.country = country
+				public init() {
 				}
+			}
 
-				public enum CountryValues: String, Codable {
-					case optionAT = "AT"
-					case optionBE = "BE"
-					case optionDE = "DE"
-					case optionES = "ES"
-					case optionIT = "IT"
-					case optionNL = "NL"
+
+
+			public final class PaymentMethodParam: Codable {
+				public var account_number: String
+				public var institution_number: String
+				public var transit_number: String
+
+				public init(account_number: String, institution_number: String, transit_number: String) {
+					self.account_number = account_number
+					self.institution_number = institution_number
+					self.transit_number = transit_number
 				}
 			}
 
 
 			public enum TypeValues: String, Codable {
+				case acssDebit = "acss_debit"
+				case afterpayClearpay = "afterpay_clearpay"
 				case alipay = "alipay"
 				case auBecsDebit = "au_becs_debit"
 				case bacsDebit = "bacs_debit"
 				case bancontact = "bancontact"
+				case boleto = "boleto"
 				case eps = "eps"
 				case fpx = "fpx"
 				case giropay = "giropay"
@@ -917,6 +985,7 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 				case p24 = "p24"
 				case sepaDebit = "sepa_debit"
 				case sofort = "sofort"
+				case wechatPay = "wechat_pay"
 			}
 		}
 
@@ -924,24 +993,36 @@ public struct PostPaymentIntentsIntentConfirm: StripeAPIEndpoint {
 
 		/// Payment-method-specific configuration for this PaymentIntent.
 		public final class PaymentMethodOptionsParam: Codable {
+			public var acss_debit: AnyCodable?
+			public var afterpay_clearpay: AnyCodable?
 			public var alipay: AnyCodable?
 			public var bancontact: AnyCodable?
+			public var boleto: AnyCodable?
 			public var card: AnyCodable?
+			public var card_present: AnyCodable?
+			public var ideal: AnyCodable?
 			public var oxxo: AnyCodable?
 			public var p24: AnyCodable?
 			public var sepa_debit: AnyCodable?
 			public var sofort: AnyCodable?
+			public var wechat_pay: AnyCodable?
 
 			/// Payment-method-specific configuration for this PaymentIntent.
 			/// - Parameters:
-			public init(alipay: AnyCodable? = nil, bancontact: AnyCodable? = nil, card: AnyCodable? = nil, oxxo: AnyCodable? = nil, p24: AnyCodable? = nil, sepa_debit: AnyCodable? = nil, sofort: AnyCodable? = nil) {
+			public init(acss_debit: AnyCodable? = nil, afterpay_clearpay: AnyCodable? = nil, alipay: AnyCodable? = nil, bancontact: AnyCodable? = nil, boleto: AnyCodable? = nil, card: AnyCodable? = nil, card_present: AnyCodable? = nil, ideal: AnyCodable? = nil, oxxo: AnyCodable? = nil, p24: AnyCodable? = nil, sepa_debit: AnyCodable? = nil, sofort: AnyCodable? = nil, wechat_pay: AnyCodable? = nil) {
+				self.acss_debit = acss_debit
+				self.afterpay_clearpay = afterpay_clearpay
 				self.alipay = alipay
 				self.bancontact = bancontact
+				self.boleto = boleto
 				self.card = card
+				self.card_present = card_present
+				self.ideal = ideal
 				self.oxxo = oxxo
 				self.p24 = p24
 				self.sepa_debit = sepa_debit
 				self.sofort = sofort
+				self.wechat_pay = wechat_pay
 			}
 		}
 

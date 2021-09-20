@@ -1,5 +1,5 @@
 
-/// Returns a list of Report Runs, with the most recent appearing first. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
+/// Returns a list of Report Runs, with the most recent appearing first.
 public struct GetReportingReportRuns: StripeAPIEndpoint {
 	public typealias inputType = AnyCodable
 	public typealias outputType = Output
@@ -53,7 +53,7 @@ public struct GetReportingReportRuns: StripeAPIEndpoint {
 
 }
 
-/// Creates a new object and begin running the report. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
+/// Creates a new object and begin running the report. (Certain report types require a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
 public struct PostReportingReportRuns: StripeAPIEndpoint {
 	public typealias inputType = FormInput
 	public typealias outputType = ReportingReportRun
@@ -740,7 +740,7 @@ public struct PostReportingReportRuns: StripeAPIEndpoint {
 
 }
 
-/// Retrieves the details of an existing Report Run. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
+/// Retrieves the details of an existing Report Run.
 public struct GetReportingReportRunsReportRun: StripeAPIEndpoint {
 	public typealias inputType = AnyCodable
 	public typealias outputType = ReportingReportRun
@@ -762,7 +762,7 @@ public struct GetReportingReportRunsReportRun: StripeAPIEndpoint {
 
 }
 
-/// Returns a full list of Report Types. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
+/// Returns a full list of Report Types.
 public struct GetReportingReportTypes: StripeAPIEndpoint {
 	public typealias inputType = AnyCodable
 	public typealias outputType = FinancialReportingFinanceReportTypeList
@@ -795,7 +795,7 @@ public struct GetReportingReportTypes: StripeAPIEndpoint {
 
 }
 
-/// Retrieves the details of a Report Type. (Requires a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
+/// Retrieves the details of a Report Type. (Certain report types require a <a href="https://stripe.com/docs/keys#test-live-modes">live-mode API key</a>.)
 public struct GetReportingReportTypesReportType: StripeAPIEndpoint {
 	public typealias inputType = AnyCodable
 	public typealias outputType = ReportingReportType

@@ -15,7 +15,7 @@ public struct PostAccountLinks: StripeAPIEndpoint {
 		public var collect: CollectValues?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?
-		/// The URL that the user will be redirected to if the account link is no longer valid. Your `refresh_url` should trigger a method on your server to create a new account link using this API, with the same parameters, and redirect the user to the new account link.
+		/// The URL the user will be redirected to if the account link is expired, has been previously-visited, or is otherwise invalid. The URL you specify should attempt to generate a new account link with the same parameters used to create the original account link, then redirect the user to the new account link's URL so they can continue with Connect Onboarding. If a new account link cannot be generated or the redirect fails you should display a useful error to the user.
 		public var refresh_url: String?
 		/// The URL that the user will be redirected to upon leaving or completing the linked flow.
 		public var return_url: String?

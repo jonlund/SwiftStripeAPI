@@ -9,17 +9,20 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 		let charge: String?
 		let ending_before: String?
 		let limit: Int?
+		let payment_intent: String?
 		let starting_after: String?
 
 		/// Initialize the request parameters
 		/// - Parameter charge: Only return early fraud warnings for the charge specified by this charge ID.
 		/// - Parameter ending_before: A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
 		/// - Parameter limit: A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+		/// - Parameter payment_intent: Only return early fraud warnings for charges that were created by the PaymentIntent specified by this PaymentIntent ID.
 		/// - Parameter starting_after: A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-		public init(charge: String? = nil, ending_before: String? = nil, limit: Int? = nil, starting_after: String? = nil) {
+		public init(charge: String? = nil, ending_before: String? = nil, limit: Int? = nil, payment_intent: String? = nil, starting_after: String? = nil) {
 			self.charge = charge
 			self.ending_before = ending_before
 			self.limit = limit
+			self.payment_intent = payment_intent
 			self.starting_after = starting_after
 		}
 	}
@@ -28,6 +31,7 @@ public struct GetRadarEarlyFraudWarnings: StripeAPIEndpoint {
 		if let a = inputs.charge?.urlEncoded { params.append("charge=\(a)") }
 		if let a = inputs.ending_before?.urlEncoded { params.append("ending_before=\(a)") }
 		if let a = inputs.limit?.urlEncoded { params.append("limit=\(a)") }
+		if let a = inputs.payment_intent?.urlEncoded { params.append("payment_intent=\(a)") }
 		if let a = inputs.starting_after?.urlEncoded { params.append("starting_after=\(a)") }
 		let query = params.joined(separator: "&")
 		return "/v1/radar/early_fraud_warnings?\(query)"

@@ -85,6 +85,8 @@ public struct PostInvoices: StripeAPIEndpoint {
 		public var application_fee_amount: Int?
 		/// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
 		public var auto_advance: Bool?
+		/// Settings for automatic tax lookup for this invoice.
+		public var automatic_tax: AutomaticTaxParam?
 		/// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
 		public var collection_method: CollectionMethodValues?
 		/// A list of up to 4 custom fields to be displayed on the invoice.
@@ -111,6 +113,10 @@ public struct PostInvoices: StripeAPIEndpoint {
 		public var footer: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
+		/// The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+		public var on_behalf_of: String?
+		/// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+		public var payment_settings: PaymentSettings?
 		/// Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
 		public var statement_descriptor: String?
 		/// The ID of the subscription to invoice, if any. If not set, the created invoice will include all pending invoice items for the customer. If set, the created invoice will only include pending invoice items for that subscription and pending invoice items not associated with any subscription. The subscription's billing cycle and regular subscription events won't be affected.
@@ -118,11 +124,12 @@ public struct PostInvoices: StripeAPIEndpoint {
 		/// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
 		public var transfer_data: TransferDataSpecs?
 
-		public init(customer: String, account_tax_ids: AnyCodable? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: AnyCodable? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [String]? = nil, description: String? = nil, discounts: AnyCodable? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: AnyCodable? = nil, statement_descriptor: String? = nil, subscription: String? = nil, transfer_data: TransferDataSpecs? = nil) {
+		public init(customer: String, account_tax_ids: AnyCodable? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, automatic_tax: AutomaticTaxParam? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: AnyCodable? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: [String]? = nil, description: String? = nil, discounts: AnyCodable? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil, payment_settings: PaymentSettings? = nil, statement_descriptor: String? = nil, subscription: String? = nil, transfer_data: TransferDataSpecs? = nil) {
 			self.customer = customer
 			self.account_tax_ids = account_tax_ids
 			self.application_fee_amount = application_fee_amount
 			self.auto_advance = auto_advance
+			self.automatic_tax = automatic_tax
 			self.collection_method = collection_method
 			self.custom_fields = custom_fields
 			self.days_until_due = days_until_due
@@ -135,10 +142,55 @@ public struct PostInvoices: StripeAPIEndpoint {
 			self.expand = expand
 			self.footer = footer
 			self.metadata = metadata
+			self.on_behalf_of = on_behalf_of
+			self.payment_settings = payment_settings
 			self.statement_descriptor = statement_descriptor
 			self.subscription = subscription
 			self.transfer_data = transfer_data
 		}
+
+
+		/// Settings for automatic tax lookup for this invoice.
+		public final class AutomaticTaxParam: Codable {
+			public var enabled: Bool
+
+			/// Settings for automatic tax lookup for this invoice.
+			/// - Parameters:
+			///   - enabled: 
+			public init(enabled: Bool) {
+				self.enabled = enabled
+			}
+		}
+
+
+
+		/// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+		public final class PaymentSettings: Codable {
+			public var payment_method_options: PaymentMethodOptions?
+			public var payment_method_types: AnyCodable?
+
+			/// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+			/// - Parameters:
+			public init(payment_method_options: PaymentMethodOptions? = nil, payment_method_types: AnyCodable? = nil) {
+				self.payment_method_options = payment_method_options
+				self.payment_method_types = payment_method_types
+			}
+
+
+			public final class PaymentMethodOptions: Codable {
+				public var acss_debit: AnyCodable?
+				public var bancontact: AnyCodable?
+				public var card: AnyCodable?
+
+				public init(acss_debit: AnyCodable? = nil, bancontact: AnyCodable? = nil, card: AnyCodable? = nil) {
+					self.acss_debit = acss_debit
+					self.bancontact = bancontact
+					self.card = card
+				}
+			}
+
+		}
+
 
 
 		/// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
@@ -368,6 +420,8 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 		public var application_fee_amount: Int?
 		/// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice.
 		public var auto_advance: Bool?
+		/// Settings for automatic tax lookup for this invoice.
+		public var automatic_tax: AutomaticTaxParam?
 		/// Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
 		public var collection_method: CollectionMethodValues?
 		/// A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
@@ -392,15 +446,20 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 		public var footer: String?
 		/// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
 		public var metadata: AnyCodable?
+		/// The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+		public var on_behalf_of: String?
+		/// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+		public var payment_settings: PaymentSettings?
 		/// Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
 		public var statement_descriptor: String?
 		/// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
 		public var transfer_data: AnyCodable?
 
-		public init(account_tax_ids: AnyCodable? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: AnyCodable? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, description: String? = nil, discounts: AnyCodable? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: AnyCodable? = nil, statement_descriptor: String? = nil, transfer_data: AnyCodable? = nil) {
+		public init(account_tax_ids: AnyCodable? = nil, application_fee_amount: Int? = nil, auto_advance: Bool? = nil, automatic_tax: AutomaticTaxParam? = nil, collection_method: CollectionMethodValues? = nil, custom_fields: AnyCodable? = nil, days_until_due: Int? = nil, default_payment_method: String? = nil, default_source: String? = nil, default_tax_rates: AnyCodable? = nil, description: String? = nil, discounts: AnyCodable? = nil, due_date: Timestamp? = nil, expand: [String]? = nil, footer: String? = nil, metadata: AnyCodable? = nil, on_behalf_of: String? = nil, payment_settings: PaymentSettings? = nil, statement_descriptor: String? = nil, transfer_data: AnyCodable? = nil) {
 			self.account_tax_ids = account_tax_ids
 			self.application_fee_amount = application_fee_amount
 			self.auto_advance = auto_advance
+			self.automatic_tax = automatic_tax
 			self.collection_method = collection_method
 			self.custom_fields = custom_fields
 			self.days_until_due = days_until_due
@@ -413,9 +472,54 @@ public struct PostInvoicesInvoice: StripeAPIEndpoint {
 			self.expand = expand
 			self.footer = footer
 			self.metadata = metadata
+			self.on_behalf_of = on_behalf_of
+			self.payment_settings = payment_settings
 			self.statement_descriptor = statement_descriptor
 			self.transfer_data = transfer_data
 		}
+
+
+		/// Settings for automatic tax lookup for this invoice.
+		public final class AutomaticTaxParam: Codable {
+			public var enabled: Bool
+
+			/// Settings for automatic tax lookup for this invoice.
+			/// - Parameters:
+			///   - enabled: 
+			public init(enabled: Bool) {
+				self.enabled = enabled
+			}
+		}
+
+
+
+		/// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+		public final class PaymentSettings: Codable {
+			public var payment_method_options: PaymentMethodOptions?
+			public var payment_method_types: AnyCodable?
+
+			/// Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+			/// - Parameters:
+			public init(payment_method_options: PaymentMethodOptions? = nil, payment_method_types: AnyCodable? = nil) {
+				self.payment_method_options = payment_method_options
+				self.payment_method_types = payment_method_types
+			}
+
+
+			public final class PaymentMethodOptions: Codable {
+				public var acss_debit: AnyCodable?
+				public var bancontact: AnyCodable?
+				public var card: AnyCodable?
+
+				public init(acss_debit: AnyCodable? = nil, bancontact: AnyCodable? = nil, card: AnyCodable? = nil) {
+					self.acss_debit = acss_debit
+					self.bancontact = bancontact
+					self.card = card
+				}
+			}
+
+		}
+
 
 		public enum CollectionMethodValues: String, Codable {
 			case chargeAutomatically = "charge_automatically"
@@ -467,7 +571,7 @@ public struct PostInvoicesInvoiceFinalize: StripeAPIEndpoint {
 	}
 
 	public final class FormInput: Codable {
-		/// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+		/// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/overview#auto-advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
 		public var auto_advance: Bool?
 		/// Specifies which fields in the response should be expanded.
 		public var expand: [String]?

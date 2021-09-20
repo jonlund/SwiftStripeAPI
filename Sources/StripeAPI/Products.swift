@@ -2,7 +2,7 @@
 /// Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
 public struct GetProducts: StripeAPIEndpoint {
 	public typealias inputType = AnyCodable
-	public typealias outputType = Output
+	public typealias outputType = ProductList
 	public typealias paramType = Params
 	
 	public struct Params {
@@ -42,7 +42,8 @@ public struct GetProducts: StripeAPIEndpoint {
 	}
 	public static var method: HTTPMethod { return .GET }
 
-	public final class Output: Codable {
+	public final class ProductList: Codable {
+		/// Details about each object.
 		public var data: [Product]
 		/// True if this list has another page of items after this one that can be fetched.
 		public var has_more: Bool
@@ -77,12 +78,6 @@ public struct PostProducts: StripeAPIEndpoint {
 	public final class FormInput: Codable {
 		/// Whether the product is currently available for purchase. Defaults to `true`.
 		public var active: Bool?
-		/// A list of up to 5 alphanumeric attributes. Should only be set if type=`good`.
-		public var attributes: [String]?
-		/// A short one-line description of the product, meant to be displayable to the customer. May only be set if type=`good`.
-		public var caption: String?
-		/// An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if type=`good`.
-		public var deactivate_on: [String]?
 		/// The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
 		public var description: String?
 		/// Specifies which fields in the response should be expanded.
@@ -95,23 +90,22 @@ public struct PostProducts: StripeAPIEndpoint {
 		public var metadata: AnyCodable?
 		/// The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
 		public var name: String
-		/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
+		/// The dimensions of this product for shipping purposes.
 		public var package_dimensions: PackageDimensionsSpecs?
-		/// Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if type=`good`.
+		/// Whether this product is shipped (i.e., physical goods).
 		public var shippable: Bool?
 		/// An arbitrary string to be displayed on your customer's credit card or bank statement. While most banks display this information consistently, some may display it incorrectly or not at all.  This may be up to 22 characters. The statement description may not include `<`, `>`, `\`, `"`, `'` characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped.  It must contain at least one letter.
 		public var statement_descriptor: String?
+		/// A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+		public var tax_code: String?
 		/// A label that represents units of this product in Stripe and on customers’ receipts and invoices. When set, this will be included in associated invoice line item descriptions.
 		public var unit_label: String?
-		/// A URL of a publicly-accessible webpage for this product. May only be set if type=`good`.
+		/// A URL of a publicly-accessible webpage for this product.
 		public var url: String?
 
-		public init(name: String, active: Bool? = nil, attributes: [String]? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, metadata: AnyCodable? = nil, package_dimensions: PackageDimensionsSpecs? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
+		public init(name: String, active: Bool? = nil, description: String? = nil, expand: [String]? = nil, id: String? = nil, images: [String]? = nil, metadata: AnyCodable? = nil, package_dimensions: PackageDimensionsSpecs? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, tax_code: String? = nil, unit_label: String? = nil, url: String? = nil) {
 			self.name = name
 			self.active = active
-			self.attributes = attributes
-			self.caption = caption
-			self.deactivate_on = deactivate_on
 			self.description = description
 			self.expand = expand
 			self.id = id
@@ -120,19 +114,20 @@ public struct PostProducts: StripeAPIEndpoint {
 			self.package_dimensions = package_dimensions
 			self.shippable = shippable
 			self.statement_descriptor = statement_descriptor
+			self.tax_code = tax_code
 			self.unit_label = unit_label
 			self.url = url
 		}
 
 
-		/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
+		/// The dimensions of this product for shipping purposes.
 		public final class PackageDimensionsSpecs: Codable {
 			public var height: StringNumber
 			public var length: StringNumber
 			public var weight: StringNumber
 			public var width: StringNumber
 
-			/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
+			/// The dimensions of this product for shipping purposes.
 			/// - Parameters:
 			///   - height: 
 			///   - length: 
@@ -194,12 +189,6 @@ public struct PostProductsId: StripeAPIEndpoint {
 	public final class FormInput: Codable {
 		/// Whether the product is available for purchase.
 		public var active: Bool?
-		/// A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.
-		public var attributes: AnyCodable?
-		/// A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
-		public var caption: String?
-		/// An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if `type=good`.
-		public var deactivate_on: [String]?
 		/// The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
 		public var description: String?
 		/// Specifies which fields in the response should be expanded.
@@ -210,22 +199,21 @@ public struct PostProductsId: StripeAPIEndpoint {
 		public var metadata: AnyCodable?
 		/// The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
 		public var name: String?
-		/// The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
+		/// The dimensions of this product for shipping purposes.
 		public var package_dimensions: AnyCodable?
-		/// Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.
+		/// Whether this product is shipped (i.e., physical goods).
 		public var shippable: Bool?
 		/// An arbitrary string to be displayed on your customer's credit card or bank statement. While most banks display this information consistently, some may display it incorrectly or not at all.  This may be up to 22 characters. The statement description may not include `<`, `>`, `\`, `"`, `'` characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped.  It must contain at least one letter. May only be set if `type=service`.
 		public var statement_descriptor: String?
+		/// A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+		public var tax_code: String?
 		/// A label that represents units of this product in Stripe and on customers’ receipts and invoices. When set, this will be included in associated invoice line item descriptions. May only be set if `type=service`.
 		public var unit_label: String?
-		/// A URL of a publicly-accessible webpage for this product. May only be set if `type=good`.
+		/// A URL of a publicly-accessible webpage for this product.
 		public var url: String?
 
-		public init(active: Bool? = nil, attributes: AnyCodable? = nil, caption: String? = nil, deactivate_on: [String]? = nil, description: String? = nil, expand: [String]? = nil, images: AnyCodable? = nil, metadata: AnyCodable? = nil, name: String? = nil, package_dimensions: AnyCodable? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, unit_label: String? = nil, url: String? = nil) {
+		public init(active: Bool? = nil, description: String? = nil, expand: [String]? = nil, images: AnyCodable? = nil, metadata: AnyCodable? = nil, name: String? = nil, package_dimensions: AnyCodable? = nil, shippable: Bool? = nil, statement_descriptor: String? = nil, tax_code: String? = nil, unit_label: String? = nil, url: String? = nil) {
 			self.active = active
-			self.attributes = attributes
-			self.caption = caption
-			self.deactivate_on = deactivate_on
 			self.description = description
 			self.expand = expand
 			self.images = images
@@ -234,6 +222,7 @@ public struct PostProductsId: StripeAPIEndpoint {
 			self.package_dimensions = package_dimensions
 			self.shippable = shippable
 			self.statement_descriptor = statement_descriptor
+			self.tax_code = tax_code
 			self.unit_label = unit_label
 			self.url = url
 		}

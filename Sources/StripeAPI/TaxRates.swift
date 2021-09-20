@@ -91,8 +91,10 @@ public struct PostTaxRates: StripeAPIEndpoint {
 		public var percentage: StringNumber
 		/// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
 		public var state: String?
+		/// The high-level tax type, such as `vat` or `sales_tax`.
+		public var tax_type: TaxTypeValues?
 
-		public init(display_name: String, inclusive: Bool, percentage: StringNumber, active: Bool? = nil, country: String? = nil, description: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: AnyCodable? = nil, state: String? = nil) {
+		public init(display_name: String, inclusive: Bool, percentage: StringNumber, active: Bool? = nil, country: String? = nil, description: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: AnyCodable? = nil, state: String? = nil, tax_type: TaxTypeValues? = nil) {
 			self.display_name = display_name
 			self.inclusive = inclusive
 			self.percentage = percentage
@@ -103,6 +105,17 @@ public struct PostTaxRates: StripeAPIEndpoint {
 			self.jurisdiction = jurisdiction
 			self.metadata = metadata
 			self.state = state
+			self.tax_type = tax_type
+		}
+
+		public enum TaxTypeValues: String, Codable {
+			case gst = "gst"
+			case hst = "hst"
+			case pst = "pst"
+			case qst = "qst"
+			case rst = "rst"
+			case salesTax = "sales_tax"
+			case vat = "vat"
 		}
 	}
 
@@ -166,8 +179,10 @@ public struct PostTaxRatesTaxRate: StripeAPIEndpoint {
 		public var metadata: AnyCodable?
 		/// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
 		public var state: String?
+		/// The high-level tax type, such as `vat` or `sales_tax`.
+		public var tax_type: TaxTypeValues?
 
-		public init(active: Bool? = nil, country: String? = nil, description: String? = nil, display_name: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: AnyCodable? = nil, state: String? = nil) {
+		public init(active: Bool? = nil, country: String? = nil, description: String? = nil, display_name: String? = nil, expand: [String]? = nil, jurisdiction: String? = nil, metadata: AnyCodable? = nil, state: String? = nil, tax_type: TaxTypeValues? = nil) {
 			self.active = active
 			self.country = country
 			self.description = description
@@ -176,6 +191,17 @@ public struct PostTaxRatesTaxRate: StripeAPIEndpoint {
 			self.jurisdiction = jurisdiction
 			self.metadata = metadata
 			self.state = state
+			self.tax_type = tax_type
+		}
+
+		public enum TaxTypeValues: String, Codable {
+			case gst = "gst"
+			case hst = "hst"
+			case pst = "pst"
+			case qst = "qst"
+			case rst = "rst"
+			case salesTax = "sales_tax"
+			case vat = "vat"
 		}
 	}
 
